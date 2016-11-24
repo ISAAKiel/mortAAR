@@ -4,9 +4,9 @@
 #' exponential tail of death distribution (to close out life table)
 #' partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
 #'
-#' @param anzahl a vector containing number of invidiuals per life year, index references life year[index-1 – index)
+#' @param necdf data.frame
 #'
-#' @return a data frame with the life table variables
+#' @return list
 #'
 #' @examples
 #' test <- data.frame(male = runif(70), female = runif(70))

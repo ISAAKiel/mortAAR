@@ -7,10 +7,10 @@
 life.table(necdf)
 }
 \arguments{
-\item{anzahl}{a vector containing number of invidiuals per life year, index references life year[index-1 – index)}
+\item{necdf}{data.frame}
 }
 \value{
-a data frame with the life table variables
+list
 }
 \description{
 simple lifetable using Keyfitz and Flieger separation factors and

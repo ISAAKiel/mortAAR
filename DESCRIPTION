@@ -2,13 +2,14 @@ Package: mortAAR
 Type: Package
 Title: Calculation and analysis of mortality data
 Version: 0.1.0
-Author: c( person("Nils", "Müller-Scheeßel", email = "nils.mueller-
-    scheessel@ufg.uni-kiel.de", role = c("aut", "cre")), person("Martin", "Hinz",
-    email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")) )
+Author: c(
+  person("Nils", "Müller-Scheeßel", email = "nils.mueller-scheessel@ufg.uni-kiel.de", role = c("aut", "cre")),
+  person("Martin", "Hinz",email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")),
+  person("Clemens", "Schmid", email = "clemens@nevrome.de", role = c("aut"))
+  )
 Maintainer: Nils Müller-Scheeßel <nils.mueller-scheessel@ufg.uni-kiel.de>
-Description: mortAAR is a collection of functions for analysis of archaeological
-    mortality data
-License: GPL-2
+Description: mortAAR is a collection of functions for analysis of archaeological mortality data.
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
