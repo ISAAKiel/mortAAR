@@ -4,17 +4,23 @@
 \alias{life.table}
 \title{Creates a life table}
 \usage{
-life.table(anzahl)
+life.table(necdf)
 }
 \arguments{
 \item{anzahl}{a vector containing number of invidiuals per life year, index references life year[index-1 – index)}
 }
 \value{
-a data frame of class 'mortaar' with the life table variables
+a data frame with the life table variables
 }
 \description{
 simple lifetable using Keyfitz and Flieger separation factors and
 exponential tail of death distribution (to close out life table)
 partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
+}
+\examples{
+test <- data.frame(male = runif(70), female = runif(70))
+
+life.table(test)
+
 }
 

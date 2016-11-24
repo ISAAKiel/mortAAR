@@ -6,9 +6,32 @@
 #'
 #' @param anzahl a vector containing number of invidiuals per life year, index references life year[index-1 – index)
 #'
-#' @return a data frame of class 'mortaar' with the life table variables
+#' @return a data frame with the life table variables
+#'
+#' @examples
+#' test <- data.frame(male = runif(70), female = runif(70))
+#'
+#' life.table(test)
+#'
+#' @importFrom magrittr "%>%"
+#'
 #' @export
-life.table <- function(anzahl) {
+life.table <- function(necdf) {
+
+  # check if input is a data.frame
+  if(!is.data.frame(necdf)) {
+    stop("The input data is not a data.frame. Please give me a data.frame!
+         I'm not able to work like this. Arrrrgh!")
+  }
+
+  # apply life.table.vec to every column of the input df
+  # and create an output list of mortaar objects
+  lapply(necdf, life.table.vec) %>%
+  return()
+}
+
+
+life.table.vec <- function(anzahl) {
   cumsum_ <- cumsum(anzahl)
   cumsum_red <- cumsum_[c(1, 4, 9, 14, 19, 24, 29, 34, 39,
                           44, 49, 54, 59, 64, 69, 70)]
