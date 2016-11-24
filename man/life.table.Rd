@@ -10,7 +10,7 @@ life.table(anzahl)
 \item{anzahl}{a vector containing number of invidiuals per life year, index references life year[index-1 – index)}
 }
 \value{
-a data frame with the life table variables
+a data frame of class 'mortaar' with the life table variables
 }
 \description{
 simple lifetable using Keyfitz and Flieger separation factors and

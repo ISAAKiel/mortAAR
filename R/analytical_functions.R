@@ -6,7 +6,7 @@
 #'
 #' @param anzahl a vector containing number of invidiuals per life year, index references life year[index-1 – index)
 #'
-#' @return a data frame with the life table variables
+#' @return a data frame of class 'mortaar' with the life table variables
 #' @export
 life.table <- function(anzahl) {
   cumsum_ <- cumsum(anzahl)
