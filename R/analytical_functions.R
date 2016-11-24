@@ -67,5 +67,6 @@ life.table <- function(anzahl) {
       ex = ex,
       rel_bev = rel_bev
     )
+  class(lt) <- append(class(lt),"mortaar")
   return(lt)
 }
