@@ -18,7 +18,7 @@ exponential tail of death distribution (to close out life table)
 partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
 }
 \examples{
-test <- data.frame(male = runif(70), female = runif(70))
+test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
 
 life.table(test)
 

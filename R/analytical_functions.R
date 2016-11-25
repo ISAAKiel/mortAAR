@@ -9,7 +9,7 @@
 #' @return list
 #'
 #' @examples
-#' test <- data.frame(male = runif(70), female = runif(70))
+#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
 #'
 #' life.table(test)
 #'
