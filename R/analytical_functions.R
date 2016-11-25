@@ -60,8 +60,17 @@ life.table.vec <- function(anzahl) {
 
   nSxsum <- (sum(nDx, na.rm = TRUE))
   nSxrsum <- cumsum(nDx)
-  nSx <- nSxsum - data.table::shift(nSxrsum)
-  nSx[1] <- nSxsum
+  nSx <- nSxsum - nSxrsum    
+  nSx <- append(x = nSx,
+                values = nSxsum,
+                after = 0)
+  nSx <- nSx[1:length(nSx)-1]
+
+  ## old cold (at this stage just for comparison of the results)
+  nSx.o <- nSxsum - data.table::shift(nSxrsum)
+  nSx.o[1] <- nSxsum
+  nSx == nSx.o  
+                  
   nqx <- nDx / nSx
   nqx <- ifelse(nqx > 1, 1, nqx)
 
