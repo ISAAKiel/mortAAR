@@ -31,7 +31,7 @@ life.table <- function(necdf) {
   # knowlegde about magrittr!!!
 
   output <- lapply(necdf, life.table.vec)
-  class(output) <- append(class(output), "mortaar_life_table_list")
+  class(output) <- append("mortaar_life_table_list", class(output))
   return(output)
 }
 
@@ -107,7 +107,7 @@ life.table.vec <- function(anzahl) {
     ex = ex,
     rel_bev = rel_bev
   )
-  class(lt) <- append(class(lt), "mortaar_life_table")
+  class(lt) <- append("mortaar_life_table", class(lt))
 
   return(lt)
 }
