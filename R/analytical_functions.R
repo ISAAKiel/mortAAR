@@ -26,13 +26,19 @@ life.table <- function(necdf) {
 
   # apply life.table.vec to every column of the input df
   # and create an output list of mortaar objects
+
   # TODO: recoded to basic call without magrittr to
   # append class. Please rewrite with your extensive
   # knowlegde about magrittr!!!
+  # -> DONE -> Has to be tested!
 
-  output <- lapply(necdf, life.table.vec)
-  class(output) <- append("mortaar_life_table_list", class(output))
-  return(output)
+  # output <- lapply(necdf, life.table.vec)
+  # class(output) <- c("mortaar_life_table_list", class(output))
+  # return(output)
+
+  lapply(necdf, life.table.vec) %>%
+    `class<-`(c("mortaar_life_table_list", class(.))) %>%
+    return()
 }
 
 
