@@ -4,10 +4,12 @@
 \alias{format.mortaar_life_table_list}
 \title{Encode a mortaar_life_table_list in a Common Format}
 \usage{
-\method{format}{mortaar_life_table_list}(life_table_list, ...)
+\method{format}{mortaar_life_table_list}(x, ...)
 }
 \arguments{
-\item{life_table_list}{a mortaar_life_table_list}
+\item{x}{a mortaar_life_table_list}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 A string representation of the mortaar_life_table_list. Each format.mortaar_life_table
@@ -20,7 +22,7 @@ Format an mortaar_life_table_list for pretty printing.
 \examples{
 
 test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-format.mortaar_life_table_list(life.table(test))
+format(life.table(test))
 
 }
 

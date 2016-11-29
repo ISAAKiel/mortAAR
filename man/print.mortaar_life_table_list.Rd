@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{a mortaar_life_table_list}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \description{
 Print a mortaar_life_table_list according to the format.mortaar_life_table_list
@@ -15,7 +17,7 @@ Print a mortaar_life_table_list according to the format.mortaar_life_table_list
 \examples{
 
 test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-print.mortaar_life_table_list(life.table(test))
+print(life.table(test))
 
 }
 

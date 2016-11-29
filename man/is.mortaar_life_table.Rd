@@ -8,6 +8,8 @@ is.mortaar_life_table(x, ...)
 }
 \arguments{
 \item{x}{a variable}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 true if x is a mortaar_life_table, false otherwise

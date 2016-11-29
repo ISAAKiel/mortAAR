@@ -4,12 +4,14 @@
 \alias{format.mortaar_life_table}
 \title{Encode a mortaar_life_table in a Common Format}
 \usage{
-\method{format}{mortaar_life_table}(life_table, class_of_deceased = NULL, ...)
+\method{format}{mortaar_life_table}(x, class_of_deceased = NULL, ...)
 }
 \arguments{
+\item{x}{a mortaar_life_table}
+
 \item{class_of_deceased}{optional specify the class of deceased (male, female, undetermined, ...)}
 
-\item{life_table_list}{a mortaar_life_table}
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 A string representation of the mortaar_life_table
@@ -20,7 +22,7 @@ Format an mortaar_life_table for pretty printing.
 \examples{
 
 test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-format.mortaar_life_table(life.table(test)$male)
+format(life.table(test)$male)
 
 }
 
