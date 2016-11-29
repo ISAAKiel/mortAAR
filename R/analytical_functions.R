@@ -26,8 +26,13 @@ life.table <- function(necdf) {
 
   # apply life.table.vec to every column of the input df
   # and create an output list of mortaar objects
-  lapply(necdf, life.table.vec) %>%
-  return()
+  # TODO: recoded to basic call without magrittr to
+  # append class. Please rewrite with your extensive
+  # knowlegde about magrittr!!!
+
+  output <- lapply(necdf, life.table.vec)
+  class(output) <- append(class(output), "mortaar_life_table_list")
+  return(output)
 }
 
 
@@ -60,7 +65,7 @@ life.table.vec <- function(anzahl) {
 
   nSxsum <- (sum(nDx, na.rm = TRUE))
   nSxrsum <- cumsum(nDx)
-  nSx <- nSxsum - nSxrsum    
+  nSx <- nSxsum - nSxrsum
   nSx <- append(x = nSx,
                 values = nSxsum,
                 after = 0)
@@ -69,8 +74,8 @@ life.table.vec <- function(anzahl) {
   ## old cold (at this stage just for comparison of the results)
   nSx.o <- nSxsum - data.table::shift(nSxrsum)
   nSx.o[1] <- nSxsum
-  nSx == nSx.o  
-                  
+  nSx == nSx.o
+
   nqx <- nDx / nSx
   nqx <- ifelse(nqx > 1, 1, nqx)
 
@@ -102,7 +107,7 @@ life.table.vec <- function(anzahl) {
     ex = ex,
     rel_bev = rel_bev
   )
-  class(lt) <- append(class(lt), "mortaar")
+  class(lt) <- append(class(lt), "mortaar_life_table")
 
   return(lt)
 }
