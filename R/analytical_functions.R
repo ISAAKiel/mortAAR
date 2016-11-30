@@ -9,9 +9,9 @@
 #' @return list
 #'
 #' @examples
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' necdf <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
 #'
-#' life.table(test)
+#' life.table(necdf)
 #'
 #' @importFrom magrittr "%>%"
 #'
@@ -19,24 +19,28 @@
 life.table <- function(necdf) {
 
   # check if input is a data.frame
-  if(!is.data.frame(necdf)) {
-    stop("The input data is not a data.frame. Please give me a data.frame!
-         I'm not able to work like this. Arrrrgh!")
+  if(necdf %>% is.data.frame %>% `!`) {
+    "The input data is not a data.frame." %>%
+      stop
+  }
+
+  # check if input data.frame has non numeric columns
+  if(necdf %>% sapply(is.numeric) %>% all %>% `!`){
+    necdf %>% colnames %>% `[`(!sapply(necdf, is.numeric)) -> wrongcols
+    paste0(
+      "The input data.frame has non-numeric columns. ",
+      "The following column",
+      ifelse(length(wrongcols) > 1, "s are ", " is "),
+      "not numeric: ",
+      paste(wrongcols, collapse = ", ")
+    ) %>%
+      stop
   }
 
   # apply life.table.vec to every column of the input df
-  # and create an output list of mortaar objects
-
-  # TODO: recoded to basic call without magrittr to
-  # append class. Please rewrite with your extensive
-  # knowlegde about magrittr!!!
-  # -> DONE -> Has to be tested!
-
-  # output <- lapply(necdf, life.table.vec)
-  # class(output) <- c("mortaar_life_table_list", class(output))
-  # return(output)
-
-  lapply(necdf, life.table.vec) %>%
+  # and create an output mortaar_life_table_list of mortaar_life_table objects
+  necdf %>%
+    lapply(life.table.vec) %>%
     `class<-`(c("mortaar_life_table_list", class(.))) %>%
     return()
 }
@@ -100,7 +104,9 @@ life.table.vec <- function(anzahl) {
   ex <- ifelse(lx[1:nmax] > 0, Tx / lx[1:nmax], NA)
 
   rel_bev <- nLx * 100 / sum(nLx)
-  lt <- data.frame(
+
+  # prepare result data.frame
+  data.frame(
     x = x,
     nDx = nDx,
     nSx = nSx,
@@ -112,8 +118,7 @@ life.table.vec <- function(anzahl) {
     Tx = Tx * 100000,
     ex = ex,
     rel_bev = rel_bev
-  )
-  class(lt) <- append("mortaar_life_table", class(lt))
-
-  return(lt)
+  ) %>%
+    `class<-`(c("mortaar_life_table", class(.))) %>%
+    return()
 }
