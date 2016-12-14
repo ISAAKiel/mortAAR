@@ -4,10 +4,10 @@
 \alias{life.table}
 \title{Creates a life table}
 \usage{
-life.table(necdf)
+life.table(neclist)
 }
 \arguments{
-\item{necdf}{data.frame}
+\item{neclist}{list}
 }
 \value{
 list
@@ -18,9 +18,27 @@ exponential tail of death distribution (to close out life table)
 partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
 }
 \examples{
-necdf <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+limit = 100
+steps = 5
+lower <- seq(from = 0, to = limit-steps[1], by = steps)
+upper <- seq(from = steps[1], to = limit, by = steps)-1
 
-life.table(necdf)
+neclist <- list (
+ male = data.frame(
+   x = paste0(lower, "--", upper),
+   a = steps,
+   Dx = runif(length(lower))*50
+ ),
+ female = data.frame(
+   x = paste0(lower, "--", upper),
+   a = steps,
+   Dx = runif(length(lower))*50
+ )
+)
+
+#neclist <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+
+life.table(neclist)
 
 }
 

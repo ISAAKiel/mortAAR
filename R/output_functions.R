@@ -9,8 +9,8 @@
 #'
 #' @examples
 #'
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-#' is.mortaar_life_table_list(life.table(test))
+#' #test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' #is.mortaar_life_table_list(life.table(test))
 #'
 #' @export
 is.mortaar_life_table_list <- function(x, ...) {"mortaar_life_table_list" %in% class(x)}
@@ -28,8 +28,8 @@ is.mortaar_life_table_list <- function(x, ...) {"mortaar_life_table_list" %in% c
 #'
 #' @examples
 #'
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-#' format(life.table(test))
+#' #test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' #format(life.table(test))
 #'
 #' @export
 format.mortaar_life_table_list <- function(x, ...) {
@@ -51,8 +51,8 @@ format.mortaar_life_table_list <- function(x, ...) {
 #'
 #' @examples
 #'
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-#' print(life.table(test))
+#' #test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' #print(life.table(test))
 #'
 #' @export
 print.mortaar_life_table_list <- function(x, ...) cat(format(x, ...), "\n")
@@ -68,8 +68,8 @@ print.mortaar_life_table_list <- function(x, ...) cat(format(x, ...), "\n")
 #'
 #' @examples
 #'
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-#' is.mortaar_life_table(life.table(test)$male)
+#' #test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' #is.mortaar_life_table(life.table(test)$male)
 #'
 #' @export
 is.mortaar_life_table <- function(x, ...) {"mortaar_life_table" %in% class(x)}
@@ -86,8 +86,8 @@ is.mortaar_life_table <- function(x, ...) {"mortaar_life_table" %in% class(x)}
 #'
 #' @examples
 #'
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-#' format(life.table(test)$male)
+#' #test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' #format(life.table(test)$male)
 #'
 #' @importFrom utils capture.output
 #' @export
@@ -101,31 +101,31 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   out_str$header <- paste("\n","\t Mortaar life table", class_of_deceased_str," of ",x$nSx[1]," individuals",sep = "")
 
   out_str$e0 <- paste("\n","Life expectation at birth (e0): ",round(x$ex[1],3), sep = "")
-  age_class_names <- vector()
-  for (i in 1:length(x$x))  {
-    this_x <- x$x[i]
-    if (i == length(x$x)) {
-      this_next_x <- Inf
-    } else {
-      this_next_x <- x$x[i+1]
-    }
-
-    this_age_class_name <- paste(this_x, this_next_x, sep="-")
-    age_class_names <- c(age_class_names, this_age_class_name)
-  }
+  # age_class_names <- vector()
+  # for (i in 1:length(x$x))  {
+  #   this_x <- x$x[i]
+  #   if (i == length(x$x)) {
+  #     this_next_x <- Inf
+  #   } else {
+  #     this_next_x <- x$x[i+1]
+  #   }
+  #
+  #   this_age_class_name <- paste(this_x, this_next_x, sep="-")
+  #   age_class_names <- c(age_class_names, this_age_class_name)
+  # }
 
   out_table <- data.frame(
-    age.class = age_class_names,
-    nDx = round(x$nDx,3),
-    nSx = round(x$nSx,3),
-    nax = round(x$nax,3),
-    nqx = round(x$nqx,3),
+    #age.class = age_class_names,
+    x = x$x,
+    a = round(x$a,3),
+    Dx = round(x$Dx,3),
+    qx = round(x$qx,3),
     lx = round(x$lx,3),
-    ndx = round(x$ndx,3),
-    nLx = round(x$nLx,3),
+    dx = round(x$dx,3),
+    Lx = round(x$Lx,3),
     Tx = round(x$Tx,3),
-    ex = round(x$ex,3),
-    rel_bev = round(x$rel_bev,3)
+    ex = round(x$ex,3)#,
+    #rel_bev = round(x$rel_bev,3)
     )
 
   return_value <- paste(out_str,collapse = "\n",sep="")
@@ -144,8 +144,8 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
 #'
 #' @examples
 #'
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-#' print(life.table(test)$male)
+#' #test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' #print(life.table(test)$male)
 #'
 #' @export
 print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")

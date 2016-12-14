@@ -19,8 +19,8 @@ Checks if a variable is of class mortaar_life_table
 }
 \examples{
 
-test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-is.mortaar_life_table(life.table(test)$male)
+#test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#is.mortaar_life_table(life.table(test)$male)
 
 }
 

@@ -4,121 +4,126 @@
 #' exponential tail of death distribution (to close out life table)
 #' partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
 #'
-#' @param necdf data.frame
+#' @param neclist list
 #'
 #' @return list
 #'
 #' @examples
-#' necdf <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' limit = 100
+#' steps = 5
+#' lower <- seq(from = 0, to = limit-steps[1], by = steps)
+#' upper <- seq(from = steps[1], to = limit, by = steps)-1
 #'
-#' life.table(necdf)
+#' neclist <- list (
+#'  male = data.frame(
+#'    x = paste0(lower, "--", upper),
+#'    a = steps,
+#'    Dx = runif(length(lower))*50
+#'  ),
+#'  female = data.frame(
+#'    x = paste0(lower, "--", upper),
+#'    a = steps,
+#'    Dx = runif(length(lower))*50
+#'  )
+#' )
+#'
+#' #neclist <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#'
+#' life.table(neclist)
 #'
 #' @importFrom magrittr "%>%"
 #'
 #' @export
-life.table <- function(necdf) {
+life.table <- function(neclist) {
 
-  # check if input is a data.frame
-  if(necdf %>% is.data.frame %>% `!`) {
-    "The input data is not a data.frame." %>%
-      stop
-  }
-
-  # check if input data.frame has non numeric columns
-  if(necdf %>% sapply(is.numeric) %>% all %>% `!`){
-    necdf %>% colnames %>% `[`(!sapply(necdf, is.numeric)) -> wrongcols
-    paste0(
-      "The input data.frame has non-numeric columns. ",
-      "The following column",
-      ifelse(length(wrongcols) > 1, "s are ", " is "),
-      "not numeric: ",
-      paste(wrongcols, collapse = ", ")
-    ) %>%
-      stop
-  }
+  # check input
+  inputchecks(neclist)
 
   # apply life.table.vec to every column of the input df
   # and create an output mortaar_life_table_list of mortaar_life_table objects
-  necdf %>%
-    lapply(life.table.vec) %>%
+  neclist %>%
+    lapply(life.table.df) %>%
     `class<-`(c("mortaar_life_table_list", class(.))) %>%
     return()
 }
 
+inputchecks <- function(neclist) {
 
-life.table.vec <- function(anzahl) {
+  # check if input is a list
+  if(neclist %>% is.list %>% `!`) {
+    "The input data is not a list." %>%
+      stop
+  }
 
-  cumsum_ <- cumsum(anzahl)
+  # check if input list contains data.frames
+  if(neclist %>% lapply(is.data.frame) %>% unlist %>% all %>% `!`) {
+    neclist %>% lapply(is.data.frame) %>% unlist %>% `!` %>% which -> wrongelements
+    paste0(
+      "The input list contains at least one element that is not a data.frame. ",
+      "The elements with the following IDs aren't data.frames: ",
+      paste(wrongelements, collapse = ", ")
+    ) %>%
+      stop
+  }
 
-  cumsum_red <- cumsum_[c(1, 4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 54, 59, 64, 69, 70)]
+  # check if input data.frames contain the numeric (!) columns "a" and "Dx"
+  aDxcheck <- function(necdf) {
+    c(
+      ifelse(
+        "a" %in% colnames(necdf) %>% all,
+        necdf['a'] %>% unlist %>% is.numeric,
+        FALSE
+      ),
+      ifelse(
+        "Dx" %in% colnames(necdf) %>% all,
+        necdf['Dx'] %>% unlist %>% is.numeric,
+        FALSE
+      )
+    ) %>% return
+  }
 
-  nDx <- cumsum_red - c(0, cumsum_red[c(1:15)])
+  if(neclist %>% lapply(aDxcheck) %>% unlist %>% all %>% `!`){
+    neclist %>% lapply(aDxcheck) %>% lapply(all) %>%
+      unlist %>% `!` %>% which -> wrongelements
+    paste0(
+      "The data.frames with the following element IDs in the input list don't have the numeric columns 'a' and 'Dx': ",
+      paste(wrongelements, collapse = ", ")
+    ) %>%
+      stop
+  }
 
-  x <- c(0, 1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70)
+}
 
-  nmax <- length(x)
+life.table.df <- function(necdf) {
 
-  # nMx = nDx/nKx
+  # dx: relative Anzahl
+  necdf['dx'] <- (necdf['Dx'] * 100) / sum(necdf['Dx'])
 
-  #width of the intervals
-  n <- c(diff(x), 999)
-  nax <- n / 2
+  # lx: rel. Anzahl der Überlebenden
+  necdf['lx'] <- 100
+  for (i in seq(2, nrow(necdf))) {
+    necdf[i, 'lx'] <- necdf[i-1, 'lx'] - necdf[i-1, 'dx']
+  }
 
-  # default to .5 of interval
-  nax[1] <- 0.333
-  nax[2] <- 1.5
+  # qx: Sterbewahrscheinlichkeit
+  necdf['qx'] <- necdf['dx'] / necdf['lx']
 
-  # e_x at open age interval
-  nax[nmax] <- 2.5
+  # Lx: gelebte Jahre
+  for (i in 1:nrow(necdf)) {
+    necdf[i, 'Lx'] <- ((necdf[i, 'lx'] + necdf[i+1, 'lx']) * necdf[i, 'a']) / 2
+    necdf[nrow(necdf), 'Lx'] <- ((necdf[i, 'lx']) * necdf[i, 'a']) / 2
+  }
 
-  # nqx <- (n*nMx) / (1 + (n-nax)*nMx)
+  # Tx: Summe der noch zu lebenden Jahre
+  necdf[1, 'Tx'] <- sum(necdf['Lx'])
+  for (i in 2:nrow(necdf)) {
+    necdf[i, 'Tx'] <- necdf[i-1, 'Tx'] - necdf[i-1, 'Lx']
+  }
 
-  nSxsum <- (sum(nDx, na.rm = TRUE))
-  nSxrsum <- cumsum(nDx)
-  nSx <- nSxsum - nSxrsum
-  nSx <- append(x = nSx,
-                values = nSxsum,
-                after = 0)
-  nSx <- nSx[1:length(nSx)-1]
+  # ex: Lebenserwartung
+  necdf['ex'] <- necdf['Tx'] / necdf['lx']
 
-  ## old cold (at this stage just for comparison of the results)
-  nSx.o <- nSxsum - data.table::shift(nSxrsum)
-  nSx.o[1] <- nSxsum
-  nSx == nSx.o
-
-  nqx <- nDx / nSx
-  nqx <- ifelse(nqx > 1, 1, nqx)
-
-  # necessary for high nMx
-  nqx[nmax] <- 1.0
-  lx <- c(1, cumprod(1 - nqx))
-
-  # survivorship lx
-  lx <- lx[1:length(x)]
-  ndx <- lx * nqx
-
-  nLx <- n * lx - nax * ndx
-  # equivalent to n*l(x+n) + (n-nax)*ndx
-  nLx[nmax] <- lx[nmax] * nax[nmax]
-  Tx <- rev(cumsum(rev(nLx)))
-  ex <- ifelse(lx[1:nmax] > 0, Tx / lx[1:nmax], NA)
-
-  rel_bev <- nLx * 100 / sum(nLx)
-
-  # prepare result data.frame
-  data.frame(
-    x = x,
-    nDx = nDx,
-    nSx = nSx,
-    nax = nax,
-    nqx = nqx,
-    lx = lx * 100000,
-    ndx = ndx * 100000,
-    nLx = nLx * 100000,
-    Tx = Tx * 100000,
-    ex = ex,
-    rel_bev = rel_bev
-  ) %>%
+  necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
     return()
 }
