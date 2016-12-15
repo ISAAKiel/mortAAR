@@ -149,3 +149,65 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
 #'
 #' @export
 print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
+
+
+#' Plot a mortaar_life_table
+#'
+#' Plot a mortaar_life_table according to the format.mortaar_life_table
+#'
+#' @param x a mortaar_life_table
+#' @param ... further arguments passed to or from other methods.
+#'
+#' @examples
+#'
+#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' plot(life.table(test)$male)
+#'
+#' @export
+plot.mortaar_life_table <- function(x, ...) {
+  if (requireNamespace("ggplot2", quietly = TRUE)) {
+    mortaar_plot_lx_ggplot(x, ...)
+  } else {
+    mortaar_plot_lx_frame(x, ...)
+    mortaar_plot_lx(x, ...)
+  }
+}
+
+# TODO names of functions might be better object specific
+
+mortaar_plot_lx_ggplot <- function(x, ...) {
+  print(x$lx)
+  my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=x,y=lx))
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("lx") + ggplot2::ggtitle("survivorship")
+  show(my_plot)
+}
+
+mortaar_plot_lx <- function(x, lty=1) {
+  lines(x$x,x$lx, lty=lty)
+}
+
+#' Plot a mortaar_life_table_list
+#'
+#' @export
+plot.mortaar_life_table_list <- function(x, ...){
+
+  if (requireNamespace("ggplot2", quietly = TRUE)) {
+    my_x <- melt(x,id="x",measure.vars="lx")
+
+    mortaar_plot_lx_ggplot(x, ...)
+  } else {
+    mortaar_plot_lx_frame(x[[1]], ...)
+    # TODO uses first element of list, might be dangerous
+    # if elements have different range regarding lx and x
+
+    for(i in 1:length(x)){
+      mortaar_plot_lx(x[[i]],lty=i, ...)
+    }
+  }
+}
+
+mortaar_plot_lx_frame <- function(x) {
+  plot(x$x,x$lx, xlab="age of individuals", ylab="lx",type="n", main="survivorship")
+}
+
+# für overlay plots: par(new=T) overlay, danach par(new=F) overlay aus
