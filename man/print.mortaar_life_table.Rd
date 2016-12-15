@@ -16,8 +16,8 @@ Print a mortaar_life_table according to the format.mortaar_life_table
 }
 \examples{
 
-test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-print(life.table(test)$male)
+#test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#print(life.table(test)$male)
 
 }
 

@@ -21,8 +21,8 @@ Format an mortaar_life_table_list for pretty printing.
 }
 \examples{
 
-test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-format(life.table(test))
+#test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#format(life.table(test))
 
 }
 

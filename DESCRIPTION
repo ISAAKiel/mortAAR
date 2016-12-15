@@ -13,7 +13,6 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    data.table,
     magrittr (>= 1.5)
 RoxygenNote: 5.0.1
 Suggests: testthat,
