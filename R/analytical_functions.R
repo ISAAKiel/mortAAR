@@ -111,9 +111,9 @@ life.table.df <- function(necdf) {
   # Lx: gelebte Jahre
   for (i in 1:nrow(necdf)) {
     necdf[i, 'Lx'] <- ((necdf[i, 'lx'] + necdf[i+1, 'lx']) * necdf[i, 'a']) / 2
-    necdf[nrow(necdf), 'Lx'] <- ((necdf[i, 'lx']) * necdf[i, 'a']) / 2
   }
-
+  necdf[nrow(necdf), 'Lx'] <- ((necdf[i, 'lx']) * necdf[i, 'a']) / 2
+  
   # Tx: Summe der noch zu lebenden Jahre
   necdf[1, 'Tx'] <- sum(necdf['Lx'])
   for (i in 2:nrow(necdf)) {
