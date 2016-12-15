@@ -126,7 +126,7 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
     Tx = round(x$Tx,3),
     ex = round(x$ex,3)#,
     #rel_bev = round(x$rel_bev,3)
-    )
+  )
 
   return_value <- paste(out_str,collapse = "\n",sep="")
 
@@ -160,30 +160,34 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'
 #' @examples
 #'
-#' test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+#' test <- list (
+#' male = data.frame(
+#'   x = paste0(lower, "--", upper),
+#'   a = steps,
+#'   Dx = runif(length(lower))*50
+#' ),
+#' female = data.frame(
+#'   x = paste0(lower, "--", upper),
+#'   a = steps,
+#'   Dx = runif(length(lower))*50
+#' )
+#' )
 #' plot(life.table(test)$male)
 #'
 #' @export
 plot.mortaar_life_table <- function(x, ...) {
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    mortaar_plot_lx_ggplot(x, ...)
-  } else {
-    mortaar_plot_lx_frame(x, ...)
-    mortaar_plot_lx(x, ...)
-  }
-}
+  # if (requireNamespace("ggplot2", quietly = TRUE)) {
+  #   mortaar_plot_qx_ggplot(x, ...)
+  # } else {
+  ask_before = par()$ask
+  par(ask=T)
+  mortaar_plot_qx_frame(x, ...)
+  mortaar_plot_qx(x, ...)
 
-# TODO names of functions might be better object specific
-
-mortaar_plot_lx_ggplot <- function(x, ...) {
-  print(x$lx)
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=x,y=lx))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("lx") + ggplot2::ggtitle("survivorship")
-  show(my_plot)
-}
-
-mortaar_plot_lx <- function(x, lty=1) {
-  lines(x$x,x$lx, lty=lty)
+  mortaar_plot_ex_frame(x, ...)
+  mortaar_plot_ex(x, ...)
+  par(ask=ask_before)
+  # }
 }
 
 #' Plot a mortaar_life_table_list
@@ -191,23 +195,57 @@ mortaar_plot_lx <- function(x, lty=1) {
 #' @export
 plot.mortaar_life_table_list <- function(x, ...){
 
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    my_x <- melt(x,id="x",measure.vars="lx")
+  # if (requireNamespace("ggplot2", quietly = TRUE)) {
+  #   my_x <- melt(x,id="x",measure.vars="qx")
+  #
+  #   mortaar_plot_qx_ggplot(x, ...)
+  # } else {
+  ask_before = par()$ask
+  par(ask=T)
+  mortaar_plot_qx_frame(x[[1]], ...)
+  # TODO uses first element of list, might be dangerous
+  # if elements have different range regarding qx and x
 
-    mortaar_plot_lx_ggplot(x, ...)
-  } else {
-    mortaar_plot_lx_frame(x[[1]], ...)
-    # TODO uses first element of list, might be dangerous
-    # if elements have different range regarding lx and x
-
-    for(i in 1:length(x)){
-      mortaar_plot_lx(x[[i]],lty=i, ...)
-    }
+  for(i in 1:length(x)){
+    mortaar_plot_qx(x[[i]],lty=i, ...)
   }
+
+  mortaar_plot_ex_frame(x[[1]], ...)
+  for(i in 1:length(x)){
+    mortaar_plot_ex(x[[i]],lty=i, ...)
+  }
+  par(ask=ask_before)
+
+  # }
 }
 
-mortaar_plot_lx_frame <- function(x) {
-  plot(x$x,x$lx, xlab="age of individuals", ylab="lx",type="n", main="survivorship")
+# TODO names of functions might be better object specific
+# TODO delegation of extra parameter is not working yet
+
+# mortaar_plot_qx_ggplot <- function(x, ...) {
+#   print(x$qx)
+#   my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=x,y=qx))
+#   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("survivorship")
+#   show(my_plot)
+# }
+
+mortaar_plot_qx <- function(x, lty=1, ...) {
+  my_x=cumsum(x$a)
+  lines(my_x,x$qx, lty=lty)
 }
 
-# für overlay plots: par(new=T) overlay, danach par(new=F) overlay aus
+mortaar_plot_qx_frame <- function(x, ...) {
+  my_x=cumsum(x$a)
+  plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="mortality rate (qx)")
+}
+
+
+mortaar_plot_ex <- function(x, lty=1, ...) {
+  my_x=cumsum(x$a)
+  lines(my_x,x$ex, lty=lty)
+}
+
+mortaar_plot_ex_frame <- function(x, ...) {
+  my_x=cumsum(x$a)
+  plot(my_x,x$ex, xlab="age of individuals", ylab="ex",type="n", main="life expectancy (ex)")
+}
