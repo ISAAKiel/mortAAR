@@ -183,9 +183,11 @@ plot.mortaar_life_table <- function(x, ...) {
   par(ask=T)
   mortaar_plot_qx_frame(x, ...)
   mortaar_plot_qx(x, ...)
+  grid()
 
   mortaar_plot_ex_frame(x, ...)
   mortaar_plot_ex(x, ...)
+  grid()
   par(ask=ask_before)
   # }
 }
@@ -209,11 +211,12 @@ plot.mortaar_life_table_list <- function(x, ...){
   for(i in 1:length(x)){
     mortaar_plot_qx(x[[i]],lty=i, ...)
   }
-
+  grid()
   mortaar_plot_ex_frame(x[[1]], ...)
   for(i in 1:length(x)){
     mortaar_plot_ex(x[[i]],lty=i, ...)
   }
+  grid()
   par(ask=ask_before)
 
   # }
@@ -236,8 +239,10 @@ mortaar_plot_qx <- function(x, lty=1, ...) {
 
 mortaar_plot_qx_frame <- function(x, ...) {
   my_x=cumsum(x$a)
-  plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="mortality rate (qx)")
-}
+  plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="mortality rate (qx)", xaxt="n")
+  my_ticks = seq(0,ceiling(max(my_x)),by=5)
+  axis(1,at=my_ticks, labels=my_ticks)
+  }
 
 
 mortaar_plot_ex <- function(x, lty=1, ...) {
@@ -247,5 +252,7 @@ mortaar_plot_ex <- function(x, lty=1, ...) {
 
 mortaar_plot_ex_frame <- function(x, ...) {
   my_x=cumsum(x$a)
-  plot(my_x,x$ex, xlab="age of individuals", ylab="ex",type="n", main="life expectancy (ex)")
-}
+  plot(my_x,x$ex, xlab="age of individuals", ylab="ex",type="n", main="life expectancy (ex)", xaxt="n")
+  my_ticks = seq(0,ceiling(max(my_x)),by=5)
+  axis(1,at=my_ticks, labels=my_ticks)
+  }
