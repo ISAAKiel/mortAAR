@@ -165,22 +165,22 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'
 #' @export
 plot.mortaar_life_table <- function(x, ...) {
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    mortaar_plot_lx_ggplot(x, ...)
-  } else {
+  # if (requireNamespace("ggplot2", quietly = TRUE)) {
+  #   mortaar_plot_lx_ggplot(x, ...)
+  # } else {
     mortaar_plot_lx_frame(x, ...)
     mortaar_plot_lx(x, ...)
-  }
+  # }
 }
 
 # TODO names of functions might be better object specific
 
-mortaar_plot_lx_ggplot <- function(x, ...) {
-  print(x$lx)
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=x,y=lx))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("lx") + ggplot2::ggtitle("survivorship")
-  show(my_plot)
-}
+# mortaar_plot_lx_ggplot <- function(x, ...) {
+#   print(x$lx)
+#   my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=x,y=lx))
+#   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("lx") + ggplot2::ggtitle("survivorship")
+#   show(my_plot)
+# }
 
 mortaar_plot_lx <- function(x, lty=1) {
   lines(x$x,x$lx, lty=lty)
@@ -191,11 +191,11 @@ mortaar_plot_lx <- function(x, lty=1) {
 #' @export
 plot.mortaar_life_table_list <- function(x, ...){
 
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    my_x <- melt(x,id="x",measure.vars="lx")
-
-    mortaar_plot_lx_ggplot(x, ...)
-  } else {
+  # if (requireNamespace("ggplot2", quietly = TRUE)) {
+  #   my_x <- melt(x,id="x",measure.vars="lx")
+  #
+  #   mortaar_plot_lx_ggplot(x, ...)
+  # } else {
     mortaar_plot_lx_frame(x[[1]], ...)
     # TODO uses first element of list, might be dangerous
     # if elements have different range regarding lx and x
@@ -203,7 +203,7 @@ plot.mortaar_life_table_list <- function(x, ...){
     for(i in 1:length(x)){
       mortaar_plot_lx(x[[i]],lty=i, ...)
     }
-  }
+  # }
 }
 
 mortaar_plot_lx_frame <- function(x) {
