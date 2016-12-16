@@ -16,7 +16,18 @@ Plot a mortaar_life_table according to the format.mortaar_life_table
 }
 \examples{
 
-test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
+test <- list (
+male = data.frame(
+  x = paste0(lower, "--", upper),
+  a = steps,
+  Dx = runif(length(lower))*50
+),
+female = data.frame(
+  x = paste0(lower, "--", upper),
+  a = steps,
+  Dx = runif(length(lower))*50
+)
+)
 plot(life.table(test)$male)
 
 }
