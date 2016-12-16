@@ -114,19 +114,23 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   #   age_class_names <- c(age_class_names, this_age_class_name)
   # }
 
-  out_table <- data.frame(
-    #age.class = age_class_names,
-    x = x$x,
-    a = round(x$a,3),
-    Dx = round(x$Dx,3),
-    qx = round(x$qx,3),
-    lx = round(x$lx,3),
-    dx = round(x$dx,3),
-    Lx = round(x$Lx,3),
-    Tx = round(x$Tx,3),
-    ex = round(x$ex,3)#,
-    #rel_bev = round(x$rel_bev,3)
-  )
+  # out_table <- data.frame(
+  #   #age.class = age_class_names,
+  #   x = x$x,
+  #   a = round(x$a,3),
+  #   Dx = round(x$Dx,3),
+  #   qx = round(x$qx,3),
+  #   lx = round(x$lx,3),
+  #   dx = round(x$dx,3),
+  #   Lx = round(x$Lx,3),
+  #   Tx = round(x$Tx,3),
+  #   ex = round(x$ex,3)#,
+  #   #rel_bev = round(x$rel_bev,3)
+  # )
+
+  out_table <- data.frame(x)
+  numeric_cols <- sapply(out_table, is.numeric)
+  out_table[numeric_cols] <- round(x[numeric_cols], 3)
 
   return_value <- paste(out_str,collapse = "\n",sep="")
 
