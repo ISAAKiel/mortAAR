@@ -108,12 +108,15 @@ life.table.df <- function(necdf) {
   # qx: Sterbewahrscheinlichkeit
   necdf['qx'] <- necdf['dx'] / necdf['lx']
 
+  ## Lx: gelebte Jahre (nach N. M.-S.)
+  # necdf["Lx"] <- necdf["a"] * necdf["lx"] - necdf["a"]/2 * necdf["dx"]
+
   # Lx: gelebte Jahre
   for (i in 1:nrow(necdf)) {
     necdf[i, 'Lx'] <- ((necdf[i, 'lx'] + necdf[i+1, 'lx']) * necdf[i, 'a']) / 2
   }
   necdf[nrow(necdf), 'Lx'] <- ((necdf[i, 'lx']) * necdf[i, 'a']) / 2
-  
+
   # Tx: Summe der noch zu lebenden Jahre
   necdf[1, 'Tx'] <- sum(necdf['Lx'])
   for (i in 2:nrow(necdf)) {
@@ -122,6 +125,15 @@ life.table.df <- function(necdf) {
 
   # ex: Lebenserwartung
   necdf['ex'] <- necdf['Tx'] / necdf['lx']
+
+  # Jx: gelebte Jahresanteile
+  necdf[1, 'Jx'] <- sum(necdf$Dx) - (necdf[1, 'Dx'] / 2)
+  for(i in 2:nrow(necdf)){
+    necdf[i, 'Jx'] <- sum(necdf$Dx) - ((necdf[i, 'Dx'] / 2) + sum(necdf[1:i-1,'Dx']))
+  }
+
+  ## Ax: Anteil an der Lebenspyramide
+  necdf$Ax <- (necdf$Jx * 100) / sum(necdf$Jx)
 
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
