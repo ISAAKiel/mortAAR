@@ -25,7 +25,6 @@ upper <- seq(from = steps[1], to = limit, by = steps)-1
 
 neclist <- list (
  male = data.frame(
-   x = paste0(lower, "--", upper),
    a = steps,
    Dx = runif(length(lower))*50
  ),
@@ -33,10 +32,13 @@ neclist <- list (
    x = paste0(lower, "--", upper),
    a = steps,
    Dx = runif(length(lower))*50
+ ),
+ sex_unknown = data.frame(
+   x = runif(length(lower)),
+   a = steps,
+   Dx = runif(length(lower))*50
  )
 )
-
-#neclist <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
 
 life.table(neclist)
 

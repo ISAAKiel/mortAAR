@@ -16,7 +16,6 @@
 #'
 #' neclist <- list (
 #'  male = data.frame(
-#'    x = paste0(lower, "--", upper),
 #'    a = steps,
 #'    Dx = runif(length(lower))*50
 #'  ),
@@ -24,10 +23,13 @@
 #'    x = paste0(lower, "--", upper),
 #'    a = steps,
 #'    Dx = runif(length(lower))*50
+#'  ),
+#'  sex_unknown = data.frame(
+#'    x = runif(length(lower)),
+#'    a = steps,
+#'    Dx = runif(length(lower))*50
 #'  )
 #' )
-#'
-#' #neclist <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
 #'
 #' life.table(neclist)
 #'
@@ -95,6 +97,22 @@ inputchecks <- function(neclist) {
 }
 
 life.table.df <- function(necdf) {
+
+  # x/x_age_classes: well readable rownames for age classes
+  if ("x" %in% colnames(necdf)) {
+    age_classes_col <- "x_age_classes"
+  } else {
+    age_classes_col <- "x"
+  }
+
+  limit <- necdf['a'] %>% sum
+  lower <- c(0, necdf[, 'a'] %>% cumsum)[1:nrow(necdf)]
+  upper <- necdf[, 'a'] %>% cumsum %>% `-`(1)
+  necdf[age_classes_col] <- paste0(lower, "--", upper)
+
+  if ("x_age_classes" %in% colnames(necdf) && necdf['x'] == necdf['x_age_classes']) {
+    necdf = necdf[, !(colnames(necdf) %in% "x_age_classes")]
+  }
 
   # dx: relative Anzahl
   necdf['dx'] <- (necdf['Dx'] * 100) / sum(necdf['Dx'])
