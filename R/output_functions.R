@@ -163,6 +163,10 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
+#' limit = 100
+#' steps = 5
+#' lower <- seq(from = 0, to = limit-steps[1], by = steps)
+#' upper <- seq(from = steps[1], to = limit, by = steps)-1
 #'
 #' test <- list (
 #' male = data.frame(
@@ -197,6 +201,9 @@ plot.mortaar_life_table <- function(x, ...) {
 }
 
 #' Plot a mortaar_life_table_list
+#'
+#' @param x a mortaar_life_table_list
+#' @param ... further arguments passed to or from other methods.
 #'
 #' @export
 plot.mortaar_life_table_list <- function(x, ...){

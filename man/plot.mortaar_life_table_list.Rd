@@ -6,6 +6,11 @@
 \usage{
 \method{plot}{mortaar_life_table_list}(x, ...)
 }
+\arguments{
+\item{x}{a mortaar_life_table_list}
+
+\item{...}{further arguments passed to or from other methods.}
+}
 \description{
 Plot a mortaar_life_table_list
 }

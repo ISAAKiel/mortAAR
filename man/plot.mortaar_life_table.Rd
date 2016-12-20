@@ -15,6 +15,10 @@
 Plot a mortaar_life_table according to the format.mortaar_life_table
 }
 \examples{
+limit = 100
+steps = 5
+lower <- seq(from = 0, to = limit-steps[1], by = steps)
+upper <- seq(from = steps[1], to = limit, by = steps)-1
 
 test <- list (
 male = data.frame(
