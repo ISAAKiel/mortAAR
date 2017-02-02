@@ -86,6 +86,7 @@ function3=function(dataframe,CountOfFuneralsFieldName,BeginOfAgeFieldName,EndOfA
 
 #asd4=function3(dataframe=asd2,CountOfFuneralsFieldName="Anzahl.von.Individuum_nr",BeginOfAgeFieldName="beg",EndOfAgeFieldName="ende",GroupName="Geschlecht_kombiniert", methode="Standart")
 #asd4
+ #dummy
 
 #standard=c(1,4,5,5,5,5,5,5)
 #hermann=c(5,5,5,5,5,5)
