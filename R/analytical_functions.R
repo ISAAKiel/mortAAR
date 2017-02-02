@@ -5,6 +5,7 @@
 #' partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
 #'
 #' @param neclist list
+#' @param acv age correction value
 #'
 #' @return list
 #'
@@ -36,7 +37,7 @@
 #' @importFrom magrittr "%>%"
 #'
 #' @export
-life.table <- function(neclist) {
+life.table <- function(neclist, acv = c()) {
 
   # check input
   inputchecks(neclist)
@@ -44,7 +45,7 @@ life.table <- function(neclist) {
   # apply life.table.vec to every column of the input df
   # and create an output mortaar_life_table_list of mortaar_life_table objects
   neclist %>%
-    lapply(life.table.df) %>%
+    lapply(., function(x) {life.table.df(x, acv = acv)}) %>%
     `class<-`(c("mortaar_life_table_list", class(.))) %>%
     return()
 }
@@ -96,7 +97,7 @@ inputchecks <- function(neclist) {
 
 }
 
-life.table.df <- function(necdf) {
+life.table.df <- function(necdf, acv = c()) {
 
   # x/x_age_classes: well readable rownames for age classes
   if ("x" %in% colnames(necdf)) {
@@ -129,11 +130,27 @@ life.table.df <- function(necdf) {
   ## Lx: gelebte Jahre (nach N. M.-S.)
   # necdf["Lx"] <- necdf["a"] * necdf["lx"] - necdf["a"]/2 * necdf["dx"]
 
-  # Lx: gelebte Jahre
-  for (i in 1:nrow(necdf)) {
-    necdf[i, 'Lx'] <- ((necdf[i, 'lx'] + necdf[i+1, 'lx']) * necdf[i, 'a']) / 2
+  # check and apply child age correction for Lx calculation
+  if (((necdf[, 'a'] %>% range %>% diff) == 0) %>% `!` & acv %>% is.null) {
+    "The age steps differ. Please consider applying a age correction factor!" %>%
+      message
   }
-  necdf[nrow(necdf), 'Lx'] <- ((necdf[i, 'lx']) * necdf[i, 'a']) / 2
+
+  if (length(acv) > nrow(necdf)) {
+    "There can not be more age correction factors than age classes." %>%
+      message
+  }
+
+  multvec <- necdf[, 'a'] / 2
+  if (acv %>% is.null %>% `!`) {
+    multvec[1:length(acv)] <- acv
+  }
+
+  # Lx: gelebte Jahre
+  for (i in 1:(nrow(necdf)-1)) {
+    necdf[i, 'Lx'] <- ((necdf[i, 'lx'] + necdf[i+1, 'lx']) * multvec[i])
+  }
+  necdf[nrow(necdf), 'Lx'] <- ((necdf[i+1, 'lx']) * multvec[nrow(necdf)])
 
   # Tx: Summe der noch zu lebenden Jahre
   necdf[1, 'Tx'] <- sum(necdf['Lx'])

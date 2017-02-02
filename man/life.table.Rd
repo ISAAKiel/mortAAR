@@ -4,10 +4,12 @@
 \alias{life.table}
 \title{Creates a life table}
 \usage{
-life.table(neclist)
+life.table(neclist, acv = c())
 }
 \arguments{
 \item{neclist}{list}
+
+\item{acv}{age correction value}
 }
 \value{
 list
