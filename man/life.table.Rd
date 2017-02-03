@@ -2,22 +2,40 @@
 % Please edit documentation in R/analytical_functions.R
 \name{life.table}
 \alias{life.table}
-\title{Creates a life table}
+\title{life table}
 \usage{
 life.table(neclist, acv = c())
 }
 \arguments{
 \item{neclist}{list}
 
-\item{acv}{age correction value}
+\item{acv}{Age correction value, mean value of the age interval for the calculation of lx.}
 }
 \value{
-list
+Returns a list of dataframe(s), one for each life table
+(males, females, sites etc.). Each dataframe with:
+
+\itemize{
+  \item \bold{x} age interval
+  \item \bold{a} years within x (default = 5)
+  \item \bold{Dx} deaths within x
+  \item \bold{dx} propotion of deaths within x (percent) : \eqn{d(x) = D(x) / \Sigma D(x) * 100}
+  \item \bold{lx} survivorship within x (percent) : \eqn{l(x) = l(x-1) - d(x-1)}
+  \item \bold{qx} probability of death within x : \eqn{q(x) = d(x) / l(x) * 100}
+  \item \bold{Lx} average years per person lived within x : \eqn{L(x) = a * (l(x) + l(x+1)) / 2}
+  \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T(x) = \Sigma L(x)}
+  \item \bold{ex} average years of life remaining (average life expactancy at mean(x)) : \eqn{e(x) = T(x) / l(x)}
+  \item \bold{Jx} gelebte Jahresanteile
+  \item \bold{Ax} Anteil an der Lebenspyramide
+}
 }
 \description{
+\code{life.table} returns a list of life table(s) for a list of dataframe(s) with deseased (Dx) per age interval (x)
+}
+\details{
 simple lifetable using Keyfitz and Flieger separation factors and
 exponential tail of death distribution (to close out life table)
-partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
+partly taken from \url{https://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
 }
 \examples{
 limit = 100

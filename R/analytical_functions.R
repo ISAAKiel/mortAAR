@@ -1,13 +1,33 @@
-#' Creates a life table
+#' life table
 #'
-#' simple lifetable using Keyfitz and Flieger separation factors and
-#' exponential tail of death distribution (to close out life table)
-#' partly taken from https://web.stanford.edu/group/heeh/cgi-bin/web/node/75
+#' \code{life.table} returns a list of life table(s) for a list of dataframe(s) with deseased (Dx) per age interval (x)
 #'
 #' @param neclist list
-#' @param acv age correction value
+#' @param acv Age correction value, mean value of the age interval for the calculation of lx.
 #'
-#' @return list
+#' @details
+#' simple lifetable using Keyfitz and Flieger separation factors and
+#' exponential tail of death distribution (to close out life table)
+#' partly taken from \url{https://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
+#'
+#' @return
+#' Returns a list of dataframe(s), one for each life table
+#' (males, females, sites etc.). Each dataframe with:
+#'
+#' \itemize{
+#'   \item \bold{x} age interval
+#'   \item \bold{a} years within x (default = 5)
+#'   \item \bold{Dx} deaths within x
+#'   \item \bold{dx} propotion of deaths within x (percent) : \eqn{d(x) = D(x) / \Sigma D(x) * 100}
+#'   \item \bold{lx} survivorship within x (percent) : \eqn{l(x) = l(x-1) - d(x-1)}
+#'   \item \bold{qx} probability of death within x : \eqn{q(x) = d(x) / l(x) * 100}
+#'   \item \bold{Lx} average years per person lived within x : \eqn{L(x) = a * (l(x) + l(x+1)) / 2}
+#'   \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T(x) = \Sigma L(x)}
+#'   \item \bold{ex} average years of life remaining (average life expactancy at mean(x)) : \eqn{e(x) = T(x) / l(x)}
+#'   \item \bold{Jx} gelebte Jahresanteile
+#'   \item \bold{Ax} Anteil an der Lebenspyramide
+#' }
+#'
 #'
 #' @examples
 #' limit = 100
@@ -115,19 +135,19 @@ life.table.df <- function(necdf, acv = c()) {
     necdf = necdf[, !(colnames(necdf) %in% "x_age_classes")]
   }
 
-  # dx: relative Anzahl
+  # dx: propotion of deaths within x
   necdf['dx'] <- (necdf['Dx'] * 100) / sum(necdf['Dx'])
 
-  # lx: rel. Anzahl der Überlebenden
+  # lx: proportion of survivorship within x
   necdf['lx'] <- 100
   for (i in seq(2, nrow(necdf))) {
     necdf[i, 'lx'] <- necdf[i-1, 'lx'] - necdf[i-1, 'dx']
   }
 
-  # qx: Sterbewahrscheinlichkeit
+  # qx: probability of death within x
   necdf['qx'] <- necdf['dx'] / necdf['lx']
 
-  ## Lx: gelebte Jahre (nach N. M.-S.)
+  ## Lx: average years per person lived within x
   # necdf["Lx"] <- necdf["a"] * necdf["lx"] - necdf["a"]/2 * necdf["dx"]
 
   # check and apply child age correction for Lx calculation
@@ -146,19 +166,19 @@ life.table.df <- function(necdf, acv = c()) {
     multvec[1:length(acv)] <- acv
   }
 
-  # Lx: gelebte Jahre
+  # Lx: average years per person lived within x
   for (i in 1:(nrow(necdf)-1)) {
     necdf[i, 'Lx'] <- ((necdf[i, 'lx'] + necdf[i+1, 'lx']) * multvec[i])
   }
   necdf[nrow(necdf), 'Lx'] <- ((necdf[i+1, 'lx']) * multvec[nrow(necdf)])
 
-  # Tx: Summe der noch zu lebenden Jahre
+  # Tx: sum of average years lived within current and remaining x
   necdf[1, 'Tx'] <- sum(necdf['Lx'])
   for (i in 2:nrow(necdf)) {
     necdf[i, 'Tx'] <- necdf[i-1, 'Tx'] - necdf[i-1, 'Lx']
   }
 
-  # ex: Lebenserwartung
+  # ex: average years of life remaining
   necdf['ex'] <- necdf['Tx'] / necdf['lx']
 
   # Jx: gelebte Jahresanteile
