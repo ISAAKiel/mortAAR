@@ -145,7 +145,7 @@ life.table.df <- function(necdf, acv = c()) {
   }
 
   # qx: probability of death within x
-  necdf['qx'] <- necdf['dx'] / necdf['lx']
+  necdf['qx'] <- necdf['dx'] / necdf['lx'] * 100
 
   ## Lx: average years per person lived within x
   # necdf["Lx"] <- necdf["a"] * necdf["lx"] - necdf["a"]/2 * necdf["dx"]
