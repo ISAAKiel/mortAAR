@@ -17,3 +17,5 @@ an_input_dataset <- list (
 )
 
 a_live_table <- life.table(an_input_dataset)
+
+single_life_table <- a_live_table$male
