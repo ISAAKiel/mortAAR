@@ -24,7 +24,7 @@ Returns a list of dataframe(s), one for each life table
   \item \bold{qx} probability of death within x : \eqn{q(x) = d(x) / l(x) * 100}
   \item \bold{Lx} average years per person lived within x : \eqn{L(x) = a * (l(x) + l(x+1)) / 2}
   \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T(x) = \Sigma L(x)}
-  \item \bold{ex} average years of life remaining (average life expactancy at mean(x)) : \eqn{e(x) = T(x) / l(x)}
+  \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) : \eqn{e(x) = T(x) / l(x)}
   \item \bold{Jx} gelebte Jahresanteile (to be translated)
   \item \bold{Ax} Anteil an der Lebenspyramide
 }
