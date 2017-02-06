@@ -189,11 +189,13 @@ plot.mortaar_life_table <- function(x, ...) {
   # } else {
   ask_before = par()$ask
   par(ask=T)
-  mortaar_plot_qx_frame(x, ...)
+  n <- sum(x$Dx)
+  my_subsets = "data set"
+  mortaar_plot_qx_frame(x, my_subsets, n=n, ...)
   mortaar_plot_qx(x, ...)
   grid()
 
-  mortaar_plot_ex_frame(x, ...)
+  mortaar_plot_ex_frame(x, my_subsets, n=n,...)
   mortaar_plot_ex(x, ...)
   grid()
   par(ask=ask_before)
@@ -215,7 +217,9 @@ plot.mortaar_life_table_list <- function(x, ...){
   # } else {
   ask_before = par()$ask
   par(ask=T)
-  mortaar_plot_qx_frame(x[[1]], ...)
+  my_subsets <- names(x)
+  n <- unlist(lapply(x, function(x){sum(x$Dx)}))
+  mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
   # TODO uses first element of list, might be dangerous
   # if elements have different range regarding qx and x
 
@@ -223,13 +227,12 @@ plot.mortaar_life_table_list <- function(x, ...){
     mortaar_plot_qx(x[[i]],lty=i, ...)
   }
   grid()
-  mortaar_plot_ex_frame(x[[1]], ...)
+  mortaar_plot_ex_frame(x[[1]], my_subsets, n, ...)
   for(i in 1:length(x)){
     mortaar_plot_ex(x[[i]],lty=i, ...)
   }
   grid()
   par(ask=ask_before)
-
   # }
 }
 
@@ -248,11 +251,12 @@ mortaar_plot_qx <- function(x, lty=1, ...) {
   lines(my_x,x$qx, lty=lty)
 }
 
-mortaar_plot_qx_frame <- function(x, ...) {
+mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
   plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="mortality rate (qx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
+  legend(x = "topleft", bty='n', paste(my_subsets, " (n=",n,")",sep=""), lty = 1:length(my_subsets))
   }
 
 
@@ -261,9 +265,10 @@ mortaar_plot_ex <- function(x, lty=1, ...) {
   lines(my_x,x$ex, lty=lty)
 }
 
-mortaar_plot_ex_frame <- function(x, ...) {
+mortaar_plot_ex_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
   plot(my_x,x$ex, xlab="age of individuals", ylab="ex",type="n", main="life expectancy (ex)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
+  legend(x = 'topright', bty='n', paste(my_subsets, " (n=",n,")",sep=""), lty = 1:length(my_subsets))
   }
