@@ -101,32 +101,6 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   out_str$header <- paste("\n","\t Mortaar life table", class_of_deceased_str," of ",x$nSx[1]," individuals",sep = "")
 
   out_str$e0 <- paste("\n","Life expectation at birth (e0): ",round(x$ex[1],3), sep = "")
-  # age_class_names <- vector()
-  # for (i in 1:length(x$x))  {
-  #   this_x <- x$x[i]
-  #   if (i == length(x$x)) {
-  #     this_next_x <- Inf
-  #   } else {
-  #     this_next_x <- x$x[i+1]
-  #   }
-  #
-  #   this_age_class_name <- paste(this_x, this_next_x, sep="-")
-  #   age_class_names <- c(age_class_names, this_age_class_name)
-  # }
-
-  # out_table <- data.frame(
-  #   #age.class = age_class_names,
-  #   x = x$x,
-  #   a = round(x$a,3),
-  #   Dx = round(x$Dx,3),
-  #   qx = round(x$qx,3),
-  #   lx = round(x$lx,3),
-  #   dx = round(x$dx,3),
-  #   Lx = round(x$Lx,3),
-  #   Tx = round(x$Tx,3),
-  #   ex = round(x$ex,3)#,
-  #   #rel_bev = round(x$rel_bev,3)
-  # )
 
   out_table <- data.frame(x)
   numeric_cols <- sapply(out_table, is.numeric)
@@ -198,14 +172,40 @@ plot.mortaar_life_table <- function(x, ...) {
   mortaar_plot_ex_frame(x, my_subsets, n=n,...)
   mortaar_plot_ex(x, ...)
   grid()
+
+  mortaar_plot_Ax_frame(x, my_subsets, n=n,...)
+  mortaar_plot_Ax(x, ...)
+  grid()
   par(ask=ask_before)
   # }
+  grid()
 }
+
 
 #' Plot a mortaar_life_table_list
 #'
 #' @param x a mortaar_life_table_list
 #' @param ... further arguments passed to or from other methods.
+#'
+#' @examples
+#' limit = 100
+#' steps = 5
+#' lower <- seq(from = 0, to = limit-steps[1], by = steps)
+#' upper <- seq(from = steps[1], to = limit, by = steps)-1
+#'
+#' test <- list (
+#' male = data.frame(
+#'   x = paste0(lower, "--", upper),
+#'   a = steps,
+#'   Dx = runif(length(lower))*50
+#' ),
+#' female = data.frame(
+#'   x = paste0(lower, "--", upper),
+#'   a = steps,
+#'   Dx = runif(length(lower))*50
+#' )
+#' )
+#' plot(life.table(test))
 #'
 #' @export
 plot.mortaar_life_table_list <- function(x, ...){
@@ -232,6 +232,12 @@ plot.mortaar_life_table_list <- function(x, ...){
     mortaar_plot_ex(x[[i]],lty=i, ...)
   }
   grid()
+
+  mortaar_plot_Ax_frame(x[[1]], my_subsets, n, ...)
+  for(i in 1:length(x)){
+    mortaar_plot_Ax(x[[i]],lty=i, ...)
+  }
+  grid()
   par(ask=ask_before)
   # }
 }
@@ -246,29 +252,92 @@ plot.mortaar_life_table_list <- function(x, ...){
 #   show(my_plot)
 # }
 
+#'plots mortality rate qx for a single life table
+#'
+#'plots mortality rate qx for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param lty line type defaults to 1
+#'@param ... further arguments passed to the print function
+
 mortaar_plot_qx <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$qx, lty=lty)
 }
+
+#'plots coordinate system for mortality rate qx for a single life table
+#'
+#'plots coordinate system for mortality rate qx for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param my_subsets a vector of categories from sublist of mortaar_life_table
+#'@param n number of individuals
+#'@param ... further arguments passed to the print function
 
 mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
   plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="mortality rate (qx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
-  legend(x = "topleft", bty='n', paste(my_subsets, " (n=",n,")",sep=""), lty = 1:length(my_subsets))
+  legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
   }
 
+#'plots mortality rate ex for a single life table
+#'
+#'plots mortality rate ex for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param lty line type defaults to 1
+#'@param ... further arguments passed to the print function
 
 mortaar_plot_ex <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$ex, lty=lty)
 }
+#'plots coordinate system for mortality rate ex for a single life table
+#'
+#'plots coordinate system for mortality rate ex for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param my_subsets a vector of categories from sublist of mortaar_life_table
+#'@param n number of individuals
+#'@param ... further arguments passed to the print function
 
 mortaar_plot_ex_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
   plot(my_x,x$ex, xlab="age of individuals", ylab="ex",type="n", main="life expectancy (ex)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
-  legend(x = 'topright', bty='n', paste(my_subsets, " (n=",n,")",sep=""), lty = 1:length(my_subsets))
+  legend(x = 'topright', bty='n', paste(my_subsets,  " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
   }
+
+
+#'plots mortality rate Ax for a single life table
+#'
+#'plots mortality rate Ax for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param lty line type defaults to 1
+#'@param ... further arguments passed to the print function
+
+mortaar_plot_Ax <- function(x, lty=1, ...) {
+  my_x=cumsum(x$a)
+  lines(my_x,x$Ax, lty=lty)
+}
+
+#'plots coordinate system for mortality rate Ax for a single life table
+#'
+#'plots coordinate system for mortality rate Ax for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param my_subsets a vector of categories from sublist of mortaar_life_table
+#'@param n number of individuals
+#'@param ... further arguments passed to the print function
+
+mortaar_plot_Ax_frame <- function(x, my_subsets="", n,...) {
+  my_x=cumsum(x$a)
+  plot(my_x,x$Ax, xlab="age of individuals", ylab="Ax",type="n", main="population age structure (Ax)", xaxt="n")
+  my_ticks = seq(0,ceiling(max(my_x)),by=5)
+  axis(1,at=my_ticks, labels=my_ticks)
+  legend(x = 'topright', bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
+}
