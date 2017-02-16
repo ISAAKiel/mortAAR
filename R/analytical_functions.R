@@ -152,7 +152,7 @@ life.table.df <- function(necdf, acv = c()) {
 
   # check and apply child age correction for Lx calculation
   if (((necdf[, 'a'] %>% range %>% diff) == 0) %>% `!` & acv %>% is.null) {
-    "The age steps differ. Please consider applying a age correction factor!" %>%
+    "The age steps differ. Please consider applying an age correction factor!" %>%
       message
   }
 
@@ -161,10 +161,17 @@ life.table.df <- function(necdf, acv = c()) {
       message
   }
 
-  multvec <- necdf[, 'a'] / 2
+    multvec <- necdf[, 'a'] / 2
+
+    # check whether any age classes are smaller than 5; if so replace corresponding values in multvec by age class * 1/3
+    if (any(necdf[, 'a'] < 5)) {
+        multvec[necdf[, 'a'] < 5] <- multvec[necdf[, 'a'] < 5] * 1/3
+    }
+    
   if (acv %>% is.null %>% `!`) {
     multvec[1:length(acv)] <- acv
   }
+    
 
   # Lx: average years per person lived within x
   for (i in 1:(nrow(necdf)-1)) {
