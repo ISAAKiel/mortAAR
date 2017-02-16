@@ -26,7 +26,7 @@ summe=function(x,y){
 
 
 #This function takes the count of funerals for a range of ages and produces a with the mean deaths per age (same as function2) / thereby it is possible to select a dependency on the Group
-function3=function(dataframe,CountOfFuneralsFieldName="NA",BeginOfAgeFieldName,EndOfAgeFieldName,Group=TRUE,GroupName="NA",methode="NA"){
+function3=function(dataframe,CountOfFuneralsFieldName="NA",BeginOfAgeFieldName,EndOfAgeFieldName,GroupName="NA",methode="NA"){
   asd=dataframe
   if(CountOfFuneralsFieldName=="NA"){
     asd$cof=rep(1,dim(asd)[1])
@@ -60,7 +60,7 @@ function3=function(dataframe,CountOfFuneralsFieldName="NA",BeginOfAgeFieldName,E
   }
   
   ## Using Group Argument to subset data into several groups
-  if(Group==TRUE){
+  if(GroupName!="NA"){
     names(asd)[which(names(asd)==GroupName)]="Group"
     
     remat=matrix(data=0,ncol=length(unique(asd$Group))+2,nrow=(max(asd$ende)+1))
@@ -88,13 +88,23 @@ function3=function(dataframe,CountOfFuneralsFieldName="NA",BeginOfAgeFieldName,E
   
   for(u in seq_along(meth)){
     if(u==1){
-      output=as.data.frame(t(colSums(restab[c(1:meth[u]),],na.rm =TRUE)))
+      output1=as.data.frame(t(colSums(restab[c(1:meth[u]),],na.rm =TRUE)))
     }else{
     v=u-1
-    output=rbind(output,as.data.frame(t(colSums(restab[(c(cumsum(meth)[v]+1):cumsum(meth)[u]),],na.rm =TRUE))))
+    output1=rbind(output1,as.data.frame(t(colSums(restab[(c(cumsum(meth)[v]+1):cumsum(meth)[u]),],na.rm =TRUE))))
     }
   }
-  output$Alter=cumsum(meth)-meth
+  output1$Alter=cumsum(meth)-meth
+  output1$a=meth       
+  
+  output=list(test=output1[,c("Alter","a",colnames(output1)[2])])
+   names(output[[1]])[3]="Dx"
+  for(u in 2:(dim(output1)[2]-2)){
+   output[[u]]=output1[,c("Alter","a",colnames(output1)[u+1])]
+    names(output[[u]])[3]="Dx"
+  }
+  names(output)=colnames(output1)[c(-1,-length(colnames(output1)))]
+  
   return(output)
 }
 
