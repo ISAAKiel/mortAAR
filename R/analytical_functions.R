@@ -8,7 +8,7 @@
 #' @details
 #' simple lifetable using Keyfitz and Flieger separation factors and
 #' exponential tail of death distribution (to close out life table)
-#' partly taken from \url{https://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
+#' partly taken from \url{http://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
 #'
 #' @return
 #' Returns a list of dataframe(s), one for each life table
@@ -167,11 +167,11 @@ life.table.df <- function(necdf, acv = c()) {
     if (any(necdf[, 'a'] < 5)) {
         multvec[necdf[, 'a'] < 5] <- multvec[necdf[, 'a'] < 5] * 1/3
     }
-    
+
   if (acv %>% is.null %>% `!`) {
     multvec[1:length(acv)] <- acv
   }
-    
+
 
   # Lx: average years per person lived within x
   for (i in 1:(nrow(necdf)-1)) {

@@ -35,7 +35,7 @@ Returns a list of dataframe(s), one for each life table
 \details{
 simple lifetable using Keyfitz and Flieger separation factors and
 exponential tail of death distribution (to close out life table)
-partly taken from \url{https://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
+partly taken from \url{http://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
 }
 \examples{
 limit = 100
