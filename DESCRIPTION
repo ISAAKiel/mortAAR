@@ -20,6 +20,4 @@ Suggests: testthat,
     ggplot2
 Depends:
     R (>= 3.3.2)
-SystemRequirements:
-    Rdpack (>= 0.4-20)
 RdMacros: Rdpack
