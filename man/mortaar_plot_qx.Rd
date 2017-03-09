@@ -16,4 +16,3 @@ mortaar_plot_qx(x, lty = 1, ...)
 \description{
 plots mortality rate qx for a single life table
 }
-

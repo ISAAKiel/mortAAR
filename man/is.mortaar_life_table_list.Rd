@@ -23,4 +23,3 @@ Checks if a variable is of class mortaar_life_table_list
 #is.mortaar_life_table_list(life.table(test))
 
 }
-
