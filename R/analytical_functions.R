@@ -198,9 +198,9 @@ life.table.df <- function(necdf, acv = c()) {
 #  }
 
   # Jx: noch zu lebende Jahre
-  necdf[1, 'Jx'] <- sum(necdf[, 'Dx'] * necdf[, 'a']) - (necdf[1, 'Dx'] / 2 * necdf[1, 'a'])
+  necdf[1, 'Jx'] <- sum(necdf[, 'Dx'] * necdf[, 'a']) - (necdf[1, 'Dx'] * multvec[1])
   for(i in 2:nrow(necdf)){
-    necdf[i, 'Jx'] <- sum(necdf[, 'Dx'] * necdf[, 'a']) - ((necdf[i, 'Dx'] / 2 * necdf[i, 'a']) + sum(necdf[1:i-1,'Dx'] * necdf[1:i-1,'a']))
+  necdf[i, 'Jx'] <- sum(necdf[, 'Dx'] * necdf[, 'a']) - (necdf[i, 'Dx'] * (multvec[i]) + sum(necdf[1:i-1,'Dx'] * necdf[1:i-1,'a']))
   }
 
   ## Ax: Anteil an der Lebenspyramide
