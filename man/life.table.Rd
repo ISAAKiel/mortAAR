@@ -23,7 +23,7 @@ Returns a list of dataframe(s), one for each life table
   \item \bold{x} age interval
   \item \bold{a} years within x (default = 5)
   \item \bold{Dx} deaths within x
-  \item \bold{dx} propotion of deaths within x (percent) : \eqn{d(x) = D(x) / \Sigma D(x) * 100}
+  \item \bold{dx} propotion of deaths within x (percent) : \eqn{d_{x} = \frac{D_{x}}{\sum D_{x}} * 100}
   \item \bold{lx} survivorship within x (percent) : \eqn{l(x) = l(x-1) - d(x-1)}
   \item \bold{qx} probability of death within x : \eqn{q(x) = d(x) / l(x) * 100}
   \item \bold{Lx} average years per person lived within x : \eqn{L(x) = a * (l(x) + l(x+1)) / 2}
