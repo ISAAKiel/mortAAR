@@ -61,6 +61,7 @@
 #' life.table(neclist, c(0.25,1/3,0.5))
 #'
 #' @importFrom magrittr "%>%"
+#' @importFrom Rdpack reprompt
 #'
 #' @export
 life.table <- function(neclist, acv = c()) {
