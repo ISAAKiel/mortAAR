@@ -16,4 +16,3 @@ mortaar_plot_ex(x, lty = 1, ...)
 \description{
 plots mortality rate ex for a single life table
 }
-

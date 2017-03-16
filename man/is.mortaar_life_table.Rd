@@ -23,4 +23,3 @@ Checks if a variable is of class mortaar_life_table
 #is.mortaar_life_table(life.table(test)$male)
 
 }
-

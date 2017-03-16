@@ -28,7 +28,7 @@ Creates the input for the function life.table
 }
 \examples{
 
-#test2=function3(x=test1,CountOfDeceasedFieldName="NA",BeginOfAgeFieldName="from",EndOfAgeFieldName="to",GroupName="Geschlecht", methode="Standard")
+#test2=function3(x=test1,CountOfDeceasedFieldName="NA",BeginOfAgeFieldName="from",
+#EndOfAgeFieldName="to",GroupName="Geschlecht", methode="Standard")
 
 }
-

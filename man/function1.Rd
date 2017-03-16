@@ -23,4 +23,3 @@ Resolves a field (RangeOfAgeFieldName) with the format "1-12" to two fields with
 #test1=function1(test,"Jahrefeld")
 
 }
-

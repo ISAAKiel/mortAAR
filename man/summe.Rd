@@ -21,4 +21,3 @@ Uses the adition function "+" to combine two vectors setting NA values of the fi
 
 #summentest=summe(c(1,2,NA,4),c(5,6,7,8)
 }
-
