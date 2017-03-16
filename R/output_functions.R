@@ -156,6 +156,8 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #' )
 #' plot(life.table(test)$male)
 #'
+#'@importFrom graphics axis grid legend lines par plot
+#'
 #' @export
 plot.mortaar_life_table <- function(x, ...) {
   # if (requireNamespace("ggplot2", quietly = TRUE)) {

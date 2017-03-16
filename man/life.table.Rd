@@ -7,9 +7,13 @@
 life.table(neclist, acv = c())
 }
 \arguments{
-\item{neclist}{list}
+\item{neclist}{list of dataframes or single dataframe with columns 'x', 'a', 'Dx'}
 
-\item{acv}{Age correction value, mean value of the age interval for the calculation of lx.}
+\item{acv}{vector, optional. Age correction values to determin the centre of the
+age interval for the calculation of L(x). Given values replace the standard values
+from the first age interval onwards. Standard values are:
+if x<5 then acv(x) = a(x) * 1/3 else acv(x) = a(x) * 1/2.
+Mainly used to correct higher mortality rates for infants.}
 }
 \value{
 Returns a list of dataframe(s), one for each life table
@@ -19,18 +23,19 @@ Returns a list of dataframe(s), one for each life table
   \item \bold{x} age interval
   \item \bold{a} years within x (default = 5)
   \item \bold{Dx} deaths within x
-  \item \bold{dx} propotion of deaths within x (percent) : \eqn{d(x) = D(x) / \Sigma D(x) * 100}
+  \item \bold{dx} propotion of deaths within x (percent) : \eqn{d_{x} = \frac{D_{x}}{\sum D_{x}} * 100}
   \item \bold{lx} survivorship within x (percent) : \eqn{l(x) = l(x-1) - d(x-1)}
   \item \bold{qx} probability of death within x : \eqn{q(x) = d(x) / l(x) * 100}
   \item \bold{Lx} average years per person lived within x : \eqn{L(x) = a * (l(x) + l(x+1)) / 2}
   \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T(x) = \Sigma L(x)}
   \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) : \eqn{e(x) = T(x) / l(x)}
-  \item \bold{Jx} gelebte Jahresanteile (to be translated)
-  \item \bold{Ax} Anteil an der Lebenspyramide
+  \item \bold{Jx} sum of remaining years at the mean of age interval x : \eqn{\sum D(x)*a(x) - (\sum D(1 - x-1)*a(1 - x-1) + D(x)/2 * a(x))}
+  \item \bold{Ax} percentage of J(x) of the sum of J(x) :  \eqn{J(x) * 100 / \Sigma J(x)}
 }
 }
 \description{
-\code{life.table} returns a list of life table(s) for a list of dataframe(s) with deseased (Dx) per age interval (x)
+\code{life.table} returns a list of life table(s) for a list of dataframe(s) with
+deseased (Dx) per age interval (x)
 }
 \details{
 simple lifetable using Keyfitz and Flieger separation factors and
@@ -61,5 +66,6 @@ neclist <- list (
 )
 
 life.table(neclist)
+life.table(neclist, c(0.25,1/3,0.5))
 
 }

@@ -1,4 +1,5 @@
 [![Travis-CI Build Status](https://travis-ci.org/ISAAKiel/mortAAR.svg?branch=master)](https://travis-ci.org/ISAAKiel/mortAAR) [![Coverage Status](https://img.shields.io/codecov/c/github/ISAAKiel/mortAAR/master.svg)](https://codecov.io/github/ISAAKiel/mortAAR?branch=master)
+[![license](https://img.shields.io/badge/license-GPL%203-B50B82.svg)](https://www.r-project.org/Licenses/GPL-3)
 
 mortAAR
 -------
@@ -14,7 +15,7 @@ Just started...
 Licence
 -------
 
-`mortAAR` is released under the [GNU General Public Licence, version 2](http://www.r-project.org/Licenses/GPL-2). Comments and feedback are welcome, as are code contributions.
+`mortAAR` is released under the [GNU General Public Licence, version 3](http://www.r-project.org/Licenses/GPL-3). Comments and feedback are welcome, as are code contributions.
 
 Installation
 ------------

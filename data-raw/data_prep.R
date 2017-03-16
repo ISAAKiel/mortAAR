@@ -7,10 +7,9 @@ schleswig_ma <- read.csv(
   header = TRUE,
   stringsAsFactors = FALSE,
   check.names = FALSE
-) #%>%
-  #`class<-`(c("mortaar_life_table", class(.)))
+) #%>% list(schleswig_ma = .)
 
-#devtools::use_data(schleswig_ma, overwrite = TRUE)
+devtools::use_data(schleswig_ma, overwrite = TRUE)
 
 #devtools::load_all()
 
