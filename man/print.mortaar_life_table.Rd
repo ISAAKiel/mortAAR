@@ -20,4 +20,3 @@ Print a mortaar_life_table according to the format.mortaar_life_table
 #print(life.table(test)$male)
 
 }
-

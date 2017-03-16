@@ -63,4 +63,3 @@ neclist <- list (
 life.table(neclist)
 
 }
-

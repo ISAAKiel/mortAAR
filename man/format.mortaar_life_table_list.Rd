@@ -25,4 +25,3 @@ Format an mortaar_life_table_list for pretty printing.
 #format(life.table(test))
 
 }
-
