@@ -18,3 +18,4 @@ mortaar_plot_Ax_frame(x, my_subsets = "", n, ...)
 \description{
 plots coordinate system for mortality rate Ax for a single life table
 }
+

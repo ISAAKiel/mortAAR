@@ -2,22 +2,23 @@ Package: mortAAR
 Type: Package
 Title: Calculation and Analysis of Mortality Data
 Version: 0.1.0
-Author: c(
-  person("Nils", "Mueller-Scheessel", email = "nils.mueller-scheessel@ufg.uni-kiel.de", role = c("aut", "cre", "cph")),
-  person("Martin", "Hinz", email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")),
-  person("Clemens", "Schmid", email = "clemens@nevrome.de", role = c("aut")),
-  person("Christoph", "Rinne", email = "crinne@ufg.uni-kiel.de", role = c("aut"))
-  )
+Author: c( person("Nils", "Mueller-Scheessel", email = "nils.mueller-
+    scheessel@ufg.uni-kiel.de", role = c("aut", "cre", "cph")), person("Martin",
+    "Hinz", email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")),
+    person("Clemens", "Schmid", email = "clemens@nevrome.de", role = c("aut")),
+    person("Christoph", "Rinne", email = "crinne@ufg.uni-kiel.de", role =
+    c("aut")) )
 Maintainer: Nils Mueller-Scheessel <nils.mueller-scheessel@ufg.uni-kiel.de>
-Description: A collection of functions for analysis of archaeological mortality data.
+Description: A collection of functions for analysis of archaeological mortality
+    data.
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     magrittr (>= 1.5),
     Rdpack (>= 0.4-20)
-RoxygenNote: 6.0.1
-Suggests: 
+RoxygenNote: 5.0.1
+Suggests:
     testthat,
     ggplot2
 Depends:

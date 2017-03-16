@@ -35,3 +35,4 @@ female = data.frame(
 plot(life.table(test)$male)
 
 }
+

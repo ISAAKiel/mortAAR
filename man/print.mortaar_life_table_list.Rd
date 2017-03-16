@@ -20,3 +20,4 @@ Print a mortaar_life_table_list according to the format.mortaar_life_table_list
 #print(life.table(test))
 
 }
+

@@ -25,3 +25,4 @@ Format an mortaar_life_table for pretty printing.
 #format(life.table(test)$male)
 
 }
+

@@ -18,3 +18,4 @@ mortaar_plot_qx_frame(x, my_subsets = "", n, ...)
 \description{
 plots coordinate system for mortality rate qx for a single life table
 }
+
