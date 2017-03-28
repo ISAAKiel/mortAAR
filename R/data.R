@@ -32,3 +32,27 @@
 #'
 #' @name schleswig_ma
 NULL
+
+#' gallery_graves: Archaeological training dataset
+#'
+#' A dataset from \emph{Czarnetzki 1966}.
+#'
+#' Skulls from four different collective graves. The dataset is
+#' not well prepared and needs some adjustement.
+#'
+#' @references
+#' \insertRef{czarnetzki_menschlichen_1966}{mortAAR}
+#'
+#' @format A data frame with 128 rows and 4 variables.
+#' \itemize{
+#'   \item \bold{indnr:} ID of the individual represented by
+#'                       its skull
+#'   \item \bold{sex:} sex determination, w -> female, m -> male
+#'   \item \bold{age:} age class
+#'   \item \bold{site:} collective grave
+#' }
+#'
+#' @family training
+#'
+#' @name gallery_graves
+NULL
