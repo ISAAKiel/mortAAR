@@ -20,7 +20,12 @@ Imports:
 RoxygenNote: 6.0.1
 Suggests:
     testthat,
-    ggplot2
+    knitr,
+    rmarkdown,
+    tidyverse,
+    tidyr,
+    dplyr
 Depends:
     R (>= 3.3.2)
 RdMacros: Rdpack
+VignetteBuilder: knitr

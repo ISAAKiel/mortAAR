@@ -1,0 +1,125 @@
+---
+title: "mortAAR: Vignette >>Create a lifetable from an ordinary burial dataset<<"
+author: "Clemens Schmid"
+date: "March 2017"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette >>Create a lifetable from an ordinary burial dataset<<}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# load stuff
+
+```{r, message=FALSE}
+library(mortAAR)
+library(tidyverse)
+```
+
+# testdata
+
+```{r}
+td <- gallery_graves
+```
+
+first ten rows:
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+# tidy stuff
+
+"?" is NA
+
+```{r}
+td %>% replace(td == "?", NA) -> td
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+translate "inf_I", "inf_I" and "juv" into numeric age ranges^[we're going to need a reference here...]
+
+```{r}
+td <- td %>% 
+  replace(td == "inf_I",  "0-7") %>%
+  replace(td == "inf_II", "7-13") %>%
+  replace(td == "juv",    "13-21")
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+remove skulls without age
+
+```{r}
+td <- td %>%
+  dplyr::filter(!is.na(age))
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+make a decision about individual 139 from Niedertiefenbach
+
+```{r}
+td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+separate the age range column
+
+```{r}
+td <- td %>%
+  tidyr::separate(age, c("from", "to"))
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+adjust variable types
+
+```{r}
+td <- td %>%
+  transform(
+    from = as.numeric(from),
+    to = as.numeric(to)
+  )
+```
+
+# prepare for analysis
+
+```{r}
+# tdlist <- td %>%
+#   plyr::dlply("site", identity)
+
+td_prepared <- function3(
+  td, 
+  CountOfDeceasedFieldName = "NA", 
+  BeginOfAgeFieldName = "from",
+  EndOfAgeFieldName = "to", 
+  GroupName = "site", 
+  methode = "Standard"
+)
+```
+
+# analysis
+
+```{r}
+td_result <- td_prepared %>%
+  life.table()
+```
+
+# plot
+
+```{r}
+td_result %>% plot
+```
