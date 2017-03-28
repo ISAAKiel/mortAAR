@@ -13,17 +13,17 @@
 #'
 #' @format A data frame with 11 rows and 9 variables.
 #' \itemize{
-#'   \item x: fa, ma, sa -> früh-, mittel-, spätadult;
-#'            fm, mm, sm -> früh-, mittel-, spätmatur;
-#'            s -> senil
-#'   \item a
-#'   \item Dx
-#'   \item dx
-#'   \item lx
-#'   \item qx
-#'   \item Lx
-#'   \item Tx
-#'   \item ex
+#'   \item \bold{x:} fa, ma, sa -> früh-, mittel-, spätadult;
+#'                   fm, mm, sm -> früh-, mittel-, spätmatur;
+#'                   s -> senil
+#'   \item \bold{a}
+#'   \item \bold{Dx}
+#'   \item \bold{dx}
+#'   \item \bold{lx}
+#'   \item \bold{qx}
+#'   \item \bold{Lx}
+#'   \item \bold{Tx}
+#'   \item \bold{ex}
 #' }
 #' For further information about the values see the
 #' documentation of \code{\link{life.table}}.
