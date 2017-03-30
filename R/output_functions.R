@@ -222,6 +222,8 @@ plot.mortaar_life_table <- function(x, ...) {
 #' )
 #' plot(life.table(test))
 #'
+#' @importFrom reshape2 melt
+#'
 #' @export
 plot.mortaar_life_table_list <- function(x, ...){
   ask_before = par()$ask
