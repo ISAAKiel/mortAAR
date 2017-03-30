@@ -16,9 +16,9 @@ td %>% head(., n = 10) %>% knitr::kable()
 
 ## ------------------------------------------------------------------------
 td <- td %>% 
-  replace(td == "inf_I",  "0-7") %>%
+  replace(td == "inf_I",  "0-6") %>%
   replace(td == "inf_II", "7-13") %>%
-  replace(td == "juv",    "13-21")
+  replace(td == "juv",    "14-19")
 
 ## ---- echo=FALSE, results='asis'-----------------------------------------
 td %>% head(., n = 10) %>% knitr::kable()

@@ -3,6 +3,7 @@ title: "mortAAR: Vignette >>Create a lifetable from an ordinary burial dataset<<
 author: "Clemens Schmid"
 date: "March 2017"
 output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{Vignette >>Create a lifetable from an ordinary burial dataset<<}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,12 +18,12 @@ library(tidyverse)
 ```
 
 # testdata
-
+Data from four neolithic gallery graves in central Germany [@czarnetzki_menschlichen_1966].
 ```{r}
 td <- gallery_graves
 ```
 
-first ten rows:
+First ten rows of the data set:
 
 ```{r, echo=FALSE, results='asis'}
 td %>% head(., n = 10) %>% knitr::kable()
@@ -30,7 +31,7 @@ td %>% head(., n = 10) %>% knitr::kable()
 
 # tidy stuff
 
-"?" is NA
+Replace: "?" is NA
 
 ```{r}
 td %>% replace(td == "?", NA) -> td
@@ -40,20 +41,20 @@ td %>% replace(td == "?", NA) -> td
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-translate "inf_I", "inf_I" and "juv" into numeric age ranges^[we're going to need a reference here...]
+Translate "inf_I", "inf_I" and "juv" into numeric age ranges [@martin_lehrbuch_1928, pp. 580].
 
 ```{r}
 td <- td %>% 
-  replace(td == "inf_I",  "0-7") %>%
+  replace(td == "inf_I",  "0-6") %>%
   replace(td == "inf_II", "7-13") %>%
-  replace(td == "juv",    "13-21")
+  replace(td == "juv",    "14-19")
 ```
 
 ```{r, echo=FALSE, results='asis'}
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-remove skulls without age
+Remove skulls without age.
 
 ```{r}
 td <- td %>%
@@ -64,7 +65,7 @@ td <- td %>%
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-make a decision about individual 139 from Niedertiefenbach
+Make a decision about individual 139 from Niedertiefenbach with age less equal 60. 
 
 ```{r}
 td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
@@ -74,7 +75,7 @@ td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-separate the age range column
+Separate the age range column.
 
 ```{r}
 td <- td %>%
@@ -85,7 +86,7 @@ td <- td %>%
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-adjust variable types
+Adjust variable types.
 
 ```{r}
 td <- td %>%
@@ -123,3 +124,5 @@ td_result <- td_prepared %>%
 ```{r}
 td_result %>% plot
 ```
+
+# references
