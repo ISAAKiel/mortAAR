@@ -4,10 +4,14 @@
 \alias{plot.mortaar_life_table_list}
 \title{Plot a mortaar_life_table_list}
 \usage{
-\method{plot}{mortaar_life_table_list}(x, ...)
+\method{plot}{mortaar_life_table_list}(x, display = c("qx", "ex", "Ax"), ...)
 }
 \arguments{
 \item{x}{a mortaar_life_table_list}
+
+\item{display}{which plots to show. These must include some of the
+alternatives \code{qx} for survivorship, \code{ex} for mortality rate
+and \code{Ax} for population age structure.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
