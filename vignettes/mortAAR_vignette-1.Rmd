@@ -102,12 +102,12 @@ td <- td %>%
 # tdlist <- td %>%
 #   plyr::dlply("site", identity)
 
-td_prepared <- function3(
+td_prepared <- prep.life.table(
   td, 
-  CountOfDeceasedFieldName = "NA", 
-  BeginOfAgeFieldName = "from",
-  EndOfAgeFieldName = "to", 
-  GroupName = "site", 
+  dec = "NA", 
+  agebeg = "from",
+  ageend = "to", 
+  grnam = "site", 
   methode = "Standard"
 )
 ```

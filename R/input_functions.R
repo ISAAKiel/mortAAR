@@ -23,29 +23,29 @@ summe=function(x,y){
 #' Creates the input for the function life.table
 #'
 #' @param x a dataframe
-#' @param CountOfDeceasedFieldName Column name of the count of deceased (as character)
-#' @param BeginOfAgeFieldName Column name of the from field (as character)
-#' @param EndOfAgeFieldName Column name of the to field (as character)
-#' @param GroupName Column name of the grouping field (as character)
+#' @param dec Column name of the count of deceased (as character)
+#' @param agebeg Column name of the from field (as character)
+#' @param ageend Column name of the to field (as character)
+#' @param grnam Column name of the grouping field (as character)
 #' @param methode name of the age class determination (as character) Options: "Standard" (default) (1,4,5,5,...), "Equal5" (5,5,...)
 #'
 #' @return list as input parameter for the function life.table
 #'
 #' @examples
 #'
-#' #test2=function3(x=test1,CountOfDeceasedFieldName="NA",BeginOfAgeFieldName="from",
-#' #EndOfAgeFieldName="to",GroupName="Geschlecht", methode="Standard")
+#' #test2=prep.life.table(x=test1,dec="NA",agebeg="from",
+#' #ageend="to",grnam="Geschlecht", methode="Standard")
 #'
 #' @export
-function3=function(x,CountOfDeceasedFieldName="NA",BeginOfAgeFieldName,EndOfAgeFieldName,GroupName="NA",methode="NA"){
+prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA"){
   asd=x
-  if(CountOfDeceasedFieldName=="NA"){
+  if(dec=="NA"){
     asd$cof=rep(1,dim(asd)[1])
   }else{
-    names(asd)[which(names(asd)==CountOfDeceasedFieldName)]="cof"
+    names(asd)[which(names(asd)==dec)]="cof"
   }
-  names(asd)[which(names(asd)==BeginOfAgeFieldName)]="beg"
-  names(asd)[which(names(asd)==EndOfAgeFieldName)]="ende"
+  names(asd)[which(names(asd)==agebeg)]="beg"
+  names(asd)[which(names(asd)==ageend)]="ende"
 
   ## Choosing which mnethod should be applied
   if(is.character(methode)){
@@ -71,8 +71,8 @@ function3=function(x,CountOfDeceasedFieldName="NA",BeginOfAgeFieldName,EndOfAgeF
   }
 
   ## Using Group Argument to subset data into several groups
-  if(GroupName!="NA"){
-    names(asd)[which(names(asd)==GroupName)]="Group"
+  if(grnam!="NA"){
+    names(asd)[which(names(asd)==grnam)]="Group"
 
     remat=matrix(data=0,ncol=length(unique(asd$Group))+2,nrow=(max(asd$ende)+1))
     restab=as.data.frame(remat)
