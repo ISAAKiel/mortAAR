@@ -25,10 +25,10 @@ Returns a list of dataframe(s), one for each life table
   \item \bold{Dx} deaths within x
   \item \bold{dx} propotion of deaths within x (percent) : \eqn{d_{x} = \frac{D_{x}}{\sum D_{x}} * 100}
   \item \bold{lx} survivorship within x (percent) : \eqn{l_{x} = l_{x-1} - d_{x-1}}
-  \item \bold{qx} probability of death within x : \eqn{q_{x} = \frac{d_{x}}{l_[x} * 100}}
+  \item \bold{qx} probability of death within x : \eqn{q_{x} = \frac{d_{x}}{l_{x} * 100}}
   \item \bold{Lx} average years per person lived within x : \eqn{L_{x} = a * \frac{(l_{x} + l_{x+1})}{2}}
-  \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T_{x} = \sigma * L_{x}
-  \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) : \eqn{e_{x} = \frac{T_{x}{l_{x}}}}
+  \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T_{x} = \sigma * L_{x}}
+  \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) : \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
   \item \bold{Jx} sum of remaining years at the mean of age interval x : \eqn{\sum D_{x}*a_{x} - (\sum D_{1 - x-1}*a_{1 - x-1} + \frac{D_{x}}{2} * a_{x})}
   \item \bold{Ax} percentage of J(x) of the sum of J(x) :  \eqn{\frac{J_{x} * 100}{\sigma * J_{x}}}
 }
