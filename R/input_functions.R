@@ -1,33 +1,3 @@
-#' Resolves a field (RangeOfAgeFieldName) with the format "1-12"
-#'
-#' Resolves a field (RangeOfAgeFieldName) with the format "1-12" to two fields with the numeric values 1 and 12
-#'
-#' @param x a dataframe
-#' @param RangeOfAgeFieldName Column name of the age class (as character)
-#'
-#' @return dataframe with additional columns "from" and "to"
-#'
-#' @examples
-#'
-#' #test=read.table("data-raw/siedl.txt",header=T,sep="\t")
-#' #test1=function1(test,"Jahrefeld")
-#'
-#' @export
-function1=function(x,RangeOfAgeFieldName){
-  asd=x
-  names(asd)[which(names(asd)==RangeOfAgeFieldName)]="Range"
-  asd$from=NA
-  asd$to=NA
-
-  for(i in seq_along(asd$Range)){
-    asd$from[i]=as.numeric(strsplit(as.character(asd$Range[i]),"-")[[1]][1])
-    asd$to[i]=as.numeric(strsplit(as.character(asd$Range[i]),"-")[[1]][2])
-  }
-  names(asd)[which(names(asd)=="Range")]=RangeOfAgeFieldName
-  return(asd)
-}
-
-
 #' Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero
 #'
 #' Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero

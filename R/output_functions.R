@@ -134,6 +134,9 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #' Plot a mortaar_life_table according to the format.mortaar_life_table
 #'
 #' @param x a mortaar_life_table
+#' @param display which plots to show. These must include some of the
+#' alternatives \code{qx} for survivorship, \code{ex} for mortality rate
+#' and \code{Ax} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -159,7 +162,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'@importFrom graphics axis grid legend lines par plot
 #'
 #' @export
-plot.mortaar_life_table <- function(x, ...) {
+plot.mortaar_life_table <- function(x, display = c("qx", "ex", "Ax"), ...) {
   ask_before = par()$ask
   par(ask=T)
   n <- sum(x$Dx)
@@ -169,28 +172,35 @@ plot.mortaar_life_table <- function(x, ...) {
     my_x$dataset <- my_subsets
     my_x$a <- cumsum(my_x$a)
   }
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    mortaar_plot_qx_ggplot(my_x, ...)
-  } else {
-    mortaar_plot_qx_frame(x, my_subsets, n=n, ...)
-    mortaar_plot_qx(x, ...)
-    grid()
+  # Plot qx
+  if ("qx" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_qx_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_qx_frame(x, my_subsets, n=n, ...)
+      mortaar_plot_qx(x, ...)
+      grid()
+    }
   }
-
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    mortaar_plot_ex_ggplot(my_x, ...)
-  } else {
-    mortaar_plot_ex_frame(x, my_subsets, n=n,...)
-    mortaar_plot_ex(x, ...)
-    grid()
+  # Plot ex
+  if ("ex" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_ex_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_ex_frame(x, my_subsets, n=n,...)
+      mortaar_plot_ex(x, ...)
+      grid()
+    }
   }
-
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    mortaar_plot_Ax_ggplot(my_x, ...)
-  } else {
-    mortaar_plot_Ax_frame(x, my_subsets, n=n,...)
-    mortaar_plot_Ax(x, ...)
-    grid()
+  # Plot Ax
+  if ("Ax" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_Ax_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_Ax_frame(x, my_subsets, n=n,...)
+      mortaar_plot_Ax(x, ...)
+      grid()
+    }
   }
   par(ask=ask_before)
   # }
@@ -200,6 +210,9 @@ plot.mortaar_life_table <- function(x, ...) {
 #' Plot a mortaar_life_table_list
 #'
 #' @param x a mortaar_life_table_list
+#' @param display which plots to show. These must include some of the
+#' alternatives \code{qx} for survivorship, \code{ex} for mortality rate
+#' and \code{Ax} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -222,52 +235,62 @@ plot.mortaar_life_table <- function(x, ...) {
 #' )
 #' plot(life.table(test))
 #'
+#' @importFrom reshape2 melt
+#'
 #' @export
-plot.mortaar_life_table_list <- function(x, ...){
+plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "Ax"),...){
   ask_before = par()$ask
   par(ask=T)
   my_subsets <- names(x)
   n <- unlist(lapply(x, function(x){sum(x$Dx)}))
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    my_x <- reshape2::melt(x,id="a",measure.vars=c("qx"))
-    colnames(my_x) <- c("a", "variable", "qx", "dataset")
-    my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-  }
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    mortaar_plot_qx_ggplot(my_x, ...)
-  } else {
-    mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
-    # TODO uses first element of list, might be dangerous
-    # if elements have different range regarding qx and x
-    for(i in 1:length(x)){
-      mortaar_plot_qx(x[[i]],lty=i, ...)
+  # Plot qx
+  if ("qx" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      my_x <- reshape2::melt(x,id="a",measure.vars=c("qx"))
+      colnames(my_x) <- c("a", "variable", "qx", "dataset")
+      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
     }
-    grid()
-  }
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    my_x <- reshape2::melt(x,id="a",measure.vars=c("ex"))
-    colnames(my_x) <- c("a", "variable", "ex", "dataset")
-    my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-    mortaar_plot_ex_ggplot(my_x, ...)
-  } else {
-    mortaar_plot_ex_frame(x[[1]], my_subsets, n, ...)
-    for(i in 1:length(x)){
-      mortaar_plot_ex(x[[i]],lty=i, ...)
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_qx_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
+      # TODO uses first element of list, might be dangerous
+      # if elements have different range regarding qx and x
+      for(i in 1:length(x)){
+        mortaar_plot_qx(x[[i]],lty=i, ...)
+      }
+      grid()
     }
-    grid()
   }
-
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
-    my_x <- reshape2::melt(x,id="a",measure.vars=c("Ax"))
-    colnames(my_x) <- c("a", "variable", "Ax", "dataset")
-    my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-    mortaar_plot_Ax_ggplot(my_x, ...)
-  } else {
-    mortaar_plot_Ax_frame(x[[1]], my_subsets, n, ...)
-    for(i in 1:length(x)){
-      mortaar_plot_Ax(x[[i]],lty=i, ...)
+  # Plot ex
+  if ("ex" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      my_x <- reshape2::melt(x,id="a",measure.vars=c("ex"))
+      colnames(my_x) <- c("a", "variable", "ex", "dataset")
+      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+      mortaar_plot_ex_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_ex_frame(x[[1]], my_subsets, n, ...)
+      for(i in 1:length(x)){
+        mortaar_plot_ex(x[[i]],lty=i, ...)
+      }
+      grid()
     }
-    grid()
+  }
+  # Plot Ax
+  if ("Ax" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      my_x <- reshape2::melt(x,id="a",measure.vars=c("Ax"))
+      colnames(my_x) <- c("a", "variable", "Ax", "dataset")
+      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+      mortaar_plot_Ax_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_Ax_frame(x[[1]], my_subsets, n, ...)
+      for(i in 1:length(x)){
+        mortaar_plot_Ax(x[[i]],lty=i, ...)
+      }
+      grid()
+    }
   }
   par(ask=ask_before)
   # }
@@ -284,7 +307,7 @@ mortaar_plot_qx_ggplot <- function(x, ...) {
 
 mortaar_plot_ex_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=a,y=ex, lty=dataset))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("mortality rate (qx)")
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("mortality rate (ex)")
   show(my_plot)
 }
 
