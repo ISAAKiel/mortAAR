@@ -4,6 +4,7 @@ author: "Clemens Schmid"
 date: "March 2017"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
+# csl: https://www.zotero.org/styles/journal-of-archaeological-science
 vignette: >
   %\VignetteIndexEntry{Vignette >>Create a lifetable from an ordinary burial dataset<<}
   %\VignetteEngine{knitr::rmarkdown}
