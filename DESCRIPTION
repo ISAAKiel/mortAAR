@@ -28,7 +28,8 @@ Suggests:
     tidyverse,
     tidyr,
     dplyr,
-    ggplot2
+    ggplot2,
+    RCurl
 Depends:
     R (>= 3.3.2)
 RdMacros: Rdpack

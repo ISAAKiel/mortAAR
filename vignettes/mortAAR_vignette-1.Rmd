@@ -4,7 +4,7 @@ author: "Clemens Schmid"
 date: "March 2017"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
-# csl: https://www.zotero.org/styles/journal-of-archaeological-science
+csl: "`r library(RCurl); ifelse(url.exists('https://www.zotero.org/styles/journal-of-archaeological-science'), 'https://www.zotero.org/styles/journal-of-archaeological-science', '')`"
 vignette: >
   %\VignetteIndexEntry{Vignette >>Create a lifetable from an ordinary burial dataset<<}
   %\VignetteEngine{knitr::rmarkdown}
@@ -73,7 +73,7 @@ td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
 ```
 
 ```{r, echo=FALSE, results='asis'}
-td %>% head(., n = 10) %>% knitr::kable()
+td %>% head(n = 10) %>% knitr::kable()
 ```
 
 Separate the age range column.
@@ -122,8 +122,8 @@ td_result <- td_prepared %>%
 
 # plot
 
-```{r}
-td_result %>% plot
+```{r, fig.width=7, fig.height=5}
+td_result %>% plot(display = c("qx", "ex", "Ax"))
 ```
 
 # references

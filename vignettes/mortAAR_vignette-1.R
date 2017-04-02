@@ -34,7 +34,7 @@ td %>% head(., n = 10) %>% knitr::kable()
 td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
 
 ## ---- echo=FALSE, results='asis'-----------------------------------------
-td %>% head(., n = 10) %>% knitr::kable()
+td %>% head(n = 10) %>% knitr::kable()
 
 ## ------------------------------------------------------------------------
 td <- td %>%
@@ -67,6 +67,6 @@ td_prepared <- prep.life.table(
 td_result <- td_prepared %>%
   life.table()
 
-## ------------------------------------------------------------------------
-td_result %>% plot
+## ---- fig.width=7, fig.height=5------------------------------------------
+td_result %>% plot(display = c("qx", "ex", "Ax"))
 
