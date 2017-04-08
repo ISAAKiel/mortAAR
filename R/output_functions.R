@@ -300,21 +300,21 @@ plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "Ax"),...){
 # TODO delegation of extra parameter is not working yet
 
 mortaar_plot_qx_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=a,y=qx, lty=dataset))
+  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="qx",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("survivorship")
-  show(my_plot)
+  methods::show(my_plot)
 }
 
 mortaar_plot_ex_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=a,y=ex, lty=dataset))
+  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="ex",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("mortality rate (ex)")
-  show(my_plot)
+  methods::show(my_plot)
 }
 
 mortaar_plot_Ax_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes(x=a,y=Ax, lty=dataset))
+  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="Ax",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("Ax") + ggplot2::ggtitle("population age structure (Ax)")
-  show(my_plot)
+  methods::show(my_plot)
 }
 
 #'plots mortality rate qx for a single life table
