@@ -23,7 +23,7 @@
 #'   \item \bold{x} age interval
 #'   \item \bold{a} years within x (default = 5)
 #'   \item \bold{Dx} deaths within x
-#'   \item \bold{dx} propotion of deaths within x (percent) : \eqn{d_{x} = \frac{D_{x}}{\sum D_{x}} * 100}
+#'   \item \bold{dx} propotion of deaths within x (percent) : \eqn{d_{x} = \frac{D_{x}}{\sum_{n=1}^{i} D_{i}} * 100}
 #'   \item \bold{lx} survivorship within x (percent) : \eqn{l_{x} = l_{x-1} - d_{x-1}}
 #'   \item \bold{qx} probability of death within x : \eqn{q_{x} = \frac{d_{x}}{l_{x} * 100}}
 #'   \item \bold{Lx} average years per person lived within x : \eqn{L_{x} = a * \frac{(l_{x} + l_{x+1})}{2}}
