@@ -23,14 +23,33 @@
 #'   \item \bold{x} age interval
 #'   \item \bold{a} years within x (default = 5)
 #'   \item \bold{Dx} deaths within x
-#'   \item \bold{dx} propotion of deaths within x (percent) : \eqn{d_{x} = \frac{D_{x}}{\sum_{n=1}^{i} D_{i}} * 100}
-#'   \item \bold{lx} survivorship within x (percent) : \eqn{l_{x} = l_{x-1} - d_{x-1}}
-#'   \item \bold{qx} probability of death within x : \eqn{q_{x} = \frac{d_{x}}{l_{x} * 100}}
-#'   \item \bold{Lx} average years per person lived within x : \eqn{L_{x} = a * \frac{(l_{x} + l_{x+1})}{2}}
-#'   \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T_{x} = \sigma * L_{x}}
-#'   \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) : \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
-#'   \item \bold{Jx} sum of remaining years at the mean of age interval x : \eqn{\sum D_{x}*a_{x} - (\sum D_{1 - x-1}*a_{1 - x-1} + \frac{D_{x}}{2} * a_{x})}
-#'   \item \bold{Ax} percentage of J(x) of the sum of J(x) :  \eqn{\frac{J_{x} * 100}{\sigma * J_{x}}}
+#'   \item \bold{dx} propotion of deaths within x (percent) :
+#'
+#'                   \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
+#'
+#'   \item \bold{lx} survivorship within x (percent) :
+#'
+#'                   \eqn{l_{x+1} = l_{x} - d_{x}} mit \eqn{l_{0} = 100}
+#'
+#'   \item \bold{qx} probability of death within x (percent) :
+#'
+#'                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
+#'
+#'   \item \bold{Lx} average years per person lived within x :
+#'
+#'                   \eqn{L_{x} = acv_{x} * (l_{x} + l_{x+1})}
+#'
+#'   \item \bold{Tx} sum of average years lived within current and remaining x :
+#'
+#'                   \eqn{T_{x+1} = T_{x} - L_{x}} mit \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
+#'
+#'   \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) :
+#'
+#'                   \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
+#'
+#'   \item \bold{Ax} percentage of L(x) of the sum of L(x) :
+#'
+#'                   \eqn{A_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
 #' }
 #'
 #'
@@ -194,20 +213,8 @@ life.table.df <- function(necdf, acv = c()) {
   # ex: average years of life remaining
   necdf['ex'] <- necdf['Tx'] / necdf['lx']
 
-  # # Jx: gelebte Jahresanteile !Nein, Individuen und noch lebende !
-  #  necdf[1, 'Jx'] <- sum(necdf$Dx) - (necdf[1, 'Dx'] / 2)
-  #  for(i in 2:nrow(necdf)){
-  #    necdf[i, 'Jx'] <- sum(necdf$Dx) - ((necdf[i, 'Dx'] / 2) + sum(necdf[1:i-1,'Dx']))
-  #  }
-
-  # Jx: noch zu lebende Jahre
-  necdf[1, 'Jx'] <- sum(necdf[, 'Dx'] * necdf[, 'a']) - (necdf[1, 'Dx'] * multvec[1])
-  for(i in 2:nrow(necdf)){
-    necdf[i, 'Jx'] <- sum(necdf[, 'Dx'] * necdf[, 'a']) - (necdf[i, 'Dx'] * (multvec[i]) + sum(necdf[1:i-1,'Dx'] * necdf[1:i-1,'a']))
-  }
-
   ## Ax: Anteil an der Lebenspyramide
-  necdf$Ax <- (necdf$Jx * 100) / sum(necdf$Jx)
+  necdf$Ax <- (necdf$Lx * 100 / sum(necdf$Lx))
 
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
