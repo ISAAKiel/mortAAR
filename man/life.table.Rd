@@ -9,16 +9,17 @@ life.table(neclist, acv = c())
 \arguments{
 \item{neclist}{list of dataframes or single dataframe with columns 'x', 'a', 'Dx'
 \itemize{
-  \item \bold{x}  age interval (optional - otherwise calculated from
-                  \bold{a})
+  \item \bold{x}  age interval name (optional - otherwise determined from \bold{a})
   \item \bold{a}  years within x
   \item \bold{Dx} number of deaths within x
 }}
 
 \item{acv}{vector, optional. Age correction values to determin the centre of the
 age interval for the calculation of L(x). Given values replace the standard values
-from the first age interval onwards. Standard values are:
-if x<5 then acv(x) = a(x) * 1/3 else acv(x) = a(x) * 1/2.
+from the first age interval onwards.
+
+Standard setup is: \eqn{acv = a * \frac{1}{2}}.
+
 Mainly used to correct higher mortality rates for infants.}
 }
 \value{
@@ -63,29 +64,10 @@ Returns a list of dataframe(s), one for each life table
 deseased (Dx) per age interval (x)
 }
 \examples{
-limit = 100
-steps = 5
-lower <- seq(from = 0, to = limit-steps[1], by = steps)
-upper <- seq(from = steps[1], to = limit, by = steps)-1
 
-neclist <- list (
- male = data.frame(
-   a = steps,
-   Dx = runif(length(lower))*50
- ),
- female = data.frame(
-   x = paste0(lower, "--", upper),
-   a = steps,
-   Dx = runif(length(lower))*50
- ),
- sex_unknown = data.frame(
-   x = runif(length(lower)),
-   a = steps,
-   Dx = runif(length(lower))*50
- )
-)
+testdata1 <- schleswig_ma[c("a", "Dx")]
 
-life.table(neclist)
-life.table(neclist, c(0.25,1/3,0.5))
+life.table(testdata1)
+life.table(testdata1, c(0.25,1/3,0.5))
 
 }
