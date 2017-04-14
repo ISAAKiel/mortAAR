@@ -11,28 +11,30 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# load stuff
+# Load libraries
 
 ```{r, message=FALSE}
 library(mortAAR)
 library(tidyverse)
 ```
 
-# testdata
+# Make test data available
+
 Data from four neolithic gallery graves in central Germany [@czarnetzki_menschlichen_1966].
+
 ```{r}
 td <- gallery_graves
 ```
 
-First ten rows of the data set:
+Inspect the data. Show the first ten rows of the data set:
 
 ```{r, echo=FALSE, results='asis'}
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-# tidy stuff
+# Clean up data
 
-Replace: "?" is NA
+Replace: "?" with `NA` values
 
 ```{r}
 td %>% replace(td == "?", NA) -> td
@@ -55,7 +57,7 @@ td <- td %>%
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-Remove skulls without age.
+Remove rows that do not have age information.
 
 ```{r}
 td <- td %>%
@@ -97,7 +99,9 @@ td <- td %>%
   )
 ```
 
-# prepare for analysis
+# Analysis preparation
+
+Control the flow of analysis by exemplifying what the different variables of the input data stand for.
 
 ```{r}
 # tdlist <- td %>%
@@ -113,17 +117,17 @@ td_prepared <- prep.life.table(
 )
 ```
 
-# analysis
+# Analysis
 
 ```{r}
 td_result <- td_prepared %>%
   life.table()
 ```
 
-# plot
+# Plot
 
 ```{r, fig.width=7, fig.height=5}
 td_result %>% plot(display = c("qx", "ex", "Ax"))
 ```
 
-# references
+# References
