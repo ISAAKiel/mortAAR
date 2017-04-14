@@ -8,7 +8,7 @@ test_that("a mortaar_life_table_list identifies correctly", {
 context("is.mortaar_life_table")
 
 test_that("a mortaar_life_table_list identifies correctly", {
-  expect_true(is.mortaar_life_table(a_live_table$male))
+  expect_true(is.mortaar_life_table(a_live_table$schleswig_ma))
   expect_false(is.mortaar_life_table(a_live_table))
   expect_false(is.mortaar_life_table(an_input_dataset))
 })
@@ -30,21 +30,21 @@ test_that("format.mortaar_life_table_list returns no output", {
 context("format.mortaar_life_table")
 
 test_that("format is delegated to format.mortaar_life_table on a mortaar_life_table", {
-  expect_match(format(a_live_table$male), "Mortaar")
+  expect_match(format(a_live_table$schleswig_ma), "Mortaar")
 })
 
 test_that("format.mortaar_life_table returns a character string", {
-  expect_is(format(a_live_table$male),"character")
+  expect_is(format(a_live_table$schleswig_ma),"character")
 })
 
 test_that("format.mortaar_life_table returns no output", {
-  expect_silent(format(a_live_table$male))
+  expect_silent(format(a_live_table$schleswig_ma))
 })
 
 context("print.mortaar_life_table")
 
 test_that("print is delegated to print.mortaar_life_table on a mortaar_life_table", {
-  expect_output(print(a_live_table$male), "Mortaar")
+  expect_output(print(a_live_table$schleswig_ma), "Mortaar")
 })
 
 # test_that("print outputs correctly", {
@@ -62,7 +62,7 @@ test_that("print is delegated to print.mortaar_life_table_list on a mortaar_life
 })
 
 # test_that("print outputs correctly", {
-#   this_life_table <- life.table(data.frame(female = c(1), indet = c(1)))
-#   expect_output(print(this_life_table), "Mortaar life table for female of 1 individuals")
+#   this_life_table <- life.table(data.frame(feschleswig_ma = c(1), indet = c(1)))
+#   expect_output(print(this_life_table), "Mortaar life table for feschleswig_ma of 1 individuals")
 #   expect_output(print(this_life_table), "Mortaar life table for indet of 1 individuals")
 # })

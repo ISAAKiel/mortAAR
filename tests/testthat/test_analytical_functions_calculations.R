@@ -2,40 +2,53 @@ context("life.table calculations")
 
 test_that("life.table does the mathing correctly", {
   # dx
-  expect_equal(
-    single_life_table$Dx / sum(single_life_table$Dx) * 100,
-    single_life_table$dx
+  expect_true(
+    dplyr::near(
+      single_life_table$dx,
+      schleswig_ma$dx/10,
+      tol = 0.1
+    ) %>% all
   )
   # lx
-  expect_equal(
-    c(100, 100 - cumsum(single_life_table$dx))[1:nrow(single_life_table)],
-    single_life_table$lx
+  expect_true(
+    dplyr::near(
+      single_life_table$lx,
+      schleswig_ma$lx/10,
+      tol = 0.1
+    ) %>% all
   )
   # qx
-  expect_equal(
-    single_life_table$dx/single_life_table$lx * 100,
-    single_life_table$qx
+  expect_true(
+    dplyr::near(
+      single_life_table$qx,
+      schleswig_ma$qx/10,
+      tol = 0.1
+    ) %>% all
   )
   # Lx
-  expect_equal(
-    single_life_table$a *
-      (single_life_table$lx +
-        c(single_life_table$lx[2:nrow(single_life_table)], 0)
-      ) / 2,
-    single_life_table$Lx
+  expect_true(
+    dplyr::near(
+      single_life_table$Lx,
+      schleswig_ma$Lx/10,
+      tol = 0.1
+    ) %>% all
   )
   # Tx
-  expect_equal(
-    rev(cumsum(rev(single_life_table$Lx))),
-    single_life_table$Tx
+  expect_true(
+    dplyr::near(
+      single_life_table$Tx,
+      schleswig_ma$Tx/10,
+      tol = 0.2
+    ) %>% all
   )
   # ex
-  expect_equal(
-    single_life_table$Tx / single_life_table$lx,
-    single_life_table$ex
+  expect_true(
+    dplyr::near(
+      single_life_table$ex,
+      schleswig_ma$ex,
+      tol = 0.1
+    ) %>% all
   )
-  # Jx
-  # missing
   # Ax
   # missing
 })
