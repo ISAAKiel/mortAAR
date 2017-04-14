@@ -4,32 +4,34 @@
 #' deseased (Dx) per age interval (x)
 #'
 #' @param neclist list of dataframes or single dataframe with columns 'x', 'a', 'Dx'
+#'   \itemize{
+#'     \item \bold{x}  age interval (optional - otherwise created from
+#'                     \bold{a})
+#'     \item \bold{a}  years within x
+#'     \item \bold{Dx} number of deaths within x
+#'   }
+#'
 #' @param acv vector, optional. Age correction values to determin the centre of the
 #' age interval for the calculation of L(x). Given values replace the standard values
 #' from the first age interval onwards. Standard values are:
 #' if x<5 then acv(x) = a(x) * 1/3 else acv(x) = a(x) * 1/2.
 #' Mainly used to correct higher mortality rates for infants.
 #'
-#' @details
-#' simple lifetable using Keyfitz and Flieger separation factors and
-#' exponential tail of death distribution (to close out life table)
-#' partly taken from \url{https://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
-#'
 #' @return
 #' Returns a list of dataframe(s), one for each life table
 #' (males, females, sites etc.). Each dataframe with:
 #'
 #' \itemize{
-#'   \item \bold{x} age interval
-#'   \item \bold{a} years within x (default = 5)
-#'   \item \bold{Dx} deaths within x
+#'   \item \bold{x}  age interval
+#'   \item \bold{a}  years within x
+#'   \item \bold{Dx} number of deaths within x
 #'   \item \bold{dx} propotion of deaths within x (percent) :
 #'
 #'                   \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
 #'
 #'   \item \bold{lx} survivorship within x (percent) :
 #'
-#'                   \eqn{l_{x+1} = l_{x} - d_{x}} mit \eqn{l_{0} = 100}
+#'                   \eqn{l_{x+1} = l_{x} - d_{x}} with \eqn{l_{0} = 100}
 #'
 #'   \item \bold{qx} probability of death within x (percent) :
 #'
@@ -41,7 +43,7 @@
 #'
 #'   \item \bold{Tx} sum of average years lived within current and remaining x :
 #'
-#'                   \eqn{T_{x+1} = T_{x} - L_{x}} mit \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
+#'                   \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
 #'
 #'   \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) :
 #'
