@@ -19,14 +19,14 @@ gallery_graves <- read.table(
 )
 devtools::use_data(gallery_graves, overwrite = TRUE)
 
-#devtools::load_all()
-
-#schleswig_ma
-#gallery_graves
-
 aiterhofen_oedmuehlen <- read.table(
   "data-raw/aiterhofen_oedmuehlen.txt",
   header = TRUE,
   sep = ";"
 )
 devtools::use_data(aiterhofen_oedmuehlen, overwrite = TRUE)
+
+#devtools::load_all()
+
+#schleswig_ma
+#gallery_graves
