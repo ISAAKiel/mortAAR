@@ -7,12 +7,19 @@
 life.table(neclist, acv = c())
 }
 \arguments{
-\item{neclist}{list of dataframes or single dataframe with columns 'x', 'a', 'Dx'}
+\item{neclist}{list of dataframes or single dataframe with columns 'x', 'a', 'Dx'
+\itemize{
+  \item \bold{x}  age interval name (optional - otherwise determined from \bold{a})
+  \item \bold{a}  years within x
+  \item \bold{Dx} number of deaths within x
+}}
 
 \item{acv}{vector, optional. Age correction values to determin the centre of the
 age interval for the calculation of L(x). Given values replace the standard values
-from the first age interval onwards. Standard values are:
-if x<5 then acv(x) = a(x) * 1/3 else acv(x) = a(x) * 1/2.
+from the first age interval onwards.
+
+Standard setup is: \eqn{acv = a * \frac{1}{2}}.
+
 Mainly used to correct higher mortality rates for infants.}
 }
 \value{
@@ -20,52 +27,47 @@ Returns a list of dataframe(s), one for each life table
 (males, females, sites etc.). Each dataframe with:
 
 \itemize{
-  \item \bold{x} age interval
-  \item \bold{a} years within x (default = 5)
-  \item \bold{Dx} deaths within x
-  \item \bold{dx} propotion of deaths within x (percent) : \eqn{d_{x} = \frac{D_{x}}{\sum D_{x}} * 100}
-  \item \bold{lx} survivorship within x (percent) : \eqn{l_{x} = l_{x-1} - d_{x-1}}
-  \item \bold{qx} probability of death within x : \eqn{q_{x} = \frac{d_{x}}{l_{x} * 100}}
-  \item \bold{Lx} average years per person lived within x : \eqn{L_{x} = a * \frac{(l_{x} + l_{x+1})}{2}}
-  \item \bold{Tx} sum of average years lived within current and remaining x : \eqn{T_{x} = \sigma * L_{x}}
-  \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) : \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
-  \item \bold{Jx} sum of remaining years at the mean of age interval x : \eqn{\sum D_{x}*a_{x} - (\sum D_{1 - x-1}*a_{1 - x-1} + \frac{D_{x}}{2} * a_{x})}
-  \item \bold{Ax} percentage of J(x) of the sum of J(x) :  \eqn{\frac{J_{x} * 100}{\sigma * J_{x}}}
+  \item \bold{x}  age interval
+  \item \bold{a}  years within x
+  \item \bold{Dx} number of deaths within x
+  \item \bold{dx} propotion of deaths within x (percent) :
+
+                  \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
+
+  \item \bold{lx} survivorship within x (percent) :
+
+                  \eqn{l_{x+1} = l_{x} - d_{x}} with \eqn{l_{0} = 100}
+
+  \item \bold{qx} probability of death within x (percent) :
+
+                  \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
+
+  \item \bold{Lx} average years per person lived within x :
+
+                  \eqn{L_{x} = acv_{x} * (l_{x} + l_{x+1})}
+
+  \item \bold{Tx} sum of average years lived within current and remaining x :
+
+                  \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
+
+  \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) :
+
+                  \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
+
+  \item \bold{Ax} percentage of L(x) of the sum of L(x) :
+
+                  \eqn{A_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
 }
 }
 \description{
 \code{life.table} returns a list of life table(s) for a list of dataframe(s) with
 deseased (Dx) per age interval (x)
 }
-\details{
-simple lifetable using Keyfitz and Flieger separation factors and
-exponential tail of death distribution (to close out life table)
-partly taken from \url{https://web.stanford.edu/group/heeh/cgi-bin/web/node/75}
-}
 \examples{
-limit = 100
-steps = 5
-lower <- seq(from = 0, to = limit-steps[1], by = steps)
-upper <- seq(from = steps[1], to = limit, by = steps)-1
 
-neclist <- list (
- male = data.frame(
-   a = steps,
-   Dx = runif(length(lower))*50
- ),
- female = data.frame(
-   x = paste0(lower, "--", upper),
-   a = steps,
-   Dx = runif(length(lower))*50
- ),
- sex_unknown = data.frame(
-   x = runif(length(lower)),
-   a = steps,
-   Dx = runif(length(lower))*50
- )
-)
+testdata1 <- schleswig_ma[c("a", "Dx")]
 
-life.table(neclist)
-life.table(neclist, c(0.25,1/3,0.5))
+life.table(testdata1)
+life.table(testdata1, c(0.25,1/3,0.5))
 
 }

@@ -56,3 +56,8 @@ NULL
 #'
 #' @name gallery_graves
 NULL
+
+#' aiterhofen_oedmuehlen: Lifetable example
+#'
+#' @name aiterhofen_oedmuehlen
+NULL

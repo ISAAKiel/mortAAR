@@ -1,21 +1,10 @@
-limit = 100
-steps = 5
-lower <- seq(from = 0, to = limit-steps[1], by = steps)
-upper <- seq(from = steps[1], to = limit, by = steps)-1
-
 an_input_dataset <- list (
-  male = data.frame(
-    x = paste0(lower, "--", upper),
-    a = steps,
-    Dx = runif(length(lower))*50
-  ),
-  female = data.frame(
-    x = paste0(lower, "--", upper),
-    a = steps,
-    Dx = runif(length(lower))*50
-  )
+  schleswig_ma = schleswig_ma[c("a", "Dx")],
+  aiterhofen_oedmuehlen = aiterhofen_oedmuehlen[c("a", "Dx")]
 )
 
-a_live_table <- life.table(an_input_dataset)
+suppressMessages(
+ a_live_table <- life.table(an_input_dataset)
+)
 
-single_life_table <- a_live_table$male
+single_life_table <- a_live_table$schleswig_ma

@@ -24,8 +24,9 @@ devtools::use_data(gallery_graves, overwrite = TRUE)
 #schleswig_ma
 #gallery_graves
 
-ai_oi <- read.table(
+aiterhofen_oedmuehlen <- read.table(
   "data-raw/aiterhofen_oedmuehlen.txt",
   header = TRUE,
   sep = ";"
 )
+devtools::use_data(aiterhofen_oedmuehlen, overwrite = TRUE)
