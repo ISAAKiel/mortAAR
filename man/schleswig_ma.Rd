@@ -32,3 +32,6 @@ be found in \emph{Grupe 1997}.
 
 \insertRef{grupe_anthropologische_1997}{mortAAR}
 }
+\seealso{
+Other lifetables: \code{\link{aiterhofen_oedmuehlen}}
+}

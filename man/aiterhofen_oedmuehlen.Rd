@@ -3,6 +3,35 @@
 \name{aiterhofen_oedmuehlen}
 \alias{aiterhofen_oedmuehlen}
 \title{aiterhofen_oedmuehlen: Lifetable example}
+\format{A data frame with 13 rows and 11 variables.
+\itemize{
+  \item \bold{Alter} (age)
+  \item \bold{a} (added to the original dataset)
+  \item \bold{Dx}
+  \item \bold{Sx}
+  \item \bold{qx}
+  \item \bold{lx}
+  \item \bold{dx}
+  \item \bold{Lx}
+  \item \bold{Tx}
+  \item \bold{ex}
+  \item \bold{rel.Bevx}
+}
+For further information about the values see the
+documentation of \code{\link{life.table}}.}
 \description{
-aiterhofen_oedmuehlen: Lifetable example
+A lifetable from \emph{Kokkotidis/Richter 1991, 228}.
+}
+\details{
+The lifetable is compiled from the Linear pottery burial site
+Aiterhofen Ödmühle (Lower Bavaria). More information can be
+found in \emph{Baum 1990}.
+}
+\references{
+\insertRef{kokkotidis_graberfeld-_1991}{mortAAR}
+
+\insertRef{baum_aiterhofen-odmuhle_1990}{mortAAR}
+}
+\seealso{
+Other lifetables: \code{\link{schleswig_ma}}
 }
