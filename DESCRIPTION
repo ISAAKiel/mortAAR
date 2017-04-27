@@ -7,7 +7,8 @@ Authors@R: c(
   person("Martin", "Hinz", email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")),
   person("Clemens", "Schmid", email = "clemens@nevrome.de", role = c("aut")),
   person("Christoph", "Rinne", email = "crinne@ufg.uni-kiel.de", role = c("aut")), 
-  person("Daniel", "Knitter", email = "knitter@geographie.uni-kiel.de", role = c("aut"))
+  person("Daniel", "Knitter", email = "knitter@geographie.uni-kiel.de", role = c("aut")),
+  person("Wolfgang", "Hamer", email = "hamer@geographie.uni-kiel.de", role = c("aut"))
   )
 Maintainer: Nils Mueller-Scheessel <nils.mueller-scheessel@ufg.uni-kiel.de>
 Description: A collection of functions for analysis of archaeological mortality
