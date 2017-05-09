@@ -14,7 +14,7 @@ life.table(neclist, acv = c())
   \item \bold{Dx} number of deaths within x
 }}
 
-\item{acv}{vector, optional. Age correction values to determin the centre of the
+\item{acv}{vector, optional. Age correction values to determine the centre of the
 age interval for the calculation of L(x). Given values replace the standard values
 from the first age interval onwards.
 
