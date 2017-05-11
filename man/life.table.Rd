@@ -7,11 +7,11 @@
 life.table(neclist, acv = c())
 }
 \arguments{
-\item{neclist}{list of dataframes or single dataframe
-             with columns 'x', 'a', 'Dx'
+\item{neclist}{single dataframe or list of dataframes
+             with the columns 'x', 'a', 'Dx'
 \itemize{
-  \item \bold{x}  age interval name (optional -
-                  otherwise determined from \bold{a})
+  \item \bold{x}  age interval name, optional -
+                  otherwise determined from \bold{a}
   \item \bold{a}  years within x
   \item \bold{Dx} number of deaths within x
 }}
@@ -27,8 +27,9 @@ Mainly used to correct higher mortality rates for
 infants.}
 }
 \value{
-Returns a list of dataframe(s), one for each life table
-(males, females, sites etc.). Each dataframe with:
+An object of type mortaar_life_table or
+mortaar_life_table_list. Each mortaar_life_table contains
+the following variables:
 
 \itemize{
   \item \bold{x}  age interval
@@ -66,9 +67,17 @@ Returns a list of dataframe(s), one for each life table
 }
 }
 \description{
-\code{life.table} returns a list of life table(s) for a
-list of dataframe(s) with deseased (Dx) per age interval
-(x)
+\code{life.table} calculates
+\href{https://en.wikipedia.org/wiki/Life_table}{life table(s)}.
+The algorithm is optimised for dead populations
+encountered in archaeological research.
+See \emph{Chamberlain 2006}, \emph{Hermann et. al 1990},
+\emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
+for the literature we examined. \cr
+The function takes an individual data.frame or a list of
+data.frames and respectively returns an object of type
+mortaar_life_table or mortaar_life_table_list for which
+exist specialised summary, print and plot functions.
 }
 \examples{
 
@@ -77,4 +86,13 @@ testdata1 <- schleswig_ma[c("a", "Dx")]
 life.table(testdata1)
 life.table(testdata1, c(0.25,1/3,0.5))
 
+}
+\references{
+\insertRef{chamberlain_demography_2006}{mortAAR}
+
+\insertRef{herrmann_prahistorische_1990}{mortAAR}
+
+\insertRef{keyfitz_applied_2005}{mortAAR}
+
+\insertRef{kokkotidis_graberfeld-_1991}{mortAAR}
 }
