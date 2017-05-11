@@ -229,10 +229,8 @@ life.table.df <- function(necdf, acv = c()) {
   }
 
   # Lx: average years per person lived within x
-  necdf['Lx'] <- multvec * (necdf['lx'] +
-                 c(necdf[, 'lx'][2:nrow(necdf)], 0))
-
-  #necdf['Lx'] <- a * necdf['lx'] - ((a - multvec) * necdf['dx'])
+  necdf['Lx'] <- necdf['a']* necdf['lx'] -
+    ((necdf['a'] - multvec) * necdf['dx'])
 
   # Tx: sum of average years lived within current and
   # remaining x
