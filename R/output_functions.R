@@ -254,8 +254,6 @@ plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "Ax"),...){
       mortaar_plot_qx_ggplot(my_x, ...)
     } else {
       mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
-      # TODO uses first element of list, might be dangerous
-      # if elements have different range regarding qx and x
       for(i in 1:length(x)){
         mortaar_plot_qx(x[[i]],lty=i, ...)
       }
@@ -295,9 +293,6 @@ plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "Ax"),...){
   par(ask=ask_before)
   # }
 }
-
-# TODO names of functions might be better object specific
-# TODO delegation of extra parameter is not working yet
 
 mortaar_plot_qx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="qx",lty="dataset"))
