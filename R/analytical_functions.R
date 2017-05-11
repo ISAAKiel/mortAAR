@@ -1,22 +1,27 @@
 #' life table
 #'
-#' \code{life.table} returns a list of life table(s) for a list of dataframe(s) with
-#' deseased (Dx) per age interval (x)
+#' \code{life.table} returns a list of life table(s) for a
+#' list of dataframe(s) with deseased (Dx) per age interval
+#' (x)
 #'
-#' @param neclist list of dataframes or single dataframe with columns 'x', 'a', 'Dx'
+#' @param neclist list of dataframes or single dataframe
+#'                with columns 'x', 'a', 'Dx'
 #'   \itemize{
-#'     \item \bold{x}  age interval name (optional - otherwise determined from \bold{a})
+#'     \item \bold{x}  age interval name (optional -
+#'                     otherwise determined from \bold{a})
 #'     \item \bold{a}  years within x
 #'     \item \bold{Dx} number of deaths within x
 #'   }
 #'
-#' @param acv vector, optional. Age correction values to determine the centre of the
-#' age interval for the calculation of L(x). Given values replace the standard values
-#' from the first age interval onwards.
+#' @param acv vector, optional. Age correction values to
+#' determine the centre of the age interval for the
+#' calculation of L(x). Given values replace the standard
+#' values from the first age interval onwards.
 #'
 #' Standard setup is: \eqn{acv = a * \frac{1}{2}}.
 #'
-#' Mainly used to correct higher mortality rates for infants.
+#' Mainly used to correct higher mortality rates for
+#' infants.
 #'
 #' @return
 #' Returns a list of dataframe(s), one for each life table
@@ -42,11 +47,13 @@
 #'
 #'                   \eqn{L_{x} = acv_{x} * (l_{x} + l_{x+1})}
 #'
-#'   \item \bold{Tx} sum of average years lived within current and remaining x :
+#'   \item \bold{Tx} sum of average years lived within
+#'                   current and remaining x :
 #'
 #'                   \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
 #'
-#'   \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) :
+#'   \item \bold{ex} average years of life remaining
+#'                   (average life expectancy at mean(x)) :
 #'
 #'                   \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
 #'
@@ -69,7 +76,8 @@
 #' @export
 life.table <- function(neclist, acv = c()) {
 
-  # check if input list is a data.frame - if so, it's converted to a list
+  # check if input list is a data.frame - if so, it's
+  # converted to a list
   if ("data.frame" %in% class(neclist)) {
     neclist %>% substitute %>% deparse -> dfname
     neclist <- list(dfname = neclist)
@@ -79,7 +87,8 @@ life.table <- function(neclist, acv = c()) {
   inputchecks(neclist)
 
   # apply life.table.vec to every column of the input df
-  # and create an output mortaar_life_table_list of mortaar_life_table objects
+  # and create an output mortaar_life_table_list of
+  # mortaar_life_table objects
   neclist %>%
     lapply(., function(x) {life.table.df(x, acv = acv)}) %>%
     `class<-`(c("mortaar_life_table_list", class(.))) %>%
@@ -95,17 +104,22 @@ inputchecks <- function(neclist) {
   }
 
   # check if input list contains data.frames
-  if (neclist %>% lapply(is.data.frame) %>% unlist %>% all %>% `!`) {
-    neclist %>% lapply(is.data.frame) %>% unlist %>% `!` %>% which -> wrongelements
+  if (neclist %>% lapply(is.data.frame) %>% unlist %>%
+      all %>% `!`) {
+    neclist %>% lapply(is.data.frame) %>% unlist %>%
+    `!` %>% which -> wrongelements
     paste0(
-      "The input list contains at least one element that is not a data.frame. ",
-      "The elements with the following IDs aren't data.frames: ",
-      paste(wrongelements, collapse = ", ")
+     "The input list contains at least one element that ",
+     "is not a data.frame. ",
+     "The elements with the following IDs aren't ",
+     "data.frames: ",
+     paste(wrongelements, collapse = ", ")
     ) %>%
       stop
   }
 
-  # check if input data.frames contain the numeric (!) columns "a" and "Dx"
+  # check if input data.frames contain the numeric (!)
+  # columns "a" and "Dx"
   aDxcheck <- function(necdf) {
     c(
       ifelse(
@@ -121,11 +135,14 @@ inputchecks <- function(neclist) {
     ) %>% return
   }
 
-  if (neclist %>% lapply(aDxcheck) %>% unlist %>% all %>% `!`) {
+  if (neclist %>% lapply(aDxcheck) %>% unlist %>% all %>%
+      `!`) {
     neclist %>% lapply(aDxcheck) %>% lapply(all) %>%
       unlist %>% `!` %>% which -> wrongelements
     paste0(
-      "The data.frames with the following element IDs in the input list don't have the numeric columns 'a' and 'Dx': ",
+      "The data.frames with the following element IDs ",
+      "in the input list don't have the numeric columns ",
+      "'a' and 'Dx': ",
       paste(wrongelements, collapse = ", ")
     ) %>%
       stop
@@ -162,19 +179,27 @@ life.table.df <- function(necdf, acv = c()) {
   necdf['dx'] <- necdf['Dx'] / sum(necdf['Dx']) * 100
 
   # lx: proportion of survivorship within x
-  necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx']))[1:nrow(necdf)]
+  necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx'])
+                   )[1:nrow(necdf)]
 
   # qx: probability of death within x
   necdf['qx'] <- necdf['dx'] / necdf['lx'] * 100
 
   # check and apply child age correction
-  if (((necdf['a'] %>% range %>% diff) == 0) %>% `!` & acv %>% is.null) {
-    "The age steps differ. Please consider applying a age correction factor!" %>%
+  if (((necdf['a'] %>% range %>% diff) == 0) %>% `!` &
+      acv %>% is.null) {
+    paste0(
+    "The age steps differ. Please consider applying an ",
+    "age correction factor!"
+    ) %>%
       message
   }
 
   if (length(acv) > nrow(necdf)) {
-    "There can not be more age correction factors than age classes." %>%
+    paste0(
+      "There can not be more age correction factors
+      than age classes."
+    ) %>%
       message
   }
 
@@ -184,9 +209,11 @@ life.table.df <- function(necdf, acv = c()) {
   }
 
   # Lx: average years per person lived within x
-  necdf['Lx'] <- multvec * (necdf['lx'] + c(necdf[, 'lx'][2:nrow(necdf)], 0))
+  necdf['Lx'] <- multvec * (necdf['lx'] +
+                 c(necdf[, 'lx'][2:nrow(necdf)], 0))
 
-  # Tx: sum of average years lived within current and remaining x
+  # Tx: sum of average years lived within current and
+  # remaining x
   necdf['Tx'] <- c(
     sum(necdf['Lx']),
     sum(necdf['Lx']) - cumsum(necdf[, 'Lx'])

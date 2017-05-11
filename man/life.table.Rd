@@ -7,20 +7,24 @@
 life.table(neclist, acv = c())
 }
 \arguments{
-\item{neclist}{list of dataframes or single dataframe with columns 'x', 'a', 'Dx'
+\item{neclist}{list of dataframes or single dataframe
+             with columns 'x', 'a', 'Dx'
 \itemize{
-  \item \bold{x}  age interval name (optional - otherwise determined from \bold{a})
+  \item \bold{x}  age interval name (optional -
+                  otherwise determined from \bold{a})
   \item \bold{a}  years within x
   \item \bold{Dx} number of deaths within x
 }}
 
-\item{acv}{vector, optional. Age correction values to determine the centre of the
-age interval for the calculation of L(x). Given values replace the standard values
-from the first age interval onwards.
+\item{acv}{vector, optional. Age correction values to
+determine the centre of the age interval for the
+calculation of L(x). Given values replace the standard
+values from the first age interval onwards.
 
 Standard setup is: \eqn{acv = a * \frac{1}{2}}.
 
-Mainly used to correct higher mortality rates for infants.}
+Mainly used to correct higher mortality rates for
+infants.}
 }
 \value{
 Returns a list of dataframe(s), one for each life table
@@ -46,11 +50,13 @@ Returns a list of dataframe(s), one for each life table
 
                   \eqn{L_{x} = acv_{x} * (l_{x} + l_{x+1})}
 
-  \item \bold{Tx} sum of average years lived within current and remaining x :
+  \item \bold{Tx} sum of average years lived within
+                  current and remaining x :
 
                   \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
 
-  \item \bold{ex} average years of life remaining (average life expectancy at mean(x)) :
+  \item \bold{ex} average years of life remaining
+                  (average life expectancy at mean(x)) :
 
                   \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
 
@@ -60,8 +66,9 @@ Returns a list of dataframe(s), one for each life table
 }
 }
 \description{
-\code{life.table} returns a list of life table(s) for a list of dataframe(s) with
-deseased (Dx) per age interval (x)
+\code{life.table} returns a list of life table(s) for a
+list of dataframe(s) with deseased (Dx) per age interval
+(x)
 }
 \examples{
 
