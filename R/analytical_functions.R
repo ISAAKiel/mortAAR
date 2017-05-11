@@ -225,7 +225,7 @@ life.table.df <- function(necdf, acv = c()) {
 
   multvec <- necdf[, 'a'] / 2
   if (acv %>% is.null %>% `!`) {
-    multvec[1:length(acv)] <- acv
+    multvec[1:length(acv)] <- necdf[, 'a'][1:length(acv)] * acv
   }
 
   # Lx: average years per person lived within x
