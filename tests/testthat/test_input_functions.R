@@ -37,3 +37,9 @@ test_that("prep.life.table method Equal5 produced age intervalls all equal 5", {
     all(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", method="Equal5")[[1]]$a==5)
 )
 })
+
+test_that("prep.life.table method 3 produced age intervalls all equal 3", {
+  expect_true(
+    all(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", method=3)[[1]]$a==3)
+  )
+})
