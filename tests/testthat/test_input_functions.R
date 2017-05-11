@@ -31,3 +31,9 @@ test_that("prep.life.table imports a data set correct", {
   expect_equal(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to"),
                prep_output_without_grname)
 })
+
+test_that("prep.life.table method Equal5 produced age intervalls all equal 5", {
+  expect_true(
+    all(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", method="Equal5")[[1]]$a==5)
+)
+})
