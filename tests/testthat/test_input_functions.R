@@ -19,3 +19,10 @@ test_that("prep.life.table works for na dec column", {
   expect_equal(prep.life.table(a_example_raw_dataset,dec="NA",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert"),
                prep_output_without_dec)
 })
+
+load("siedlungsbestattungen_grname_empty.rda")
+
+test_that("prep.life.table imports a data set correct", {
+  expect_equal(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to"),
+               prep_output_without_grname)
+})
