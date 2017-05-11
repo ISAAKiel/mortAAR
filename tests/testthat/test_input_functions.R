@@ -43,3 +43,11 @@ test_that("prep.life.table method 3 produced age intervalls all equal 3", {
     all(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", method=3)[[1]]$a==3)
   )
 })
+
+test_that("prep.life.table method vector produced age intervalls equal to the vector", {
+  age_vec <- c(2,3,4,5,6,7)
+  expect_equal(
+    prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", method=age_vec)[[1]]$a,
+    age_vec
+  )
+})
