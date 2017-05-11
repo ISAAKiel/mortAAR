@@ -38,6 +38,7 @@ test_that("life.table does the mathing correctly", {
     dplyr::near(
       single_life_table$Tx,
       schleswig_ma$Tx/10,
+      # cumulated error here already bigger
       tol = 0.2
     ) %>% all
   )
