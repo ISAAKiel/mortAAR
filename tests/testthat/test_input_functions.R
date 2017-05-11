@@ -6,8 +6,16 @@ test_that("summe replaces NA by 0 and adds up the vectors elementwise", {
 
 context("prep.life.table")
 
+a_example_raw_dataset <- read.csv("Siedlungsbestattungen_ueberblick_for_prep_function.csv")
+load("siedlungsbestattungen_importiert.rda")
+
 test_that("prep.life.table imports a data set correct", {
-  a_example_raw_dataset <- read.csv("Siedlungsbestattungen_ueberblick_for_prep_function.csv")
-  load("siedlungsbestattungen_importiert.rda")
   expect_equal(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert"), prep_output)
+})
+
+load("siedlungsbestattungen_dec_empty.rda")
+
+test_that("prep.life.table works for na dec column", {
+  expect_equal(prep.life.table(a_example_raw_dataset,dec="NA",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert"),
+               prep_output_without_dec)
 })
