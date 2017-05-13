@@ -32,12 +32,12 @@
 #'     \item \bold{Dx} number of deaths within x
 #'   }
 #'
-#' @param acf vector, optional. Age correction values to
+#' @param agecorfac vector, optional. Age correction values to
 #' determine the centre of the age interval for the
 #' calculation of L(x). Given values replace the standard
 #' values from the first age interval onwards.
 #'
-#' Standard setup is: \eqn{acf = a * \frac{1}{2}}.
+#' Standard setup is: \eqn{agecorfac = a * \frac{1}{2}}.
 #'
 #' Mainly used to correct higher mortality rates for
 #' infants.
@@ -63,9 +63,11 @@
 #'
 #'                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
 #'
+#'   \item \bold{Ax}
+#'
 #'   \item \bold{Lx} average years per person lived within x :
 #'
-#'                   \eqn{L_{x} = acf_{x} * (l_{x} + l_{x+1})}
+#'                   \eqn{L_{x} = agecorfac_{x} * (l_{x} + l_{x+1})}
 #'
 #'   \item \bold{Tx} sum of average years lived within
 #'                   current and remaining x :
@@ -94,7 +96,7 @@
 #' @importFrom Rdpack reprompt
 #'
 #' @export
-life.table <- function(neclist, acf = c()) {
+life.table <- function(neclist, agecorfac = c()) {
 
   # check if input list is a data.frame - if so, it's
   # converted to a list
@@ -110,7 +112,7 @@ life.table <- function(neclist, acf = c()) {
   # and create an output mortaar_life_table_list of
   # mortaar_life_table objects
   neclist %>%
-    lapply(., function(x) {life.table.df(x, acf = acf)}) %>%
+    lapply(., function(x) {life.table.df(x, agecorfac = agecorfac)}) %>%
     `class<-`(c("mortaar_life_table_list", class(.))) %>%
     return()
 }
@@ -170,7 +172,7 @@ inputchecks <- function(neclist) {
 
 }
 
-life.table.df <- function(necdf, acf = c()) {
+life.table.df <- function(necdf, agecorfac = c()) {
 
   # x: well readable rownames for age classes
   limit <- necdf['a'] %>% sum
@@ -207,7 +209,7 @@ life.table.df <- function(necdf, acf = c()) {
 
   # check and apply child age correction
   if (((necdf['a'] %>% range %>% diff) == 0) %>% `!` &
-      acf %>% is.null) {
+      agecorfac %>% is.null) {
     paste0(
     "The age steps differ. Please consider applying an ",
     "age correction factor!"
@@ -215,7 +217,7 @@ life.table.df <- function(necdf, acf = c()) {
       message
   }
 
-  if (length(acf) > nrow(necdf)) {
+  if (length(agecorfac) > nrow(necdf)) {
     paste0(
       "There can not be more age correction factors
       than age classes."
@@ -223,14 +225,15 @@ life.table.df <- function(necdf, acf = c()) {
       message
   }
 
-  multvec <- necdf[, 'a'] / 2
-  if (acf %>% is.null %>% `!`) {
-    multvec[1:length(acf)] <- necdf[, 'a'][1:length(acf)] * acf
+  necdf['Ax'] <- necdf[, 'a'] / 2
+  if (agecorfac %>% is.null %>% `!`) {
+    necdf['Ax'][1:length(agecorfac)] <-
+      necdf[, 'a'][1:length(agecorfac)] * agecorfac
   }
 
   # Lx: average years per person lived within x
   necdf['Lx'] <- necdf['a']* necdf['lx'] -
-    ((necdf['a'] - multvec) * necdf['dx'])
+    ((necdf['a'] - necdf['Ax']) * necdf['dx'])
 
   # Tx: sum of average years lived within current and
   # remaining x

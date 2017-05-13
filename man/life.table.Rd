@@ -4,7 +4,7 @@
 \alias{life.table}
 \title{life table}
 \usage{
-life.table(neclist, acf = c())
+life.table(neclist, agecorfac = c())
 }
 \arguments{
 \item{neclist}{single dataframe or list of dataframes
@@ -16,12 +16,12 @@ life.table(neclist, acf = c())
   \item \bold{Dx} number of deaths within x
 }}
 
-\item{acf}{vector, optional. Age correction values to
+\item{agecorfac}{vector, optional. Age correction values to
 determine the centre of the age interval for the
 calculation of L(x). Given values replace the standard
 values from the first age interval onwards.
 
-Standard setup is: \eqn{acf = a * \frac{1}{2}}.
+Standard setup is: \eqn{agecorfac = a * \frac{1}{2}}.
 
 Mainly used to correct higher mortality rates for
 infants.}
@@ -47,9 +47,11 @@ the following variables:
 
                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
 
+  \item \bold{Ax}
+
   \item \bold{Lx} average years per person lived within x :
 
-                  \eqn{L_{x} = acf_{x} * (l_{x} + l_{x+1})}
+                  \eqn{L_{x} = agecorfac_{x} * (l_{x} + l_{x+1})}
 
   \item \bold{Tx} sum of average years lived within
                   current and remaining x :
