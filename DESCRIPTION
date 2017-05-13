@@ -1,0 +1,38 @@
+Package: mortAAR
+Type: Package
+Title: Calculation and Analysis of Mortality Data
+Version: 0.1.0
+Authors@R: c(
+  person("Nils", "Mueller-Scheessel", email = "nils.mueller-scheessel@ufg.uni-kiel.de", role = c("aut", "cre", "cph")), 
+  person("Martin", "Hinz", email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")),
+  person("Clemens", "Schmid", email = "clemens@nevrome.de", role = c("aut")),
+  person("Christoph", "Rinne", email = "crinne@ufg.uni-kiel.de", role = c("aut")), 
+  person("Daniel", "Knitter", email = "knitter@geographie.uni-kiel.de", role = c("aut")),
+  person("Wolfgang", "Hamer", email = "hamer@geographie.uni-kiel.de", role = c("aut"))
+  )
+Maintainer: Nils Mueller-Scheessel <nils.mueller-scheessel@ufg.uni-kiel.de>
+Description: A collection of functions for analysis of archaeological mortality
+    data.
+Date: 2017-03-31
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    magrittr (>= 1.5),
+    Rdpack (>= 0.4-20),
+    reshape2 (>= 1.4.2),
+    methods (>= 3.3.3)
+RoxygenNote: 6.0.1
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown,
+    tidyverse,
+    tidyr,
+    dplyr,
+    ggplot2,
+    RCurl
+Depends:
+    R (>= 3.3.2)
+RdMacros: Rdpack
+VignetteBuilder: knitr

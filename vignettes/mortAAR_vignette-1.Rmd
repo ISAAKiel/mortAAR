@@ -1,0 +1,133 @@
+---
+title: "mortAAR: Vignette >>Create a lifetable from an ordinary burial dataset<<"
+author: "Clemens Schmid"
+date: "March 2017"
+output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+csl: "`r library(RCurl); ifelse(url.exists('https://www.zotero.org/styles/journal-of-archaeological-science'), 'https://www.zotero.org/styles/journal-of-archaeological-science', '')`"
+vignette: >
+  %\VignetteIndexEntry{Vignette >>Create a lifetable from an ordinary burial dataset<<}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Load libraries
+
+```{r, message=FALSE}
+library(mortAAR)
+library(tidyverse)
+```
+
+# Make test data available
+
+Data from four neolithic gallery graves in central Germany [@czarnetzki_menschlichen_1966].
+
+```{r}
+td <- gallery_graves
+```
+
+Inspect the data. Show the first ten rows of the data set:
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+# Clean up data
+
+Replace: "?" with `NA` values
+
+```{r}
+td %>% replace(td == "?", NA) -> td
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+Translate "inf_I", "inf_I" and "juv" into numeric age ranges [@martin_lehrbuch_1928, pp. 580].
+
+```{r}
+td <- td %>% 
+  replace(td == "inf_I",  "0-6") %>%
+  replace(td == "inf_II", "7-13") %>%
+  replace(td == "juv",    "14-19")
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+Remove rows that do not have age information.
+
+```{r}
+td <- td %>%
+  dplyr::filter(!is.na(age))
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+Make a decision about individual 139 from Niedertiefenbach with age less equal 60. 
+
+```{r}
+td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(n = 10) %>% knitr::kable()
+```
+
+Separate the age range column.
+
+```{r}
+td <- td %>%
+  tidyr::separate(age, c("from", "to"))
+```
+
+```{r, echo=FALSE, results='asis'}
+td %>% head(., n = 10) %>% knitr::kable()
+```
+
+Adjust variable types.
+
+```{r}
+td <- td %>%
+  transform(
+    from = as.numeric(from),
+    to = as.numeric(to)
+  )
+```
+
+# Analysis preparation
+
+Control the flow of analysis by exemplifying what the different variables of the input data stand for.
+
+```{r}
+# tdlist <- td %>%
+#   plyr::dlply("site", identity)
+
+td_prepared <- prep.life.table(
+  td, 
+  dec = "NA", 
+  agebeg = "from",
+  ageend = "to", 
+  grnam = "site", 
+  methode = "Standard"
+)
+```
+
+# Analysis
+
+```{r}
+td_result <- td_prepared %>%
+  life.table()
+```
+
+# Plot
+
+```{r, fig.width=7, fig.height=5}
+td_result %>% plot(display = c("qx", "ex", "rel_popx"))
+```
+
+# References
