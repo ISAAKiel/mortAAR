@@ -4,7 +4,7 @@
 \alias{life.table}
 \title{life table}
 \usage{
-life.table(neclist, agecorfac = c())
+life.table(neclist, agecor = TRUE, agecorfac = c())
 }
 \arguments{
 \item{neclist}{single dataframe or list of dataframes
@@ -16,20 +16,23 @@ life.table(neclist, agecorfac = c())
   \item \bold{Dx} number of deaths within x
 }}
 
-\item{agecorfac}{vector, optional. Age correction values to
-determine the centre of the age interval for the
-calculation of L(x). Given values replace the standard
-values from the first age interval onwards.
+\item{agecor}{logical, optional. TODO Nils!
 
-Standard setup is: \eqn{agecorfac = a * \frac{1}{2}}.
+Default setup is: TRUE
 
 Mainly used to correct higher mortality rates for
 infants.}
+
+\item{agecorfac}{vector, optional - only applies if
+agecor == TRUE. Given values replace the standard
+values from the first age interval onwards.
+
+Default setup is 1/3 for every age class <= 5
+life years, and 1/2 for the others.}
 }
 \value{
-An object of type mortaar_life_table or
-mortaar_life_table_list. Each mortaar_life_table contains
-the following variables:
+An object of type mortaar_life_table_list.
+Each mortaar_life_table contains the following variables:
 
 \itemize{
   \item \bold{x}  age interval
@@ -81,9 +84,8 @@ See \emph{Chamberlain 2006}, \emph{Hermann et. al 1990},
 \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
 for the literature we examined. \cr
 The function takes an individual data.frame or a list of
-data.frames and respectively returns an object of type
-mortaar_life_table or mortaar_life_table_list for which
-exist specialised summary, print and plot functions.
+data.frames and returns an object of mortaar_life_table_list
+for which exist specialised summary, print and plot functions.
 }
 \examples{
 
