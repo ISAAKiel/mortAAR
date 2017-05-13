@@ -50,6 +50,6 @@ test_that("life.table does the mathing correctly", {
       tol = 0.1
     ) %>% all
   )
-  # Ax
+  # rel_popx
   # missing
 })

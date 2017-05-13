@@ -77,7 +77,7 @@
 #'
 #'                   \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
 #'
-#'   \item \bold{Ax} percentage of L(x) of the sum of L(x) :
+#'   \item \bold{rel_popx} percentage of L(x) of the sum of L(x) :
 #'
 #'                   \eqn{A_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
 #' }
@@ -242,8 +242,8 @@ life.table.df <- function(necdf, acf = c()) {
   # ex: average years of life remaining
   necdf['ex'] <- necdf['Tx'] / necdf['lx']
 
-  ## Ax: percentage of L(x) of the sum of L(x)
-  necdf['Ax'] <- necdf['Lx'] / sum(necdf['Lx']) * 100
+  ## rel_popx: percentage of L(x) of the sum of L(x)
+  necdf['rel_popx'] <- necdf['Lx'] / sum(necdf['Lx']) * 100
 
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%

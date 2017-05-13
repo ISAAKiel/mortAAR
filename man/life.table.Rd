@@ -61,7 +61,7 @@ the following variables:
 
                   \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
 
-  \item \bold{Ax} percentage of L(x) of the sum of L(x) :
+  \item \bold{rel_popx} percentage of L(x) of the sum of L(x) :
 
                   \eqn{A_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
 }

@@ -136,7 +136,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #' @param x a mortaar_life_table
 #' @param display which plots to show. These must include some of the
 #' alternatives \code{qx} for survivorship, \code{ex} for mortality rate
-#' and \code{Ax} for population age structure.
+#' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -162,7 +162,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'@importFrom graphics axis grid legend lines par plot
 #'
 #' @export
-plot.mortaar_life_table <- function(x, display = c("qx", "ex", "Ax"), ...) {
+plot.mortaar_life_table <- function(x, display = c("qx", "ex", "rel_popx"), ...) {
   ask_before = par()$ask
   par(ask=T)
   n <- sum(x$Dx)
@@ -192,13 +192,13 @@ plot.mortaar_life_table <- function(x, display = c("qx", "ex", "Ax"), ...) {
       grid()
     }
   }
-  # Plot Ax
-  if ("Ax" %in% display) {
+  # Plot rel_popx
+  if ("rel_popx" %in% display) {
     if (requireNamespace("ggplot2", quietly = TRUE)) {
-      mortaar_plot_Ax_ggplot(my_x, ...)
+      mortaar_plot_rel_popx_ggplot(my_x, ...)
     } else {
-      mortaar_plot_Ax_frame(x, my_subsets, n=n,...)
-      mortaar_plot_Ax(x, ...)
+      mortaar_plot_rel_popx_frame(x, my_subsets, n=n,...)
+      mortaar_plot_rel_popx(x, ...)
       grid()
     }
   }
@@ -212,7 +212,7 @@ plot.mortaar_life_table <- function(x, display = c("qx", "ex", "Ax"), ...) {
 #' @param x a mortaar_life_table_list
 #' @param display which plots to show. These must include some of the
 #' alternatives \code{qx} for survivorship, \code{ex} for mortality rate
-#' and \code{Ax} for population age structure.
+#' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -238,7 +238,7 @@ plot.mortaar_life_table <- function(x, display = c("qx", "ex", "Ax"), ...) {
 #' @importFrom reshape2 melt
 #'
 #' @export
-plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "Ax"),...){
+plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "rel_popx"),...){
   ask_before = par()$ask
   par(ask=T)
   my_subsets <- names(x)
@@ -275,17 +275,17 @@ plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "Ax"),...){
       grid()
     }
   }
-  # Plot Ax
-  if ("Ax" %in% display) {
+  # Plot rel_popx
+  if ("rel_popx" %in% display) {
     if (requireNamespace("ggplot2", quietly = TRUE)) {
-      my_x <- reshape2::melt(x,id="a",measure.vars=c("Ax"))
-      colnames(my_x) <- c("a", "variable", "Ax", "dataset")
+      my_x <- reshape2::melt(x,id="a",measure.vars=c("rel_popx"))
+      colnames(my_x) <- c("a", "variable", "rel_popx", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-      mortaar_plot_Ax_ggplot(my_x, ...)
+      mortaar_plot_rel_popx_ggplot(my_x, ...)
     } else {
-      mortaar_plot_Ax_frame(x[[1]], my_subsets, n, ...)
+      mortaar_plot_rel_popx_frame(x[[1]], my_subsets, n, ...)
       for(i in 1:length(x)){
-        mortaar_plot_Ax(x[[i]],lty=i, ...)
+        mortaar_plot_rel_popx(x[[i]],lty=i, ...)
       }
       grid()
     }
@@ -306,9 +306,9 @@ mortaar_plot_ex_ggplot <- function(x, ...) {
   methods::show(my_plot)
 }
 
-mortaar_plot_Ax_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="Ax",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("Ax") + ggplot2::ggtitle("population age structure (Ax)")
+mortaar_plot_rel_popx_ggplot <- function(x, ...) {
+  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="rel_popx",lty="dataset"))
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("rel_popx") + ggplot2::ggtitle("population age structure (rel_popx)")
   methods::show(my_plot)
 }
 
@@ -372,31 +372,31 @@ mortaar_plot_ex_frame <- function(x, my_subsets="", n,...) {
 }
 
 
-#'plots mortality rate Ax for a single life table
+#'plots mortality rate rel_popx for a single life table
 #'
-#'plots mortality rate Ax for a single life table
+#'plots mortality rate rel_popx for a single life table
 #'
 #'@param x an object of the class mortaar_life_table
 #'@param lty line type defaults to 1
 #'@param ... further arguments passed to the print function
 
-mortaar_plot_Ax <- function(x, lty=1, ...) {
+mortaar_plot_rel_popx <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
-  lines(my_x,x$Ax, lty=lty)
+  lines(my_x,x$rel_popx, lty=lty)
 }
 
-#'plots coordinate system for mortality rate Ax for a single life table
+#'plots coordinate system for mortality rate rel_popx for a single life table
 #'
-#'plots coordinate system for mortality rate Ax for a single life table
+#'plots coordinate system for mortality rate rel_popx for a single life table
 #'
 #'@param x an object of the class mortaar_life_table
 #'@param my_subsets a vector of categories from sublist of mortaar_life_table
 #'@param n number of individuals
 #'@param ... further arguments passed to the print function
 
-mortaar_plot_Ax_frame <- function(x, my_subsets="", n,...) {
+mortaar_plot_rel_popx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
-  plot(my_x,x$Ax, xlab="age of individuals", ylab="Ax",type="n", main="population age structure (Ax)", xaxt="n")
+  plot(my_x,x$rel_popx, xlab="age of individuals", ylab="rel_popx",type="n", main="population age structure (rel_popx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
   legend(x = 'topright', bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
