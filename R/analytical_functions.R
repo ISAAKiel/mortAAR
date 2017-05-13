@@ -63,11 +63,15 @@
 #'
 #'                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
 #'
-#'   \item \bold{Ax}
+#'   \item \bold{Ax} average number of years lived of an
+#'                   individual that died within a specific
+#'                   age class :
+#'
+#'                   \eqn{A_{x} = a_{x} * agecorfac_{x}}
 #'
 #'   \item \bold{Lx} average years per person lived within x :
 #'
-#'                   \eqn{L_{x} = agecorfac_{x} * (l_{x} + l_{x+1})}
+#'                   \eqn{L_{x} = (a_{x} * l_{x}) - ((a_{x} - A_{x}) * d_{x})}
 #'
 #'   \item \bold{Tx} sum of average years lived within
 #'                   current and remaining x :
@@ -81,7 +85,7 @@
 #'
 #'   \item \bold{rel_popx} percentage of L(x) of the sum of L(x) :
 #'
-#'                   \eqn{A_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
+#'                   \eqn{relpopx_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
 #' }
 #'
 #'
@@ -225,6 +229,9 @@ life.table.df <- function(necdf, agecorfac = c()) {
       message
   }
 
+  # Ax: average number of years lived of an
+  # individual that died within a specific
+  # age class :
   necdf['Ax'] <- necdf[, 'a'] / 2
   if (agecorfac %>% is.null %>% `!`) {
     necdf['Ax'][1:length(agecorfac)] <-
