@@ -16,12 +16,12 @@ life.table(neclist, agecor = TRUE, agecorfac = c())
   \item \bold{Dx} number of deaths within x
 }}
 
-\item{agecor}{logical, optional. TODO Nils!
+\item{agecor}{logical, optional. If set TRUE, the average number of years lived within a
+given age class of individuals having died in this class can be adjusted via agecorfac. If set FALSE,
+it is assumed that they died in the middle of that class. Due to higher mortality rates of infants,
+this assumption is certainly erroneous for individuals <= 5 years.
 
-Default setup is: TRUE
-
-Mainly used to correct higher mortality rates for
-infants.}
+Default setup is: TRUE}
 
 \item{agecorfac}{vector, optional - only applies if
 agecor == TRUE. Given values replace the standard
@@ -56,11 +56,12 @@ Each mortaar_life_table contains the following variables:
 
                   \eqn{A_{x} = a_{x} * agecorfac_{x}}
 
-  \item \bold{Lx} average years per person lived within x :
+  \item \bold{Lx} number of years lived within x by those that died within x and those
+                  that reached the next age class :
 
                   \eqn{L_{x} = (a_{x} * l_{x}) - ((a_{x} - A_{x}) * d_{x})}
 
-  \item \bold{Tx} sum of average years lived within
+  \item \bold{Tx} sum of years lived within
                   current and remaining x :
 
                   \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
@@ -80,9 +81,9 @@ Each mortaar_life_table contains the following variables:
 \href{https://en.wikipedia.org/wiki/Life_table}{life table(s)}.
 The algorithm is optimised for dead populations
 encountered in archaeological research.
-See \emph{Chamberlain 2006}, \emph{Hermann et. al 1990},
+See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
-for the literature we examined. \cr
+for selected literature. \cr
 The function takes an individual data.frame or a list of
 data.frames and returns an object of mortaar_life_table_list
 for which exist specialised summary, print and plot functions.

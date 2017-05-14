@@ -4,9 +4,9 @@
 #' \href{https://en.wikipedia.org/wiki/Life_table}{life table(s)}.
 #' The algorithm is optimised for dead populations
 #' encountered in archaeological research.
-#' See \emph{Chamberlain 2006}, \emph{Hermann et. al 1990},
+#' See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 #' \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
-#' for the literature we examined. \cr
+#' for selected literature. \cr
 #' The function takes an individual data.frame or a list of
 #' data.frames and returns an object of mortaar_life_table_list
 #' for which exist specialised summary, print and plot functions.
@@ -29,12 +29,13 @@
 #'     \item \bold{Dx} number of deaths within x
 #'   }
 #'
-#' @param agecor logical, optional. TODO Nils!
+#' @param agecor logical, optional. If set TRUE, the average number of years lived within a
+#' given age class of individuals having died in this class can be adjusted via agecorfac. If set FALSE,
+#' it is assumed that they died in the middle of that class. Due to higher mortality rates of infants,
+#' this assumption is certainly erroneous for individuals <= 5 years.
 #'
 #' Default setup is: TRUE
 #'
-#' Mainly used to correct higher mortality rates for
-#' infants.
 #'
 #' @param agecorfac vector, optional - only applies if
 #' agecor == TRUE. Given values replace the standard
@@ -69,11 +70,12 @@
 #'
 #'                   \eqn{A_{x} = a_{x} * agecorfac_{x}}
 #'
-#'   \item \bold{Lx} average years per person lived within x :
+#'   \item \bold{Lx} number of years lived within x by those that died within x and those
+#'                   that reached the next age class :
 #'
 #'                   \eqn{L_{x} = (a_{x} * l_{x}) - ((a_{x} - A_{x}) * d_{x})}
 #'
-#'   \item \bold{Tx} sum of average years lived within
+#'   \item \bold{Tx} sum of years lived within
 #'                   current and remaining x :
 #'
 #'                   \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
@@ -251,11 +253,12 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
 
   }
 
-  # Lx: average years per person lived within x
+  # Lx: number of years lived within x by those that died within x and those
+  # that reached the next age class
   necdf['Lx'] <- necdf['a']* necdf['lx'] -
     ((necdf['a'] - necdf['Ax']) * necdf['dx'])
 
-  # Tx: sum of average years lived within current and
+  # Tx: sum of years lived within current and
   # remaining x
   necdf['Tx'] <- c(
     sum(necdf['Lx']),
