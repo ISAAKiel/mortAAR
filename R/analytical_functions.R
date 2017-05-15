@@ -8,7 +8,7 @@
 #' \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
 #' for selected literature. \cr
 #' The function takes an individual data.frame or a list of
-#' data.frames and returns an object of mortaar_life_table_list
+#' data.frames and returns an object of class mortaar_life_table_list
 #' for which exist specialised summary, print and plot functions.
 #'
 #'@references
@@ -45,7 +45,7 @@
 #' life years, and 1/2 for the others.
 #'
 #' @return
-#' An object of type mortaar_life_table_list.
+#' An object of class mortaar_life_table_list.
 #' Each mortaar_life_table contains the following variables:
 #'
 #' \itemize{
