@@ -68,5 +68,5 @@ td_result <- td_prepared %>%
   life.table()
 
 ## ---- fig.width=7, fig.height=5------------------------------------------
-td_result %>% plot(display = c("qx", "ex", "Ax"))
+td_result %>% plot(display = c("qx", "ex", "rel_popx"))
 

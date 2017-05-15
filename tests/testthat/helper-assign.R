@@ -4,7 +4,7 @@ an_input_dataset <- list (
 )
 
 suppressMessages(
- a_live_table <- life.table(an_input_dataset)
+ a_live_table <- life.table(an_input_dataset, agecor = FALSE)
 )
 
 single_life_table <- a_live_table$schleswig_ma

@@ -4,13 +4,12 @@
 #' \href{https://en.wikipedia.org/wiki/Life_table}{life table(s)}.
 #' The algorithm is optimised for dead populations
 #' encountered in archaeological research.
-#' See \emph{Chamberlain 2006}, \emph{Hermann et. al 1990},
+#' See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 #' \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
-#' for the literature we examined. \cr
+#' for selected literature. \cr
 #' The function takes an individual data.frame or a list of
-#' data.frames and respectively returns an object of type
-#' mortaar_life_table or mortaar_life_table_list for which
-#' exist specialised summary, print and plot functions.
+#' data.frames and returns an object of mortaar_life_table_list
+#' for which exist specialised summary, print and plot functions.
 #'
 #'@references
 #' \insertRef{chamberlain_demography_2006}{mortAAR}
@@ -21,8 +20,6 @@
 #'
 #' \insertRef{kokkotidis_graberfeld-_1991}{mortAAR}
 #'
-#'
-#'
 #' @param neclist single dataframe or list of dataframes
 #'                with the columns 'x', 'a', 'Dx'
 #'   \itemize{
@@ -32,20 +29,24 @@
 #'     \item \bold{Dx} number of deaths within x
 #'   }
 #'
-#' @param acv vector, optional. Age correction values to
-#' determine the centre of the age interval for the
-#' calculation of L(x). Given values replace the standard
+#' @param agecor logical, optional. If set TRUE, the average number of years lived within a
+#' given age class of individuals having died in this class can be adjusted via agecorfac. If set FALSE,
+#' it is assumed that they died in the middle of that class. Due to higher mortality rates of infants,
+#' this assumption is certainly erroneous for individuals <= 5 years.
+#'
+#' Default setup is: TRUE
+#'
+#'
+#' @param agecorfac vector, optional - only applies if
+#' agecor == TRUE. Given values replace the standard
 #' values from the first age interval onwards.
 #'
-#' Standard setup is: \eqn{acv = a * \frac{1}{2}}.
-#'
-#' Mainly used to correct higher mortality rates for
-#' infants.
+#' Default setup is 1/3 for every age class <= 5
+#' life years, and 1/2 for the others.
 #'
 #' @return
-#' An object of type mortaar_life_table or
-#' mortaar_life_table_list. Each mortaar_life_table contains
-#' the following variables:
+#' An object of type mortaar_life_table_list.
+#' Each mortaar_life_table contains the following variables:
 #'
 #' \itemize{
 #'   \item \bold{x}  age interval
@@ -63,11 +64,18 @@
 #'
 #'                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
 #'
-#'   \item \bold{Lx} average years per person lived within x :
+#'   \item \bold{Ax} average number of years lived of an
+#'                   individual that died within a specific
+#'                   age class :
 #'
-#'                   \eqn{L_{x} = acv_{x} * (l_{x} + l_{x+1})}
+#'                   \eqn{A_{x} = a_{x} * agecorfac_{x}}
 #'
-#'   \item \bold{Tx} sum of average years lived within
+#'   \item \bold{Lx} number of years lived within x by those that died within x and those
+#'                   that reached the next age class :
+#'
+#'                   \eqn{L_{x} = (a_{x} * l_{x}) - ((a_{x} - A_{x}) * d_{x})}
+#'
+#'   \item \bold{Tx} sum of years lived within
 #'                   current and remaining x :
 #'
 #'                   \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
@@ -77,9 +85,9 @@
 #'
 #'                   \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
 #'
-#'   \item \bold{Ax} percentage of L(x) of the sum of L(x) :
+#'   \item \bold{rel_popx} percentage of L(x) of the sum of L(x) :
 #'
-#'                   \eqn{A_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
+#'                   \eqn{relpopx_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
 #' }
 #'
 #'
@@ -94,10 +102,10 @@
 #' @importFrom Rdpack reprompt
 #'
 #' @export
-life.table <- function(neclist, acv = c()) {
+life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
 
   # check if input list is a data.frame - if so, it's
-  # converted to a list
+  # packed into a list
   if ("data.frame" %in% class(neclist)) {
     neclist %>% substitute %>% deparse -> dfname
     neclist <- list(dfname = neclist)
@@ -110,9 +118,12 @@ life.table <- function(neclist, acv = c()) {
   # and create an output mortaar_life_table_list of
   # mortaar_life_table objects
   neclist %>%
-    lapply(., function(x) {life.table.df(x, acv = acv)}) %>%
-    `class<-`(c("mortaar_life_table_list", class(.))) %>%
-    return()
+    lapply(., function(x) {
+      life.table.df(
+        x, agecor = agecor, agecorfac = agecorfac)}
+      ) %>%
+        `class<-`(c("mortaar_life_table_list", class(.))) %>%
+        return()
 }
 
 inputchecks <- function(neclist) {
@@ -170,7 +181,7 @@ inputchecks <- function(neclist) {
 
 }
 
-life.table.df <- function(necdf, acv = c()) {
+life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
 
   # x: well readable rownames for age classes
   limit <- necdf['a'] %>% sum
@@ -205,34 +216,49 @@ life.table.df <- function(necdf, acv = c()) {
   # qx: probability of death within x
   necdf['qx'] <- necdf['dx'] / necdf['lx'] * 100
 
-  # check and apply child age correction
-  if (((necdf['a'] %>% range %>% diff) == 0) %>% `!` &
-      acv %>% is.null) {
-    paste0(
-    "The age steps differ. Please consider applying an ",
-    "age correction factor!"
-    ) %>%
-      message
+  # Ax: average number of years lived of an
+  # individual that died within a specific
+  # age class
+  # different possibilities:
+  # 1. user doesn't want a correction
+  if (!agecor) {
+    necdf['Ax'] <- necdf[, 'a'] / 2
+  } else {
+    # 2. user manually added a agecorfac
+    if (agecorfac %>% is.null %>% `!`) {
+
+      # check if agecorfac is too long
+      if (length(agecorfac) > nrow(necdf)) {
+        paste0(
+          "There can not be more age correction factors
+        than age classes."
+        ) %>%
+          message
+      }
+
+      # apply manually added agecorfac
+      necdf['Ax'][1:length(agecorfac)] <-
+        necdf[, 'a'][1:length(agecorfac)] * agecorfac
+
+    # 3. default: user didn't do anything and the
+    # age correction is applied for every age class
+    # <= 5 life years
+    } else {
+      necdf['Ax'] <- necdf[, 'a'] %>%
+        cumsum() %>%
+        `<=`(.,5) %>%
+        ifelse(1/3, 1/2) %>%
+        `*`(necdf[, 'a'])
+    }
+
   }
 
-  if (length(acv) > nrow(necdf)) {
-    paste0(
-      "There can not be more age correction factors
-      than age classes."
-    ) %>%
-      message
-  }
-
-  multvec <- necdf[, 'a'] / 2
-  if (acv %>% is.null %>% `!`) {
-    multvec[1:length(acv)] <- necdf[, 'a'][1:length(acv)] * acv
-  }
-
-  # Lx: average years per person lived within x
+  # Lx: number of years lived within x by those that died within x and those
+  # that reached the next age class
   necdf['Lx'] <- necdf['a']* necdf['lx'] -
-    ((necdf['a'] - multvec) * necdf['dx'])
+    ((necdf['a'] - necdf['Ax']) * necdf['dx'])
 
-  # Tx: sum of average years lived within current and
+  # Tx: sum of years lived within current and
   # remaining x
   necdf['Tx'] <- c(
     sum(necdf['Lx']),
@@ -242,8 +268,8 @@ life.table.df <- function(necdf, acv = c()) {
   # ex: average years of life remaining
   necdf['ex'] <- necdf['Tx'] / necdf['lx']
 
-  ## Ax: percentage of L(x) of the sum of L(x)
-  necdf['Ax'] <- necdf['Lx'] / sum(necdf['Lx']) * 100
+  ## rel_popx: percentage of L(x) of the sum of L(x)
+  necdf['rel_popx'] <- necdf['Lx'] / sum(necdf['Lx']) * 100
 
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
