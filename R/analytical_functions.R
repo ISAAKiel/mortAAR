@@ -117,13 +117,21 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
   # apply life.table.vec to every column of the input df
   # and create an output mortaar_life_table_list of
   # mortaar_life_table objects
-  neclist %>%
-    lapply(., function(x) {
-      life.table.df(
-        x, agecor = agecor, agecorfac = agecorfac)}
-      ) %>%
-        `class<-`(c("mortaar_life_table_list", class(.))) %>%
-        return()
+    if (length(neclist)>1) {
+        neclist %>%
+            lapply(., function(x) {
+                life.table.df(
+                    x, agecor = agecor, agecorfac = agecorfac)}
+                ) %>%
+            `class<-`(c("mortaar_life_table_list", class(.))) %>%
+            return()
+    } else {
+        neclist[[1]] %>%
+            life.table.df(
+                ., agecor = agecor, agecorfac = agecorfac) %>%
+            `class<-`(c("mortaar_life_table", class(.))) %>%
+            return()
+    }
 }
 
 inputchecks <- function(neclist) {
