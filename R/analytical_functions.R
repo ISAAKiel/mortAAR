@@ -121,12 +121,12 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
         neclist %>%
             lapply(., function(x) {
                 life.table.df(
-                    x, agecor = agecor, agecorfac = agecorfac)}
+                    x[,c("a","Dx")], agecor = agecor, agecorfac = agecorfac)}
                 ) %>%
             `class<-`(c("mortaar_life_table_list", class(.))) %>%
             return()
     } else {
-        neclist[[1]] %>%
+        neclist[[1]][,c("a","Dx")] %>%
             life.table.df(
                 ., agecor = agecor, agecorfac = agecorfac) %>%
             `class<-`(c("mortaar_life_table", class(.))) %>%
@@ -173,6 +173,14 @@ inputchecks <- function(neclist) {
       )
     ) %>% return
   }
+
+    moreColCheck <- function(necdf) {
+        if (colnames(necdf) %in% c("a","Dx") %>% `!` %>% any ) {
+            warning("In one of your data.frames are more than the two necessary columns a, Dx. Note that these additional columns will be dropped in the output.")
+        }                                
+    }
+
+    neclist %>% lapply(moreColCheck)         
 
   if (neclist %>% lapply(aDxcheck) %>% unlist %>% all %>%
       `!`) {
