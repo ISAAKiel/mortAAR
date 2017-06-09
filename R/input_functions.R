@@ -28,7 +28,7 @@ summe=function(x,y){
 #' @param ageend Column name of the to field (as character)
 #' @param grnam Column name of the grouping field (as character)
 #' @param methode name of the age class determination (as character) Options: "Standard" (default) (1,4,5,5,...), "Equal5" (5,5,...)
-#' @param age.range is ageend included or excluded in the age range: Included means for an age range 20 to 39 that the year 39 is part of this age range. The same result will be obtained by choosing the option excluded, if the data in prvoded as for example 20 to 40; excluded is default
+#' @param age.range is ageend included or excluded in the age range: Included means for an age range 20 to 39 that the year 39 is part of this age range. The same result will be obtained by choosing the option excluded, if the data is provided as, for example 20 to 40; excluded is default
 #'
 #' @return list as input parameter for the function life.table
 #'

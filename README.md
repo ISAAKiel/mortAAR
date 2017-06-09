@@ -6,11 +6,18 @@ mortAAR
 
 R Library for the analysis of archaeological mortality data
 
-With `mortAAR` you can calculated a life table based on archaeological demographic data. You just need the number of people of a certain age. `mortAAR` allows to seperate the data according to sex/location/epoch.
+With `mortAAR` you can calculate a life table based on archaeological demographic data. You just need the number of people of a certain age, but you can also use single individual data. `mortAAR` allows to separate the data according to sex/location/epoch.
 
 What is a life table [aka discrete time survival analysis]? According to [Chamberlain](https://books.google.de/books?id=nG5FoO_becAC&lpg=PA27&ots=LG0b_xrx6O&dq=life%20table%20archaeology&pg=PA27#v=onepage&q&f=false): it is a "(...) mathematical device for representing the mortality experience of a population and for exploring the effects on survivorship of age-specific probabilities of death. One reason why life tables have been ubiquitous in demography is that mortality cannot easily be modelled as a single equation or continuous function of age."
 
-There are other ways and tools to create and analyse life table [e.g. [this one](https://web.stanford.edu/group/heeh/cgi-bin/web/node/75)]. What makes `mortAAR` special is that it implements a modern way of reprensenting the different weight of age classes by using an age-correction factor of 1/3 for all ages younger than 5. However, `mortAAR` also allows you to follow the "classic" approach. Just have a look at the [Vignette]() and the [Manual]() for further information. 
+To our knowledge, as of writing a simple to use and easily accessible tool calculate and create archaeological life tables has been lacking. That is why we sat down and put mortAAR for R together. We hope it will be of use for archaeologists world-wide.
+
+In our view, mortAAR shines in the following areas:
+- Ease and flexibility of input (different kinds of customisation and grouping)
+- Sophisticated means of computation (exploding of age ranges, separation factor for average lived years)
+- Comprehensiveness of output (life tables for all groups specified, plots for the most important measures, relative population calculation)
+
+For further information, please have a look at the [Vignette]() and the [Manual](). 
 
 #### Released version
 
