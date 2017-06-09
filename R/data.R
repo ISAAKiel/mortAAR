@@ -91,3 +91,48 @@ NULL
 #'
 #' @name aiterhofen_oedmuehlen
 NULL
+
+#' magdalenenberg: Archaeological training dataset used in the extended vignette
+#'
+#' A data set from \emph{zaeuner_wahl_magdalenenberg_2013}.
+#'
+#' Anthropological data from a large burial mound of the Early Iron Age in southwestern Germany, already
+#' pooled for constructing a life table.
+#'
+#' @references
+#' \insertRef{zaeuner_wahl_magdalenenberg_2013}{mortAAR}
+#'
+#' @format A data frame with 13 rows and 2 variables.
+#' \itemize{
+#'   \item \bold{a:} age range
+#'   \item \bold{Dx:} number of deceased
+#' }
+#'
+#' @family training, vignette
+#'
+#' @name magdalenenberg
+NULL
+
+#' muensingen: Archaeological training dataset used in the extended vignette
+#'
+#' A data set from \emph{moghaddam_et_al_muensingen_2016}.
+#'
+#' Anthropological data from one of the largest Latene burial grounds of Central Europe.
+#' Besides age and sex of each individual it comprises the archaeological phasing (A, B or C) and the information
+#' if the respective burial contained grave goods (yes or no).
+#'
+#' @references
+#' \insertRef{moghaddam_et_al_muensingen_2016}{mortAAR}
+#'
+#' @format A data frame with 71 rows and 4 variables.
+#' \itemize{
+#'   \item \bold{age:} age range of the individual
+#'   \item \bold{sex:} sex of the individual
+#'   \item \bold{latene_phase:} archaeological phasing
+#'   \item \bold{grave_goods:} grave contained grave goods?
+#' }
+#'
+#' @family training, vignette
+#'
+#' @name muensingen
+NULL

@@ -26,7 +26,23 @@ aiterhofen_oedmuehlen <- read.table(
 )
 devtools::use_data(aiterhofen_oedmuehlen, overwrite = TRUE)
 
+magdalenenberg <- read.table(
+  "data-raw/magdalenenberg.txt",
+  header = TRUE,
+  sep = "\t"
+)
+devtools::use_data(magdalenenberg, overwrite = TRUE)
+
+muensingen <- read.table(
+  "data-raw/muensingen.txt",
+  header = TRUE,
+  sep = "\t",
+  row.names=1
+)
+devtools::use_data(muensingen, overwrite = TRUE)
+
 #devtools::load_all()
 
 #schleswig_ma
 #gallery_graves
+#magdalenenberg
