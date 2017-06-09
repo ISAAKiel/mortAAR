@@ -52,6 +52,11 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
   names(asd)[which(names(asd)==agebeg)]="beg"
   names(asd)[which(names(asd)==ageend)]="ende"
 
+  # Filter potential NA values from the begin or end column
+  # asd=asd %>% filter(!is.na(beg), !is.na(ende))
+  asd=asd[!is.na(asd$beg),]
+  asd=asd[!is.na(asd$ende),]
+
   # defines if the max of the age ranges should be included or excluded
   if(age.range == "excluded"){
     asd$ende = asd$ende -1
@@ -61,22 +66,22 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
   if(is.character(methode)){
     if(methode=="Standard"){
       meth=c(1,4)
-      while(sum(meth)<max(asd$ende)){
+      while(sum(meth)<max(asd$ende,na.rm=T)){
         meth=c(meth,5)
       }
     }else if(methode=="Equal5"){
-      meth=rep(5,ceiling(max(asd$ende)/5))
+      meth=rep(5,ceiling(max(asd$ende,na.rm=T)/5))
     }else{
       # If no selection is take for method => use standard method
       meth=c(1,4)
-      while(sum(meth)<max(asd$ende)){
+      while(sum(meth)<max(asd$ende,na.rm=T)){
         meth=c(meth,5)
       }
     }
   }else{
     # If the "methode" is not a character and of length 1 use the value as age class size and repeat
     if(length(methode)==1){
-      meth=rep(methode,ceiling(max(asd$ende)/methode))
+      meth=rep(methode,ceiling(max(asd$ende,na.rm=T)/methode))
     # If the "methode" value is not of length 1 take the entry of "methode" as method
     }else{
       meth=methode
@@ -91,12 +96,12 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
     # Create a dataframe (restab) filled with zeros
     # with the column count of the grouping columns (+2)
     # and the row count of the maximum age (+1)
-    remat=matrix(data=0,ncol=length(unique(asd$Group))+2,nrow=(max(asd$ende)+1))
+    remat=matrix(data=0,ncol=length(unique(asd$Group))+2,nrow=(max(asd$ende,na.rm=T)+1))
     restab=as.data.frame(remat)
     # Set the dataframes column names to age, the groups names and all
     names(restab)=c("Alter",as.character(unique(asd$Group)),"All")
     # Set the age values to 0 to the maximum age +1
-    restab$Alter=seq(0,max(asd$ende),1)
+    restab$Alter=seq(0,max(asd$ende,na.rm=T),1)
 
     # For each Group (k) the deaths per age class (available years i) are summed up equally seperated by ages
     for(k in 1:length(unique(asd$Group))){
