@@ -1,6 +1,3 @@
-library(devtools)
-library(magrittr)
-
 schleswig_ma <- read.csv(
   "data-raw/schleswig_ma.csv",
   sep = ";",
@@ -29,6 +26,7 @@ devtools::use_data(aiterhofen_oedmuehlen, overwrite = TRUE)
 magdalenenberg <- read.table(
   "data-raw/magdalenenberg.txt",
   header = TRUE,
+  stringsAsFactors = FALSE,
   sep = "\t"
 )
 devtools::use_data(magdalenenberg, overwrite = TRUE)
@@ -36,13 +34,8 @@ devtools::use_data(magdalenenberg, overwrite = TRUE)
 muensingen <- read.table(
   "data-raw/muensingen.txt",
   header = TRUE,
+  stringsAsFactors = FALSE,
   sep = "\t",
-  row.names=1
+  row.names = 1
 )
 devtools::use_data(muensingen, overwrite = TRUE)
-
-#devtools::load_all()
-
-#schleswig_ma
-#gallery_graves
-#magdalenenberg
