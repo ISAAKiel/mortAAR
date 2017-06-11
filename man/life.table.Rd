@@ -37,6 +37,13 @@ Each mortaar_life_table contains the following variables:
 \itemize{
   \item \bold{x}  age interval
   \item \bold{a}  years within x
+
+  \item \bold{Ax} average number of years lived of an
+                  individual that died within a specific
+                  age class x :
+
+                  \eqn{A_{x} = a_{x} * agecorfac_{x}}
+
   \item \bold{Dx} number of deaths within x
   \item \bold{dx} propotion of deaths within x (percent) :
 
@@ -49,12 +56,6 @@ Each mortaar_life_table contains the following variables:
   \item \bold{qx} probability of death within x (percent) :
 
                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
-
-  \item \bold{Ax} average number of years lived of an
-                  individual that died within a specific
-                  age class :
-
-                  \eqn{A_{x} = a_{x} * agecorfac_{x}}
 
   \item \bold{Lx} number of years lived within x by those that died within x and those
                   that reached the next age class :
@@ -85,8 +86,9 @@ See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
 for selected literature. \cr
 The function takes an individual data.frame or a list of
-data.frames and returns an object of class mortaar_life_table_list
-for which exist specialised summary, print and plot functions.
+data.frames and returns an object of class mortaar_life_table
+or mortaar_life_table_list for which exist specialised summary,
+print and plot functions.
 }
 \examples{
 

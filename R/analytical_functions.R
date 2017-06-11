@@ -8,8 +8,9 @@
 #' \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
 #' for selected literature. \cr
 #' The function takes an individual data.frame or a list of
-#' data.frames and returns an object of class mortaar_life_table_list
-#' for which exist specialised summary, print and plot functions.
+#' data.frames and returns an object of class mortaar_life_table
+#' or mortaar_life_table_list for which exist specialised summary,
+#' print and plot functions.
 #'
 #'@references
 #' \insertRef{chamberlain_demography_2006}{mortAAR}
@@ -51,6 +52,13 @@
 #' \itemize{
 #'   \item \bold{x}  age interval
 #'   \item \bold{a}  years within x
+#'
+#'   \item \bold{Ax} average number of years lived of an
+#'                   individual that died within a specific
+#'                   age class x :
+#'
+#'                   \eqn{A_{x} = a_{x} * agecorfac_{x}}
+#'
 #'   \item \bold{Dx} number of deaths within x
 #'   \item \bold{dx} propotion of deaths within x (percent) :
 #'
@@ -63,12 +71,6 @@
 #'   \item \bold{qx} probability of death within x (percent) :
 #'
 #'                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
-#'
-#'   \item \bold{Ax} average number of years lived of an
-#'                   individual that died within a specific
-#'                   age class :
-#'
-#'                   \eqn{A_{x} = a_{x} * agecorfac_{x}}
 #'
 #'   \item \bold{Lx} number of years lived within x by those that died within x and those
 #'                   that reached the next age class :
@@ -177,10 +179,10 @@ inputchecks <- function(neclist) {
     moreColCheck <- function(necdf) {
         if (colnames(necdf) %in% c("a","Dx") %>% `!` %>% any ) {
             warning("In one of your data.frames are more than the two necessary columns a, Dx. Note that these additional columns will be dropped in the output.")
-        }                                
+        }
     }
 
-    neclist %>% lapply(moreColCheck)         
+    neclist %>% lapply(moreColCheck)
 
   if (neclist %>% lapply(aDxcheck) %>% unlist %>% all %>%
       `!`) {
@@ -287,6 +289,13 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
   ## rel_popx: percentage of L(x) of the sum of L(x)
   necdf['rel_popx'] <- necdf['Lx'] / sum(necdf['Lx']) * 100
 
+  ## reorder variables in result data.frame
+  necdf <- necdf[, c(
+    "x", "a", "Ax", "Dx", "dx", "lx",
+    "qx", "Lx", "Tx", "ex", "rel_popx"
+  )]
+
+  # ouput
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
     return()
