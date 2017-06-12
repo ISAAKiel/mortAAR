@@ -8,12 +8,12 @@ life.table(neclist, agecor = TRUE, agecorfac = c())
 }
 \arguments{
 \item{neclist}{single dataframe or list of dataframes
-             with the columns 'x', 'a', 'Dx'
+             with the columns 'x'/'Age', 'a', 'Dx'
 \itemize{
-  \item \bold{x}  age interval name, optional -
-                  otherwise determined from \bold{a}
-  \item \bold{a}  years within x
-  \item \bold{Dx} number of deaths within x
+  \item \bold{x} or \bold{Age} age interval name, optional -
+                               otherwise determined from \bold{a}
+  \item \bold{a}               years within x
+  \item \bold{Dx}              number of deaths within x
 }}
 
 \item{agecor}{logical, optional. If set TRUE, the average number of years lived within a
@@ -95,7 +95,7 @@ print and plot functions.
 testdata1 <- schleswig_ma[c("a", "Dx")]
 
 life.table(testdata1)
-life.table(testdata1, c(0.25,1/3,0.5))
+life.table(testdata1, agecorfac =  c(0.25,1/3,0.5))
 
 }
 \references{

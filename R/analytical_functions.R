@@ -22,12 +22,12 @@
 #' \insertRef{kokkotidis_graberfeld-_1991}{mortAAR}
 #'
 #' @param neclist single dataframe or list of dataframes
-#'                with the columns 'x', 'a', 'Dx'
+#'                with the columns 'x'/'Age', 'a', 'Dx'
 #'   \itemize{
-#'     \item \bold{x}  age interval name, optional -
-#'                     otherwise determined from \bold{a}
-#'     \item \bold{a}  years within x
-#'     \item \bold{Dx} number of deaths within x
+#'     \item \bold{x} or \bold{Age} age interval name, optional -
+#'                                  otherwise determined from \bold{a}
+#'     \item \bold{a}               years within x
+#'     \item \bold{Dx}              number of deaths within x
 #'   }
 #'
 #' @param agecor logical, optional. If set TRUE, the average number of years lived within a
@@ -98,7 +98,7 @@
 #' testdata1 <- schleswig_ma[c("a", "Dx")]
 #'
 #' life.table(testdata1)
-#' life.table(testdata1, c(0.25,1/3,0.5))
+#' life.table(testdata1, agecorfac =  c(0.25,1/3,0.5))
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom Rdpack reprompt
@@ -113,30 +113,40 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
     neclist <- list(dfname = neclist)
   }
 
+  # create vector of allowed variables
+  okvars <- c("x", "Age", "a", "Dx")
+
   # check input
-  inputchecks(neclist)
+  inputchecks(neclist, okvars)
 
   # apply life.table.vec to every column of the input df
   # and create an output mortaar_life_table_list of
   # mortaar_life_table objects
-    if (length(neclist)>1) {
-        neclist %>%
-            lapply(., function(x) {
-                life.table.df(
-                    x[,c("a","Dx")], agecor = agecor, agecorfac = agecorfac)}
-                ) %>%
-            `class<-`(c("mortaar_life_table_list", class(.))) %>%
-            return()
-    } else {
-        neclist[[1]][,c("a","Dx")] %>%
-            life.table.df(
-                ., agecor = agecor, agecorfac = agecorfac) %>%
-            `class<-`(c("mortaar_life_table", class(.))) %>%
-            return()
-    }
+
+  # single data.frame input:
+  if (length(neclist)>1) {
+    neclist %>%
+      lapply(., function(necdf) {
+        vars <- colnames(necdf)[colnames(necdf) %in% okvars]
+        life.table.df(
+          necdf[,vars], agecor = agecor, agecorfac = agecorfac)
+        }
+      ) %>%
+        `class<-`(c("mortaar_life_table_list", class(.))) %>%
+        return()
+  # list of data.frames input:
+  } else {
+    necdf <- neclist[[1]]
+    vars <- colnames(necdf)[colnames(necdf) %in% okvars]
+    life.table.df(
+      necdf[,vars], agecor = agecor, agecorfac = agecorfac
+    ) %>%
+      `class<-`(c("mortaar_life_table", class(.))) %>%
+      return()
+  }
 }
 
-inputchecks <- function(neclist) {
+inputchecks <- function(neclist, okvars) {
 
   # check if input is a list
   if (neclist %>% is.list %>% `!`) {
@@ -176,14 +186,6 @@ inputchecks <- function(neclist) {
     ) %>% return
   }
 
-    moreColCheck <- function(necdf) {
-        if (colnames(necdf) %in% c("a","Dx") %>% `!` %>% any ) {
-            warning("In one of your data.frames are more than the two necessary columns a, Dx. Note that these additional columns will be dropped in the output.")
-        }
-    }
-
-    neclist %>% lapply(moreColCheck)
-
   if (neclist %>% lapply(aDxcheck) %>% unlist %>% all %>%
       `!`) {
     neclist %>% lapply(aDxcheck) %>% lapply(all) %>%
@@ -195,6 +197,21 @@ inputchecks <- function(neclist) {
       paste(wrongelements, collapse = ", ")
     ) %>%
       stop
+  }
+
+  # check if input data.frames contain other columns than
+  # "x", "Age", "a", "Dx" (the okvars)
+  moreColCheck <- function(necdf) {
+    colnames(necdf) %in% okvars %>% `!` %>% any
+  }
+
+  if(neclist %>% lapply(moreColCheck) %>% unlist %>% any) {
+    paste0(
+      "In one of your data.frames there are more than the two ",
+      "necessary ('a', 'Dx') and the one optional ('Age') column. ",
+      "Note that these additional ",
+      "columns will be dropped in the output."
+    ) %>% warning
   }
 
 }
@@ -218,7 +235,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     identical(necdf[, 'x'], xvec) %>% `!`
   ) {
     necdf <- cbind(
-      x_age_classes = xvec,
+      x_auto = xvec,
       necdf,
       stringsAsFactors = FALSE
     )
@@ -292,9 +309,12 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
 
   ## reorder variables in result data.frame
   necdf <- necdf[, c(
-    "x", "a", "Ax", "Dx", "dx", "lx",
+    ifelse("Age" %in% colnames(necdf), "Age", NA_character_),
+    "x",
+    ifelse("x_auto" %in% colnames(necdf), "x_auto", NA_character_),
+    "a", "Ax", "Dx", "dx", "lx",
     "qx", "Lx", "Tx", "ex", "rel_popx"
-  )]
+  ) %>% stats::na.omit()]
 
   # ouput
   necdf %>%
