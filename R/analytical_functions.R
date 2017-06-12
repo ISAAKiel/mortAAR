@@ -255,7 +255,8 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
       }
 
       # apply manually added agecorfac
-      necdf['Ax'][1:length(agecorfac)] <-
+      necdf['Ax'] <- necdf[, 'a'] / 2
+      necdf['Ax'][1:length(agecorfac), ] <-
         necdf[, 'a'][1:length(agecorfac)] * agecorfac
 
     # 3. default: user didn't do anything and the
