@@ -21,84 +21,95 @@
 #'
 #' \insertRef{kokkotidis_graberfeld-_1991}{mortAAR}
 #'
-#' @param neclist single dataframe or list of dataframes
+#' @param neclist single data.frame or list of data.frames
 #'                with the columns 'x'/'Age', 'a', 'Dx'
 #'   \itemize{
-#'     \item \bold{x} or \bold{Age} age interval name, optional -
-#'                                  otherwise determined from \bold{a}
-#'     \item \bold{a}               years within x
-#'     \item \bold{Dx}              number of deaths within x
+#'     \item \bold{x} or \bold{Age}: age interval identifier, optional -
+#'                                   otherwise determined from \bold{a}
+#'     \item \bold{a}:               years within x
+#'     \item \bold{Dx}:              number of deaths within x
 #'   }
 #'
 #' @param agecor logical, optional. If set TRUE, the average number of years lived within a
-#' given age class of individuals having died in this class can be adjusted via agecorfac. If set FALSE,
-#' it is assumed that they died in the middle of that class. Due to higher mortality rates of infants,
-#' this assumption is certainly erroneous for individuals <= 5 years.
+#' given age class of individuals having died in this class can be adjusted via agecorfac.
+#' If set FALSE, it is assumed that they died in the middle of that class. Due to higher
+#' mortality rates of infants, this assumption is certainly erroneous for individuals
+#' <= 5 years.
 #'
 #' Default setup is: TRUE
 #'
+#' @param agecorfac numeric vector, optional. Only applies if agecor == TRUE. Given values
+#' replace the standard values from the first age interval onwards.
 #'
-#' @param agecorfac vector, optional - only applies if
-#' agecor == TRUE. Given values replace the standard
-#' values from the first age interval onwards.
-#'
-#' Default setup is 1/3 for every age class <= 5
-#' life years, and 1/2 for the others.
+#' Default setup is 1/3 for every age class <= 5 life years, and 1/2 for the others.
 #'
 #' @return
-#' An object of class mortaar_life_table_list.
+#' An object of class mortaar_life_table or mortaar_life_table_list.
 #' Each mortaar_life_table contains the following variables:
 #'
 #' \itemize{
-#'   \item \bold{x}  age interval
-#'   \item \bold{a}  years within x
+#'   \item \bold{x}:  age interval
+#'   \item \bold{a}:  years within x
 #'
-#'   \item \bold{Ax} average number of years lived of an
-#'                   individual that died within a specific
-#'                   age class x :
+#'   \item \bold{Ax}: average number of years lived of an
+#'                    individual that died within a specific
+#'                    age class x :
 #'
-#'                   \eqn{A_{x} = a_{x} * agecorfac_{x}}
+#'                    \eqn{A_{x} = a_{x} * agecorfac_{x}}
 #'
-#'   \item \bold{Dx} number of deaths within x
-#'   \item \bold{dx} propotion of deaths within x (percent) :
+#'   \item \bold{Dx}: number of deaths within x
+#'   \item \bold{dx}: propotion of deaths within x (percent) :
 #'
-#'                   \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
+#'                    \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
 #'
-#'   \item \bold{lx} survivorship within x (percent) :
+#'   \item \bold{lx}: survivorship within x (percent) :
 #'
-#'                   \eqn{l_{x+1} = l_{x} - d_{x}} with \eqn{l_{0} = 100}
+#'                    \eqn{l_{x+1} = l_{x} - d_{x}} with \eqn{l_{0} = 100}
 #'
-#'   \item \bold{qx} probability of death within x (percent) :
+#'   \item \bold{qx}: probability of death within x (percent) :
 #'
-#'                   \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
+#'                    \eqn{q_{x} = \frac{d_{x}}{l_{x}}* 100}
 #'
-#'   \item \bold{Lx} number of years lived within x by those that died within x and those
-#'                   that reached the next age class :
+#'   \item \bold{Lx}: number of years lived within x by those that died within x and those
+#'                    that reached the next age class :
 #'
-#'                   \eqn{L_{x} = (a_{x} * l_{x}) - ((a_{x} - A_{x}) * d_{x})}
+#'                    \eqn{L_{x} = (a_{x} * l_{x}) - ((a_{x} - A_{x}) * d_{x})}
 #'
-#'   \item \bold{Tx} sum of years lived within
-#'                   current and remaining x :
+#'   \item \bold{Tx}: sum of years lived within
+#'                    current and remaining x :
 #'
-#'                   \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
+#'                    \eqn{T_{x+1} = T_{x} - L_{x}} with \eqn{T_{0} = \sum_{i=1}^{n}{L_{i}}}
 #'
-#'   \item \bold{ex} average years of life remaining
-#'                   (average life expectancy at mean(x)) :
+#'   \item \bold{ex}: average years of life remaining
+#'                    (average life expectancy at mean(x)) :
 #'
-#'                   \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
+#'                    \eqn{e_{x} = \frac{T_{x}}{l_{x}}}
 #'
-#'   \item \bold{rel_popx} percentage of L(x) of the sum of L(x) :
+#'   \item \bold{rel_popx}: percentage of L(x) of the sum of L(x) :
 #'
-#'                   \eqn{relpopx_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
+#'                    \eqn{relpopx_{x} = \frac{L_{x}}{\sum_{i=1}^{n}{L_{i}}} * 100}
 #' }
 #'
 #'
 #' @examples
+#' # apply life.table to an already prepared dataset
+#' td1 <- schleswig_ma[c("a", "Dx")]
 #'
-#' testdata1 <- schleswig_ma[c("a", "Dx")]
+#' life.table(td1)
+#' life.table(td1, agecorfac =  c(0.25,1/3,0.5))
 #'
-#' life.table(testdata1)
-#' life.table(testdata1, agecorfac =  c(0.25,1/3,0.5))
+#' \dontrun{
+#'
+#' # with data preparation (requires dplyr and tidyr)
+#' magdalenenberg %>%
+#'  replace(. == "60-x", "60-70") %>%
+#'  tidyr::separate(a, c("from", "to")) %>%
+#'  dplyr::mutate(from = as.numeric(from), to = as.numeric(to)) %>%
+#'  prep.life.table(
+#'   dec = "Dx", agebeg = "from", ageend = "to", methode = "Standard", age.range = "excluded"
+#'  ) %>%
+#'  life.table()
+#' }
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom Rdpack reprompt
@@ -123,7 +134,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
   # and create an output mortaar_life_table_list of
   # mortaar_life_table objects
 
-  # single data.frame input:
+  # list of data.frames input:
   if (length(neclist)>1) {
     neclist %>%
       lapply(., function(necdf) {
@@ -134,7 +145,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
       ) %>%
         `class<-`(c("mortaar_life_table_list", class(.))) %>%
         return()
-  # list of data.frames input:
+  # single data.frame input:
   } else {
     necdf <- neclist[[1]]
     vars <- colnames(necdf)[colnames(necdf) %in% okvars]
