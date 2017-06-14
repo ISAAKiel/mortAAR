@@ -100,7 +100,7 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   }
   out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n=",round(sum(x$Dx),2)," individuals)",sep = "")
 
-  out_str$e0 <- paste("\n","Life expectation at birth (e0): ",round(x$ex[1],3), sep = "")
+  out_str$e0 <- paste("\n","Life expectancy at birth (e0): ",round(x$ex[1],3), sep = "")
 
   out_table <- data.frame(x)
   numeric_cols <- sapply(out_table, is.numeric)
