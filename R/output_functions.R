@@ -296,13 +296,13 @@ plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "rel_popx"),
 
 mortaar_plot_qx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="qx",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("survivorship")
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("survivorship (qx)")
   methods::show(my_plot)
 }
 
 mortaar_plot_ex_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="ex",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("mortality rate (ex)")
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("life expectancy (ex)")
   methods::show(my_plot)
 }
 
@@ -336,7 +336,7 @@ mortaar_plot_qx <- function(x, lty=1, ...) {
 
 mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
-  plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="mortality rate (qx)", xaxt="n")
+  plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="survivorship (qx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
   legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
