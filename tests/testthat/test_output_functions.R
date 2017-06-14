@@ -16,7 +16,7 @@ test_that("a mortaar_life_table_list identifies correctly", {
 context("format.mortaar_life_table_list")
 
 test_that("format is delegated to format.mortaar_life_table_list on a mortaar_life_table_list", {
-  expect_match(format(a_live_table), "Mortaar")
+  expect_match(format(a_live_table), "mortAAR")
 })
 
 test_that("format.mortaar_life_table_list returns a character string", {
@@ -30,7 +30,7 @@ test_that("format.mortaar_life_table_list returns no output", {
 context("format.mortaar_life_table")
 
 test_that("format is delegated to format.mortaar_life_table on a mortaar_life_table", {
-  expect_match(format(a_live_table$schleswig_ma), "Mortaar")
+  expect_match(format(a_live_table$schleswig_ma), "mortAAR")
 })
 
 test_that("format.mortaar_life_table returns a character string", {
@@ -44,7 +44,7 @@ test_that("format.mortaar_life_table returns no output", {
 context("print.mortaar_life_table")
 
 test_that("print is delegated to print.mortaar_life_table on a mortaar_life_table", {
-  expect_output(print(a_live_table$schleswig_ma), "Mortaar")
+  expect_output(print(a_live_table$schleswig_ma), "mortAAR")
 })
 
 # test_that("print outputs correctly", {
@@ -58,7 +58,7 @@ test_that("print is delegated to print.mortaar_life_table on a mortaar_life_tabl
 context("print.mortaar_life_table_list")
 
 test_that("print is delegated to print.mortaar_life_table_list on a mortaar_life_table_list", {
-  expect_output(print(a_live_table), "Mortaar")
+  expect_output(print(a_live_table), "mortAAR")
 })
 
 # test_that("print outputs correctly", {
