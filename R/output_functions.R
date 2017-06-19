@@ -135,7 +135,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'
 #' @param x a mortaar_life_table
 #' @param display which plots to show. These must include some of the
-#' alternatives \code{qx} for survivorship, \code{ex} for mortality rate
+#' alternatives \code{qx} for probability of death, \code{ex} for mortality rate
 #' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
@@ -222,7 +222,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "ex", "rel_popx")
 #'
 #' @param x a mortaar_life_table_list
 #' @param display which plots to show. These must include some of the
-#' alternatives \code{qx} for survivorship, \code{ex} for mortality rate
+#' alternatives \code{qx} for probability of death, \code{ex} for mortality rate
 #' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
@@ -324,7 +324,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "ex", "rel_p
 
 mortaar_plot_qx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="qx",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("survivorship (qx)")
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("probability of death (qx)")
   methods::show(my_plot)
 }
 
@@ -370,15 +370,15 @@ mortaar_plot_dx <- function(x, lty=1, ...) {
 
 mortaar_plot_dx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
-  plot(my_x,x$dx, xlab="age of individuals", ylab="qx",type="n", main="proportion of deaths (dx)", xaxt="n")
+  plot(my_x,x$dx, xlab="age of individuals", ylab="dx",type="n", main="proportion of deaths (dx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
   legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
 }
 
-#'plots mortality rate qx for a single life table
+#'plots probability of death qx for a single life table
 #'
-#'plots mortality rate qx for a single life table
+#'plots probability of death qx for a single life table
 #'
 #'@param x an object of the class mortaar_life_table
 #'@param lty line type defaults to 1
@@ -389,9 +389,9 @@ mortaar_plot_qx <- function(x, lty=1, ...) {
   lines(my_x,x$qx, lty=lty)
 }
 
-#'plots coordinate system for mortality rate qx for a single life table
+#'plots coordinate system for probability of death qx for a single life table
 #'
-#'plots coordinate system for mortality rate qx for a single life table
+#'plots coordinate system for probability of death qx for a single life table
 #'
 #'@param x an object of the class mortaar_life_table
 #'@param my_subsets a vector of categories from sublist of mortaar_life_table
@@ -400,7 +400,7 @@ mortaar_plot_qx <- function(x, lty=1, ...) {
 
 mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
-  plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="survivorship (qx)", xaxt="n")
+  plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="probability of death (qx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
   legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
