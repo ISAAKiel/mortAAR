@@ -135,7 +135,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'
 #' @param x a mortaar_life_table
 #' @param display which plots to show. These must include some of the
-#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{ex} for mortality rate
+#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
 #' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
@@ -162,7 +162,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'@importFrom graphics axis grid legend lines par plot
 #'
 #' @export
-plot.mortaar_life_table <- function(x, display = c("dx", "qx", "ex", "rel_popx"), ...) {
+plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), ...) {
   ask_before = par()$ask
   par(ask=T)
   n <- sum(x$Dx)
@@ -190,6 +190,16 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "ex", "rel_popx")
     } else {
       mortaar_plot_qx_frame(x, my_subsets, n=n, ...)
       mortaar_plot_qx(x, ...)
+      grid()
+    }
+  }
+  # Plot lx
+  if ("lx" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_lx_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_lx_frame(x, my_subsets, n=n, ...)
+      mortaar_plot_lx(x, ...)
       grid()
     }
   }
@@ -222,7 +232,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "ex", "rel_popx")
 #'
 #' @param x a mortaar_life_table_list
 #' @param display which plots to show. These must include some of the
-#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{ex} for mortality rate
+#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
 #' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
@@ -249,7 +259,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "ex", "rel_popx")
 #' @importFrom reshape2 melt
 #'
 #' @export
-plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "ex", "rel_popx"),...){
+plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"),...){
   ask_before = par()$ask
   par(ask=T)
   my_subsets <- names(x)
@@ -284,6 +294,23 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "ex", "rel_p
       mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
       for(i in 1:length(x)){
         mortaar_plot_qx(x[[i]],lty=i, ...)
+      }
+      grid()
+    }
+  }
+  # Plot lx
+  if ("lx" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      my_x <- reshape2::melt(x,id="a",measure.vars=c("lx"))
+      colnames(my_x) <- c("a", "variable", "lx", "dataset")
+      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+    }
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_lx_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_lx_frame(x[[1]], my_subsets, n, ...)
+      for(i in 1:length(x)){
+        mortaar_plot_lx(x[[i]],lty=i, ...)
       }
       grid()
     }
@@ -331,6 +358,12 @@ mortaar_plot_qx_ggplot <- function(x, ...) {
 mortaar_plot_dx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="dx",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("dx") + ggplot2::ggtitle("proportion of deaths (dx)")
+  methods::show(my_plot)
+}
+
+mortaar_plot_lx_ggplot <- function(x, ...) {
+  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="lx",lty="dataset"))
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("lx") + ggplot2::ggtitle("survivorship (lx)")
   methods::show(my_plot)
 }
 
@@ -406,9 +439,39 @@ mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
   legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
 }
 
-#'plots mortality rate ex for a single life table
+#'plots survivorship lx for a single life table
 #'
-#'plots mortality rate ex for a single life table
+#'plots survivorship lx for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param lty line type defaults to 1
+#'@param ... further arguments passed to the print function
+
+mortaar_plot_lx <- function(x, lty=1, ...) {
+  my_x=cumsum(x$a)
+  lines(my_x,x$lx, lty=lty)
+}
+
+#'plots coordinate system for survivorship lx for a single life table
+#'
+#'plots coordinate system for survivorship lx for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param my_subsets a vector of categories from sublist of mortaar_life_table
+#'@param n number of individuals
+#'@param ... further arguments passed to the print function
+
+mortaar_plot_lx_frame <- function(x, my_subsets="", n,...) {
+  my_x=cumsum(x$a)
+  plot(my_x,x$lx, xlab="age of individuals", ylab="lx",type="n", main="survivorship (lx)", xaxt="n")
+  my_ticks = seq(0,ceiling(max(my_x)),by=5)
+  axis(1,at=my_ticks, labels=my_ticks)
+  legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
+}
+
+#'plots life expectancy ex for a single life table
+#'
+#'plots life expectancy ex for a single life table
 #'
 #'@param x an object of the class mortaar_life_table
 #'@param lty line type defaults to 1
@@ -418,9 +481,9 @@ mortaar_plot_ex <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$ex, lty=lty)
 }
-#'plots coordinate system for mortality rate ex for a single life table
+#'plots coordinate system for life expectancy ex for a single life table
 #'
-#'plots coordinate system for mortality rate ex for a single life table
+#'plots coordinate system for life expectancy ex for a single life table
 #'
 #'@param x an object of the class mortaar_life_table
 #'@param my_subsets a vector of categories from sublist of mortaar_life_table
