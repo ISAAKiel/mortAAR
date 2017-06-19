@@ -135,7 +135,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'
 #' @param x a mortaar_life_table
 #' @param display which plots to show. These must include some of the
-#' alternatives \code{qx} for probability of death, \code{ex} for mortality rate
+#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{ex} for mortality rate
 #' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
@@ -222,7 +222,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "ex", "rel_popx")
 #'
 #' @param x a mortaar_life_table_list
 #' @param display which plots to show. These must include some of the
-#' alternatives \code{qx} for probability of death, \code{ex} for mortality rate
+#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{ex} for mortality rate
 #' and \code{rel_popx} for population age structure.
 #' @param ... further arguments passed to or from other methods.
 #'
