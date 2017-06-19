@@ -162,7 +162,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'@importFrom graphics axis grid legend lines par plot
 #'
 #' @export
-plot.mortaar_life_table <- function(x, display = c("qx", "ex", "rel_popx"), ...) {
+plot.mortaar_life_table <- function(x, display = c("dx", "qx", "ex", "rel_popx"), ...) {
   ask_before = par()$ask
   par(ask=T)
   n <- sum(x$Dx)
@@ -171,6 +171,17 @@ plot.mortaar_life_table <- function(x, display = c("qx", "ex", "rel_popx"), ...)
     my_x <- x
     my_x$dataset <- my_subsets
     my_x$a <- cumsum(my_x$a)
+  }
+
+  # Plot dx
+  if ("dx" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_dx_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_dx_frame(x, my_subsets, n=n, ...)
+      mortaar_plot_dx(x, ...)
+      grid()
+    }
   }
   # Plot qx
   if ("qx" %in% display) {
@@ -238,11 +249,28 @@ plot.mortaar_life_table <- function(x, display = c("qx", "ex", "rel_popx"), ...)
 #' @importFrom reshape2 melt
 #'
 #' @export
-plot.mortaar_life_table_list <- function(x, display = c("qx", "ex", "rel_popx"),...){
+plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "ex", "rel_popx"),...){
   ask_before = par()$ask
   par(ask=T)
   my_subsets <- names(x)
   n <- unlist(lapply(x, function(x){sum(x$Dx)}))
+  # Plot qx
+  if ("dx" %in% display) {
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      my_x <- reshape2::melt(x,id="a",measure.vars=c("dx"))
+      colnames(my_x) <- c("a", "variable", "dx", "dataset")
+      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+    }
+    if (requireNamespace("ggplot2", quietly = TRUE)) {
+      mortaar_plot_dx_ggplot(my_x, ...)
+    } else {
+      mortaar_plot_dx_frame(x[[1]], my_subsets, n, ...)
+      for(i in 1:length(x)){
+        mortaar_plot_dx(x[[i]],lty=i, ...)
+      }
+      grid()
+    }
+  }
   # Plot qx
   if ("qx" %in% display) {
     if (requireNamespace("ggplot2", quietly = TRUE)) {
@@ -300,6 +328,12 @@ mortaar_plot_qx_ggplot <- function(x, ...) {
   methods::show(my_plot)
 }
 
+mortaar_plot_dx_ggplot <- function(x, ...) {
+  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="dx",lty="dataset"))
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("dx") + ggplot2::ggtitle("proportion of deaths (dx)")
+  methods::show(my_plot)
+}
+
 mortaar_plot_ex_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="ex",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("life expectancy (ex)")
@@ -310,6 +344,36 @@ mortaar_plot_rel_popx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="rel_popx",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("rel_popx") + ggplot2::ggtitle("population age structure (rel_popx)")
   methods::show(my_plot)
+}
+
+#'plots proportion of deaths dx for a single life table
+#'
+#'plots proportion of deaths dx for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param lty line type defaults to 1
+#'@param ... further arguments passed to the print function
+
+mortaar_plot_dx <- function(x, lty=1, ...) {
+  my_x=cumsum(x$a)
+  lines(my_x,x$dx, lty=lty)
+}
+
+#'plots coordinate system for proportion of deaths dx for a single life table
+#'
+#'plots coordinate system for proportion of deaths dx for a single life table
+#'
+#'@param x an object of the class mortaar_life_table
+#'@param my_subsets a vector of categories from sublist of mortaar_life_table
+#'@param n number of individuals
+#'@param ... further arguments passed to the print function
+
+mortaar_plot_dx_frame <- function(x, my_subsets="", n,...) {
+  my_x=cumsum(x$a)
+  plot(my_x,x$dx, xlab="age of individuals", ylab="qx",type="n", main="proportion of deaths (dx)", xaxt="n")
+  my_ticks = seq(0,ceiling(max(my_x)),by=5)
+  axis(1,at=my_ticks, labels=my_ticks)
+  legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
 }
 
 #'plots mortality rate qx for a single life table
