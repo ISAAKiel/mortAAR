@@ -152,7 +152,6 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
     life.table.df(
       necdf[,vars], agecor = agecor, agecorfac = agecorfac
     ) %>%
-      `class<-`(c("mortaar_life_table", class(.))) %>%
       return()
   }
 }
