@@ -2,7 +2,7 @@
 % Please edit documentation in R/output_functions.R
 \name{mortaar_plot_qx}
 \alias{mortaar_plot_qx}
-\title{plots mortality rate qx for a single life table}
+\title{plots probability of death qx for a single life table}
 \usage{
 mortaar_plot_qx(x, lty = 1, ...)
 }
@@ -14,5 +14,5 @@ mortaar_plot_qx(x, lty = 1, ...)
 \item{...}{further arguments passed to the print function}
 }
 \description{
-plots mortality rate qx for a single life table
+plots probability of death qx for a single life table
 }

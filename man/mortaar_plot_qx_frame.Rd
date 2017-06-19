@@ -2,7 +2,7 @@
 % Please edit documentation in R/output_functions.R
 \name{mortaar_plot_qx_frame}
 \alias{mortaar_plot_qx_frame}
-\title{plots coordinate system for mortality rate qx for a single life table}
+\title{plots coordinate system for probability of death qx for a single life table}
 \usage{
 mortaar_plot_qx_frame(x, my_subsets = "", n, ...)
 }
@@ -16,5 +16,5 @@ mortaar_plot_qx_frame(x, my_subsets = "", n, ...)
 \item{...}{further arguments passed to the print function}
 }
 \description{
-plots coordinate system for mortality rate qx for a single life table
+plots coordinate system for probability of death qx for a single life table
 }
