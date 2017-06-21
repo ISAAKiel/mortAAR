@@ -80,3 +80,13 @@ test_that("plot produces no error", {
   expect_error(plot( a_live_table, display = "ex" ), NA)
   expect_error(plot( a_live_table, display = "rel_popx" ), NA)
 })
+
+context("plot.mortaar_life_table")
+
+test_that("plot produces no error", {
+  expect_error(plot( a_live_table$schleswig_ma, display = "dx" ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "qx" ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "lx" ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "ex" ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "rel_popx" ), NA)
+})
