@@ -266,6 +266,15 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 #'
 #' @export
 plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), prefer.ggplot=TRUE, ...){
+
+  # check if grname attribute is present to pass it on for plot legend title
+  grnam <- attributes(x)$grnam
+  if(is.null(grnam) %>% `!`) {
+    grnam_flag <- attributes(x)$grnam %>% is.na %>% `!`
+  } else {
+    grnam_flag <- FALSE
+  }
+
   ask_before = par()$ask
 
   if(length(display)>1) {
@@ -274,7 +283,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
 
   my_subsets <- names(x)
   n <- unlist(lapply(x, function(x){sum(x$Dx)}))
-  # Plot qx
+  # Plot dx
   if ("dx" %in% display) {
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       my_x <- reshape2::melt(x,id="a",measure.vars=c("dx"))
@@ -282,6 +291,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
     }
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
+      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
       mortaar_plot_dx_ggplot(my_x, ...)
     } else {
       mortaar_plot_dx_frame(x[[1]], my_subsets, n, ...)
@@ -299,6 +309,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
     }
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
+      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
       mortaar_plot_qx_ggplot(my_x, ...)
     } else {
       mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
@@ -316,6 +327,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
     }
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
+      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
       mortaar_plot_lx_ggplot(my_x, ...)
     } else {
       mortaar_plot_lx_frame(x[[1]], my_subsets, n, ...)
@@ -331,6 +343,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
       my_x <- reshape2::melt(x,id="a",measure.vars=c("ex"))
       colnames(my_x) <- c("a", "variable", "ex", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
       mortaar_plot_ex_ggplot(my_x, ...)
     } else {
       mortaar_plot_ex_frame(x[[1]], my_subsets, n, ...)
@@ -346,6 +359,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
       my_x <- reshape2::melt(x,id="a",measure.vars=c("rel_popx"))
       colnames(my_x) <- c("a", "variable", "rel_popx", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
       mortaar_plot_rel_popx_ggplot(my_x, ...)
     } else {
       mortaar_plot_rel_popx_frame(x[[1]], my_subsets, n, ...)
@@ -362,30 +376,55 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
 mortaar_plot_qx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="qx",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("probability of death (qx)")
+
+  # check if grname attribute is present to pass it on for plot legend title
+  grnam <- attributes(x)$grnam
+  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
+
   methods::show(my_plot)
 }
 
 mortaar_plot_dx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="dx",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("dx") + ggplot2::ggtitle("proportion of deaths (dx)")
+
+  # check if grname attribute is present to pass it on for plot legend title
+  grnam <- attributes(x)$grnam
+  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
+
   methods::show(my_plot)
 }
 
 mortaar_plot_lx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="lx",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("lx") + ggplot2::ggtitle("survivorship (lx)")
+
+  # check if grname attribute is present to pass it on for plot legend title
+  grnam <- attributes(x)$grnam
+  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
+
   methods::show(my_plot)
 }
 
 mortaar_plot_ex_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="ex",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("life expectancy (ex)")
+
+  # check if grname attribute is present to pass it on for plot legend title
+  grnam <- attributes(x)$grnam
+  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
+
   methods::show(my_plot)
 }
 
 mortaar_plot_rel_popx_ggplot <- function(x, ...) {
   my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="rel_popx",lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("rel_popx") + ggplot2::ggtitle("population age structure (rel_popx)")
+
+  # check if grname attribute is present to pass it on for plot legend title
+  grnam <- attributes(x)$grnam
+  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
+
   methods::show(my_plot)
 }
 
