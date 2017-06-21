@@ -137,6 +137,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #' @param display which plots to show. These must include some of the
 #' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
 #' and \code{rel_popx} for population age structure.
+#' @param prefer.ggplot should ggplot be preferred if available, default to TRUE
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -162,7 +163,7 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #'@importFrom graphics axis grid legend lines par plot
 #'
 #' @export
-plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), ...) {
+plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), prefer.ggplot=TRUE, ...) {
   ask_before = par()$ask
 
   if(length(display)>1) {
@@ -171,7 +172,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 
   n <- sum(x$Dx)
   my_subsets = "data set"
-  if (requireNamespace("ggplot2", quietly = TRUE)) {
+  if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
     my_x <- x
     my_x$dataset <- my_subsets
     my_x$a <- cumsum(my_x$a)
@@ -179,7 +180,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 
   # Plot dx
   if ("dx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_dx_ggplot(my_x, ...)
     } else {
       mortaar_plot_dx_frame(x, my_subsets, n=n, ...)
@@ -189,7 +190,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
   }
   # Plot qx
   if ("qx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_qx_ggplot(my_x, ...)
     } else {
       mortaar_plot_qx_frame(x, my_subsets, n=n, ...)
@@ -199,7 +200,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
   }
   # Plot lx
   if ("lx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_lx_ggplot(my_x, ...)
     } else {
       mortaar_plot_lx_frame(x, my_subsets, n=n, ...)
@@ -209,7 +210,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
   }
   # Plot ex
   if ("ex" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_ex_ggplot(my_x, ...)
     } else {
       mortaar_plot_ex_frame(x, my_subsets, n=n,...)
@@ -219,7 +220,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
   }
   # Plot rel_popx
   if ("rel_popx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_rel_popx_ggplot(my_x, ...)
     } else {
       mortaar_plot_rel_popx_frame(x, my_subsets, n=n,...)
@@ -238,6 +239,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 #' @param display which plots to show. These must include some of the
 #' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
 #' and \code{rel_popx} for population age structure.
+#' @param prefer.ggplot should ggplot be preferred if available, default to TRUE
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -263,7 +265,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 #' @importFrom reshape2 melt
 #'
 #' @export
-plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"),...){
+plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), prefer.ggplot=TRUE, ...){
   ask_before = par()$ask
 
   if(length(display)>1) {
@@ -274,12 +276,12 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
   n <- unlist(lapply(x, function(x){sum(x$Dx)}))
   # Plot qx
   if ("dx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       my_x <- reshape2::melt(x,id="a",measure.vars=c("dx"))
       colnames(my_x) <- c("a", "variable", "dx", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
     }
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_dx_ggplot(my_x, ...)
     } else {
       mortaar_plot_dx_frame(x[[1]], my_subsets, n, ...)
@@ -291,12 +293,12 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
   }
   # Plot qx
   if ("qx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       my_x <- reshape2::melt(x,id="a",measure.vars=c("qx"))
       colnames(my_x) <- c("a", "variable", "qx", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
     }
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_qx_ggplot(my_x, ...)
     } else {
       mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
@@ -308,12 +310,12 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
   }
   # Plot lx
   if ("lx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       my_x <- reshape2::melt(x,id="a",measure.vars=c("lx"))
       colnames(my_x) <- c("a", "variable", "lx", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
     }
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       mortaar_plot_lx_ggplot(my_x, ...)
     } else {
       mortaar_plot_lx_frame(x[[1]], my_subsets, n, ...)
@@ -325,7 +327,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
   }
   # Plot ex
   if ("ex" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       my_x <- reshape2::melt(x,id="a",measure.vars=c("ex"))
       colnames(my_x) <- c("a", "variable", "ex", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
@@ -340,7 +342,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
   }
   # Plot rel_popx
   if ("rel_popx" %in% display) {
-    if (requireNamespace("ggplot2", quietly = TRUE)) {
+    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
       my_x <- reshape2::melt(x,id="a",measure.vars=c("rel_popx"))
       colnames(my_x) <- c("a", "variable", "rel_popx", "dataset")
       my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))

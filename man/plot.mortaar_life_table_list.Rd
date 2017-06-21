@@ -5,7 +5,7 @@
 \title{Plot a mortaar_life_table_list}
 \usage{
 \method{plot}{mortaar_life_table_list}(x, display = c("dx", "qx", "lx", "ex",
-  "rel_popx"), ...)
+  "rel_popx"), prefer.ggplot = TRUE, ...)
 }
 \arguments{
 \item{x}{a mortaar_life_table_list}
@@ -13,6 +13,8 @@
 \item{display}{which plots to show. These must include some of the
 alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
 and \code{rel_popx} for population age structure.}
+
+\item{prefer.ggplot}{should ggplot be preferred if available, default to TRUE}
 
 \item{...}{further arguments passed to or from other methods.}
 }
