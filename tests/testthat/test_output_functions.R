@@ -90,3 +90,48 @@ test_that("plot produces no error", {
   expect_error(plot( a_live_table$schleswig_ma, display = "ex" ), NA)
   expect_error(plot( a_live_table$schleswig_ma, display = "rel_popx" ), NA)
 })
+
+test_that("plot individual life table dx system graphics produces no error", {
+  x <- a_live_table$schleswig_ma
+  n <- sum(x$Dx)
+  my_subsets = "data set"
+
+  expect_error(mortAAR:::mortaar_plot_dx_frame(x, my_subsets, n=n), NA)
+  expect_error(mortAAR:::mortaar_plot_dx(x), NA)
+})
+
+test_that("plot individual life table qx system graphics produces no error", {
+  x <- a_live_table$schleswig_ma
+  n <- sum(x$Dx)
+  my_subsets = "data set"
+
+  expect_error(mortAAR:::mortaar_plot_qx_frame(x, my_subsets, n=n), NA)
+  expect_error(mortAAR:::mortaar_plot_qx(x), NA)
+})
+
+test_that("plot individual life table lx system graphics produces no error", {
+  x <- a_live_table$schleswig_ma
+  n <- sum(x$Dx)
+  my_subsets = "data set"
+
+  expect_error(mortAAR:::mortaar_plot_lx_frame(x, my_subsets, n=n), NA)
+  expect_error(mortAAR:::mortaar_plot_lx(x), NA)
+})
+
+test_that("plot individual life table ex system graphics produces no error", {
+  x <- a_live_table$schleswig_ma
+  n <- sum(x$Dx)
+  my_subsets = "data set"
+
+  expect_error(mortAAR:::mortaar_plot_ex_frame(x, my_subsets, n=n), NA)
+  expect_error(mortAAR:::mortaar_plot_ex(x), NA)
+})
+
+test_that("plot individual life table rel_popx system graphics produces no error", {
+  x <- a_live_table$schleswig_ma
+  n <- sum(x$Dx)
+  my_subsets = "data set"
+
+  expect_error(mortAAR:::mortaar_plot_rel_popx_frame(x, my_subsets, n=n), NA)
+  expect_error(mortAAR:::mortaar_plot_rel_popx(x), NA)
+})
