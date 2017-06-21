@@ -9,6 +9,20 @@ context("prep.life.table")
 a_example_raw_dataset <- read.csv("Siedlungsbestattungen_ueberblick_for_prep_function.csv")
 load("siedlungsbestattungen_importiert.rda")
 
+test_that("prep.life.table excludes the max of the age ranges when age.range = 'excluded'", {
+  expect_equal(
+    max(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert", age.range = "excluded")$All$Age),
+  65
+  )
+})
+
+test_that("prep.life.table includes the max of the age ranges when age.range = 'included'", {
+  expect_equal(
+    max(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert", age.range = "included")$All$Age),
+    70
+  )
+})
+
 test_that("prep.life.table imports a data set correct", {
   expect_equal(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert"), prep_output)
 })
