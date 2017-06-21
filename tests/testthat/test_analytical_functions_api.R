@@ -35,3 +35,7 @@ test_that("life.table warns if more then the necessary columns are in the input 
   a_wrong_input_dataset <- data.frame(a = 1:10, Dx = 1:10, c= 1:10)
   expect_warning(life.table(a_wrong_input_dataset), "Note that these additional columns will be dropped in the output.")
 })
+
+test_that("given column x life.table produces column x_auto", {
+  expect_true("x_auto" %in% colnames(life.table(data.frame(x=1:10, a = 1:10, Dx = 1:10))))
+})
