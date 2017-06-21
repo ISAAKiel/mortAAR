@@ -89,6 +89,10 @@ test_that("plot with system graphics produces no error", {
   expect_error(plot( a_live_table, display = "rel_popx", prefer.ggplot=FALSE ), NA)
 })
 
+test_that("plot life table list produces no error", {
+  expect_error(plot( a_live_table) , NA)
+})
+
 context("plot.mortaar_life_table")
 
 test_that("plot produces no error", {
@@ -150,4 +154,8 @@ test_that("plot individual life table rel_popx system graphics produces no error
 
   expect_error(mortAAR:::mortaar_plot_rel_popx_frame(x, my_subsets, n=n), NA)
   expect_error(mortAAR:::mortaar_plot_rel_popx(x), NA)
+})
+
+test_that("plot individual life table produces no error", {
+    expect_error(plot( a_live_table$schleswig_ma) , NA)
 })
