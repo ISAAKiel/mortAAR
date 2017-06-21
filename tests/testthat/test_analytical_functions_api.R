@@ -39,3 +39,10 @@ test_that("life.table warns if more then the necessary columns are in the input 
 test_that("given column x life.table produces column x_auto", {
   expect_true("x_auto" %in% colnames(life.table(data.frame(x=1:10, a = 1:10, Dx = 1:10))))
 })
+
+test_that("life.table warns if more age correction values than age classes are given", {
+  expect_message(
+    suppressWarnings(life.table(data.frame(x=1:10, a = 1:10, Dx = 1:10), agecorfac = 1:11)),
+                 "There can not be more age correction factors")
+})
+
