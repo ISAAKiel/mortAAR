@@ -164,7 +164,11 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #' @export
 plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), ...) {
   ask_before = par()$ask
-  par(ask=T)
+
+  if(length(display)>1) {
+    par(ask=T)
+  }
+
   n <- sum(x$Dx)
   my_subsets = "data set"
   if (requireNamespace("ggplot2", quietly = TRUE)) {
@@ -261,7 +265,11 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 #' @export
 plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"),...){
   ask_before = par()$ask
-  par(ask=T)
+
+  if(length(display)>1) {
+    par(ask=T)
+  }
+
   my_subsets <- names(x)
   n <- unlist(lapply(x, function(x){sum(x$Dx)}))
   # Plot qx
