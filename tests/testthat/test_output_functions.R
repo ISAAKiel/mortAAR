@@ -81,6 +81,14 @@ test_that("plot produces no error", {
   expect_error(plot( a_live_table, display = "rel_popx" ), NA)
 })
 
+test_that("plot with system graphics produces no error", {
+  expect_error(plot( a_live_table, display = "dx", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table, display = "qx", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table, display = "lx", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table, display = "ex", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table, display = "rel_popx", prefer.ggplot=FALSE ), NA)
+})
+
 context("plot.mortaar_life_table")
 
 test_that("plot produces no error", {
@@ -89,6 +97,14 @@ test_that("plot produces no error", {
   expect_error(plot( a_live_table$schleswig_ma, display = "lx" ), NA)
   expect_error(plot( a_live_table$schleswig_ma, display = "ex" ), NA)
   expect_error(plot( a_live_table$schleswig_ma, display = "rel_popx" ), NA)
+})
+
+test_that("plot with system graphics produces no error", {
+  expect_error(plot( a_live_table$schleswig_ma, display = "dx", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "qx", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "lx", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "ex", prefer.ggplot=FALSE ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "rel_popx", prefer.ggplot=FALSE ), NA)
 })
 
 test_that("plot individual life table dx system graphics produces no error", {
