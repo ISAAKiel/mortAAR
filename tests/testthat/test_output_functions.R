@@ -66,3 +66,17 @@ test_that("print is delegated to print.mortaar_life_table_list on a mortaar_life
 #   expect_output(print(this_life_table), "Mortaar life table for feschleswig_ma of 1 individuals")
 #   expect_output(print(this_life_table), "Mortaar life table for indet of 1 individuals")
 # })
+
+## Plots
+
+# Dummy test for plots
+
+context("plot.mortaar_life_table_list")
+
+test_that("plot produces no error", {
+  expect_error(plot( a_live_table, display = "dx" ), NA)
+  expect_error(plot( a_live_table, display = "qx" ), NA)
+  expect_error(plot( a_live_table, display = "lx" ), NA)
+  expect_error(plot( a_live_table, display = "ex" ), NA)
+  expect_error(plot( a_live_table, display = "rel_popx" ), NA)
+})
