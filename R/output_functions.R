@@ -96,9 +96,10 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   out_str <- list()
   class_of_deceased_str <- ""
   if (!is.null(class_of_deceased)) {
-    class_of_deceased_str <- paste(" for", class_of_deceased)
+    grnam <- attr(x,'grname')
+    class_of_deceased_str <- paste(" for ", grnam, ":", class_of_deceased, sep = "")
   }
-  out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n=",round(sum(x$Dx),2)," individuals)",sep = "")
+  out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n = ",round(sum(x$Dx),2)," individuals)",sep = "")
 
   out_str$e0 <- paste("\n","Life expectancy at birth (e0): ",round(x$ex[1],3), sep = "")
 
