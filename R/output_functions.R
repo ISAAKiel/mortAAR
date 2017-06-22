@@ -170,61 +170,25 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
     par(ask=T)
   }
 
+  variable_labels <- make_variable_labels()
+
   n <- sum(x$Dx)
   my_subsets = "data set"
-  if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
+  #if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
     my_x <- x
     my_x$dataset <- my_subsets
     my_x$a <- cumsum(my_x$a)
-  }
+    my_x<-list(dataset=my_x)
+  #}
 
-  # Plot dx
-  if ("dx" %in% display) {
+  for (i in 1:length(display)) {
+    this_variable <- display[i]
+
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      mortaar_plot_dx_ggplot(my_x, ...)
+      make_ggplot(my_x,this_variable, variable_labels)
     } else {
-      mortaar_plot_dx_frame(x, my_subsets, n=n, ...)
-      mortaar_plot_dx(x, ...)
-      grid()
-    }
-  }
-  # Plot qx
-  if ("qx" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      mortaar_plot_qx_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_qx_frame(x, my_subsets, n=n, ...)
-      mortaar_plot_qx(x, ...)
-      grid()
-    }
-  }
-  # Plot lx
-  if ("lx" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      mortaar_plot_lx_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_lx_frame(x, my_subsets, n=n, ...)
-      mortaar_plot_lx(x, ...)
-      grid()
-    }
-  }
-  # Plot ex
-  if ("ex" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      mortaar_plot_ex_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_ex_frame(x, my_subsets, n=n,...)
-      mortaar_plot_ex(x, ...)
-      grid()
-    }
-  }
-  # Plot rel_popx
-  if ("rel_popx" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      mortaar_plot_rel_popx_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_rel_popx_frame(x, my_subsets, n=n,...)
-      mortaar_plot_rel_popx(x, ...)
+      eval(parse(text=paste("mortaar_plot_", this_variable, "_frame(my_x[[1]], my_subsets, n)", sep="")))
+      eval(parse(text=paste("mortaar_plot_", this_variable, "(my_x[[1]], lty=i)", sep="")))
       grid()
     }
   }
@@ -266,165 +230,53 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 #'
 #' @export
 plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), prefer.ggplot=TRUE, ...){
-
-  # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(x)$grnam
-  if(is.null(grnam) %>% `!`) {
-    grnam_flag <- attributes(x)$grnam %>% is.na %>% `!`
-  } else {
-    grnam_flag <- FALSE
-  }
-
   ask_before = par()$ask
 
   if(length(display)>1) {
     par(ask=T)
   }
 
+  variable_labels <- make_variable_labels()
+
   my_subsets <- names(x)
   n <- unlist(lapply(x, function(x){sum(x$Dx)}))
-  # Plot dx
-  if ("dx" %in% display) {
+  for (i in 1:length(display)) {
+    this_variable <- display[i]
+
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      my_x <- reshape2::melt(x,id="a",measure.vars=c("dx"))
-      colnames(my_x) <- c("a", "variable", "dx", "dataset")
-      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-    }
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
-      mortaar_plot_dx_ggplot(my_x, ...)
+      make_ggplot(x,this_variable, variable_labels)
     } else {
-      mortaar_plot_dx_frame(x[[1]], my_subsets, n, ...)
-      for(i in 1:length(x)){
-        mortaar_plot_dx(x[[i]],lty=i, ...)
-      }
-      grid()
-    }
-  }
-  # Plot qx
-  if ("qx" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      my_x <- reshape2::melt(x,id="a",measure.vars=c("qx"))
-      colnames(my_x) <- c("a", "variable", "qx", "dataset")
-      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-    }
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
-      mortaar_plot_qx_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_qx_frame(x[[1]], my_subsets, n, ...)
-      for(i in 1:length(x)){
-        mortaar_plot_qx(x[[i]],lty=i, ...)
-      }
-      grid()
-    }
-  }
-  # Plot lx
-  if ("lx" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      my_x <- reshape2::melt(x,id="a",measure.vars=c("lx"))
-      colnames(my_x) <- c("a", "variable", "lx", "dataset")
-      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-    }
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
-      mortaar_plot_lx_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_lx_frame(x[[1]], my_subsets, n, ...)
-      for(i in 1:length(x)){
-        mortaar_plot_lx(x[[i]],lty=i, ...)
-      }
-      grid()
-    }
-  }
-  # Plot ex
-  if ("ex" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      my_x <- reshape2::melt(x,id="a",measure.vars=c("ex"))
-      colnames(my_x) <- c("a", "variable", "ex", "dataset")
-      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
-      mortaar_plot_ex_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_ex_frame(x[[1]], my_subsets, n, ...)
-      for(i in 1:length(x)){
-        mortaar_plot_ex(x[[i]],lty=i, ...)
-      }
-      grid()
-    }
-  }
-  # Plot rel_popx
-  if ("rel_popx" %in% display) {
-    if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      my_x <- reshape2::melt(x,id="a",measure.vars=c("rel_popx"))
-      colnames(my_x) <- c("a", "variable", "rel_popx", "dataset")
-      my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
-      if(grnam_flag) {attr(my_x, "grnam") <- grnam}
-      mortaar_plot_rel_popx_ggplot(my_x, ...)
-    } else {
-      mortaar_plot_rel_popx_frame(x[[1]], my_subsets, n, ...)
-      for(i in 1:length(x)){
-        mortaar_plot_rel_popx(x[[i]],lty=i, ...)
+      eval(parse(text=paste("mortaar_plot_", this_variable, "_frame(x[[1]], my_subsets, n)", sep="")))
+      for(t in 1:length(x)){
+        eval(parse(text=paste("mortaar_plot_", this_variable, "(x[[t]], lty=i)", sep="")))
       }
       grid()
     }
   }
   par(ask=ask_before)
-  # }
 }
 
-mortaar_plot_qx_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="qx",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("qx") + ggplot2::ggtitle("probability of death (qx)")
-
-  # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(x)$grnam
-  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
-
-  methods::show(my_plot)
+make_variable_labels <- function() {
+  variable_labels <- c(
+    "probability of death (qx)",
+    "proportion of deaths (dx)",
+    "survivorship (lx)",
+    "life expectancy (ex)",
+    "population age structure (rel_popx)"
+  )
+  names(variable_labels) <- c("dx", "qx", "lx", "ex", "rel_popx")
+  return(variable_labels)
 }
 
-mortaar_plot_dx_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="dx",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("dx") + ggplot2::ggtitle("proportion of deaths (dx)")
-
+make_ggplot <- function(data, variable_name, variable_labels) {
+  my_x <- reshape2::melt(data,id="a",measure.vars=c(variable_name))
+  colnames(my_x) <- c("a", "variable", variable_name, "dataset")
+  my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+  my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name,lty="dataset"))
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab(variable_name) + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
   # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(x)$grnam
+  grnam <- attributes(data)$grnam
   if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
-
-  methods::show(my_plot)
-}
-
-mortaar_plot_lx_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="lx",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("lx") + ggplot2::ggtitle("survivorship (lx)")
-
-  # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(x)$grnam
-  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
-
-  methods::show(my_plot)
-}
-
-mortaar_plot_ex_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="ex",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("ex") + ggplot2::ggtitle("life expectancy (ex)")
-
-  # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(x)$grnam
-  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
-
-  methods::show(my_plot)
-}
-
-mortaar_plot_rel_popx_ggplot <- function(x, ...) {
-  my_plot <- ggplot2::ggplot(x, ggplot2::aes_string(x="a",y="rel_popx",lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age of individuals") + ggplot2::ylab("rel_popx") + ggplot2::ggtitle("population age structure (rel_popx)")
-
-  # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(x)$grnam
-  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
-
   methods::show(my_plot)
 }
 
