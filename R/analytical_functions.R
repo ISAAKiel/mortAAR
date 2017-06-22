@@ -143,17 +143,25 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
           necdf[,vars], agecor = agecor, agecorfac = agecorfac)
         }
       ) %>%
-        `class<-`(c("mortaar_life_table_list", class(.))) %>%
-        return()
+        `class<-`(c("mortaar_life_table_list", class(.))) -> res
   # single data.frame input:
   } else {
     necdf <- neclist[[1]]
     vars <- colnames(necdf)[colnames(necdf) %in% okvars]
     life.table.df(
       necdf[,vars], agecor = agecor, agecorfac = agecorfac
-    ) %>%
-      return()
+    ) -> res
   }
+
+  # check if attribute "grname" is present in the input
+  # if yes, add it alos in the output
+  # necessary for nice legend title in plots
+  grnam <- attributes(neclist)$grnam
+  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {
+    attr(res, "grnam") <- grnam
+  }
+
+  return(res)
 }
 
 inputchecks <- function(neclist, okvars) {

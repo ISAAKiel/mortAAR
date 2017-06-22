@@ -154,5 +154,9 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
   }
   names(output)=colnames(output1)[c(-1,-length(colnames(output1)))]
 
+  # add attribute "grname" to output, if grname is available
+  # necessary for nice legend title in plots
+  attr(output, "grnam") <- ifelse(grnam != "NA", grnam, NA)
+
   return(output)
 }
