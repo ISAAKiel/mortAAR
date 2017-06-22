@@ -264,7 +264,7 @@ make_variable_labels <- function() {
     "life expectancy (ex)",
     "population age structure (rel_popx)"
   )
-  names(variable_labels) <- c("dx", "qx", "lx", "ex", "rel_popx")
+  names(variable_labels) <- c("qx", "dx", "lx", "ex", "rel_popx")
   return(variable_labels)
 }
 
