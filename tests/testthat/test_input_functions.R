@@ -7,12 +7,11 @@ test_that("summe replaces NA by 0 and adds up the vectors elementwise", {
 context("prep.life.table")
 
 a_example_raw_dataset <- read.csv("Siedlungsbestattungen_ueberblick_for_prep_function.csv")
-load("siedlungsbestattungen_importiert.rda")
 
 test_that("prep.life.table excludes the max of the age ranges when age.range = 'excluded'", {
   expect_equal(
     max(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert", age.range = "excluded")$All$Age),
-  65
+    65
   )
 })
 
@@ -24,7 +23,13 @@ test_that("prep.life.table includes the max of the age ranges when age.range = '
 })
 
 test_that("prep.life.table imports a data set correct", {
-  expect_equal(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert"), prep_output)
+  example_life_table <- prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert")
+  expect_equal(names(example_life_table),c("Unbestimmt", "Weiblich", "Männlich", "All"))
+  expect_equal(colnames(example_life_table[[1]]),c("Age", "a", "Dx"))
+  expect_equal(diff(example_life_table[[1]]$Age),
+               head(example_life_table[[1]]$a,-1))
+  expect_equal(round(example_life_table[[1]]$Dx,6),
+               c(22.142857, 24.714286, 3.214286, 3.418745, 6.807823, 10.938156, 8.915338, 7.865943, 8.765211, 5.540914, 4.656715, 4.754955, 4.722697, 4.851219, 4.779182, 1.911673))
 })
 
 test_that("prep.life.table method standard is default", {
@@ -32,24 +37,22 @@ test_that("prep.life.table method standard is default", {
                prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert", methode = "Standard"))
 })
 
-load("siedlungsbestattungen_dec_empty.rda")
-
 test_that("prep.life.table works for na dec column", {
-  expect_equal(prep.life.table(a_example_raw_dataset,dec="NA",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert"),
-               prep_output_without_dec)
+  expect_false(prep.life.table(a_example_raw_dataset,dec="NA",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert")$Unbestimmt$Dx[1] ==
+                prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert")$Unbestimmt$Dx[1])
+  expect_equal(round(prep.life.table(a_example_raw_dataset,dec="NA",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert")$Unbestimmt$Dx[1], 6), 0.571429)
 })
 
-load("siedlungsbestattungen_grname_empty.rda")
-
 test_that("prep.life.table imports a data set correct", {
-  expect_equal(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to"),
-               prep_output_without_grname)
+  example_life_table <- prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to")
+  expect_equal(names(example_life_table),
+               "Deceased")
 })
 
 test_that("prep.life.table method Equal5 produced age intervalls all equal 5", {
   expect_true(
     all(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", method="Equal5")[[1]]$a==5)
-)
+  )
 })
 
 test_that("prep.life.table method 3 produced age intervalls all equal 3", {
