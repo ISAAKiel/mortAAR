@@ -20,28 +20,45 @@ summe=function(x,y){
 
 #' Creates the input for the function life.table
 #'
-#' Creates the input for the function life.table. A single individual approach is supported as well
+#' Creates the input for the function life.table. An individual approach is supported as well
 #' as already pooled data (e. g. from an already existing life table). In the latter case, the user
-#' has to specify a numerical variable (dec) which defines the count of each age class. To get from time
-#' spans of individuals or groups of individuals to discrete age classes, the time span is exploded to
-#' single years; the individual values for these years are then pooled together to whichever age
-#' class the user chose initially (via parameter methode). If the data set comprises a grouping variable (e.g., sex),
-#' this can be specified as well (parameter grnam).
+#' has to specify a numerical variable (\code{dec}) which defines the count for each age class.
+#' If no life table exists, this function will process a dataframe including age ranges of
+#' individuals or groups of individuals to discreate age classes. The age range is spread to
+#' single years. \code{agebeg} has to be specified for the beginning of an age range, as well
+#' as \code{ageend} for the end of an age range. These values for single years as to be integrated
+#' accroding to \code{methode} into age classes. If the data set comprises a grouping variable (e.g., sex),
+#' this can be specified with \code{grnam}.
 #'
-#' @param x a dataframe
-#' @param dec Column name of the count of deceased (as character)
-#' @param agebeg Column name of the from field (as character)
-#' @param ageend Column name of the to field (as character)
-#' @param grnam Column name of the grouping field (as character)
-#' @param methode name of the age class determination (as character) Options: "Standard" (default) (1,4,5,5,...), "Equal5" (5,5,...)
-#' @param age.range is ageend included or excluded in the age range: Included means for an age range 20 to 39 that the year 39 is part of this age range. The same result will be obtained by choosing the option excluded, if the data is provided as, for example 20 to 40; excluded is the default
+#' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
+#' @param dec numeric verctor or a column name (as character) of the count of deceased.
+#' @param agebeg numeric verctor or a column name (as character) for the beginning of an age range.
+#' @param ageend numeric verctor or a column name (as character) for the end of an age range.
+#' @param grnam numeric verctor or a column name (as character) of the grouping field (e.g., sex),
+#' optional. Default setup is: \code{NA}.
+#' @param methode character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
+#' up to 4 yeras, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
+#' @param age.range character string, optional. Default setup is: \code{excluded}.
+#' If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
+#' to  prevent overlapping age classes. \code{included} means for an age range 20 to 39 that the year 39 is not doubled.
 #'
-#' @return list as input parameter for the function life.table
+#' @return A list of input parameter needed for the function \code{life.table}.
+#'
+#' \itemize{
+#'   \item \bold{x} or \bold{Age}:  age interval
+#'   \item \bold{a}:  years within x
+#'   \item \bold{Dx}: number of deaths within \bold{x}
+#' }
 #'
 #' @examples
+#' # to separate age ranges in you data set (requires magrittr, dplyr and tidyr)
+#'  df <- dplyr::mutate(tidyr::separate(replace(magdalenenberg, magdalenenberg=="60-x", "60-70"),
+#'          a, c("from", "to")),from = as.numeric(from), to = as.numeric(to))
 #'
-#' #test2=prep.life.table(x=test1,dec="NA",agebeg="from",
-#' #ageend="to",grnam="Geschlecht", methode="Standard")
+#' # apply to a data set containing age ranges
+#'  prep.life.table( df, dec = "Dx", agebeg = "from", ageend = "to",
+#'                     methode = "Standard", age.range = "excluded")
+#'
 #'
 #' @export
 prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.range= "included"){
