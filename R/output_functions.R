@@ -274,6 +274,9 @@ make_ggplot <- function(data, variable_name, variable_labels) {
   my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
   my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name,lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab(variable_name) + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
+  # check if grname attribute is present to pass it on for plot legend title
+  grnam <- attributes(data)$grnam
+  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
   methods::show(my_plot)
 }
 
