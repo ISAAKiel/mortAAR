@@ -19,7 +19,7 @@ In our view, `mortAAR` shines in the following areas:
 - Sophisticated means of computation (exploding of age ranges, separation factor for average lived years)
 - Comprehensiveness of output (life tables for all groups specified, plots for the most important measures, relative population calculation)
 
-For further information, please have a look at the [Vignettes]() and the [Manual](). 
+For further information, please have a look at the Vignettes and the Manual. 
 
 Installation
 ------------
