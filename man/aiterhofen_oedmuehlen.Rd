@@ -33,5 +33,6 @@ found in \emph{Baum 1990}.
 \insertRef{baum_aiterhofen-odmuhle_1990}{mortAAR}
 }
 \seealso{
-Other lifetables: \code{\link{schleswig_ma}}
+Other lifetables: \code{\link{odagsen_cm}},
+  \code{\link{odagsen_mo}}, \code{\link{schleswig_ma}}
 }
