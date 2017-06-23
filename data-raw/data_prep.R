@@ -39,3 +39,19 @@ muensingen <- read.table(
   row.names = 1
 )
 devtools::use_data(muensingen, overwrite = TRUE)
+
+odagsen_cm <- read.table(
+  "data-raw/odagsen_corpus.mandibulae.txt",
+  header = TRUE,
+  stringsAsFactors = FALSE,
+  sep = "\t"
+)
+devtools::use_data(odagsen_cm, overwrite = TRUE)
+
+odagsen_mo <- read.table(
+  "data-raw/odagsen_margo.orbitalis.txt",
+  header = TRUE,
+  stringsAsFactors = FALSE,
+  sep = "\t"
+)
+devtools::use_data(odagsen_mo, overwrite = TRUE)
