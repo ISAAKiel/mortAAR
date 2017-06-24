@@ -31,16 +31,17 @@ summe=function(x,y){
 #' this can be specified with \code{grnam}.
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
-#' @param dec numeric verctor or a column name (as character) of the count of deceased.
-#' @param agebeg numeric verctor or a column name (as character) for the beginning of an age range.
-#' @param ageend numeric verctor or a column name (as character) for the end of an age range.
-#' @param grnam numeric verctor or a column name (as character) of the grouping field (e.g., sex),
+#' @param dec numeric vector or a column name (as character) of the count of deceased.
+#' @param agebeg numeric vector or a column name (as character) for the beginning of an age range.
+#' @param ageend numeric vector or a column name (as character) for the end of an age range.
+#' @param grnam numeric vector or a column name (as character) of the grouping field (e.g., sex),
 #' optional. Default setup is: \code{NA}.
 #' @param methode character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
-#' up to 4 yeras, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
+#' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
 #' @param age.range character string, optional. Default setup is: \code{excluded}.
 #' If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
-#' to  prevent overlapping age classes. \code{included} means for an age range 20 to 39 that the year 39 is not doubled.
+#' to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
+#' where the year 39 is meant to be counted.
 #'
 #' @return A list of input parameter needed for the function \code{life.table}.
 #'
@@ -52,12 +53,12 @@ summe=function(x,y){
 #'
 #' @examples
 #' # to separate age ranges in you data set (requires magrittr, dplyr and tidyr)
-#'  df <- dplyr::mutate(tidyr::separate(replace(magdalenenberg, magdalenenberg=="60-x", "60-70"),
+#'  df <- dplyr::mutate(tidyr::separate(replace(magdalenenberg, magdalenenberg=="60-x", "60-69"),
 #'          a, c("from", "to")),from = as.numeric(from), to = as.numeric(to))
 #'
 #' # apply to a data set containing age ranges
 #'  prep.life.table( df, dec = "Dx", agebeg = "from", ageend = "to",
-#'                     methode = "Standard", age.range = "excluded")
+#'                     methode = "Equal5", age.range = "included")
 #'
 #'
 #' @export
