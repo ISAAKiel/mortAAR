@@ -22,12 +22,12 @@
 #' \insertRef{kokkotidis_graberfeld-_1991}{mortAAR}
 #'
 #' @param neclist single data.frame or list of data.frames
-#'                with the columns 'x'/'Age', 'a', 'Dx'
+#'                with the columns 'x', 'a', 'Dx'
 #'   \itemize{
-#'     \item \bold{x} or \bold{Age}: age interval identifier, optional -
-#'                                   otherwise determined from \bold{a}
-#'     \item \bold{a}:               years within x
-#'     \item \bold{Dx}:              number of deaths within x
+#'     \item \bold{x}:  age interval identifier, optional -
+#'                      otherwise determined from \bold{a}
+#'     \item \bold{a}:  years within x
+#'     \item \bold{Dx}: number of deaths within x
 #'   }
 #'
 #' @param agecor logical, optional. If set TRUE, the average number of years lived within a
@@ -125,7 +125,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
   }
 
   # create vector of allowed variables
-  okvars <- c("x", "Age", "a", "Dx")
+  okvars <- c("x", "a", "Dx")
 
   # check input
   inputchecks(neclist, okvars)
@@ -218,7 +218,7 @@ inputchecks <- function(neclist, okvars) {
   }
 
   # check if input data.frames contain other columns than
-  # "x", "Age", "a", "Dx" (the okvars)
+  # "x", "a", "Dx" (the okvars)
   moreColCheck <- function(necdf) {
     colnames(necdf) %in% okvars %>% `!` %>% any
   }
@@ -226,7 +226,7 @@ inputchecks <- function(neclist, okvars) {
   if(neclist %>% lapply(moreColCheck) %>% unlist %>% any) {
     paste0(
       "In one of your data.frames there are more than the two ",
-      "necessary ('a', 'Dx') and the one optional ('Age') column. ",
+      "necessary ('a', 'Dx') and the one optional ('x') columns. ",
       "Note that these additional ",
       "columns will be dropped in the output."
     ) %>% warning
@@ -327,7 +327,6 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
 
   ## reorder variables in result data.frame
   necdf <- necdf[, c(
-    ifelse("Age" %in% colnames(necdf), "Age", NA_character_),
     "x",
     ifelse("x_auto" %in% colnames(necdf), "x_auto", NA_character_),
     "a", "Ax", "Dx", "dx", "lx",
