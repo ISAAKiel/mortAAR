@@ -59,18 +59,21 @@ The data stems from a published report of recent scientific analyses of the surv
 
 ### Constructing the life table
 
-```{r}
+```{r, message=FALSE}
+# load package dependencies
 library(tidyverse)  
+library(mortAAR)
 ```
 
 ```{r}
-muen <- muensingen  
+# load dataset muensingen
+muen <- mortAAR::muensingen  
 ```
   
 First of all, we have to get an overview of the age classes that were used. For this end, there are endless possibilities, the easiest would be <muen$age>. However, this results in an badly formatted row of strings. We use the following code to get an ordered and well-arranged list.  
 
 ```{r}
-noquote(cbind(unique(muen$age[order(nchar(muen$age),muen$age)]))) 
+muen %>% dplyr::select(age) %>% dplyr::arrange(nchar(age), age) %>% unique()
 ```
 
 As can be easily seen, the dataset comprises 31 different age ranges. Skimming through the lines, it is obvious that the anthropologists were not completely consequent in their age ranges. While „20–40“ clearly should be read as „from 20 to 39 years“, this is certainly not the case with, for example, „7–8“. The first is in our terminology exclusive of the maximal age range, the second inclusive. Less clear are cases like „12–14“ or „13–15“. If we want to get to 5-year-classes the differentiation does not really matter in the first case, as the individual would fall completely in the age range of 10 to 14 anyway. In the second, the differentiation unfortunately is of importance. Taking it as inclusive, the individual would count with 1/4 to the age class 15 to 19 while reading it as exlusive the individual would add fully to the younger age class.  
@@ -80,29 +83,48 @@ Unfortuantely, we cannot solve this issue but for future reports we can only ask
 In the next step, not only the inconsistencies have to be corrected, but also non-numerical characters (e.g., ">") must be replaced to be able to feed the data to mortAAR.
 
 ```{r}
-muen <- muen %>%  
-replace(muen == ">50", "50-70") %>%   
-replace(muen == ">60", "60-70") %>%   
-replace(muen == "10+/-1", "9-12") %>%   
-replace(muen == "10", "10-11") %>%   
-replace(muen == "7-8", "7-9") %>%   
-replace(muen == "9-10", "9-11")    
+# correct inconsistencies
+muen <- muen %>%
+  dplyr::mutate(
+    age = dplyr::case_when(
+      age == ">50"    ~ "50-70",
+      age == ">60"    ~ "60-70",
+      age == "10+/-1" ~ "9-12",
+      age == "10"     ~ "10-11",
+      age == "7-8"    ~ "7-9",
+      age == "9-10"   ~ "9-11",
+      TRUE            ~  age
+    )
+  )
 ```
 
 ```{r}
-muen <- muen %>% tidyr::separate(age, c("from", "to"))  
+# split string column
+muen <- muen %>% 
+  tidyr::separate(age, c("from", "to")) %>%  
+  transform(from = as.numeric(from), to = as.numeric(to))  
 ```
 
 ```{r}
-muen <- muen %>% transform( from = as.numeric(from), to = as.numeric(to) )  
+# apply data preparation function 
+muen_prep <- muen %>% 
+    prep.life.table(
+    grnam = "sex", 
+    agebeg = "from", 
+    ageend = "to", 
+    methode = "Standard", 
+    age.range = "excluded" 
+  )  
 ```
 
 ```{r}
-muen_prep <- prep.life.table( muen, grnam = "sex", agebeg = "from", ageend = "to", methode = "Standard", age.range = "excluded" )  
+# calculate life.table
+muen_result <- muen_prep %>% 
+  life.table() 
 ```
 
-```{r}
-muen_result <- muen_prep %>% life.table()  
+```{r, echo=FALSE}
+options(width = 999)
 ```
 
 ```{r}
@@ -110,7 +132,8 @@ muen_result
 ```
 
 ```{r}
-muen_result %>% plot(display = c("dx","qx", "lx", "ex", "rel_popx"))  
+muen_result %>% 
+  plot(display = c("dx","qx", "lx", "ex", "rel_popx"))  
 ```
 
 
@@ -148,31 +171,37 @@ mag <- magdalenenberg
 ```
 
 ```{r}
-mag <- mag %>% replace(mag == "60-x", "60-69")  
+mag <- mag %>% 
+  replace(mag == "60-x", "60-69")  
 ```
 
 ```{r}
-mag <- mag %>% tidyr::separate(a, c("from", "to"))  
+mag <- mag %>% 
+  tidyr::separate(a, c("from", "to")) %>%  
+  transform(from = as.numeric(from), to = as.numeric(to))  
 ```
 
 ```{r}
-mag <- mag %>% transform( from = as.numeric(from), to = as.numeric(to) )  
+mag_prep <- mag %>% 
+  prep.life.table( 
+    dec = "Dx", 
+    agebeg = "from", 
+    ageend = "to", 
+    methode = "Equal5", 
+    age.range = "included"
+  )  
 ```
 
 ```{r}
-mag_prep <- prep.life.table( mag, dec = "Dx", agebeg = "from", ageend = "to", methode = "Equal5", age.range = "included" )  
-```
+mag_result <- mag_prep %>% 
+  life.table()  
 
-```{r}
-mag_result <- mag_prep %>% life.table()  
-```
-
-```{r}
 mag_result 
 ```
 
 ```{r}
-mag_result %>% plot(display = c("qx", "ex", "rel_popx"))  
+mag_result %>% 
+  plot(display = c("qx", "ex", "rel_popx"))  
 ```
 
 ## Comparing Early Iron Age (Magdalenenberg) and Late Iron Age (Münsingen)
@@ -191,11 +220,13 @@ names(comp) <- c("Magdalenenberg", "Muensingen")
 ```
 
 ```{r}
-comp_result <- comp %>% life.table()  
+comp_result <- comp %>% 
+  life.table()  
 ```
 
 ```{r}
-comp_result %>% plot(display = c("dx","qx", "lx","ex", "rel_popx"))  
+comp_result %>% 
+  plot(display = c("dx","qx", "lx","ex", "rel_popx"))  
 ```
 
 ## Conclusion
