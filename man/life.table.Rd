@@ -8,12 +8,12 @@ life.table(neclist, agecor = TRUE, agecorfac = c())
 }
 \arguments{
 \item{neclist}{single data.frame or list of data.frames
-             with the columns 'x'/'Age', 'a', 'Dx'
+             with the columns 'x', 'a', 'Dx'
 \itemize{
-  \item \bold{x} or \bold{Age}: age interval identifier, optional -
-                                otherwise determined from \bold{a}
-  \item \bold{a}:               years within x
-  \item \bold{Dx}:              number of deaths within x
+  \item \bold{x}:  age interval identifier, optional -
+                   otherwise determined from \bold{a}
+  \item \bold{a}:  years within x
+  \item \bold{Dx}: number of deaths within x
 }}
 
 \item{agecor}{logical, optional. If set TRUE, the average number of years lived within a
