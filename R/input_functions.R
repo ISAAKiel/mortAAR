@@ -80,19 +80,21 @@ summe=function(x,y){
 #' }
 #'
 #' @export
-prep.life.table=function(x,dec="NA",agebeg,ageend,group="NA",method="NA", age.range= "included"){
-  asd=x
+prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Standard", age.range= "included"){
+
+  asd <- x
+
   # Ask if "dec" is set / if a count of deceased people exist
   # Otherwise for each row one deceased person is assumed
-  if(dec=="NA"){
+  if (is.na(dec)) {
     asd$cof=rep(1,dim(asd)[1])
-  }else{
+  } else {
     names(asd)[which(names(asd)==dec)]="cof"
   }
 
   # Change the names of agebeg and ageend for further processes to "beg" and "ende"
-  names(asd)[which(names(asd)==agebeg)]="beg"
-  names(asd)[which(names(asd)==ageend)]="ende"
+  names(asd)[which(names(asd)==agebeg)] <- "beg"
+  names(asd)[which(names(asd)==ageend)] <- "ende"
 
   # Filter potential NA values from the begin or end column
   # asd=asd %>% filter(!is.na(beg), !is.na(ende))
@@ -106,32 +108,27 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,group="NA",method="NA", age.ra
 
   ## Choosing which method should be used to combine different ages to classes
   if(is.character(method)){
-    if(method=="Standard"){
-      meth=c(1,4)
-      while(sum(meth)<max(asd$ende,na.rm=T)){
-        meth=c(meth,5)
-      }
-    }else if(method=="Equal5"){
+    if(method == "Equal5") {
       meth=rep(5,ceiling(max(asd$ende,na.rm=T)/5))
-    }else{
+    } else {
       # If no selection is take for method => use standard method
       meth=c(1,4)
       while(sum(meth)<max(asd$ende,na.rm=T)){
         meth=c(meth,5)
       }
     }
-  }else{
+  } else {
     # If the "method" is not a character and of length 1 use the value as age class size and repeat
     if(length(method)==1){
       meth=rep(method,ceiling(max(asd$ende,na.rm=T)/method))
-    # If the "method" value is not of length 1 take the entry of "method" as method
+      # If the "method" value is not of length 1 take the entry of "method" as method
     }else{
       meth=method
     }
   }
 
   ## Using Group Argument (male, female, whatever, ...) to subset data into several groups if it is set
-  if(group!="NA"){
+  if(!is.na(group)){
     # Change the names of group for further processes to "Group"
     names(asd)[which(names(asd)==group)]="Group"
 
@@ -156,7 +153,7 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,group="NA",method="NA", age.ra
       restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=summe(x=(restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
     }
 
-  # If no groups (male, female, whatever, ...) are specified, do the same without considering groups
+    # If no groups (male, female, whatever, ...) are specified, do the same without considering groups
   }else{
 
     restab=data.frame(Age=seq(0,99,1),Deceased=0)
@@ -183,16 +180,16 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,group="NA",method="NA", age.ra
   output=list(test=output1[,c("Age","a",colnames(output1)[2])])
   names(output[[1]])[3]="Dx"
   if((dim(output1)[2]-2)>1){
-  for(u in 2:(dim(output1)[2]-2)){
-    output[[u]]=output1[,c("Age","a",colnames(output1)[u+1])]
-    names(output[[u]])[3]="Dx"
-  }
+    for(u in 2:(dim(output1)[2]-2)){
+      output[[u]]=output1[,c("Age","a",colnames(output1)[u+1])]
+      names(output[[u]])[3]="Dx"
+    }
   }
   names(output)=colnames(output1)[c(-1,-length(colnames(output1)))]
 
   # add attribute "group" to output, if group is available
   # necessary for nice legend title in plots
-  attr(output, "group") <- ifelse(group != "NA", group, NA)
+  attr(output, "group") <- group
 
   return(output)
 }

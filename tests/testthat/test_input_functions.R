@@ -38,9 +38,9 @@ test_that("prep.life.table method standard is default", {
 })
 
 test_that("prep.life.table works for na dec column", {
-  expect_false(prep.life.table(a_example_raw_dataset,dec="NA",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert")$Unbestimmt$Dx[1] ==
+  expect_false(prep.life.table(a_example_raw_dataset,dec=NA,agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert")$Unbestimmt$Dx[1] ==
                 prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert")$Unbestimmt$Dx[1])
-  expect_equal(round(prep.life.table(a_example_raw_dataset,dec="NA",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert")$Unbestimmt$Dx[1], 6), 0.571429)
+  expect_equal(round(prep.life.table(a_example_raw_dataset,dec=NA,agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert")$Unbestimmt$Dx[1], 6), 0.571429)
 })
 
 test_that("prep.life.table imports a data set correct", {
