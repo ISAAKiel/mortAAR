@@ -20,15 +20,15 @@ summe=function(x,y){
 
 #' Creates the input for the function life.table
 #'
-#' Creates the input for the function life.table. An individual based approach is supported as well
+#' Prepares the input for \code{life.table()}. An individual based approach is supported as well
 #' as already pooled data (e. g. from an already existing life table). In the latter case, the user
-#' has to specify a numerical variable (\code{dec}) which defines the count for each age class.
+#' has to specify a numerical variable (\bold{dec}) which defines the count for each age class.
 #' If no life table exists, this function will process a dataframe including age ranges of
 #' individuals or groups of individuals to discreate age classes. The age range is spread to
-#' single years. \code{agebeg} has to be specified for the beginning of an age range, as well
-#' as \code{ageend} for the end of an age range. These values for single years has to be integrated
-#' accroding to \code{methode} into age classes. If the data set comprises a grouping variable (e.g., sex),
-#' this can be specified with \code{grnam}.
+#' single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
+#' as \bold{ageend} for the end of an age range. These values for single years have to be integrated
+#' according to a defined \bold{methode} into age classes.
+#' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{grnam}.
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
 #' @param dec numeric vector or a column name (as character) of the count of deceased.
@@ -52,14 +52,32 @@ summe=function(x,y){
 #' }
 #'
 #' @examples
-#' # to separate age ranges in you data set (requires magrittr, dplyr and tidyr)
-#'  df <- dplyr::mutate(tidyr::separate(replace(magdalenenberg, magdalenenberg=="60-x", "60-69"),
-#'          a, c("from", "to")),from = as.numeric(from), to = as.numeric(to))
+#' \dontrun{
 #'
-#' # apply to a data set containing age ranges
-#'  prep.life.table( df, dec = "Dx", agebeg = "from", ageend = "to",
-#'                     methode = "Equal5", age.range = "included")
+#' # separate age ranges in you data set
+#' df <- dplyr::mutate(
+#'   tidyr::separate(
+#'     replace(
+#'      magdalenenberg,
+#'      magdalenenberg=="60-x", "60-69"
+#'     ),
+#'     a,
+#'     c("from", "to")
+#'   ),
+#'   from = as.numeric(from),
+#'   to = as.numeric(to)
+#' )
 #'
+#' # apply prep.life.table to a data set containing age ranges
+#' prep.life.table(
+#'   df,
+#'   dec = "Dx",
+#'   agebeg = "from",
+#'   ageend = "to",
+#'   methode = "Equal5",
+#'   age.range = "included"
+#' )
+#' }
 #'
 #' @export
 prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.range= "included"){

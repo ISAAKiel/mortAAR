@@ -100,13 +100,17 @@
 #'
 #' \dontrun{
 #'
-#' # with data preparation (requires dplyr and tidyr)
+#' # with data preparation
 #' magdalenenberg %>%
 #'  replace(. == "60-x", "60-70") %>%
 #'  tidyr::separate(a, c("from", "to")) %>%
 #'  dplyr::mutate(from = as.numeric(from), to = as.numeric(to)) %>%
 #'  prep.life.table(
-#'   dec = "Dx", agebeg = "from", ageend = "to", methode = "Standard", age.range = "excluded"
+#'   dec = "Dx",
+#'   agebeg = "from",
+#'   ageend = "to",
+#'   methode = "Standard",
+#'   age.range = "excluded"
 #'  ) %>%
 #'  life.table()
 #' }
