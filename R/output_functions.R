@@ -175,12 +175,11 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 
   n <- sum(x$Dx)
   my_subsets = "data set"
-  #if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-    my_x <- x
-    my_x$dataset <- my_subsets
-    my_x$a <- cumsum(my_x$a)
-    my_x<-list(dataset=my_x)
-  #}
+  my_x <- x
+  my_x$dataset <- my_subsets
+
+  my_x<-list(dataset=my_x)
+
 
   for (i in 1:length(display)) {
     this_variable <- display[i]
