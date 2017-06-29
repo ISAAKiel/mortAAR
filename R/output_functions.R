@@ -96,7 +96,7 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   out_str <- list()
   class_of_deceased_str <- ""
   if (!is.null(class_of_deceased)) {
-    group <- attr(x,'groupe')
+    group <- attr(x,'group')
     class_of_deceased_str <- paste(" for ", group, ":", class_of_deceased, sep = "")
   }
   out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n = ",round(sum(x$Dx),2)," individuals)",sep = "")
