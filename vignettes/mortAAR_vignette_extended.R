@@ -15,13 +15,13 @@ muen %>% dplyr::select(age) %>% dplyr::arrange(nchar(age), age) %>% unique()
 muen <- muen %>%
   dplyr::mutate(
     age = dplyr::case_when(
-      age == ">50"    ~ "50-70",
-      age == ">60"    ~ "60-70",
-      age == "10+/-1" ~ "9-12",
-      age == "10"     ~ "10-11",
-      age == "7-8"    ~ "7-9",
-      age == "9-10"   ~ "9-11",
-      TRUE            ~  age
+      .$age == ">50"    ~ "50-70",
+      .$age == ">60"    ~ "60-70",
+      .$age == "10+/-1" ~ "9-12",
+      .$age == "10"     ~ "10-11",
+      .$age == "7-8"    ~ "7-9",
+      .$age == "9-10"   ~ "9-11",
+      TRUE            ~  .$age
     )
   )
 

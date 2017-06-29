@@ -55,7 +55,7 @@ Recently, in a number of studies, the anthropological and archaeological materia
 
 ### The data set
 
-The data stems from a published report of recent scientific analyses of the survived skeletal material ({Moghaddam et al., 2016, #100497}), all in all 71 individuals. The data is available as supplemental online material and was directly taken from the respective xlsx-file. Beside the age-range of each individuals the sex, the archaeological phase and the binary information if grave goods were provided or not, are included. Further columns not of interest in the present context were omitted. Unfortunately, the authors do not report how well the new results corresponded to those done formerly.  
+The data stems from a published report of recent scientific analyses of the survived skeletal material ({Moghaddam et al., 2016, #100497}), all in all 71 individuals. The data is available as supplemental online material and was directly taken from the respective xlsx-file. Beside the age-range of each individuals the sex, the archaeological phase and the binary information if grave goods were provided or not, are included. Further columns not of interest in the present context were omitted. Unfortunately, the authors do not report how well the new results corresponded to those done formerly. However, a comparison with ##Hug 1956## shows that generally there is a very good agreement in age as well as sex determination.  
 
 ### Constructing the life table
 
@@ -70,7 +70,7 @@ library(mortAAR)
 muen <- mortAAR::muensingen  
 ```
   
-First of all, we have to get an overview of the age classes that were used. For this end, there are endless possibilities, the easiest would be <muen$age>. However, this results in an badly formatted row of strings. We use the following code to get an ordered and well-arranged list.  
+First of all, we have to get an overview of the age classes that were used. The easiest way would be `muen$age`. However, this results in an badly formatted row of strings. We use the following code to get an ordered and well-arranged list without duplicated age classes.  
 
 ```{r}
 muen %>% dplyr::select(age) %>% dplyr::arrange(nchar(age), age) %>% unique()
@@ -80,23 +80,25 @@ As can be easily seen, the dataset comprises 31 different age ranges. Skimming t
 
 Unfortuantely, we cannot solve this issue but for future reports we can only ask the authors to be more precise in their terminology. For the sake of the example, we assumed that age ranges only one year apart (e. g. „7-8“) are meant as inclusive and had to be adapted (because anything else does not make sense), but otherwise treated the age ranges as exclusive. For those individuals with an open end, we assume a maximal age of 70.  
 
-In the next step, not only the inconsistencies have to be corrected, but also non-numerical characters (e.g., ">") must be replaced to be able to feed the data to mortAAR.
+In the next step, not only the afore-mentioned inconsistencies have to be corrected, but also non-numerical characters (e.g., ">") must be replaced to be able to feed the data to mortAAR.
 
 ```{r}
 # correct inconsistencies
 muen <- muen %>%
   dplyr::mutate(
     age = dplyr::case_when(
-      age == ">50"    ~ "50-70",
-      age == ">60"    ~ "60-70",
-      age == "10+/-1" ~ "9-12",
-      age == "10"     ~ "10-11",
-      age == "7-8"    ~ "7-9",
-      age == "9-10"   ~ "9-11",
-      TRUE            ~  age
+      .$age == ">50"    ~ "50-70",
+      .$age == ">60"    ~ "60-70",
+      .$age == "10+/-1" ~ "9-12",
+      .$age == "10"     ~ "10-11",
+      .$age == "7-8"    ~ "7-9",
+      .$age == "9-10"   ~ "9-11",
+      TRUE            ~  .$age
     )
   )
 ```
+
+After the harmonization of age class categories, the column "age" can be split into two separte columns "from" and "to" that mark the age span. These are further then transformed into numeric columns.  
 
 ```{r}
 # split string column
@@ -104,6 +106,9 @@ muen <- muen %>%
   tidyr::separate(age, c("from", "to")) %>%  
   transform(from = as.numeric(from), to = as.numeric(to))  
 ```
+
+All the above steps were necessary to prepare the raw data. We are now ready to feed it into the function `prep.life.table` that rearranges it for the actual life table function.  
+We want to have 5-year-age categories except for the first 5 years that are further split into the first and the subsequent 4 years. Therefore, we choose "Standard" for `methode`. As explained above, we assume that the age ranges are meant to be exclusive of the closing year (e.g., "20-40" as "20-39"). We regulate this by choosing "excluded" for `age.range`. The beginning and ending of the age classes is geared by "from" (= `agebeg`) and "to" (= `ageend`), respectively. For the first run, we choose "sex" for the grouping variable `grnam` but we could also have selected "latene_phase" (the archaeological phasing) or "grave_goods" (existence or non-existence of grave goods).  
 
 ```{r}
 # apply data preparation function 
@@ -116,6 +121,8 @@ muen_prep <- muen %>%
     age.range = "excluded" 
   )  
 ```
+
+The resulting data frame `muen_prep` is then fed into the life table function `life.table`.  
 
 ```{r}
 # calculate life.table
@@ -153,9 +160,6 @@ In recent years the anthropological material was subjected to stable isotope ana
 ### The data set
 
 The aforementioned paper (Zäuner and Wahl 2013) gives a complete table of the findings, but as this is very detailled, it is easier to refer to the life table the authors generated. They refrained from including an age range of 0–1, so we followed them in this. As explained above, mortAAR allows this easily. For the oldest age, we assumed, similar to Münsingen, a maximal age of 69 (because the age ranges are this time inclusive). 
-
-
-### Discussion of life table construction
 
 Because of one pecularity, their life table differs from the one mortAAR generates: they estimated the lived years of the oldest age group, after all 4.72 individuals, with 0, what means that they assumed that the individuals died with reaching their 60th birthday. This does not seem very plausible to us, and we think that the result of mortAAR is more realistic (average death in the middle of the age class). The differences apply specifically to the sum of lived years (Lx) and thus also to Tx, ex and the relative population measure (rel_popx).  
 
