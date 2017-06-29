@@ -157,12 +157,12 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
     ) -> res
   }
 
-  # check if attribute "grname" is present in the input
+  # check if attribute "group" is present in the input
   # if yes, add it alos in the output
   # necessary for nice legend title in plots
-  grnam <- attributes(neclist)$grnam
-  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {
-    attr(res, "grnam") <- grnam
+  group <- attributes(neclist)$group
+  if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {
+    attr(res, "group") <- group
   }
 
   return(res)

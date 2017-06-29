@@ -35,10 +35,10 @@ muen <- muen %>%
 # apply data preparation function 
 muen_prep <- muen %>% 
     prep.life.table(
-    grnam = "sex", 
+    group = "sex", 
     agebeg = "from", 
     ageend = "to", 
-    methode = "Standard", 
+    method = "Standard", 
     age.range = "excluded" 
   )  
 
@@ -78,7 +78,7 @@ mag_prep <- mag %>%
     dec = "Dx", 
     agebeg = "from", 
     ageend = "to", 
-    methode = "Equal5", 
+    method = "Equal5",
     age.range = "included"
   )  
 

@@ -28,13 +28,13 @@ summe=function(x,y){
 #' single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
 #' as \bold{ageend} for the end of an age range. These values for single years have to be integrated
 #' according to a defined \bold{method} into age classes.
-#' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{grnam}.
+#' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
 #' @param dec numeric vector or a column name (as character) of the count of deceased.
 #' @param agebeg numeric vector or a column name (as character) for the beginning of an age range.
 #' @param ageend numeric vector or a column name (as character) for the end of an age range.
-#' @param grnam numeric vector or a column name (as character) of the grouping field (e.g., sex),
+#' @param group numeric vector or a column name (as character) of the grouping field (e.g., sex),
 #' optional. Default setup is: \code{NA}.
 #' @param method character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
 #' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
@@ -80,7 +80,7 @@ summe=function(x,y){
 #' }
 #'
 #' @export
-prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",method="NA", age.range= "included"){
+prep.life.table=function(x,dec="NA",agebeg,ageend,group="NA",method="NA", age.range= "included"){
   asd=x
   # Ask if "dec" is set / if a count of deceased people exist
   # Otherwise for each row one deceased person is assumed
@@ -131,9 +131,9 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",method="NA", age.ra
   }
 
   ## Using Group Argument (male, female, whatever, ...) to subset data into several groups if it is set
-  if(grnam!="NA"){
-    # Change the names of grnam for further processes to "Group"
-    names(asd)[which(names(asd)==grnam)]="Group"
+  if(group!="NA"){
+    # Change the names of group for further processes to "Group"
+    names(asd)[which(names(asd)==group)]="Group"
 
     # Create a dataframe (restab) filled with zeros
     # with the column count of the grouping columns (+2)
@@ -190,9 +190,9 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",method="NA", age.ra
   }
   names(output)=colnames(output1)[c(-1,-length(colnames(output1)))]
 
-  # add attribute "grname" to output, if grname is available
+  # add attribute "group" to output, if group is available
   # necessary for nice legend title in plots
-  attr(output, "grnam") <- ifelse(grnam != "NA", grnam, NA)
+  attr(output, "group") <- ifelse(group != "NA", group, NA)
 
   return(output)
 }

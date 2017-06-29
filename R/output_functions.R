@@ -96,8 +96,8 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   out_str <- list()
   class_of_deceased_str <- ""
   if (!is.null(class_of_deceased)) {
-    grnam <- attr(x,'grname')
-    class_of_deceased_str <- paste(" for ", grnam, ":", class_of_deceased, sep = "")
+    group <- attr(x,'groupe')
+    class_of_deceased_str <- paste(" for ", group, ":", class_of_deceased, sep = "")
   }
   out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n = ",round(sum(x$Dx),2)," individuals)",sep = "")
 
@@ -274,9 +274,9 @@ make_ggplot <- function(data, variable_name, variable_labels) {
   my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
   my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name,lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab(variable_name) + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
-  # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(data)$grnam
-  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
+  # check if group attribute is present to pass it on for plot legend title
+  group <- attributes(data)$group
+  if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=group))}
   methods::show(my_plot)
 }
 

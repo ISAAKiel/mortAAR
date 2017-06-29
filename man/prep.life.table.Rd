@@ -4,7 +4,7 @@
 \alias{prep.life.table}
 \title{Creates the input for the function life.table}
 \usage{
-prep.life.table(x, dec = "NA", agebeg, ageend, grnam = "NA",
+prep.life.table(x, dec = "NA", agebeg, ageend, group = "NA",
   method = "NA", age.range = "included")
 }
 \arguments{
@@ -16,7 +16,7 @@ prep.life.table(x, dec = "NA", agebeg, ageend, grnam = "NA",
 
 \item{ageend}{numeric vector or a column name (as character) for the end of an age range.}
 
-\item{grnam}{numeric vector or a column name (as character) of the grouping field (e.g., sex),
+\item{group}{numeric vector or a column name (as character) of the grouping field (e.g., sex),
 optional. Default setup is: \code{NA}.}
 
 \item{method}{character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
@@ -45,7 +45,7 @@ individuals or groups of individuals to discreate age classes. The age range is 
 single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
 as \bold{ageend} for the end of an age range. These values for single years have to be integrated
 according to a defined \bold{method} into age classes.
-If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{grnam}.
+If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
 }
 \examples{
 \dontrun{

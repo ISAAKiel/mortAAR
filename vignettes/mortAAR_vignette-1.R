@@ -59,8 +59,8 @@ td_prepared <- prep.life.table(
   dec = "NA", 
   agebeg = "from",
   ageend = "to", 
-  grnam = "site", 
-  methode = "Standard",
+  group = "site", 
+  method = "Standard",
   age.range = "included"
 )
 
