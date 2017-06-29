@@ -35,8 +35,14 @@ is.mortaar_life_table_list <- function(x, ...) {"mortaar_life_table_list" %in% c
 format.mortaar_life_table_list <- function(x, ...) {
   return_value <- ""
   list_names <- names(x)
+  group <- attributes(x)$group
   for (i in 1:length(x)) {
-    this_return_value <- format.mortaar_life_table(x[[i]], class_of_deceased = list_names[i], ...)
+    my_life_table <- x[[i]]
+    # pass group name attribute to individual mortaar_life_tables
+    if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {
+      attr(my_life_table, "group") <- group
+    }
+    this_return_value <- format.mortaar_life_table(my_life_table, class_of_deceased = list_names[i], ...)
     return_value <- paste(return_value, this_return_value,sep="\n",collapse="\n")
   }
   invisible(return_value)
