@@ -20,13 +20,13 @@ summe=function(x,y){
 
 #' Creates the input for the function life.table
 #'
-#' Creates the input for the function life.table. An individual approach is supported as well
+#' Creates the input for the function life.table. An individual based approach is supported as well
 #' as already pooled data (e. g. from an already existing life table). In the latter case, the user
 #' has to specify a numerical variable (\code{dec}) which defines the count for each age class.
 #' If no life table exists, this function will process a dataframe including age ranges of
 #' individuals or groups of individuals to discreate age classes. The age range is spread to
 #' single years. \code{agebeg} has to be specified for the beginning of an age range, as well
-#' as \code{ageend} for the end of an age range. These values for single years as to be integrated
+#' as \code{ageend} for the end of an age range. These values for single years has to be integrated
 #' accroding to \code{methode} into age classes. If the data set comprises a grouping variable (e.g., sex),
 #' this can be specified with \code{grnam}.
 #'
