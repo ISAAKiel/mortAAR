@@ -27,7 +27,7 @@ summe=function(x,y){
 #' individuals or groups of individuals to discreate age classes. The age range is spread to
 #' single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
 #' as \bold{ageend} for the end of an age range. These values for single years have to be integrated
-#' according to a defined \bold{methode} into age classes.
+#' according to a defined \bold{method} into age classes.
 #' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{grnam}.
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
@@ -36,7 +36,7 @@ summe=function(x,y){
 #' @param ageend numeric vector or a column name (as character) for the end of an age range.
 #' @param grnam numeric vector or a column name (as character) of the grouping field (e.g., sex),
 #' optional. Default setup is: \code{NA}.
-#' @param methode character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
+#' @param method character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
 #' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
 #' @param age.range character string, optional. Default setup is: \code{excluded}.
 #' If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
@@ -74,13 +74,13 @@ summe=function(x,y){
 #'   dec = "Dx",
 #'   agebeg = "from",
 #'   ageend = "to",
-#'   methode = "Equal5",
+#'   method = "Equal5",
 #'   age.range = "included"
 #' )
 #' }
 #'
 #' @export
-prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.range= "included"){
+prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",method="NA", age.range= "included"){
   asd=x
   # Ask if "dec" is set / if a count of deceased people exist
   # Otherwise for each row one deceased person is assumed
@@ -105,13 +105,13 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
   }
 
   ## Choosing which method should be used to combine different ages to classes
-  if(is.character(methode)){
-    if(methode=="Standard"){
+  if(is.character(method)){
+    if(method=="Standard"){
       meth=c(1,4)
       while(sum(meth)<max(asd$ende,na.rm=T)){
         meth=c(meth,5)
       }
-    }else if(methode=="Equal5"){
+    }else if(method=="Equal5"){
       meth=rep(5,ceiling(max(asd$ende,na.rm=T)/5))
     }else{
       # If no selection is take for method => use standard method
@@ -121,12 +121,12 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
       }
     }
   }else{
-    # If the "methode" is not a character and of length 1 use the value as age class size and repeat
-    if(length(methode)==1){
-      meth=rep(methode,ceiling(max(asd$ende,na.rm=T)/methode))
-    # If the "methode" value is not of length 1 take the entry of "methode" as method
+    # If the "method" is not a character and of length 1 use the value as age class size and repeat
+    if(length(method)==1){
+      meth=rep(method,ceiling(max(asd$ende,na.rm=T)/method))
+    # If the "method" value is not of length 1 take the entry of "method" as method
     }else{
-      meth=methode
+      meth=method
     }
   }
 

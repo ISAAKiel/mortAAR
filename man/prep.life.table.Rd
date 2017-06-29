@@ -5,7 +5,7 @@
 \title{Creates the input for the function life.table}
 \usage{
 prep.life.table(x, dec = "NA", agebeg, ageend, grnam = "NA",
-  methode = "NA", age.range = "included")
+  method = "NA", age.range = "included")
 }
 \arguments{
 \item{x}{single dataframe containing sex age and quantity of deceased (individuals or group of individuals).}
@@ -19,7 +19,7 @@ prep.life.table(x, dec = "NA", agebeg, ageend, grnam = "NA",
 \item{grnam}{numeric vector or a column name (as character) of the grouping field (e.g., sex),
 optional. Default setup is: \code{NA}.}
 
-\item{methode}{character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
+\item{method}{character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
 up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.}
 
 \item{age.range}{character string, optional. Default setup is: \code{excluded}.
@@ -44,7 +44,7 @@ If no life table exists, this function will process a dataframe including age ra
 individuals or groups of individuals to discreate age classes. The age range is spread to
 single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
 as \bold{ageend} for the end of an age range. These values for single years have to be integrated
-according to a defined \bold{methode} into age classes.
+according to a defined \bold{method} into age classes.
 If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{grnam}.
 }
 \examples{
@@ -70,7 +70,7 @@ prep.life.table(
   dec = "Dx",
   agebeg = "from",
   ageend = "to",
-  methode = "Equal5",
+  method = "Equal5",
   age.range = "included"
 )
 }

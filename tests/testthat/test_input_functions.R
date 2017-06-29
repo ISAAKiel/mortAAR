@@ -34,7 +34,7 @@ test_that("prep.life.table imports a data set correct", {
 
 test_that("prep.life.table method standard is default", {
   expect_equal(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert"),
-               prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert", methode = "Standard"))
+               prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", grnam = "Geschlecht_kombiniert", method = "Standard"))
 })
 
 test_that("prep.life.table works for na dec column", {
