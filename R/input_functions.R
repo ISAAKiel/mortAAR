@@ -38,7 +38,7 @@ summe=function(x,y){
 #' optional. Default setup is: \code{NA}.
 #' @param method character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
 #' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
-#' @param age.range character string, optional. Default setup is: \code{excluded}.
+#' @param agerange character string, optional. Default setup is: \code{excluded}.
 #' If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
 #' to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
 #' where the year 39 is meant to be counted.
@@ -75,12 +75,12 @@ summe=function(x,y){
 #'   agebeg = "from",
 #'   ageend = "to",
 #'   method = "Equal5",
-#'   age.range = "included"
+#'   agerange = "included"
 #' )
 #' }
 #'
 #' @export
-prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Standard", age.range= "included"){
+prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Standard", agerange= "included"){
 
   asd <- x
 
@@ -102,7 +102,7 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
   asd=asd[!is.na(asd$ende),]
 
   # defines if the max of the age ranges should be included or excluded
-  if(age.range == "excluded"){
+  if(agerange == "excluded"){
     asd$ende = asd$ende -1
   }
 

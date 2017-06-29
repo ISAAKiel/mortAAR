@@ -108,7 +108,7 @@ magdalenenberg \%>\%
   agebeg = "from",
   ageend = "to",
   methode = "Standard",
-  age.range = "excluded"
+  agerange = "excluded"
  ) \%>\%
  life.table()
 }

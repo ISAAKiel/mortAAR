@@ -5,7 +5,7 @@
 \title{Creates the input for the function life.table}
 \usage{
 prep.life.table(x, dec = NA, agebeg, ageend, group = NA,
-  method = "Standard", age.range = "included")
+  method = "Standard", agerange = "included")
 }
 \arguments{
 \item{x}{single dataframe containing sex age and quantity of deceased (individuals or group of individuals).}
@@ -22,7 +22,7 @@ optional. Default setup is: \code{NA}.}
 \item{method}{character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
 up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.}
 
-\item{age.range}{character string, optional. Default setup is: \code{excluded}.
+\item{agerange}{character string, optional. Default setup is: \code{excluded}.
 If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
 to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
 where the year 39 is meant to be counted.}
@@ -71,7 +71,7 @@ prep.life.table(
   agebeg = "from",
   ageend = "to",
   method = "Equal5",
-  age.range = "included"
+  agerange = "included"
 )
 }
 

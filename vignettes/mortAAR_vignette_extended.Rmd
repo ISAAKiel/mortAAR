@@ -108,7 +108,7 @@ muen <- muen %>%
 ```
 
 All the above steps were necessary to prepare the raw data. We are now ready to feed it into the function `prep.life.table` that rearranges it for the actual life table function.  
-We want to have 5-year-age categories except for the first 5 years that are further split into the first and the subsequent 4 years. Therefore, we choose "Standard" for `method`. As explained above, we assume that the age ranges are meant to be exclusive of the closing year (e.g., "20-40" as "20-39"). We regulate this by choosing "excluded" for `age.range`. The beginning and ending of the age classes is geared by "from" (= `agebeg`) and "to" (= `ageend`), respectively. For the first run, we choose "sex" for the grouping variable `group` but we could also have selected "latene_phase" (the archaeological phasing) or "grave_goods" (existence or non-existence of grave goods).  
+We want to have 5-year-age categories except for the first 5 years that are further split into the first and the subsequent 4 years. Therefore, we choose "Standard" for `method`. As explained above, we assume that the age ranges are meant to be exclusive of the closing year (e.g., "20-40" as "20-39"). We regulate this by choosing "excluded" for `agerange`. The beginning and ending of the age classes is geared by "from" (= `agebeg`) and "to" (= `ageend`), respectively. For the first run, we choose "sex" for the grouping variable `group` but we could also have selected "latene_phase" (the archaeological phasing) or "grave_goods" (existence or non-existence of grave goods).  
 
 ```{r}
 # apply data preparation function 
@@ -118,7 +118,7 @@ muen_prep <- muen %>%
     agebeg = "from", 
     ageend = "to", 
     method = "Standard", 
-    age.range = "excluded" 
+    agerange = "excluded" 
   )  
 ```
 
@@ -192,7 +192,7 @@ mag_prep <- mag %>%
     agebeg = "from", 
     ageend = "to", 
     method = "Equal5",
-    age.range = "included"
+    agerange = "included"
   )  
 ```
 
