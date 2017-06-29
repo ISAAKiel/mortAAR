@@ -173,19 +173,27 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
     }
   }
   # The ages of the "meth" breaks are added as column Age and the "meth" vector is added as column "a"
-  output1$Age=cumsum(meth)-meth
+  #output1$Age=cumsum(meth)-meth
   output1$a=meth
 
   # For the output of the function the table is converted to a list containing a dataframe for each group defined in the "Group" variable
-  output=list(test=output1[,c("Age","a",colnames(output1)[2])])
-  names(output[[1]])[3]="Dx"
+  output=list(test=output1[,c("a",colnames(output1)[2])])
+  names(output[[1]])[2]="Dx"
   if((dim(output1)[2]-2)>1){
     for(u in 2:(dim(output1)[2]-2)){
-      output[[u]]=output1[,c("Age","a",colnames(output1)[u+1])]
-      names(output[[u]])[3]="Dx"
+      output[[u]]=output1[,c("a",colnames(output1)[u+1])]
+      names(output[[u]])[2]="Dx"
     }
   }
   names(output)=colnames(output1)[c(-1,-length(colnames(output1)))]
+
+  output <- lapply(output, function(x){
+    lower <- c(0, x[, 'a'] %>% cumsum)[1:nrow(x)]
+    upper <- x[, 'a'] %>% cumsum %>% `-`(1)
+    xvec <- paste0(lower, "--", upper)
+    x <- cbind(x = xvec, x)
+    return(x)
+  })
 
   # add attribute "group" to output, if group is available
   # necessary for nice legend title in plots

@@ -10,24 +10,22 @@ a_example_raw_dataset <- read.csv("Siedlungsbestattungen_ueberblick_for_prep_fun
 
 test_that("prep.life.table excludes the max of the age ranges when agerange = 'excluded'", {
   expect_equal(
-    max(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert", agerange = "excluded")$All$Age),
-    65
+    prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert", agerange = "excluded")$All$x %>% tail(1) %>% as.character(),
+    "65--69"
   )
 })
 
 test_that("prep.life.table includes the max of the age ranges when agerange = 'included'", {
   expect_equal(
-    max(prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert", agerange = "included")$All$Age),
-    70
+    prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert", agerange = "included")$All$x %>% tail(1) %>% as.character(),
+    "70--74"
   )
 })
 
 test_that("prep.life.table imports a data set correct", {
   example_life_table <- prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert")
   expect_equal(names(example_life_table),c("Unbestimmt", "Weiblich", "Männlich", "All"))
-  expect_equal(colnames(example_life_table[[1]]),c("Age", "a", "Dx"))
-  expect_equal(diff(example_life_table[[1]]$Age),
-               head(example_life_table[[1]]$a,-1))
+  expect_equal(colnames(example_life_table[[1]]),c("x", "a", "Dx"))
   expect_equal(round(example_life_table[[1]]$Dx,6),
                c(22.142857, 24.714286, 3.214286, 3.418745, 6.807823, 10.938156, 8.915338, 7.865943, 8.765211, 5.540914, 4.656715, 4.754955, 4.722697, 4.851219, 4.779182, 1.911673))
 })

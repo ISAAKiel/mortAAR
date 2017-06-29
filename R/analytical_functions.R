@@ -254,7 +254,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     )
   } else if (
     "x" %in% colnames(necdf) &&
-    identical(necdf[, 'x'], xvec) %>% `!`
+    (necdf[, 'x'] != xvec) %>% all
   ) {
     necdf <- cbind(
       x_auto = xvec,
