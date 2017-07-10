@@ -20,27 +20,28 @@ summe=function(x,y){
 
 #' Creates the input for the function life.table
 #'
-#' Creates the input for the function life.table. An individual approach is supported as well
+#' Prepares the input for \code{life.table()}. An individual based approach is supported as well
 #' as already pooled data (e. g. from an already existing life table). In the latter case, the user
-#' has to specify a numerical variable (\code{dec}) which defines the count for each age class.
+#' has to specify a numerical variable (\bold{dec}) which defines the count for each age class.
 #' If no life table exists, this function will process a dataframe including age ranges of
 #' individuals or groups of individuals to discreate age classes. The age range is spread to
-#' single years. \code{agebeg} has to be specified for the beginning of an age range, as well
-#' as \code{ageend} for the end of an age range. These values for single years as to be integrated
-#' accroding to \code{methode} into age classes. If the data set comprises a grouping variable (e.g., sex),
-#' this can be specified with \code{grnam}.
+#' single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
+#' as \bold{ageend} for the end of an age range. These values for single years have to be integrated
+#' according to a defined \bold{method} into age classes.
+#' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
-#' @param dec numeric verctor or a column name (as character) of the count of deceased.
-#' @param agebeg numeric verctor or a column name (as character) for the beginning of an age range.
-#' @param ageend numeric verctor or a column name (as character) for the end of an age range.
-#' @param grnam numeric verctor or a column name (as character) of the grouping field (e.g., sex),
+#' @param dec numeric vector or a column name (as character) of the count of deceased.
+#' @param agebeg numeric vector or a column name (as character) for the beginning of an age range.
+#' @param ageend numeric vector or a column name (as character) for the end of an age range.
+#' @param group numeric vector or a column name (as character) of the grouping field (e.g., sex),
 #' optional. Default setup is: \code{NA}.
-#' @param methode character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
-#' up to 4 yeras, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
-#' @param age.range character string, optional. Default setup is: \code{excluded}.
+#' @param method character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
+#' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.
+#' @param agerange character string, optional. Default setup is: \code{excluded}.
 #' If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
-#' to  prevent overlapping age classes. \code{included} means for an age range 20 to 39 that the year 39 is not doubled.
+#' to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
+#' where the year 39 is meant to be counted.
 #'
 #' @return A list of input parameter needed for the function \code{life.table}.
 #'
@@ -51,29 +52,49 @@ summe=function(x,y){
 #' }
 #'
 #' @examples
-#' # to separate age ranges in you data set (requires magrittr, dplyr and tidyr)
-#'  df <- dplyr::mutate(tidyr::separate(replace(magdalenenberg, magdalenenberg=="60-x", "60-70"),
-#'          a, c("from", "to")),from = as.numeric(from), to = as.numeric(to))
+#' \dontrun{
 #'
-#' # apply to a data set containing age ranges
-#'  prep.life.table( df, dec = "Dx", agebeg = "from", ageend = "to",
-#'                     methode = "Standard", age.range = "excluded")
+#' # separate age ranges in you data set
+#' df <- dplyr::mutate(
+#'   tidyr::separate(
+#'     replace(
+#'      magdalenenberg,
+#'      magdalenenberg=="60-x", "60-69"
+#'     ),
+#'     a,
+#'     c("from", "to")
+#'   ),
+#'   from = as.numeric(from),
+#'   to = as.numeric(to)
+#' )
 #'
+#' # apply prep.life.table to a data set containing age ranges
+#' prep.life.table(
+#'   df,
+#'   dec = "Dx",
+#'   agebeg = "from",
+#'   ageend = "to",
+#'   method = "Equal5",
+#'   agerange = "included"
+#' )
+#' }
 #'
 #' @export
-prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.range= "included"){
-  asd=x
+prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Standard", agerange= "included"){
+
+  asd <- x
+
   # Ask if "dec" is set / if a count of deceased people exist
   # Otherwise for each row one deceased person is assumed
-  if(dec=="NA"){
+  if (is.na(dec)) {
     asd$cof=rep(1,dim(asd)[1])
-  }else{
+  } else {
     names(asd)[which(names(asd)==dec)]="cof"
   }
 
   # Change the names of agebeg and ageend for further processes to "beg" and "ende"
-  names(asd)[which(names(asd)==agebeg)]="beg"
-  names(asd)[which(names(asd)==ageend)]="ende"
+  names(asd)[which(names(asd)==agebeg)] <- "beg"
+  names(asd)[which(names(asd)==ageend)] <- "ende"
 
   # Filter potential NA values from the begin or end column
   # asd=asd %>% filter(!is.na(beg), !is.na(ende))
@@ -81,40 +102,35 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
   asd=asd[!is.na(asd$ende),]
 
   # defines if the max of the age ranges should be included or excluded
-  if(age.range == "excluded"){
+  if(agerange == "excluded"){
     asd$ende = asd$ende -1
   }
 
   ## Choosing which method should be used to combine different ages to classes
-  if(is.character(methode)){
-    if(methode=="Standard"){
-      meth=c(1,4)
-      while(sum(meth)<max(asd$ende,na.rm=T)){
-        meth=c(meth,5)
-      }
-    }else if(methode=="Equal5"){
+  if(is.character(method)){
+    if(method == "Equal5") {
       meth=rep(5,ceiling(max(asd$ende,na.rm=T)/5))
-    }else{
+    } else {
       # If no selection is take for method => use standard method
       meth=c(1,4)
       while(sum(meth)<max(asd$ende,na.rm=T)){
         meth=c(meth,5)
       }
     }
-  }else{
-    # If the "methode" is not a character and of length 1 use the value as age class size and repeat
-    if(length(methode)==1){
-      meth=rep(methode,ceiling(max(asd$ende,na.rm=T)/methode))
-    # If the "methode" value is not of length 1 take the entry of "methode" as method
+  } else {
+    # If the "method" is not a character and of length 1 use the value as age class size and repeat
+    if(length(method)==1){
+      meth=rep(method,ceiling(max(asd$ende,na.rm=T)/method))
+      # If the "method" value is not of length 1 take the entry of "method" as method
     }else{
-      meth=methode
+      meth=method
     }
   }
 
   ## Using Group Argument (male, female, whatever, ...) to subset data into several groups if it is set
-  if(grnam!="NA"){
-    # Change the names of grnam for further processes to "Group"
-    names(asd)[which(names(asd)==grnam)]="Group"
+  if(!is.na(group)){
+    # Change the names of group for further processes to "Group"
+    names(asd)[which(names(asd)==group)]="Group"
 
     # Create a dataframe (restab) filled with zeros
     # with the column count of the grouping columns (+2)
@@ -137,7 +153,7 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
       restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=summe(x=(restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
     }
 
-  # If no groups (male, female, whatever, ...) are specified, do the same without considering groups
+    # If no groups (male, female, whatever, ...) are specified, do the same without considering groups
   }else{
 
     restab=data.frame(Age=seq(0,99,1),Deceased=0)
@@ -157,23 +173,31 @@ prep.life.table=function(x,dec="NA",agebeg,ageend,grnam="NA",methode="NA", age.r
     }
   }
   # The ages of the "meth" breaks are added as column Age and the "meth" vector is added as column "a"
-  output1$Age=cumsum(meth)-meth
+  #output1$Age=cumsum(meth)-meth
   output1$a=meth
 
   # For the output of the function the table is converted to a list containing a dataframe for each group defined in the "Group" variable
-  output=list(test=output1[,c("Age","a",colnames(output1)[2])])
-  names(output[[1]])[3]="Dx"
+  output=list(test=output1[,c("a",colnames(output1)[2])])
+  names(output[[1]])[2]="Dx"
   if((dim(output1)[2]-2)>1){
-  for(u in 2:(dim(output1)[2]-2)){
-    output[[u]]=output1[,c("Age","a",colnames(output1)[u+1])]
-    names(output[[u]])[3]="Dx"
-  }
+    for(u in 2:(dim(output1)[2]-2)){
+      output[[u]]=output1[,c("a",colnames(output1)[u+1])]
+      names(output[[u]])[2]="Dx"
+    }
   }
   names(output)=colnames(output1)[c(-1,-length(colnames(output1)))]
 
-  # add attribute "grname" to output, if grname is available
+  output <- lapply(output, function(x){
+    lower <- c(0, x[, 'a'] %>% cumsum)[1:nrow(x)]
+    upper <- x[, 'a'] %>% cumsum %>% `-`(1)
+    xvec <- paste0(lower, "--", upper)
+    x <- cbind(x = xvec, x)
+    return(x)
+  })
+
+  # add attribute "group" to output, if group is available
   # necessary for nice legend title in plots
-  attr(output, "grnam") <- ifelse(grnam != "NA", grnam, NA)
+  attr(output, "group") <- group
 
   return(output)
 }

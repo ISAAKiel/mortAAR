@@ -4,27 +4,28 @@
 \alias{prep.life.table}
 \title{Creates the input for the function life.table}
 \usage{
-prep.life.table(x, dec = "NA", agebeg, ageend, grnam = "NA",
-  methode = "NA", age.range = "included")
+prep.life.table(x, dec = NA, agebeg, ageend, group = NA,
+  method = "Standard", agerange = "included")
 }
 \arguments{
 \item{x}{single dataframe containing sex age and quantity of deceased (individuals or group of individuals).}
 
-\item{dec}{numeric verctor or a column name (as character) of the count of deceased.}
+\item{dec}{numeric vector or a column name (as character) of the count of deceased.}
 
-\item{agebeg}{numeric verctor or a column name (as character) for the beginning of an age range.}
+\item{agebeg}{numeric vector or a column name (as character) for the beginning of an age range.}
 
-\item{ageend}{numeric verctor or a column name (as character) for the end of an age range.}
+\item{ageend}{numeric vector or a column name (as character) for the end of an age range.}
 
-\item{grnam}{numeric verctor or a column name (as character) of the grouping field (e.g., sex),
+\item{group}{numeric vector or a column name (as character) of the grouping field (e.g., sex),
 optional. Default setup is: \code{NA}.}
 
-\item{methode}{character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
-up to 4 yeras, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.}
+\item{method}{character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
+up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.}
 
-\item{age.range}{character string, optional. Default setup is: \code{excluded}.
+\item{agerange}{character string, optional. Default setup is: \code{excluded}.
 If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
-to  prevent overlapping age classes. \code{included} means for an age range 20 to 39 that the year 39 is not doubled.}
+to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
+where the year 39 is meant to be counted.}
 }
 \value{
 A list of input parameter needed for the function \code{life.table}.
@@ -36,24 +37,42 @@ A list of input parameter needed for the function \code{life.table}.
 }
 }
 \description{
-Creates the input for the function life.table. An individual approach is supported as well
+Prepares the input for \code{life.table()}. An individual based approach is supported as well
 as already pooled data (e. g. from an already existing life table). In the latter case, the user
-has to specify a numerical variable (\code{dec}) which defines the count for each age class.
+has to specify a numerical variable (\bold{dec}) which defines the count for each age class.
 If no life table exists, this function will process a dataframe including age ranges of
 individuals or groups of individuals to discreate age classes. The age range is spread to
-single years. \code{agebeg} has to be specified for the beginning of an age range, as well
-as \code{ageend} for the end of an age range. These values for single years as to be integrated
-accroding to \code{methode} into age classes. If the data set comprises a grouping variable (e.g., sex),
-this can be specified with \code{grnam}.
+single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
+as \bold{ageend} for the end of an age range. These values for single years have to be integrated
+according to a defined \bold{method} into age classes.
+If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
 }
 \examples{
-# to separate age ranges in you data set (requires magrittr, dplyr and tidyr)
- df <- dplyr::mutate(tidyr::separate(replace(magdalenenberg, magdalenenberg=="60-x", "60-70"),
-         a, c("from", "to")),from = as.numeric(from), to = as.numeric(to))
+\dontrun{
 
-# apply to a data set containing age ranges
- prep.life.table( df, dec = "Dx", agebeg = "from", ageend = "to",
-                    methode = "Standard", age.range = "excluded")
+# separate age ranges in you data set
+df <- dplyr::mutate(
+  tidyr::separate(
+    replace(
+     magdalenenberg,
+     magdalenenberg=="60-x", "60-69"
+    ),
+    a,
+    c("from", "to")
+  ),
+  from = as.numeric(from),
+  to = as.numeric(to)
+)
 
+# apply prep.life.table to a data set containing age ranges
+prep.life.table(
+  df,
+  dec = "Dx",
+  agebeg = "from",
+  ageend = "to",
+  method = "Equal5",
+  agerange = "included"
+)
+}
 
 }

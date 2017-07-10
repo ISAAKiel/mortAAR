@@ -8,12 +8,12 @@ life.table(neclist, agecor = TRUE, agecorfac = c())
 }
 \arguments{
 \item{neclist}{single data.frame or list of data.frames
-             with the columns 'x'/'Age', 'a', 'Dx'
+             with the columns 'x', 'a', 'Dx'
 \itemize{
-  \item \bold{x} or \bold{Age}: age interval identifier, optional -
-                                otherwise determined from \bold{a}
-  \item \bold{a}:               years within x
-  \item \bold{Dx}:              number of deaths within x
+  \item \bold{x}:  age interval identifier, optional -
+                   otherwise determined from \bold{a}
+  \item \bold{a}:  years within x
+  \item \bold{Dx}: number of deaths within x
 }}
 
 \item{agecor}{logical, optional. If set TRUE, the average number of years lived within a
@@ -98,13 +98,17 @@ life.table(td1, agecorfac =  c(0.25,1/3,0.5))
 
 \dontrun{
 
-# with data preparation (requires dplyr and tidyr)
+# with data preparation
 magdalenenberg \%>\%
  replace(. == "60-x", "60-70") \%>\%
  tidyr::separate(a, c("from", "to")) \%>\%
  dplyr::mutate(from = as.numeric(from), to = as.numeric(to)) \%>\%
  prep.life.table(
-  dec = "Dx", agebeg = "from", ageend = "to", methode = "Standard", age.range = "excluded"
+  dec = "Dx",
+  agebeg = "from",
+  ageend = "to",
+  methode = "Standard",
+  agerange = "excluded"
  ) \%>\%
  life.table()
 }

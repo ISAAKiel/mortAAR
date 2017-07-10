@@ -35,8 +35,14 @@ is.mortaar_life_table_list <- function(x, ...) {"mortaar_life_table_list" %in% c
 format.mortaar_life_table_list <- function(x, ...) {
   return_value <- ""
   list_names <- names(x)
+  group <- attributes(x)$group
   for (i in 1:length(x)) {
-    this_return_value <- format.mortaar_life_table(x[[i]], class_of_deceased = list_names[i], ...)
+    my_life_table <- x[[i]]
+    # pass group name attribute to individual mortaar_life_tables
+    if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {
+      attr(my_life_table, "group") <- group
+    }
+    this_return_value <- format.mortaar_life_table(my_life_table, class_of_deceased = list_names[i], ...)
     return_value <- paste(return_value, this_return_value,sep="\n",collapse="\n")
   }
   invisible(return_value)
@@ -96,9 +102,10 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   out_str <- list()
   class_of_deceased_str <- ""
   if (!is.null(class_of_deceased)) {
-    class_of_deceased_str <- paste(" for", class_of_deceased)
+    group <- attributes(x)$group
+    class_of_deceased_str <- paste(" for ", group, ":", class_of_deceased, sep = "")
   }
-  out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n=",round(sum(x$Dx),2)," individuals)",sep = "")
+  out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n = ",round(sum(x$Dx),2)," individuals)",sep = "")
 
   out_str$e0 <- paste("\n","Life expectancy at birth (e0): ",round(x$ex[1],3), sep = "")
 
@@ -174,12 +181,11 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 
   n <- sum(x$Dx)
   my_subsets = "data set"
-  #if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-    my_x <- x
-    my_x$dataset <- my_subsets
-    my_x$a <- cumsum(my_x$a)
-    my_x<-list(dataset=my_x)
-  #}
+  my_x <- x
+  my_x$dataset <- my_subsets
+
+  my_x<-list(dataset=my_x)
+
 
   for (i in 1:length(display)) {
     this_variable <- display[i]
@@ -264,7 +270,7 @@ make_variable_labels <- function() {
     "life expectancy (ex)",
     "population age structure (rel_popx)"
   )
-  names(variable_labels) <- c("dx", "qx", "lx", "ex", "rel_popx")
+  names(variable_labels) <- c("qx", "dx", "lx", "ex", "rel_popx")
   return(variable_labels)
 }
 
@@ -273,10 +279,10 @@ make_ggplot <- function(data, variable_name, variable_labels) {
   colnames(my_x) <- c("a", "variable", variable_name, "dataset")
   my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
   my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name,lty="dataset"))
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab(variable_name) + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
-  # check if grname attribute is present to pass it on for plot legend title
-  grnam <- attributes(data)$grnam
-  if(is.null(grnam) %>% `!` && grnam %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=grnam))}
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age") + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
+  # check if group attribute is present to pass it on for plot legend title
+  group <- attributes(data)$group
+  if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=group))}
   methods::show(my_plot)
 }
 

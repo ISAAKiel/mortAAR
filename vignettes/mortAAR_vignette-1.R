@@ -56,12 +56,12 @@ td <- td %>%
 
 td_prepared <- prep.life.table(
   td, 
-  dec = "NA", 
+  dec = NA, 
   agebeg = "from",
   ageend = "to", 
-  grnam = "site", 
-  methode = "Standard",
-  age.range = "included"
+  group = "site", 
+  method = "Standard",
+  agerange = "included"
 )
 
 ## ------------------------------------------------------------------------
