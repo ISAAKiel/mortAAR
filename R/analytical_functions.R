@@ -7,7 +7,7 @@
 #' See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 #' \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
 #' for selected literature. \cr
-#' The function takes an individual data.frame or a list of
+#' The function0 takes an individual data.frame or a list of
 #' data.frames and returns an object of class mortaar_life_table
 #' or mortaar_life_table_list for which exist specialised summary,
 #' print and plot functions.
