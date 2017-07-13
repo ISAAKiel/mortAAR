@@ -2,8 +2,8 @@
 #'
 #' A lifetable from \emph{Hermann et. al 1990, 305}.
 #'
-#' The lifetable is compiled from a medieval grave collection from
-#' Schleswig (11th-13th century). More information can possibly
+#' This lifetable is compiled from a medieval grave collection from
+#' Schleswig (11th-13th century). More information can
 #' be found in \emph{Grupe 1997}.
 #'
 #' @references
@@ -92,11 +92,11 @@ NULL
 #' @name aiterhofen_oedmuehlen
 NULL
 
-#' magdalenenberg: Archaeological training dataset used in the extended vignette
+#' magdalenenberg: The archaeological training dataset used in the extended vignette
 #'
 #' A data set from \emph{zaeuner_wahl_magdalenenberg_2013}.
 #'
-#' Anthropological data from a large burial mound of the Early Iron Age in southwestern Germany, already
+#' Anthropological data from a large burial mound of the Early Iron Age in southwestern Germany. It is already
 #' pooled for constructing a life table.
 #'
 #' @references
@@ -113,12 +113,12 @@ NULL
 #' @name magdalenenberg
 NULL
 
-#' muensingen: Archaeological training dataset used in the extended vignette
+#' muensingen: The archaeological training dataset used in the extended vignette
 #'
 #' A data set from \emph{moghaddam_et_al_muensingen_2016}.
 #'
 #' Anthropological data from one of the largest Latene burial grounds of Central Europe.
-#' Besides age and sex of each individual it comprises the archaeological phasing (A, B or C) and the information
+#' Besides age and sex of each individual, it comprises the archaeological phasing (A, B or C) and the information
 #' if the respective burial contained grave goods (yes or no).
 #'
 #' @references
@@ -129,7 +129,7 @@ NULL
 #'   \item \bold{age:} age range of the individual
 #'   \item \bold{sex:} sex of the individual
 #'   \item \bold{latene_phase:} archaeological phasing
-#'   \item \bold{grave_goods:} grave contained grave goods?
+#'   \item \bold{grave_goods:} did the grave contain grave goods?
 #' }
 #'
 #' @family training, vignette
