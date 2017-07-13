@@ -1,22 +1,9 @@
-#' Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero
-#'
-#' Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero
-#'
-#' @param x a vector
-#' @param y vector to combine with
-#'
-#' @return dataframe with additional columns "from" and "to"
-#'
-#' @examples
-#'
-#' #summentest=summe(c(1,2,NA,4),c(5,6,7,8)
 summe=function(x,y){
   if(any(is.na(x))){
     x[is.na(x)]=0
   }
   return(x+y)
 }
-
 
 #' Creates the input for the function life.table
 #'

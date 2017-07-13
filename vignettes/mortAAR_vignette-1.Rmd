@@ -18,7 +18,7 @@ library(mortAAR)
 library(tidyverse)
 ```
 
-# Make test data available
+# Make test data available.
 
 Data from four neolithic gallery graves in central Germany [@czarnetzki_menschlichen_1966].
 
@@ -68,7 +68,7 @@ td <- td %>%
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-Make a decision about individual 139 from Niedertiefenbach with age less equal 60. 
+Make a decision about individual 139 from Niedertiefenbach. Altersangabe (<60) ist im Kontext der folgenden Untersuchung nicht verarbeitbar. 
 
 ```{r}
 td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
