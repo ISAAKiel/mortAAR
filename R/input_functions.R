@@ -41,7 +41,7 @@ summe=function(x,y){
 #' @examples
 #' \dontrun{
 #'
-#' # separate age ranges in you data set
+#' # separate age ranges in your data set
 #' df <- dplyr::mutate(
 #'   tidyr::separate(
 #'     replace(
