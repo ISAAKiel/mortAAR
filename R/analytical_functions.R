@@ -9,8 +9,8 @@
 #' for selected literature. \cr
 #' The function takes an individual data.frame or a list of
 #' data.frames and returns an object of class mortaar_life_table
-#' or mortaar_life_table_list for which exist specialised summary,
-#' print and plot functions.
+#' or mortaar_life_table_list, for which specialised summary,
+#' print and plot functions exist.
 #'
 #'@references
 #' \insertRef{chamberlain_demography_2006}{mortAAR}
@@ -51,7 +51,7 @@
 #'   \item \bold{x}:  age interval
 #'   \item \bold{a}:  years within x
 #'
-#'   \item \bold{Ax}: average number of years lived of an
+#'   \item \bold{Ax}: average number of years lived by an
 #'                    individual that died within a specific
 #'                    age class x :
 #'
@@ -128,7 +128,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
     neclist <- list(dfname = neclist)
   }
 
-  # create vector of allowed variables
+  # create vector of needed variables
   okvars <- c("x", "a", "Dx")
 
   # check input
@@ -158,8 +158,8 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
   }
 
   # check if attribute "group" is present in the input
-  # if yes, add it alos in the output
-  # necessary for nice legend title in plots
+  # if yes, add it to the output
+  # necessary for a nice legend title in plots
   group <- attributes(neclist)$group
   if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {
     attr(res, "group") <- group
@@ -184,7 +184,7 @@ inputchecks <- function(neclist, okvars) {
     paste0(
      "The input list contains at least one element that ",
      "is not a data.frame. ",
-     "The elements with the following IDs aren't ",
+     "The elements with the following IDs are not ",
      "data.frames: ",
      paste(wrongelements, collapse = ", ")
     ) %>%
@@ -214,7 +214,7 @@ inputchecks <- function(neclist, okvars) {
       unlist %>% `!` %>% which -> wrongelements
     paste0(
       "The data.frames with the following element IDs ",
-      "in the input list don't have the numeric columns ",
+      "in the input list do not have the numeric columns ",
       "'a' and 'Dx': ",
       paste(wrongelements, collapse = ", ")
     ) %>%
@@ -229,8 +229,8 @@ inputchecks <- function(neclist, okvars) {
 
   if(neclist %>% lapply(moreColCheck) %>% unlist %>% any) {
     paste0(
-      "In one of your data.frames there are more than the two ",
-      "necessary ('a', 'Dx') and the one optional ('x') columns. ",
+      "One of your data.frames contains more than the two ",
+      "necessary ('a', 'Dx') columns and the one optional ('x') column. ",
       "Note that these additional ",
       "columns will be dropped in the output."
     ) %>% warning
@@ -263,7 +263,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     )
   }
 
-  # dx: propotion of deaths within x
+  # dx: proportion of deaths within x
   necdf['dx'] <- necdf['Dx'] / sum(necdf['Dx']) * 100
 
   # lx: proportion of survivorship within x
@@ -273,11 +273,11 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
   # qx: probability of death within x
   necdf['qx'] <- necdf['dx'] / necdf['lx'] * 100
 
-  # Ax: average number of years lived of an
+  # Ax: average number of years lived by an
   # individual that died within a specific
   # age class
   # different possibilities:
-  # 1. user doesn't want a correction
+  # 1. user does not want a correction
   if (!agecor) {
     necdf['Ax'] <- necdf[, 'a'] / 2
   } else {
@@ -298,8 +298,8 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
       necdf['Ax'][1:length(agecorfac), ] <-
         necdf[, 'a'][1:length(agecorfac)] * agecorfac
 
-    # 3. default: user didn't do anything and the
-    # age correction is applied for every age class
+    # 3. default: user did not do anything and the
+    # age correction is applied to every age class
     # <= 5 life years
     } else {
       necdf['Ax'] <- necdf[, 'a'] %>%
@@ -329,7 +329,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
   ## rel_popx: percentage of L(x) of the sum of L(x)
   necdf['rel_popx'] <- necdf['Lx'] / sum(necdf['Lx']) * 100
 
-  ## reorder variables in result data.frame
+  ## reorder variables in resulting data.frame
   necdf <- necdf[, c(
     "x",
     ifelse("x_auto" %in% colnames(necdf), "x_auto", NA_character_),
