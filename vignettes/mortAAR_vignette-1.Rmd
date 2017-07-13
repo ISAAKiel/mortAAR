@@ -68,7 +68,7 @@ td <- td %>%
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-Make a decision about individual 139 from Niedertiefenbach with age less equal 60. 
+Make a decision on individual 139 from Niedertiefenbach with age less equal 60. 
 
 ```{r}
 td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
@@ -101,7 +101,7 @@ td <- td %>%
 
 # Analysis preparation
 
-Control the flow of analysis by exemplifying what the different variables of the input data stand for.
+Control the flow of the analysis by exemplifying what the different variables of the input data stand for.
 
 ```{r}
 # tdlist <- td %>%
