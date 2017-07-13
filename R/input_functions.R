@@ -1,10 +1,3 @@
-summe=function(x,y){
-  if(any(is.na(x))){
-    x[is.na(x)]=0
-  }
-  return(x+y)
-}
-
 #' Creates the input for the function life.table
 #'
 #' Prepares the input for \code{life.table()}. An individual based approach is supported as well
@@ -132,12 +125,12 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
     # For each Group (k) the deaths per age class (available years i) are summed up equally seperated by ages
     for(k in 1:length(unique(asd$Group))){
       for(i in which(asd$Group==unique(asd$Group)[k])){
-        restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)]=summe(x=(restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
+        restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)]=apply(cbind(restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)], asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))), 1, sum, na.rm=TRUE)
       }
     }
     # Also for all Groups all deceased are summed up seperated on the according years
     for(i in seq_along(asd[,1])){
-      restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=summe(x=(restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
+      restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=apply(cbind(restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))], asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))), 1, sum, na.rm=TRUE)
     }
 
     # If no groups (male, female, whatever, ...) are specified, do the same without considering groups
@@ -146,7 +139,7 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
     restab=data.frame(Age=seq(0,99,1),Deceased=0)
 
     for(i in seq_along(asd[,1])){
-      restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=summe(x=(restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
+      restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=apply(cbind(restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))], asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))),1, sum, na.rm=TRUE)
     }
   }
 
