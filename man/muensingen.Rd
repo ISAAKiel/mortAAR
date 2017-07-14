@@ -2,20 +2,20 @@
 % Please edit documentation in R/data.R
 \name{muensingen}
 \alias{muensingen}
-\title{muensingen: Archaeological training dataset used in the extended vignette}
+\title{muensingen: The archaeological training dataset used in the extended vignette.}
 \format{A data frame with 71 rows and 4 variables.
 \itemize{
-  \item \bold{age:} age range of the individual
-  \item \bold{sex:} sex of the individual
-  \item \bold{latene_phase:} archaeological phasing
-  \item \bold{grave_goods:} grave contained grave goods?
+  \item \bold{age:} age range of the individual.
+  \item \bold{sex:} sex of the individual.
+  \item \bold{latene_phase:} archaeological phasing.
+  \item \bold{grave_goods:} did the grave contain grave goods?
 }}
 \description{
 A data set from \emph{moghaddam_et_al_muensingen_2016}.
 }
 \details{
 Anthropological data from one of the largest Latene burial grounds of Central Europe.
-Besides age and sex of each individual it comprises the archaeological phasing (A, B or C) and the information
+Besides age and sex of each individual, it comprises the archaeological phasing (A, B or C) and the information
 if the respective burial contained grave goods (yes or no).
 }
 \references{

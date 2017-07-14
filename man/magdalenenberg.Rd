@@ -2,17 +2,17 @@
 % Please edit documentation in R/data.R
 \name{magdalenenberg}
 \alias{magdalenenberg}
-\title{magdalenenberg: Archaeological training dataset used in the extended vignette}
+\title{magdalenenberg: The archaeological training dataset used in the extended vignette.}
 \format{A data frame with 13 rows and 2 variables.
 \itemize{
-  \item \bold{a:} age range
-  \item \bold{Dx:} number of deceased
+  \item \bold{a:} age range.
+  \item \bold{Dx:} number of deceased.
 }}
 \description{
 A data set from \emph{zaeuner_wahl_magdalenenberg_2013}.
 }
 \details{
-Anthropological data from a large burial mound of the Early Iron Age in southwestern Germany, already
+Anthropological data from a large burial mound of the Early Iron Age in southwestern Germany. It is already
 pooled for constructing a life table.
 }
 \references{

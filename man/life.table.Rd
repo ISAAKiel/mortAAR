@@ -8,18 +8,18 @@ life.table(neclist, agecor = TRUE, agecorfac = c())
 }
 \arguments{
 \item{neclist}{single data.frame or list of data.frames
-             with the columns 'x', 'a', 'Dx'
+             with the columns 'x', 'a', 'Dx'.
 \itemize{
   \item \bold{x}:  age interval identifier, optional -
-                   otherwise determined from \bold{a}
-  \item \bold{a}:  years within x
-  \item \bold{Dx}: number of deaths within x
+                   otherwise determined from \bold{a}.
+  \item \bold{a}:  years within x.
+  \item \bold{Dx}: number of deaths within x.
 }}
 
 \item{agecor}{logical, optional. If set TRUE, the average number of years lived within a
 given age class of individuals having died in this class can be adjusted via agecorfac.
-If set FALSE, it is assumed that they died in the middle of that class. Due to higher
-mortality rates of infants, this assumption is certainly erroneous for individuals
+If set FALSE, it is assumed that they died in the middle of this class. Due to the higher
+mortality rates of infants, this assumption is certainly inaccurate for individuals
 <= 5 years.
 
 Default setup is: TRUE}
@@ -37,13 +37,13 @@ Each mortaar_life_table contains the following variables:
   \item \bold{x}:  age interval
   \item \bold{a}:  years within x
 
-  \item \bold{Ax}: average number of years lived of an
+  \item \bold{Ax}: average number of years lived by an
                    individual that died within a specific
                    age class x :
 
                    \eqn{A_{x} = a_{x} * agecorfac_{x}}
 
-  \item \bold{Dx}: number of deaths within x
+  \item \bold{Dx}: number of deaths within x.
   \item \bold{dx}: propotion of deaths within x (percent) :
 
                    \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
@@ -86,8 +86,8 @@ See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 for selected literature. \cr
 The function takes an individual data.frame or a list of
 data.frames and returns an object of class mortaar_life_table
-or mortaar_life_table_list for which exist specialised summary,
-print and plot functions.
+or mortaar_life_table_list, for which specialised summary,
+print and plot functions exist.
 }
 \examples{
 # apply life.table to an already prepared dataset

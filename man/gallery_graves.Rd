@@ -2,20 +2,20 @@
 % Please edit documentation in R/data.R
 \name{gallery_graves}
 \alias{gallery_graves}
-\title{gallery_graves: Archaeological training dataset}
+\title{gallery_graves: The Archaeological training dataset.}
 \format{A data frame with 128 rows and 4 variables.
 \itemize{
   \item \bold{indnr:} ID of the individual represented by
-                      its skull
-  \item \bold{sex:} sex determination, w -> female, m -> male
-  \item \bold{age:} age class
-  \item \bold{site:} collective grave
+                      a skull.
+  \item \bold{sex:} sex determination, w -> female, m -> male.
+  \item \bold{age:} age class.
+  \item \bold{site:} collective grave.
 }}
 \description{
 A dataset from \emph{Czarnetzki 1966}.
 }
 \details{
-Skulls from four different collective graves. The dataset is
+Skulls from four different collective graves. This dataset is
 not well prepared and needs some adjustement.
 }
 \references{

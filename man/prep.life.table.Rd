@@ -50,7 +50,7 @@ If the data set comprises a grouping variable (e.g., sex), this can be specified
 \examples{
 \dontrun{
 
-# separate age ranges in you data set
+# separate age ranges in your data set
 df <- dplyr::mutate(
   tidyr::separate(
     replace(

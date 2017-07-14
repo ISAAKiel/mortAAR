@@ -23,8 +23,8 @@ documentation of \code{\link{life.table}}.}
 A lifetable from \emph{Hermann et. al 1990, 305}.
 }
 \details{
-The lifetable is compiled from a medieval grave collection from
-Schleswig (11th-13th century). More information can possibly
+This lifetable is compiled from a medieval grave collection from
+Schleswig (11th-13th century). More information can
 be found in \emph{Grupe 1997}.
 }
 \references{
