@@ -33,11 +33,11 @@
 #' @name schleswig_ma
 NULL
 
-#' gallery_graves: Archaeological training dataset
+#' gallery_graves: The Archaeological training dataset.
 #'
 #' A dataset from \emph{Czarnetzki 1966}.
 #'
-#' Skulls from four different collective graves. The dataset is
+#' Skulls from four different collective graves. This dataset is
 #' not well prepared and needs some adjustement.
 #'
 #' @references
@@ -46,10 +46,10 @@ NULL
 #' @format A data frame with 128 rows and 4 variables.
 #' \itemize{
 #'   \item \bold{indnr:} ID of the individual represented by
-#'                       its skull
-#'   \item \bold{sex:} sex determination, w -> female, m -> male
-#'   \item \bold{age:} age class
-#'   \item \bold{site:} collective grave
+#'                       a skull.
+#'   \item \bold{sex:} sex determination, w -> female, m -> male.
+#'   \item \bold{age:} age class.
+#'   \item \bold{site:} collective grave.
 #' }
 #'
 #' @family training
@@ -57,7 +57,7 @@ NULL
 #' @name gallery_graves
 NULL
 
-#' aiterhofen_oedmuehlen: Lifetable example
+#' aiterhofen_oedmuehlen: Lifetable example.
 #'
 #' A lifetable from \emph{Kokkotidis/Richter 1991, 228}.
 #'
@@ -92,7 +92,7 @@ NULL
 #' @name aiterhofen_oedmuehlen
 NULL
 
-#' magdalenenberg: The archaeological training dataset used in the extended vignette
+#' magdalenenberg: The archaeological training dataset used in the extended vignette.
 #'
 #' A data set from \emph{zaeuner_wahl_magdalenenberg_2013}.
 #'
@@ -104,8 +104,8 @@ NULL
 #'
 #' @format A data frame with 13 rows and 2 variables.
 #' \itemize{
-#'   \item \bold{a:} age range
-#'   \item \bold{Dx:} number of deceased
+#'   \item \bold{a:} age range.
+#'   \item \bold{Dx:} number of deceased.
 #' }
 #'
 #' @family training, vignette
@@ -113,7 +113,7 @@ NULL
 #' @name magdalenenberg
 NULL
 
-#' muensingen: The archaeological training dataset used in the extended vignette
+#' muensingen: The archaeological training dataset used in the extended vignette.
 #'
 #' A data set from \emph{moghaddam_et_al_muensingen_2016}.
 #'
@@ -126,9 +126,9 @@ NULL
 #'
 #' @format A data frame with 71 rows and 4 variables.
 #' \itemize{
-#'   \item \bold{age:} age range of the individual
-#'   \item \bold{sex:} sex of the individual
-#'   \item \bold{latene_phase:} archaeological phasing
+#'   \item \bold{age:} age range of the individual.
+#'   \item \bold{sex:} sex of the individual.
+#'   \item \bold{latene_phase:} archaeological phasing.
 #'   \item \bold{grave_goods:} did the grave contain grave goods?
 #' }
 #'
