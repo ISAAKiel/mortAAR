@@ -22,18 +22,18 @@
 #' \insertRef{kokkotidis_graberfeld-_1991}{mortAAR}
 #'
 #' @param neclist single data.frame or list of data.frames
-#'                with the columns 'x', 'a', 'Dx'
+#'                with the columns 'x', 'a', 'Dx'.
 #'   \itemize{
 #'     \item \bold{x}:  age interval identifier, optional -
-#'                      otherwise determined from \bold{a}
-#'     \item \bold{a}:  years within x
-#'     \item \bold{Dx}: number of deaths within x
+#'                      otherwise determined from \bold{a}.
+#'     \item \bold{a}:  years within x.
+#'     \item \bold{Dx}: number of deaths within x.
 #'   }
 #'
 #' @param agecor logical, optional. If set TRUE, the average number of years lived within a
 #' given age class of individuals having died in this class can be adjusted via agecorfac.
-#' If set FALSE, it is assumed that they died in the middle of that class. Due to higher
-#' mortality rates of infants, this assumption is certainly erroneous for individuals
+#' If set FALSE, it is assumed that they died in the middle of this class. Due to the higher
+#' mortality rates of infants, this assumption is certainly inaccurate for individuals
 #' <= 5 years.
 #'
 #' Default setup is: TRUE
@@ -57,7 +57,7 @@
 #'
 #'                    \eqn{A_{x} = a_{x} * agecorfac_{x}}
 #'
-#'   \item \bold{Dx}: number of deaths within x
+#'   \item \bold{Dx}: number of deaths within x.
 #'   \item \bold{dx}: propotion of deaths within x (percent) :
 #'
 #'                    \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
@@ -121,24 +121,24 @@
 #' @export
 life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
 
-  # check if input list is a data.frame - if so, it's
-  # packed into a list
+  # Check if the input list is a data.frame, if so, it's
+  # packed into a list.
   if ("data.frame" %in% class(neclist)) {
     neclist %>% substitute %>% deparse -> dfname
     neclist <- list(dfname = neclist)
   }
 
-  # create vector of needed variables
+  # Create a vector of the needed variables.
   okvars <- c("x", "a", "Dx")
 
-  # check input
+  # Check the input.
   inputchecks(neclist, okvars)
 
-  # apply life.table.vec to every column of the input df
+  # Apply life.table.vec to every column of the input df
   # and create an output mortaar_life_table_list of
-  # mortaar_life_table objects
+  # mortaar_life_table objects.
 
-  # list of data.frames input:
+  # List of data.frames input:
   if (length(neclist)>1) {
     neclist %>%
       lapply(., function(necdf) {
@@ -148,7 +148,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
         }
       ) %>%
         `class<-`(c("mortaar_life_table_list", class(.))) -> res
-  # single data.frame input:
+  # Single data.frame input:
   } else {
     necdf <- neclist[[1]]
     vars <- colnames(necdf)[colnames(necdf) %in% okvars]
@@ -157,9 +157,9 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
     ) -> res
   }
 
-  # check if attribute "group" is present in the input
-  # if yes, add it to the output
-  # necessary for a nice legend title in plots
+  # Check if the attribute "group" is present in the input,
+  # if yes, add it to the output.
+  # It is necessary for a nice legend title for the plots.
   group <- attributes(neclist)$group
   if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {
     attr(res, "group") <- group
@@ -170,13 +170,13 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
 
 inputchecks <- function(neclist, okvars) {
 
-  # check if input is a list
+  # Check if the input is a list.
   if (neclist %>% is.list %>% `!`) {
     "The input data is not a list." %>%
       stop
   }
 
-  # check if input list contains data.frames
+  # Check if the input list contains data.frames.
   if (neclist %>% lapply(is.data.frame) %>% unlist %>%
       all %>% `!`) {
     neclist %>% lapply(is.data.frame) %>% unlist %>%
@@ -191,8 +191,8 @@ inputchecks <- function(neclist, okvars) {
       stop
   }
 
-  # check if input data.frames contain the numeric (!)
-  # columns "a" and "Dx"
+  # Check if the input data.frames contain the numeric (!)
+  # columns "a" and "Dx".
   aDxcheck <- function(necdf) {
     c(
       ifelse(
@@ -221,8 +221,8 @@ inputchecks <- function(neclist, okvars) {
       stop
   }
 
-  # check if input data.frames contain other columns than
-  # "x", "a", "Dx" (the okvars)
+  # Check if the input data.frames contain other columns than
+  # "x", "a", "Dx" (the okvars).
   moreColCheck <- function(necdf) {
     colnames(necdf) %in% okvars %>% `!` %>% any
   }
@@ -240,7 +240,7 @@ inputchecks <- function(neclist, okvars) {
 
 life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
 
-  # x: well readable rownames for age classes
+  # x: well readable rownames for age classes.
   limit <- necdf['a'] %>% sum
   lower <- c(0, necdf[, 'a'] %>% cumsum)[1:nrow(necdf)]
   upper <- necdf[, 'a'] %>% cumsum %>% `-`(1)
@@ -263,28 +263,28 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     )
   }
 
-  # dx: proportion of deaths within x
+  # dx: proportion of deaths within x.
   necdf['dx'] <- necdf['Dx'] / sum(necdf['Dx']) * 100
 
-  # lx: proportion of survivorship within x
+  # lx: proportion of survivorship within x.
   necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx'])
                    )[1:nrow(necdf)]
 
-  # qx: probability of death within x
+  # qx: probability of death within x.
   necdf['qx'] <- necdf['dx'] / necdf['lx'] * 100
 
   # Ax: average number of years lived by an
-  # individual that died within a specific
-  # age class
-  # different possibilities:
-  # 1. user does not want a correction
+  # individual, which died within a specific
+  # age class.
+  # Different outcomes are possible:
+  # 1. user does not want a correction.
   if (!agecor) {
     necdf['Ax'] <- necdf[, 'a'] / 2
   } else {
-    # 2. user manually added a agecorfac
+    # 2. user manually added an agecorfac.
     if (agecorfac %>% is.null %>% `!`) {
 
-      # check if agecorfac is too long
+      # Check if agecorfac is too long.
       if (length(agecorfac) > nrow(necdf)) {
         paste0(
           "There can not be more age correction factors
@@ -293,14 +293,14 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
           message
       }
 
-      # apply manually added agecorfac
+      # Apply the manually added agecorfac.
       necdf['Ax'] <- necdf[, 'a'] / 2
       necdf['Ax'][1:length(agecorfac), ] <-
         necdf[, 'a'][1:length(agecorfac)] * agecorfac
 
     # 3. default: user did not do anything and the
     # age correction is applied to every age class
-    # <= 5 life years
+    # <= 5 life years.
     } else {
       necdf['Ax'] <- necdf[, 'a'] %>%
         cumsum() %>%
@@ -312,24 +312,24 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
   }
 
   # Lx: number of years lived within x by those that died within x and those
-  # that reached the next age class
+  # that reached the next age class.
   necdf['Lx'] <- necdf['a']* necdf['lx'] -
     ((necdf['a'] - necdf['Ax']) * necdf['dx'])
 
   # Tx: sum of years lived within current and
-  # remaining x
+  # remaining x.
   necdf['Tx'] <- c(
     sum(necdf['Lx']),
     sum(necdf['Lx']) - cumsum(necdf[, 'Lx'])
   )[1:nrow(necdf)]
 
-  # ex: average years of life remaining
+  # ex: average years of life remaining.
   necdf['ex'] <- necdf['Tx'] / necdf['lx']
 
-  ## rel_popx: percentage of L(x) of the sum of L(x)
+  ## rel_popx: percentage of L(x) of the sum of L(x).
   necdf['rel_popx'] <- necdf['Lx'] / sum(necdf['Lx']) * 100
 
-  ## reorder variables in resulting data.frame
+  ## Reorder the variables in the resulting data.frame.
   necdf <- necdf[, c(
     "x",
     ifelse("x_auto" %in% colnames(necdf), "x_auto", NA_character_),
@@ -337,7 +337,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     "qx", "Lx", "Tx", "ex", "rel_popx"
   ) %>% stats::na.omit()]
 
-  # ouput
+  # Ouput.
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
     return()
