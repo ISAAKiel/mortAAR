@@ -2,7 +2,7 @@
 #'
 #' \code{life.table} calculates
 #' \href{https://en.wikipedia.org/wiki/Life_table}{life table(s)}.
-#' The algorithm is optimised for dead populations
+#' The algorithm is optimised for deceased populations
 #' encountered in archaeological research.
 #' See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 #' \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
@@ -24,8 +24,8 @@
 #' @param neclist single data.frame or list of data.frames
 #'                with the columns 'x', 'a', 'Dx'.
 #'   \itemize{
-#'     \item \bold{x}:  age interval identifier, optional -
-#'                      otherwise determined from \bold{a}.
+#'     \item \bold{x}:  age interval identifier, optional. -
+#'                      Otherwise determined from \bold{a}.
 #'     \item \bold{a}:  years within x.
 #'     \item \bold{Dx}: number of deaths within x.
 #'   }
@@ -36,7 +36,7 @@
 #' mortality rates of infants, this assumption is certainly inaccurate for individuals
 #' <= 5 years.
 #'
-#' Default setup is: TRUE
+#' Default setup is: TRUE.
 #'
 #' @param agecorfac numeric vector, optional. Only applies if agecor == TRUE. Given values
 #' replace the standard values from the first age interval onwards.
@@ -48,8 +48,8 @@
 #' Each mortaar_life_table contains the following variables:
 #'
 #' \itemize{
-#'   \item \bold{x}:  age interval
-#'   \item \bold{a}:  years within x
+#'   \item \bold{x}:  age interval.
+#'   \item \bold{a}:  years within x.
 #'
 #'   \item \bold{Ax}: average number of years lived by an
 #'                    individual that died within a specific
@@ -92,7 +92,7 @@
 #'
 #'
 #' @examples
-#' # apply life.table to an already prepared dataset
+#' # Apply life.table to an already prepared dataset.
 #' td1 <- schleswig_ma[c("a", "Dx")]
 #'
 #' life.table(td1)
@@ -100,7 +100,7 @@
 #'
 #' \dontrun{
 #'
-#' # with data preparation
+#' # With data preparation.
 #' magdalenenberg %>%
 #'  replace(. == "60-x", "60-70") %>%
 #'  tidyr::separate(a, c("from", "to")) %>%
@@ -121,7 +121,7 @@
 #' @export
 life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
 
-  # Check if the input list is a data.frame, if so, it's
+  # Check if the input list is a data.frame, if so, it is
   # packed into a list.
   if ("data.frame" %in% class(neclist)) {
     neclist %>% substitute %>% deparse -> dfname
@@ -159,7 +159,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
 
   # Check if the attribute "group" is present in the input,
   # if yes, add it to the output.
-  # It is necessary for a nice legend title for the plots.
+  # It is necessary for a good legend title for the plots.
   group <- attributes(neclist)$group
   if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {
     attr(res, "group") <- group
@@ -170,13 +170,13 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
 
 inputchecks <- function(neclist, okvars) {
 
-  # Check if the input is a list.
+  # Checks if the input is a list.
   if (neclist %>% is.list %>% `!`) {
     "The input data is not a list." %>%
       stop
   }
 
-  # Check if the input list contains data.frames.
+  # Checks if the input list contains data.frames.
   if (neclist %>% lapply(is.data.frame) %>% unlist %>%
       all %>% `!`) {
     neclist %>% lapply(is.data.frame) %>% unlist %>%
@@ -191,7 +191,7 @@ inputchecks <- function(neclist, okvars) {
       stop
   }
 
-  # Check if the input data.frames contain the numeric (!)
+  # Checks if the input data.frames contain the numeric (!)
   # columns "a" and "Dx".
   aDxcheck <- function(necdf) {
     c(
@@ -221,7 +221,7 @@ inputchecks <- function(neclist, okvars) {
       stop
   }
 
-  # Check if the input data.frames contain other columns than
+  # Checks if the input data.frames contain other columns than
   # "x", "a", "Dx" (the okvars).
   moreColCheck <- function(necdf) {
     colnames(necdf) %in% okvars %>% `!` %>% any
@@ -284,7 +284,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     # 2. user manually added an agecorfac.
     if (agecorfac %>% is.null %>% `!`) {
 
-      # Check if agecorfac is too long.
+      # Checks if agecorfac is too long.
       if (length(agecorfac) > nrow(necdf)) {
         paste0(
           "There can not be more age correction factors

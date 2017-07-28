@@ -52,7 +52,7 @@ NULL
 #'   \item \bold{site:} collective grave.
 #' }
 #'
-#' @family training
+#' @family training.
 #'
 #' @name gallery_graves
 NULL
@@ -108,7 +108,7 @@ NULL
 #'   \item \bold{Dx:} number of deceased.
 #' }
 #'
-#' @family training, vignette
+#' @family training, vignette.
 #'
 #' @name magdalenenberg
 NULL
@@ -132,12 +132,12 @@ NULL
 #'   \item \bold{grave_goods:} did the grave contain grave goods?
 #' }
 #'
-#' @family training, vignette
+#' @family training, vignette.
 #'
 #' @name muensingen
 NULL
 
-#' odagsen_corpus.mandibulae: Lifetable example
+#' odagsen_corpus.mandibulae: Lifetable example.
 #'
 #' A lifetable from \emph{Grupe/Herrmann 1986, 51}.
 #'
@@ -179,7 +179,7 @@ NULL
 NULL
 
 
-#' odagsen_margo.orbitalis: Lifetable example
+#' odagsen_margo.orbitalis: Lifetable example.
 #'
 #' A lifetable from \emph{Grupe/Herrmann 1986, 51}.
 #'
@@ -216,7 +216,7 @@ NULL
 #' For further information about the values see the
 #' documentation of \code{\link{life.table}}.
 #'
-#' @family lifetables
+#' @family lifetables.
 #'
 #' @name odagsen_mo
 NULL

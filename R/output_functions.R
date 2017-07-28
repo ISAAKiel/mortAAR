@@ -1,11 +1,11 @@
-#' Checks if a variable is of class mortaar_life_table_list
+#' Checks if a variable is of class mortaar_life_table_list.
 #'
-#' Checks if a variable is of class mortaar_life_table_list
+#' Checks if a variable is of class mortaar_life_table_list.
 #'
-#' @param x a variable
+#' @param x a variable.
 #' @param ... further arguments passed to or from other methods.
 #'
-#' @return true if x is a mortaar_life_table_list, false otherwise
+#' @return true if x is a mortaar_life_table_list, otherwise false.
 #'
 #' @examples
 #'
@@ -15,16 +15,16 @@
 #' @export
 is.mortaar_life_table_list <- function(x, ...) {"mortaar_life_table_list" %in% class(x)}
 
-#' Encode a mortaar_life_table_list in a Common Format
+#' Encode a mortaar_life_table_list in a Common Format.
 #'
-#' Format an mortaar_life_table_list for pretty printing.
+#' Format a mortaar_life_table_list for pretty printing.
 #'
-#' @param x a mortaar_life_table_list
+#' @param x a mortaar_life_table_list.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @return A string representation of the mortaar_life_table_list. Each format.mortaar_life_table
-#' is formated by its own method and concatenated. The names of the elements are used to specify
-#' the name in the returned header of the printout
+#' is formated by its own method and strung together. The names of the elements are used to specify
+#' the name in the returned header of the printout.
 #'
 #' @examples
 #'
@@ -38,7 +38,7 @@ format.mortaar_life_table_list <- function(x, ...) {
   group <- attributes(x)$group
   for (i in 1:length(x)) {
     my_life_table <- x[[i]]
-    # pass group name attribute to individual mortaar_life_tables
+    # Pass the group name attribute to individual mortaar_life_tables.
     if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {
       attr(my_life_table, "group") <- group
     }
@@ -48,11 +48,11 @@ format.mortaar_life_table_list <- function(x, ...) {
   invisible(return_value)
 }
 
-#' Print a mortaar_life_table_list
+#' Print a mortaar_life_table_list.
 #'
-#' Print a mortaar_life_table_list according to the format.mortaar_life_table_list
+#' Print a mortaar_life_table_list according to the format.mortaar_life_table_list.
 #'
-#' @param x a mortaar_life_table_list
+#' @param x a mortaar_life_table_list.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -63,11 +63,11 @@ format.mortaar_life_table_list <- function(x, ...) {
 #' @export
 print.mortaar_life_table_list <- function(x, ...) cat(format(x, ...), "\n")
 
-#' Checks if a variable is of class mortaar_life_table
+#' Checks if a variable is part of the class mortaar_life_table.
 #'
-#' Checks if a variable is of class mortaar_life_table
+#' Checks if a variable is part of the class mortaar_life_table.
 #'
-#' @param x a variable
+#' @param x a variable.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @return true if x is a mortaar_life_table, false otherwise
@@ -80,15 +80,15 @@ print.mortaar_life_table_list <- function(x, ...) cat(format(x, ...), "\n")
 #' @export
 is.mortaar_life_table <- function(x, ...) {"mortaar_life_table" %in% class(x)}
 
-#' Encode a mortaar_life_table in a Common Format
+#' Encode a mortaar_life_table in a Common Format.
 #'
-#' Format an mortaar_life_table for pretty printing.
+#' Format a mortaar_life_table for pretty printing.
 #'
-#' @param x a mortaar_life_table
-#' @param class_of_deceased optional specify the class of deceased (male, female, undetermined, ...)
+#' @param x a mortaar_life_table.
+#' @param class_of_deceased optional, specify the class of deceased (male, female, phase, ...).
 #' @param ... further arguments passed to or from other methods.
 #'
-#' @return A string representation of the mortaar_life_table
+#' @return A string representation of the mortaar_life_table.
 #'
 #' @examples
 #'
@@ -120,11 +120,11 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   invisible(return_value)
 }
 
-#' Print a mortaar_life_table
+#' Print a mortaar_life_table.
 #'
-#' Print a mortaar_life_table according to the format.mortaar_life_table
+#' Print a mortaar_life_table according to the format.mortaar_life_table.
 #'
-#' @param x a mortaar_life_table
+#' @param x a mortaar_life_table.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -136,15 +136,15 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
 print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 
 
-#' Plot a mortaar_life_table
+#' Plot a mortaar_life_table.
 #'
-#' Plot a mortaar_life_table according to the format.mortaar_life_table
+#' Plot a mortaar_life_table according to the format.mortaar_life_table.
 #'
-#' @param x a mortaar_life_table
-#' @param display which plots to show. These must include some of the
-#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
-#' and \code{rel_popx} for population age structure.
-#' @param prefer.ggplot should ggplot be preferred if available, default to TRUE
+#' @param x a mortaar_life_table.
+#' @param display a character vector. Displays the calculated variables as plots. These must include some of the
+#' alternatives \code{dx} for the proportion of deaths, \code{qx} for the probability of death, \code{lx} for the survivorship, \code{ex} for the life expectancy
+#' and \code{rel_popx} for the population age structure.
+#' @param prefer.ggplot should ggplot be preferred, if available. Default to TRUE.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -203,13 +203,13 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 }
 
 
-#' Plot a mortaar_life_table_list
+#' Plot a mortaar_life_table_list.
 #'
-#' @param x a mortaar_life_table_list
-#' @param display which plots to show. These must include some of the
-#' alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
-#' and \code{rel_popx} for population age structure.
-#' @param prefer.ggplot should ggplot be preferred if available, default to TRUE
+#' @param x a mortaar_life_table_list.
+#' @param display a character vector. Displays the calculated variables as plots. These must include some of the
+#' alternatives \code{dx} for the proportion of deaths, \code{qx} for the probability of death, \code{lx} for the survivorship, \code{ex} for the life expectancy
+#' and \code{rel_popx} for the population age structure.
+#' @param prefer.ggplot should ggplot be preferred, if available. Default to TRUE.
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
@@ -286,27 +286,27 @@ make_ggplot <- function(data, variable_name, variable_labels) {
   methods::show(my_plot)
 }
 
-#'plots proportion of deaths dx for a single life table
+#'Plots proportion of deaths dx for a single life table.
 #'
-#'plots proportion of deaths dx for a single life table
+#'Plots proportion of deaths dx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param lty line type defaults to 1
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param lty line type, default to 1.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_dx <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$dx, lty=lty)
 }
 
-#'plots coordinate system for proportion of deaths dx for a single life table
+#'Plots a coordinate system for proportion of deaths dx for a single life table.
 #'
-#'plots coordinate system for proportion of deaths dx for a single life table
+#'Plots a coordinate system for proportion of deaths dx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param my_subsets a vector of categories from sublist of mortaar_life_table
-#'@param n number of individuals
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param my_subsets a vector of categories from the sublist of mortaar_life_table.
+#'@param n number of individuals.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_dx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
@@ -316,27 +316,27 @@ mortaar_plot_dx_frame <- function(x, my_subsets="", n,...) {
   legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
 }
 
-#'plots probability of death qx for a single life table
+#'Plots the probability of death qx for a single life table.
 #'
-#'plots probability of death qx for a single life table
+#'Plots the probability of death qx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param lty line type defaults to 1
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param lty line type, default to 1.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_qx <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$qx, lty=lty)
 }
 
-#'plots coordinate system for probability of death qx for a single life table
+#'Plots a coordinate system for probability of death qx for a single life table.
 #'
-#'plots coordinate system for probability of death qx for a single life table
+#'Plots a coordinate system for probability of death qx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param my_subsets a vector of categories from sublist of mortaar_life_table
-#'@param n number of individuals
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param my_subsets a vector of categories from the sublist of mortaar_life_table.
+#'@param n number of individuals.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
@@ -346,27 +346,27 @@ mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
   legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
 }
 
-#'plots survivorship lx for a single life table
+#'Plots the survivorship lx for a single life table.
 #'
-#'plots survivorship lx for a single life table
+#'Plots the survivorship lx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param lty line type defaults to 1
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param lty line type, default to 1.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_lx <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$lx, lty=lty)
 }
 
-#'plots coordinate system for survivorship lx for a single life table
+#'Plots a coordinate system for survivorship lx for a single life table.
 #'
-#'plots coordinate system for survivorship lx for a single life table
+#'Plots a coordinate system for survivorship lx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param my_subsets a vector of categories from sublist of mortaar_life_table
-#'@param n number of individuals
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param my_subsets a vector of categories from the sublist of mortaar_life_table.
+#'@param n number of individuals.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_lx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
@@ -376,26 +376,26 @@ mortaar_plot_lx_frame <- function(x, my_subsets="", n,...) {
   legend(x = "topleft", bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
 }
 
-#'plots life expectancy ex for a single life table
+#'Plots the life expectancy ex for a single life table.
 #'
-#'plots life expectancy ex for a single life table
+#'Plots the life expectancy ex for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param lty line type defaults to 1
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param lty line type, default to 1.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_ex <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$ex, lty=lty)
 }
-#'plots coordinate system for life expectancy ex for a single life table
+#'Plots a coordinate system for life expectancy ex for a single life table.
 #'
-#'plots coordinate system for life expectancy ex for a single life table
+#'Plots a coordinate system for life expectancy ex for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param my_subsets a vector of categories from sublist of mortaar_life_table
-#'@param n number of individuals
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param my_subsets a vector of categories from the sublist of mortaar_life_table.
+#'@param n number of individuals.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_ex_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)
@@ -406,27 +406,27 @@ mortaar_plot_ex_frame <- function(x, my_subsets="", n,...) {
 }
 
 
-#'plots mortality rate rel_popx for a single life table
+#'Plots the mortality rate rel_popx for a single life table.
 #'
-#'plots mortality rate rel_popx for a single life table
+#'Plots the mortality rate rel_popx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param lty line type defaults to 1
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param lty line type, default to 1.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_rel_popx <- function(x, lty=1, ...) {
   my_x=cumsum(x$a)
   lines(my_x,x$rel_popx, lty=lty)
 }
 
-#'plots coordinate system for mortality rate rel_popx for a single life table
+#'Plots a coordinate system for mortality rate rel_popx for a single life table.
 #'
-#'plots coordinate system for mortality rate rel_popx for a single life table
+#'Plots a coordinate system for mortality rate rel_popx for a single life table.
 #'
-#'@param x an object of the class mortaar_life_table
-#'@param my_subsets a vector of categories from sublist of mortaar_life_table
-#'@param n number of individuals
-#'@param ... further arguments passed to the print function
+#'@param x an object of the class mortaar_life_table.
+#'@param my_subsets a vector of categories from sublist of mortaar_life_table.
+#'@param n number of individuals.
+#'@param ... further arguments passed to the print function.
 
 mortaar_plot_rel_popx_frame <- function(x, my_subsets="", n,...) {
   my_x=cumsum(x$a)

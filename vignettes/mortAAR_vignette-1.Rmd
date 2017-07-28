@@ -34,7 +34,7 @@ td %>% head(., n = 10) %>% knitr::kable()
 
 # Clean up data
 
-Replace: "?" with `NA` values
+Replace: "?" with `NA` values.
 
 ```{r}
 td %>% replace(td == "?", NA) -> td
@@ -68,7 +68,7 @@ td <- td %>%
 td %>% head(., n = 10) %>% knitr::kable()
 ```
 
-Make a decision on individual 139 from Niedertiefenbach with age less equal 60. 
+Make a decision on individual 139 from Niedertiefenbach with age less or equal 60. 
 
 ```{r}
 td[td$indnr == "139" & td$site == "Niedertiefenbach", ]$age <- "50-60"
