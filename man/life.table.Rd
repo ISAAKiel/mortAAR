@@ -10,8 +10,8 @@ life.table(neclist, agecor = TRUE, agecorfac = c())
 \item{neclist}{single data.frame or list of data.frames
              with the columns 'x', 'a', 'Dx'.
 \itemize{
-  \item \bold{x}:  age interval identifier, optional -
-                   otherwise determined from \bold{a}.
+  \item \bold{x}:  age interval identifier, optional. -
+                   Otherwise determined from \bold{a}.
   \item \bold{a}:  years within x.
   \item \bold{Dx}: number of deaths within x.
 }}
@@ -22,7 +22,7 @@ If set FALSE, it is assumed that they died in the middle of this class. Due to t
 mortality rates of infants, this assumption is certainly inaccurate for individuals
 <= 5 years.
 
-Default setup is: TRUE}
+Default setup is: TRUE.}
 
 \item{agecorfac}{numeric vector, optional. Only applies if agecor == TRUE. Given values
 replace the standard values from the first age interval onwards.
@@ -34,8 +34,8 @@ An object of class mortaar_life_table or mortaar_life_table_list.
 Each mortaar_life_table contains the following variables:
 
 \itemize{
-  \item \bold{x}:  age interval
-  \item \bold{a}:  years within x
+  \item \bold{x}:  age interval.
+  \item \bold{a}:  years within x.
 
   \item \bold{Ax}: average number of years lived by an
                    individual that died within a specific
@@ -79,7 +79,7 @@ Each mortaar_life_table contains the following variables:
 \description{
 \code{life.table} calculates
 \href{https://en.wikipedia.org/wiki/Life_table}{life table(s)}.
-The algorithm is optimised for dead populations
+The algorithm is optimised for deceased populations
 encountered in archaeological research.
 See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
 \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
@@ -90,7 +90,7 @@ or mortaar_life_table_list, for which specialised summary,
 print and plot functions exist.
 }
 \examples{
-# apply life.table to an already prepared dataset
+# Apply life.table to an already prepared dataset.
 td1 <- schleswig_ma[c("a", "Dx")]
 
 life.table(td1)
@@ -98,7 +98,7 @@ life.table(td1, agecorfac =  c(0.25,1/3,0.5))
 
 \dontrun{
 
-# with data preparation
+# With data preparation.
 magdalenenberg \%>\%
  replace(. == "60-x", "60-70") \%>\%
  tidyr::separate(a, c("from", "to")) \%>\%

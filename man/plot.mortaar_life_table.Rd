@@ -2,24 +2,24 @@
 % Please edit documentation in R/output_functions.R
 \name{plot.mortaar_life_table}
 \alias{plot.mortaar_life_table}
-\title{Plot a mortaar_life_table}
+\title{Plot a mortaar_life_table.}
 \usage{
 \method{plot}{mortaar_life_table}(x, display = c("dx", "qx", "lx", "ex",
   "rel_popx"), prefer.ggplot = TRUE, ...)
 }
 \arguments{
-\item{x}{a mortaar_life_table}
+\item{x}{a mortaar_life_table.}
 
-\item{display}{which plots to show. These must include some of the
-alternatives \code{dx} for proportion of deaths, \code{qx} for probability of death, \code{lx} for survivorship, \code{ex} for life expectancy
-and \code{rel_popx} for population age structure.}
+\item{display}{a character vector. Displays the calculated variables as plots. These must include some of the
+alternatives \code{dx} for the proportion of deaths, \code{qx} for the probability of death, \code{lx} for the survivorship, \code{ex} for the life expectancy
+and \code{rel_popx} for the population age structure.}
 
-\item{prefer.ggplot}{should ggplot be preferred if available, default to TRUE}
+\item{prefer.ggplot}{should ggplot be preferred, if available. Default to TRUE.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-Plot a mortaar_life_table according to the format.mortaar_life_table
+Plot a mortaar_life_table according to the format.mortaar_life_table.
 }
 \examples{
 limit = 100

@@ -34,5 +34,5 @@ be found in \emph{Grupe 1997}.
 }
 \seealso{
 Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
-  \code{\link{odagsen_cm}}, \code{\link{odagsen_mo}}
+  \code{\link{odagsen_cm}}
 }

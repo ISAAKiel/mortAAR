@@ -2,22 +2,22 @@
 % Please edit documentation in R/output_functions.R
 \name{format.mortaar_life_table}
 \alias{format.mortaar_life_table}
-\title{Encode a mortaar_life_table in a Common Format}
+\title{Encode a mortaar_life_table in a Common Format.}
 \usage{
 \method{format}{mortaar_life_table}(x, class_of_deceased = NULL, ...)
 }
 \arguments{
-\item{x}{a mortaar_life_table}
+\item{x}{a mortaar_life_table.}
 
-\item{class_of_deceased}{optional specify the class of deceased (male, female, undetermined, ...)}
+\item{class_of_deceased}{optional, specify the class of deceased (male, female, phase, ...).}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-A string representation of the mortaar_life_table
+A string representation of the mortaar_life_table.
 }
 \description{
-Format an mortaar_life_table for pretty printing.
+Format a mortaar_life_table for pretty printing.
 }
 \examples{
 

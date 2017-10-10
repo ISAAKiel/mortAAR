@@ -2,17 +2,17 @@
 % Please edit documentation in R/output_functions.R
 \name{mortaar_plot_qx}
 \alias{mortaar_plot_qx}
-\title{plots probability of death qx for a single life table}
+\title{Plots the probability of death qx for a single life table.}
 \usage{
 mortaar_plot_qx(x, lty = 1, ...)
 }
 \arguments{
-\item{x}{an object of the class mortaar_life_table}
+\item{x}{an object of the class mortaar_life_table.}
 
-\item{lty}{line type defaults to 1}
+\item{lty}{line type, default to 1.}
 
-\item{...}{further arguments passed to the print function}
+\item{...}{further arguments passed to the print function.}
 }
 \description{
-plots probability of death qx for a single life table
+Plots the probability of death qx for a single life table.
 }

@@ -2,19 +2,19 @@
 % Please edit documentation in R/output_functions.R
 \name{mortaar_plot_rel_popx_frame}
 \alias{mortaar_plot_rel_popx_frame}
-\title{plots coordinate system for mortality rate rel_popx for a single life table}
+\title{Plots a coordinate system for mortality rate rel_popx for a single life table.}
 \usage{
 mortaar_plot_rel_popx_frame(x, my_subsets = "", n, ...)
 }
 \arguments{
-\item{x}{an object of the class mortaar_life_table}
+\item{x}{an object of the class mortaar_life_table.}
 
-\item{my_subsets}{a vector of categories from sublist of mortaar_life_table}
+\item{my_subsets}{a vector of categories from sublist of mortaar_life_table.}
 
-\item{n}{number of individuals}
+\item{n}{number of individuals.}
 
-\item{...}{further arguments passed to the print function}
+\item{...}{further arguments passed to the print function.}
 }
 \description{
-plots coordinate system for mortality rate rel_popx for a single life table
+Plots a coordinate system for mortality rate rel_popx for a single life table.
 }

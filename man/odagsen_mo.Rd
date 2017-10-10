@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{odagsen_mo}
 \alias{odagsen_mo}
-\title{odagsen_margo.orbitalis: Lifetable example}
+\title{odagsen_margo.orbitalis: Lifetable example.}
 \format{A data frame with 11 rows and 9 variables.
 \itemize{
   \item \bold{age.group:} inf.I, inf.II -> Infans I, II
@@ -38,8 +38,4 @@ More information can be found in \emph{Grupe/Herrmann 1986}.
 \insertRef{grupe_skelettreste_1986}{mortAAR}
 
 \insertRef{rinne_odagsen_2002}{mortAAR}
-}
-\seealso{
-Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
-  \code{\link{odagsen_cm}}, \code{\link{schleswig_ma}}
 }

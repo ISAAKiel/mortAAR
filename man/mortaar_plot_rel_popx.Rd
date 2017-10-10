@@ -2,17 +2,17 @@
 % Please edit documentation in R/output_functions.R
 \name{mortaar_plot_rel_popx}
 \alias{mortaar_plot_rel_popx}
-\title{plots mortality rate rel_popx for a single life table}
+\title{Plots the mortality rate rel_popx for a single life table.}
 \usage{
 mortaar_plot_rel_popx(x, lty = 1, ...)
 }
 \arguments{
-\item{x}{an object of the class mortaar_life_table}
+\item{x}{an object of the class mortaar_life_table.}
 
-\item{lty}{line type defaults to 1}
+\item{lty}{line type, default to 1.}
 
-\item{...}{further arguments passed to the print function}
+\item{...}{further arguments passed to the print function.}
 }
 \description{
-plots mortality rate rel_popx for a single life table
+Plots the mortality rate rel_popx for a single life table.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{odagsen_cm}
 \alias{odagsen_cm}
-\title{odagsen_corpus.mandibulae: Lifetable example}
+\title{odagsen_corpus.mandibulae: Lifetable example.}
 \format{A data frame with 11 rows and 9 variables.
 \itemize{
   \item \bold{age.group:} inf.I, inf.II -> Infans I, II
@@ -40,5 +40,5 @@ the published original data in \emph{Grupe/Herrmann 1986}.
 }
 \seealso{
 Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
-  \code{\link{odagsen_mo}}, \code{\link{schleswig_ma}}
+  \code{\link{schleswig_ma}}
 }

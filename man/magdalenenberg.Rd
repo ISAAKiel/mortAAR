@@ -19,5 +19,5 @@ pooled for constructing a life table.
 \insertRef{zaeuner_wahl_magdalenenberg_2013}{mortAAR}
 }
 \seealso{
-Other training, vignette: \code{\link{muensingen}}
+Other training, vignette.: \code{\link{muensingen}}
 }

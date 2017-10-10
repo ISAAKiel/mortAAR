@@ -34,5 +34,5 @@ found in \emph{Baum 1990}.
 }
 \seealso{
 Other lifetables: \code{\link{odagsen_cm}},
-  \code{\link{odagsen_mo}}, \code{\link{schleswig_ma}}
+  \code{\link{schleswig_ma}}
 }

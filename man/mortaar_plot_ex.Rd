@@ -2,17 +2,17 @@
 % Please edit documentation in R/output_functions.R
 \name{mortaar_plot_ex}
 \alias{mortaar_plot_ex}
-\title{plots life expectancy ex for a single life table}
+\title{Plots the life expectancy ex for a single life table.}
 \usage{
 mortaar_plot_ex(x, lty = 1, ...)
 }
 \arguments{
-\item{x}{an object of the class mortaar_life_table}
+\item{x}{an object of the class mortaar_life_table.}
 
-\item{lty}{line type defaults to 1}
+\item{lty}{line type, default to 1.}
 
-\item{...}{further arguments passed to the print function}
+\item{...}{further arguments passed to the print function.}
 }
 \description{
-plots life expectancy ex for a single life table
+Plots the life expectancy ex for a single life table.
 }

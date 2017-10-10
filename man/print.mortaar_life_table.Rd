@@ -2,17 +2,17 @@
 % Please edit documentation in R/output_functions.R
 \name{print.mortaar_life_table}
 \alias{print.mortaar_life_table}
-\title{Print a mortaar_life_table}
+\title{Print a mortaar_life_table.}
 \usage{
 \method{print}{mortaar_life_table}(x, ...)
 }
 \arguments{
-\item{x}{a mortaar_life_table}
+\item{x}{a mortaar_life_table.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \description{
-Print a mortaar_life_table according to the format.mortaar_life_table
+Print a mortaar_life_table according to the format.mortaar_life_table.
 }
 \examples{
 

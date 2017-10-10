@@ -2,7 +2,7 @@
 % Please edit documentation in R/input_functions.R
 \name{prep.life.table}
 \alias{prep.life.table}
-\title{Creates the input for the function life.table}
+\title{Creates the input for the function life.table.}
 \usage{
 prep.life.table(x, dec = NA, agebeg, ageend, group = NA,
   method = "Standard", agerange = "included")
@@ -19,8 +19,8 @@ prep.life.table(x, dec = NA, agebeg, ageend, group = NA,
 \item{group}{numeric vector or a column name (as character) of the grouping field (e.g., sex),
 optional. Default setup is: \code{NA}.}
 
-\item{method}{character string, optional.Default options is \code{Standard}, which will create age classes beginning with 1 year,
-up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution with steps of 5 years (5,5,...) until the maximum age is reached.}
+\item{method}{character string, optional. Default options is \code{Standard}, which will create age classes beginning with 1 year,
+up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution, stepped by 5 years (5,5,...) until the maximum age is reached.}
 
 \item{agerange}{character string, optional. Default setup is: \code{excluded}.
 If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
@@ -31,26 +31,25 @@ where the year 39 is meant to be counted.}
 A list of input parameter needed for the function \code{life.table}.
 
 \itemize{
-  \item \bold{x} or \bold{Age}:  age interval
-  \item \bold{a}:  years within x
-  \item \bold{Dx}: number of deaths within \bold{x}
+  \item \bold{x} or \bold{Age}:  age interval.
+  \item \bold{a}:  years within x.
+  \item \bold{Dx}: number of deaths within \bold{x}.
 }
 }
 \description{
 Prepares the input for \code{life.table()}. An individual based approach is supported as well
 as already pooled data (e. g. from an already existing life table). In the latter case, the user
 has to specify a numerical variable (\bold{dec}) which defines the count for each age class.
-If no life table exists, this function will process a dataframe including age ranges of
-individuals or groups of individuals to discreate age classes. The age range is spread to
+If no life table exists, this function will process a dataframe including the age ranges of
+individuals or groups of individuals to discreate the age classes. The age range is spread to
 single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
-as \bold{ageend} for the end of an age range. These values for single years have to be integrated
-according to a defined \bold{method} into age classes.
+as \bold{ageend} for the end of an age range. The \bold{method} defines in which way the single years between the different age classes are split.
 If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
 }
 \examples{
 \dontrun{
 
-# separate age ranges in your data set
+# Separate age ranges in your data set.
 df <- dplyr::mutate(
   tidyr::separate(
     replace(
@@ -64,7 +63,7 @@ df <- dplyr::mutate(
   to = as.numeric(to)
 )
 
-# apply prep.life.table to a data set containing age ranges
+# Apply prep.life.table to a data set containing the age ranges.
 prep.life.table(
   df,
   dec = "Dx",

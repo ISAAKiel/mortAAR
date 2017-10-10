@@ -2,20 +2,20 @@
 % Please edit documentation in R/output_functions.R
 \name{is.mortaar_life_table_list}
 \alias{is.mortaar_life_table_list}
-\title{Checks if a variable is of class mortaar_life_table_list}
+\title{Checks if a variable is of class mortaar_life_table_list.}
 \usage{
 is.mortaar_life_table_list(x, ...)
 }
 \arguments{
-\item{x}{a variable}
+\item{x}{a variable.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-true if x is a mortaar_life_table_list, false otherwise
+true if x is a mortaar_life_table_list, otherwise false.
 }
 \description{
-Checks if a variable is of class mortaar_life_table_list
+Checks if a variable is of class mortaar_life_table_list.
 }
 \examples{
 
