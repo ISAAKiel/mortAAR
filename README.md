@@ -24,7 +24,7 @@ For further information, please have a look at the Vignettes and the Manual.
 Installation
 ------------
 
-`mortAAR` is currently not on [CRAN](https://CRAN.R-project.org/), but you can use [devtools](https://CRAN.R-project.org/web/packages/devtools/index.html) to install the development version. To do so:
+`mortAAR` is currently not on [CRAN](https://CRAN.R-project.org/), but you can use [devtools](https://CRAN.R-project.org/package=devtools) to install the development version. To do so:
 
     if(!require('devtools')) install.packages('devtools')
     library(devtools)
