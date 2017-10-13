@@ -1,6 +1,6 @@
-#' Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero.
+#' Uses the addition function "+" to combine two vectors setting NA values of the first vector to zero.
 #'
-#' Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero.
+#' Uses the addition function "+" to combine two vectors setting NA values of the first vector to zero.
 #'
 #' @param x a vector.
 #' @param y vector to combine with.
@@ -24,7 +24,7 @@ summe=function(x,y){
 #' as already pooled data (e. g. from an already existing life table). In the latter case, the user
 #' has to specify a numerical variable (\bold{dec}) which defines the count for each age class.
 #' If no life table exists, this function will process a dataframe including the age ranges of
-#' individuals or groups of individuals to discreate the age classes. The age range is spread to
+#' individuals or groups of individuals to discrete the age classes. The age range is spread to
 #' single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
 #' as \bold{ageend} for the end of an age range. The \bold{method} defines in which way the single years between the different age classes are split.
 #' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
@@ -36,7 +36,7 @@ summe=function(x,y){
 #' @param group numeric vector or a column name (as character) of the grouping field (e.g., sex),
 #' optional. Default setup is: \code{NA}.
 #' @param method character string, optional. Default options is \code{Standard}, which will create age classes beginning with 1 year,
-#' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distrubution, stepped by 5 years (5,5,...) until the maximum age is reached.
+#' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distribution, stepped by 5 years (5,5,...) until the maximum age is reached.
 #' @param agerange character string, optional. Default setup is: \code{excluded}.
 #' If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
 #' to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"

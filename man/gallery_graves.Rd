@@ -16,7 +16,7 @@ A dataset from \emph{Czarnetzki 1966}.
 }
 \details{
 Skulls from four different collective graves. This dataset is
-not well prepared and needs some adjustement.
+not well prepared and needs some adjustment.
 }
 \references{
 \insertRef{czarnetzki_menschlichen_1966}{mortAAR}

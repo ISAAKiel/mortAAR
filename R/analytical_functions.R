@@ -58,7 +58,7 @@
 #'                    \eqn{A_{x} = a_{x} * agecorfac_{x}}
 #'
 #'   \item \bold{Dx}: number of deaths within x.
-#'   \item \bold{dx}: propotion of deaths within x (percent) :
+#'   \item \bold{dx}: proportion of deaths within x (percent) :
 #'
 #'                    \eqn{d_{x} = \frac{D_{x}}{\sum_{i=1}^{n} D_{i}} * 100}
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/input_functions.R
 \name{summe}
 \alias{summe}
-\title{Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero.}
+\title{Uses the addition function "+" to combine two vectors setting NA values of the first vector to zero.}
 \usage{
 summe(x, y)
 }
@@ -15,7 +15,7 @@ summe(x, y)
 dataframe with additional columns "from" and "to".
 }
 \description{
-Uses the adition function "+" to combine two vectors setting NA values of the first vector to zero.
+Uses the addition function "+" to combine two vectors setting NA values of the first vector to zero.
 }
 \examples{
 
