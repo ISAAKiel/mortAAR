@@ -6,7 +6,7 @@ output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 csl: "`r library(RCurl); ifelse(url.exists('https://www.zotero.org/styles/journal-of-archaeological-science'), 'https://www.zotero.org/styles/journal-of-archaeological-science', '')`"
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Vignette >>Extended discussion<<}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
