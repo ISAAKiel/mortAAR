@@ -2,7 +2,7 @@
 % Please edit documentation in R/analytical_functions.R
 \name{life.table}
 \alias{life.table}
-\title{life table}
+\title{Calculates a life table}
 \usage{
 life.table(neclist, agecor = TRUE, agecorfac = c())
 }
@@ -90,11 +90,18 @@ or mortaar_life_table_list, for which specialised summary,
 print and plot functions exist.
 }
 \examples{
-# Apply life.table to an already prepared dataset.
-td1 <- schleswig_ma[c("a", "Dx")]
+# Create a mortaar_life_table from a prepared dataset.
+schleswig_1 <- life.table(schleswig_ma[c("a", "Dx")])
+print(schleswig_1)
+plot(schleswig_1)
 
-life.table(td1)
-life.table(td1, agecorfac =  c(0.25,1/3,0.5))
+# Create a mortaar_life_table_list from two datasets.
+comparison <- life.table(list(
+  "schleswig" = schleswig_ma[c("a", "Dx")],
+  "odagsen" = odagsen_cm[c("a", "Dx")]
+))
+print(comparison)
+plot(comparison)
 
 \dontrun{
 
