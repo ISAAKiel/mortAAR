@@ -8,9 +8,18 @@
 #' @return true if x is a mortaar_life_table_list, otherwise false.
 #'
 #' @examples
+#' # create a mortaar_life_table from a prepared dataset
+#' class(schleswig_ma)
+#' is.mortaar_life_table(schleswig_ma)
 #'
-#' #test <- data.frame(male = round(runif(70)*100, 0), female = round(runif(70)*100, 0))
-#' #is.mortaar_life_table_list(life.table(test))
+#' schleswig_1 <- life.table(schleswig_ma[c("a", "Dx")])
+#'
+#' class(schleswig_1)
+#' is.mortaar_life_table(schleswig_1)
+#'
+#' # create a mortaar_life_table_list from two datasets
+#' schleswig_2 <- life.table(list(schleswig_ma[c("a", "Dx")], odagsen_cm[c("a", "Dx")]))
+#' is.mortaar_life_table_list(schleswig_2)
 #'
 #' @name is
 NULL
