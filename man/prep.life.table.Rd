@@ -47,8 +47,6 @@ as \bold{ageend} for the end of an age range. The \bold{method} defines in which
 If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
 }
 \examples{
-\dontrun{
-
 # Separate age ranges in your data set.
 df <- dplyr::mutate(
   tidyr::separate(
@@ -64,7 +62,7 @@ df <- dplyr::mutate(
 )
 
 # Apply prep.life.table to a data set containing the age ranges.
-prep.life.table(
+magda_prep <- prep.life.table(
   df,
   dec = "Dx",
   agebeg = "from",
@@ -72,6 +70,8 @@ prep.life.table(
   method = "Equal5",
   agerange = "included"
 )
-}
+
+# Create a life.table.
+life.table(magda_prep)
 
 }

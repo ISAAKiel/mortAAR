@@ -54,8 +54,6 @@ summe=function(x,y){
 #' }
 #'
 #' @examples
-#' \dontrun{
-#'
 #' # Separate age ranges in your data set.
 #' df <- dplyr::mutate(
 #'   tidyr::separate(
@@ -71,7 +69,7 @@ summe=function(x,y){
 #' )
 #'
 #' # Apply prep.life.table to a data set containing the age ranges.
-#' prep.life.table(
+#' magda_prep <- prep.life.table(
 #'   df,
 #'   dec = "Dx",
 #'   agebeg = "from",
@@ -79,7 +77,9 @@ summe=function(x,y){
 #'   method = "Equal5",
 #'   agerange = "included"
 #' )
-#' }
+#'
+#' # Create a life.table.
+#' life.table(magda_prep)
 #'
 #' @export
 prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Standard", agerange= "included"){
