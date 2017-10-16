@@ -20,4 +20,6 @@ Uses the addition function "+" to combine two vectors setting NA values of the f
 \examples{
 
 #summentest=summe(c(1,2,NA,4),c(5,6,7,8)
+
 }
+\keyword{internal}

@@ -10,6 +10,9 @@
 #' @examples
 #'
 #' #summentest=summe(c(1,2,NA,4),c(5,6,7,8)
+#'
+#' @keywords internal
+
 summe=function(x,y){
   if(any(is.na(x))){
     x[is.na(x)]=0
