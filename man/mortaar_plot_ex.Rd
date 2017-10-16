@@ -16,3 +16,4 @@ mortaar_plot_ex(x, lty = 1, ...)
 \description{
 Plots the life expectancy ex for a single life table.
 }
+\keyword{internal}

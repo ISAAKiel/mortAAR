@@ -18,3 +18,4 @@ mortaar_plot_lx_frame(x, my_subsets = "", n, ...)
 \description{
 Plots a coordinate system for survivorship lx for a single life table.
 }
+\keyword{internal}

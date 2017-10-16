@@ -16,3 +16,4 @@ mortaar_plot_qx(x, lty = 1, ...)
 \description{
 Plots the probability of death qx for a single life table.
 }
+\keyword{internal}

@@ -16,3 +16,4 @@ mortaar_plot_rel_popx(x, lty = 1, ...)
 \description{
 Plots the mortality rate rel_popx for a single life table.
 }
+\keyword{internal}

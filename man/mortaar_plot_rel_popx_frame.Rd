@@ -18,3 +18,4 @@ mortaar_plot_rel_popx_frame(x, my_subsets = "", n, ...)
 \description{
 Plots a coordinate system for mortality rate rel_popx for a single life table.
 }
+\keyword{internal}

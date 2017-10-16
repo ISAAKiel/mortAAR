@@ -16,3 +16,4 @@ mortaar_plot_dx(x, lty = 1, ...)
 \description{
 Plots proportion of deaths dx for a single life table.
 }
+\keyword{internal}

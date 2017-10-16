@@ -18,3 +18,4 @@ mortaar_plot_dx_frame(x, my_subsets = "", n, ...)
 \description{
 Plots a coordinate system for proportion of deaths dx for a single life table.
 }
+\keyword{internal}

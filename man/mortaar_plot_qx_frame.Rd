@@ -18,3 +18,4 @@ mortaar_plot_qx_frame(x, my_subsets = "", n, ...)
 \description{
 Plots a coordinate system for probability of death qx for a single life table.
 }
+\keyword{internal}

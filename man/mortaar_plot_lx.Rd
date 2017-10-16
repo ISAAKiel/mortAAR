@@ -16,3 +16,4 @@ mortaar_plot_lx(x, lty = 1, ...)
 \description{
 Plots the survivorship lx for a single life table.
 }
+\keyword{internal}
