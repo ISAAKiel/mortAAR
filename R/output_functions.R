@@ -18,8 +18,8 @@
 #' is.mortaar_life_table(schleswig_1)
 #'
 #' # Create a mortaar_life_table_list from two datasets.
-#' schleswig_2 <- life.table(list(schleswig_ma[c("a", "Dx")], odagsen_cm[c("a", "Dx")]))
-#' is.mortaar_life_table_list(schleswig_2)
+#' comparison <- life.table(list(schleswig_ma[c("a", "Dx")], odagsen_cm[c("a", "Dx")]))
+#' is.mortaar_life_table_list(comparison)
 #'
 #' @name is
 NULL
