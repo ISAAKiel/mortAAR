@@ -48,6 +48,18 @@ is.mortaar_life_table <- function(x, ...) {"mortaar_life_table" %in% class(x)}
 #' strung together. The names of the elements are used to specify the name in the returned header
 #' of the printout.
 #'
+#' @examples
+#' # Create a mortaar_life_table from a prepared dataset.
+#' schleswig_1 <- life.table(schleswig_ma[c("a", "Dx")])
+#' print(schleswig_1)
+#'
+#' # Create a mortaar_life_table_list from two datasets.
+#' odagsen <- life.table(list(
+#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+#' ))
+#' print(odagsen)
+#'
 #' @importFrom utils capture.output
 #'
 #' @name print
@@ -119,24 +131,18 @@ print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @examples
-#' limit = 100
-#' steps = 5
-#' lower <- seq(from = 0, to = limit-steps[1], by = steps)
-#' upper <- seq(from = steps[1], to = limit, by = steps)-1
+#' # Create a mortaar_life_table from a prepared dataset.
+#' schleswig_1 <- life.table(schleswig_ma[c("a", "Dx")])
+#' plot(schleswig_1)
+#' plot(schleswig_1, display = "qx")
 #'
-#' test <- list (
-#' male = data.frame(
-#'   x = paste0(lower, "--", upper),
-#'   a = steps,
-#'   Dx = runif(length(lower))*50
-#' ),
-#' female = data.frame(
-#'   x = paste0(lower, "--", upper),
-#'   a = steps,
-#'   Dx = runif(length(lower))*50
-#' )
-#' )
-#' plot(life.table(test)$male)
+#' # Create a mortaar_life_table_list from two datasets.
+#' odagsen <- life.table(list(
+#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+#' ))
+#' plot(odagsen)
+#' plot(odagsen, display = "lx")
 #'
 #' @importFrom graphics axis grid legend lines par plot
 #'

@@ -32,3 +32,16 @@ of the printout.
 \description{
 Format for pretty printing.
 }
+\examples{
+# Create a mortaar_life_table from a prepared dataset.
+schleswig_1 <- life.table(schleswig_ma[c("a", "Dx")])
+print(schleswig_1)
+
+# Create a mortaar_life_table_list from two datasets.
+odagsen <- life.table(list(
+  "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+))
+print(odagsen)
+
+}
