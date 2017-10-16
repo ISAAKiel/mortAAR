@@ -22,7 +22,7 @@ true if x is a mortaar_life_table_list, otherwise false.
 Checks class membership.
 }
 \examples{
-# create a mortaar_life_table from a prepared dataset
+# Create a mortaar_life_table from a prepared dataset.
 class(schleswig_ma)
 is.mortaar_life_table(schleswig_ma)
 
@@ -31,7 +31,7 @@ schleswig_1 <- life.table(schleswig_ma[c("a", "Dx")])
 class(schleswig_1)
 is.mortaar_life_table(schleswig_1)
 
-# create a mortaar_life_table_list from two datasets
+# Create a mortaar_life_table_list from two datasets.
 schleswig_2 <- life.table(list(schleswig_ma[c("a", "Dx")], odagsen_cm[c("a", "Dx")]))
 is.mortaar_life_table_list(schleswig_2)
 
