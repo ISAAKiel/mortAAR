@@ -98,12 +98,12 @@
 #' plot(schleswig_1)
 #'
 #' # Create a mortaar_life_table_list from two datasets.
-#' comparison <- life.table(list(
-#'   "schleswig" = schleswig_ma[c("a", "Dx")],
-#'   "odagsen" = odagsen_cm[c("a", "Dx")]
+#' odagsen <- life.table(list(
+#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 #' ))
-#' print(comparison)
-#' plot(comparison)
+#' print(odagsen)
+#' plot(odagsen)
 #'
 #' \dontrun{
 #'
