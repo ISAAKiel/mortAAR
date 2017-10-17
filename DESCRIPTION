@@ -14,8 +14,9 @@ Authors@R: c(
   person("Carolin", "Tietze", email = "Carolin Tietze <ctietze1991@gmail.com>", role = c("aut")),
   person("Nicole", "Grunert", email = "nicolegrunert@gmail.com", role = c("aut")))
 Maintainer: Nils Mueller-Scheessel <nils.mueller-scheessel@ufg.uni-kiel.de>
-Description: A collection of functions for analysis of archaeological mortality
-    data.
+Description: A collection of functions for the analysis of archaeological mortality
+    data. It takes demographic data in different formats and displays the result in a standard life table
+    as well as plots the relevant indices.
 Date: 2017-10-13
 License: GPL-3 | file LICENSE
 Encoding: UTF-8

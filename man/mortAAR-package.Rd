@@ -6,8 +6,9 @@
 \alias{mortAAR-package}
 \title{mortAAR: Analysis of Archaeological Mortality Data}
 \description{
-A collection of functions for analysis of archaeological mortality
-data.
+A collection of functions for the analysis of archaeological mortality
+data. It takes demographic data in different formats and displays the result in a standard life table
+as well as plots the relevant indices.
 }
 \author{
 \strong{Maintainer}: Nils Mueller-Scheessel \email{nils.mueller-scheessel@ufg.uni-kiel.de} [copyright holder]

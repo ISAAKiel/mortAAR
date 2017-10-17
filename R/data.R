@@ -33,7 +33,7 @@
 #' @name schleswig_ma
 NULL
 
-#' gallery_graves: The Archaeological training dataset.
+#' gallery_graves: Lifetable example.
 #'
 #' A dataset from \emph{Czarnetzki 1966}.
 #'
@@ -92,7 +92,7 @@ NULL
 #' @name aiterhofen_oedmuehlen
 NULL
 
-#' magdalenenberg: The archaeological training dataset used in the extended vignette.
+#' magdalenenberg: Lifetable example.
 #'
 #' A data set from \emph{zaeuner_wahl_magdalenenberg_2013}.
 #'
@@ -113,7 +113,7 @@ NULL
 #' @name magdalenenberg
 NULL
 
-#' muensingen: The archaeological training dataset used in the extended vignette.
+#' muensingen: Lifetable example.
 #'
 #' A data set from \emph{moghaddam_et_al_muensingen_2016}.
 #'
