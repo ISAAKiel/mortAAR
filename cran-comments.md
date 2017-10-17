@@ -3,6 +3,8 @@ This is a resubmission. In this version we have:
 
 * elaborated the provided functionality in the description field of the DESCRIPTION file.
 
+* restructured the documentation in the Rd-files.
+
 * added more small executable examples in our Rd-files.
 
 
