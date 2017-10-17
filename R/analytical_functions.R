@@ -95,7 +95,7 @@
 #' # Create a mortaar_life_table from a prepared dataset.
 #' schleswig_1 <- life.table(schleswig_ma[c("a", "Dx")])
 #' print(schleswig_1)
-#' plot(schleswig_1)
+#' plot(schleswig_1, display = "lx")
 #'
 #' # Create a mortaar_life_table_list from two datasets.
 #' odagsen <- life.table(list(
@@ -103,11 +103,10 @@
 #'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 #' ))
 #' print(odagsen)
-#' plot(odagsen)
+#' plot(odagsen, display = "ex")
 #'
-#' \dontrun{
-#'
-#' # With data preparation.
+#' # Prepare a real world dataset and create a mortaar_life_table.
+#' library(magrittr)
 #' magdalenenberg %>%
 #'  replace(. == "60-x", "60-70") %>%
 #'  tidyr::separate(a, c("from", "to")) %>%
@@ -116,11 +115,11 @@
 #'   dec = "Dx",
 #'   agebeg = "from",
 #'   ageend = "to",
-#'   methode = "Standard",
+#'   method = "Standard",
 #'   agerange = "excluded"
 #'  ) %>%
 #'  life.table()
-#' }
+#'
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom Rdpack reprompt
