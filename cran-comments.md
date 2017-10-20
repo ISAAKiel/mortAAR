@@ -1,11 +1,9 @@
 ## Resubmission
 This is a resubmission. In this version we have:
 
-* elaborated the provided functionality in the description field of the DESCRIPTION file.
+* further elaborated the provided functionality in the description field of the DESCRIPTION file.
 
-* restructured the documentation in the Rd-files.
-
-* added more small executable examples in our Rd-files.
+* to the best of our knowledge, each function visible to the user has now at least two small executable examples. Please elaborate your point if you think otherwise
 
 
 ## Test environments

@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{aiterhofen_oedmuehlen}
 \alias{aiterhofen_oedmuehlen}
-\title{aiterhofen_oedmuehlen: Lifetable example.}
+\title{aiterhofen_oedmuehlen: Life table example}
 \format{A data frame with 13 rows and 11 variables.
 \itemize{
   \item \bold{Alter} (age)
@@ -20,10 +20,10 @@
 For further information about the values see the
 documentation of \code{\link{life.table}}.}
 \description{
-A lifetable from \emph{Kokkotidis/Richter 1991, 228}.
+A life table from \emph{Kokkotidis/Richter 1991, 228}.
 }
 \details{
-The lifetable is compiled from the Linear pottery burial site
+The life table is compiled from the Linear pottery burial site
 Aiterhofen Ödmühle (Lower Bavaria). More information can be
 found in \emph{Baum 1990}.
 }

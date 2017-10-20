@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{gallery_graves}
 \alias{gallery_graves}
-\title{gallery_graves: Lifetable example.}
+\title{gallery_graves: Life table example}
 \format{A data frame with 128 rows and 4 variables.
 \itemize{
   \item \bold{indnr:} ID of the individual represented by

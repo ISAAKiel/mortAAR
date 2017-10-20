@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{magdalenenberg}
 \alias{magdalenenberg}
-\title{magdalenenberg: Lifetable example.}
+\title{magdalenenberg: Life table example}
 \format{A data frame with 13 rows and 2 variables.
 \itemize{
   \item \bold{a:} age range.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{schleswig_ma}
 \alias{schleswig_ma}
-\title{schleswig_ma: Lifetable example}
+\title{schleswig_ma: Life table example}
 \format{A data frame with 11 rows and 9 variables.
 \itemize{
   \item \bold{x:} fa, ma, sa -> früh-, mittel-, spätadult;
@@ -20,7 +20,7 @@
 For further information about the values see the
 documentation of \code{\link{life.table}}.}
 \description{
-A lifetable from \emph{Hermann et. al 1990, 305}.
+A life table from \emph{Hermann et. al 1990, 305}.
 }
 \details{
 This lifetable is compiled from a medieval grave collection from

@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{odagsen_cm}
 \alias{odagsen_cm}
-\title{odagsen_corpus.mandibulae: Lifetable example.}
+\title{odagsen_corpus.mandibulae: Life table example}
 \format{A data frame with 11 rows and 9 variables.
 \itemize{
   \item \bold{age.group:} inf.I, inf.II -> Infans I, II
@@ -26,10 +26,10 @@ aufeinanderfolgenden Intervallen").
 For further information about the values see the
 documentation of \code{\link{life.table}}.}
 \description{
-A lifetable from \emph{Grupe/Herrmann 1986, 51}.
+A life table from \emph{Grupe/Herrmann 1986, 51}.
 }
 \details{
-The lifetable is compiled from the mandibulae of the late neolithic collective burial #' from Odagsen, Einbeck district Northeim (3.250 - 2.950 cal BC).
+The life table is compiled from the mandibulae of the late neolithic collective burial #' from Odagsen, Einbeck district Northeim (3.250 - 2.950 cal BC).
 The calculated values show minor adjustments in comparison to
 the published original data in \emph{Grupe/Herrmann 1986}.
 }

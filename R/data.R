@@ -1,6 +1,6 @@
-#' schleswig_ma: Lifetable example
+#' schleswig_ma: Life table example
 #'
-#' A lifetable from \emph{Hermann et. al 1990, 305}.
+#' A life table from \emph{Hermann et. al 1990, 305}.
 #'
 #' This lifetable is compiled from a medieval grave collection from
 #' Schleswig (11th-13th century). More information can
@@ -33,7 +33,7 @@
 #' @name schleswig_ma
 NULL
 
-#' gallery_graves: Lifetable example.
+#' gallery_graves: Life table example
 #'
 #' A dataset from \emph{Czarnetzki 1966}.
 #'
@@ -57,11 +57,11 @@ NULL
 #' @name gallery_graves
 NULL
 
-#' aiterhofen_oedmuehlen: Lifetable example.
+#' aiterhofen_oedmuehlen: Life table example
 #'
-#' A lifetable from \emph{Kokkotidis/Richter 1991, 228}.
+#' A life table from \emph{Kokkotidis/Richter 1991, 228}.
 #'
-#' The lifetable is compiled from the Linear pottery burial site
+#' The life table is compiled from the Linear pottery burial site
 #' Aiterhofen Ödmühle (Lower Bavaria). More information can be
 #' found in \emph{Baum 1990}.
 #'
@@ -92,7 +92,7 @@ NULL
 #' @name aiterhofen_oedmuehlen
 NULL
 
-#' magdalenenberg: Lifetable example.
+#' magdalenenberg: Life table example
 #'
 #' A data set from \emph{zaeuner_wahl_magdalenenberg_2013}.
 #'
@@ -113,7 +113,7 @@ NULL
 #' @name magdalenenberg
 NULL
 
-#' muensingen: Lifetable example.
+#' muensingen: Life table example
 #'
 #' A data set from \emph{moghaddam_et_al_muensingen_2016}.
 #'
@@ -137,11 +137,11 @@ NULL
 #' @name muensingen
 NULL
 
-#' odagsen_corpus.mandibulae: Lifetable example.
+#' odagsen_corpus.mandibulae: Life table example
 #'
-#' A lifetable from \emph{Grupe/Herrmann 1986, 51}.
+#' A life table from \emph{Grupe/Herrmann 1986, 51}.
 #'
-#' The lifetable is compiled from the mandibulae of the late neolithic collective burial #' from Odagsen, Einbeck district Northeim (3.250 - 2.950 cal BC).
+#' The life table is compiled from the mandibulae of the late neolithic collective burial #' from Odagsen, Einbeck district Northeim (3.250 - 2.950 cal BC).
 #' The calculated values show minor adjustments in comparison to
 #' the published original data in \emph{Grupe/Herrmann 1986}.
 #'
@@ -179,11 +179,11 @@ NULL
 NULL
 
 
-#' odagsen_margo.orbitalis: Lifetable example.
+#' odagsen_margo.orbitalis: Life table example
 #'
-#' A lifetable from \emph{Grupe/Herrmann 1986, 51}.
+#' A life table from \emph{Grupe/Herrmann 1986, 51}.
 #'
-#' The lifetable is compiled from the orbital margin of skulls
+#' The life table is compiled from the orbital margin of skulls
 #' from the late neolithic collective burial
 #' from Odagsen, Einbeck district Northeim (3.250 - 2.950 cal BC).
 #' More information can be found in \emph{Grupe/Herrmann 1986}.

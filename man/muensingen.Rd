@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{muensingen}
 \alias{muensingen}
-\title{muensingen: Lifetable example.}
+\title{muensingen: Life table example}
 \format{A data frame with 71 rows and 4 variables.
 \itemize{
   \item \bold{age:} age range of the individual.
