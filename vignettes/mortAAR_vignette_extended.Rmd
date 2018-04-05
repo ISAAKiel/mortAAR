@@ -61,8 +61,8 @@ The data originates from a published report of recent scientific analyses of the
 
 ```{r, message=FALSE}
 # load package dependencies
-library(tidyverse)  
 library(mortAAR)
+library(magrittr)
 ```
 
 ```{r}
@@ -182,10 +182,6 @@ Because of one peculiarity their life table differs from the one mortAAR generat
 ### Constructing the life table
 
 The preparing steps for the construction of the life table of the population from 'Magdalenenberg' are less extensive than from Münsingen-Rain because the data already came from a life table and is thus better prepared.  
-
-```{r}
-library(tidyverse)  
-```
 
 ```{r}
 mag <- magdalenenberg  

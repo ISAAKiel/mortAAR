@@ -15,7 +15,7 @@ vignette: >
 
 ```{r, message=FALSE}
 library(mortAAR)
-library(tidyverse)
+library(magrittr)
 ```
 
 # Make test data available

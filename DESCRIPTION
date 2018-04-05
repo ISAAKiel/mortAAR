@@ -33,7 +33,6 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    tidyverse,
     tidyr,
     dplyr,
     ggplot2,
