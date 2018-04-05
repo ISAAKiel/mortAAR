@@ -69,6 +69,9 @@ test_that("print is delegated to print.mortaar_life_table_list on a mortaar_life
 
 ## Plots
 
+# send plot result to /dev/null
+pdf(file = NULL)
+
 # Dummy test for plots
 
 context("plot.mortaar_life_table_list")
@@ -159,3 +162,5 @@ test_that("plot individual life table rel_popx system graphics produces no error
 test_that("plot individual life table produces no error", {
     expect_error(plot( a_live_table$schleswig_ma) , NA)
 })
+
+dev.off()
