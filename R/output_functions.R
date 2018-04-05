@@ -91,7 +91,7 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
   class_of_deceased_str <- ""
   if (!is.null(class_of_deceased)) {
     group <- attributes(x)$group
-    class_of_deceased_str <- paste(" for", group, ": ", class_of_deceased, sep = "")
+    class_of_deceased_str <- paste(" for ", group, ": ", class_of_deceased, sep = "")
   }
   out_str$header <- paste("\n","\t mortAAR life table", class_of_deceased_str," (n = ",round(sum(x$Dx),2)," individuals)",sep = "")
 
@@ -229,7 +229,7 @@ make_variable_labels <- function() {
 make_ggplot <- function(data, variable_name, variable_labels) {
   my_x <- reshape2::melt(data,id="a",measure.vars=c(variable_name))
   colnames(my_x) <- c("a", "variable", variable_name, "dataset")
-  my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x)))
+  my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x))) - my_x$a
   my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name,lty="dataset"))
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age") + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
   # check if group attribute is present to pass it on for plot legend title
@@ -249,7 +249,7 @@ make_ggplot <- function(data, variable_name, variable_labels) {
 #'@keywords internal
 
 mortaar_plot_dx <- function(x, lty=1, ...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   lines(my_x,x$dx, lty=lty)
 }
 
@@ -265,7 +265,7 @@ mortaar_plot_dx <- function(x, lty=1, ...) {
 #'@keywords internal
 
 mortaar_plot_dx_frame <- function(x, my_subsets="", n,...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   plot(my_x,x$dx, xlab="age of individuals", ylab="dx",type="n", main="proportion of deaths (dx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
@@ -283,7 +283,7 @@ mortaar_plot_dx_frame <- function(x, my_subsets="", n,...) {
 #'@keywords internal
 
 mortaar_plot_qx <- function(x, lty=1, ...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   lines(my_x,x$qx, lty=lty)
 }
 
@@ -299,7 +299,7 @@ mortaar_plot_qx <- function(x, lty=1, ...) {
 #'@keywords internal
 
 mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   plot(my_x,x$qx, xlab="age of individuals", ylab="qx",type="n", main="probability of death (qx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
@@ -317,7 +317,7 @@ mortaar_plot_qx_frame <- function(x, my_subsets="", n,...) {
 #'@keywords internal
 
 mortaar_plot_lx <- function(x, lty=1, ...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   lines(my_x,x$lx, lty=lty)
 }
 
@@ -335,7 +335,7 @@ mortaar_plot_lx <- function(x, lty=1, ...) {
 #'@keywords internal
 
 mortaar_plot_lx_frame <- function(x, my_subsets="", n,...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   plot(my_x,x$lx, xlab="age of individuals", ylab="lx",type="n", main="survivorship (lx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
@@ -353,7 +353,7 @@ mortaar_plot_lx_frame <- function(x, my_subsets="", n,...) {
 #'@keywords internal
 
 mortaar_plot_ex <- function(x, lty=1, ...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   lines(my_x,x$ex, lty=lty)
 }
 
@@ -369,7 +369,7 @@ mortaar_plot_ex <- function(x, lty=1, ...) {
 #'@keywords internal
 
 mortaar_plot_ex_frame <- function(x, my_subsets="", n,...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   plot(my_x,x$ex, xlab="age of individuals", ylab="ex",type="n", main="life expectancy (ex)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
@@ -387,7 +387,7 @@ mortaar_plot_ex_frame <- function(x, my_subsets="", n,...) {
 #'@keywords internal
 
 mortaar_plot_rel_popx <- function(x, lty=1, ...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   lines(my_x,x$rel_popx, lty=lty)
 }
 
@@ -403,9 +403,22 @@ mortaar_plot_rel_popx <- function(x, lty=1, ...) {
 #'@keywords internal
 
 mortaar_plot_rel_popx_frame <- function(x, my_subsets="", n,...) {
-  my_x=cumsum(x$a)
+  my_x=mortaar_plot_x_axis(x)
   plot(my_x,x$rel_popx, xlab="age of individuals", ylab="rel_popx",type="n", main="population age structure (rel_popx)", xaxt="n")
   my_ticks = seq(0,ceiling(max(my_x)),by=5)
   axis(1,at=my_ticks, labels=my_ticks)
   legend(x = 'topright', bty='n', paste(my_subsets, " (n=",round(n,3),")",sep=""), lty = 1:length(my_subsets))
+}
+
+#' Calculates the x axis (age) for mortaar life table plots
+#'
+#' Calculates the x axis (age) for mortaar life table plots
+#'
+#' @param x an object of the class mortaar_life_table.
+#'
+#' @return the vector for the x axis
+#'
+#' @keywords internal
+mortaar_plot_x_axis <- function(x) {
+  cumsum(x$a) - x$a
 }
