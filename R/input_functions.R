@@ -13,12 +13,17 @@
 #'
 #' @export
 `%+0%` <- function(x, y) {
-  if (any(is.na(x))) {
-    x[is.na(x)] <- 0
-  }
+  x <- NA_to_0(x)
+  y <- NA_to_0(y)
   return(x + y)
 }
 
+NA_to_0 <- function(x) {
+  if (any(is.na(x))) {
+    x[is.na(x)] <- 0
+  }
+  return(x)
+}
 
 #' Creates the input for the function life.table.
 #'
