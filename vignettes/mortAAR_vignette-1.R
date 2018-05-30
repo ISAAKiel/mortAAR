@@ -1,6 +1,6 @@
 ## ---- message=FALSE------------------------------------------------------
 library(mortAAR)
-library(tidyverse)
+library(magrittr)
 
 ## ------------------------------------------------------------------------
 td <- gallery_graves

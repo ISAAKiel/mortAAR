@@ -4,7 +4,7 @@
 #'
 #' @description The \strong{mortaar_life_table} is the central data structure of the
 #' \code{mortAAR} package. It's a data.frame with set of custom methods and
-#' variables. Please see \code{mortAAR::life.table} for a describtion
+#' variables. Please see \code{mortAAR::life.table} for a description
 #' of the variables. Further available variables are ignored. \cr
 #' If an object is of class data.frame or tibble (tbl & tbl_df), it can be
 #' converted to an object of class mortaar_life_table. The only requirement
@@ -22,7 +22,7 @@
 #' @rdname mortaar_life_table
 #'
 #' @examples
-#' # a mortaar_life_table can be crafted manually:
+#' # a mortaar_life_table can be put together manually:
 #' as.mortaar_life_table(data.frame(a = c(20, 20, 20), Dx = c(10, 15, 20)))
 #'
 #' as.mortaar_life_table_list(
@@ -48,7 +48,7 @@ as.mortaar_life_table_list <- function(x, ...) {
         return()
     } else {
       stop(
-        "One or more elements of x aren't of class mortaar_life_table."
+        "One or more elements of x are not of class mortaar_life_table."
       )
     }
   } else {
