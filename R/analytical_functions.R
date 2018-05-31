@@ -311,8 +311,9 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
       necdf['Ax'] <- necdf[, 'a'] %>%
         cumsum() %>%
         `<=`(.,5) %>%
-        ifelse(1/3, 1/2) %>%
-        `*`(necdf[, 'a'])
+        ifelse(1/3, 1/2)
+
+      necdf['Ax'] <- necdf['Ax'] * necdf[, 'a']
     }
 
   }
