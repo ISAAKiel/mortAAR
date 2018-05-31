@@ -11,7 +11,6 @@
 #'
 #' c(1, 2, NA, 4) %+0% c(5, 6, 7,  8)
 #'
-#' @export
 `%+0%` <- function(x, y) {
   x <- NA_to_0(x)
   y <- NA_to_0(y)
