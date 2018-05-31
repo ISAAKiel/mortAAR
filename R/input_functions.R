@@ -1,16 +1,3 @@
-#' Uses the addition function "+" to combine two vectors setting NA values of the first vector to zero.
-#'
-#' Uses the addition function "+" to combine two vectors setting NA values of the first vector to zero.
-#'
-#' @param x a vector.
-#' @param y vector to combine with.
-#'
-#' @return dataframe with additional columns "from" and "to".
-#'
-#' @examples
-#'
-#' c(1, 2, NA, 4) %+0% c(5, 6, 7,  8)
-#'
 `%+0%` <- function(x, y) {
   x <- NA_to_0(x)
   y <- NA_to_0(y)
