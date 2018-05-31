@@ -1,3 +1,37 @@
+context("as.mortaar_life_table_list")
+
+test_that("as transformation works or fails depending on input dataset", {
+  expect_s3_class(
+    as.mortaar_life_table_list(list(a_live_table[[1]], a_live_table[[2]])),
+    "mortaar_life_table_list"
+  )
+  expect_error(
+    as.mortaar_life_table_list(list(a_live_table[[1]], 3)),
+    NULL
+  )
+  expect_error(
+    as.mortaar_life_table_list(3),
+    NULL
+  )
+})
+
+context("as.mortaar_life_table")
+
+test_that("as works or fails depending on input dataset", {
+  expect_s3_class(
+    as.mortaar_life_table(data.frame(a = c(20, 20, 20), Dx = c(10, 15, 20))),
+    "mortaar_life_table"
+  )
+  expect_error(
+    as.mortaar_life_table(data.frame(a = c(20, 20, 20), Dy = c(10, 15, 20))),
+    NULL
+  )
+  expect_error(
+    as.mortaar_life_table(3),
+    NULL
+  )
+})
+
 context("is.mortaar_life_table_list")
 
 test_that("a mortaar_life_table_list identifies correctly", {
