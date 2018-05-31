@@ -9,17 +9,20 @@
 #'
 #' @examples
 #'
-#' #summentest=summe(c(1,2,NA,4),c(5,6,7,8)
+#' c(1, 2, NA, 4) %+0% c(5, 6, 7,  8)
 #'
-#' @keywords internal
-
-summe=function(x,y){
-  if(any(is.na(x))){
-    x[is.na(x)]=0
-  }
-  return(x+y)
+`%+0%` <- function(x, y) {
+  x <- NA_to_0(x)
+  y <- NA_to_0(y)
+  return(x + y)
 }
 
+NA_to_0 <- function(x) {
+  if (any(is.na(x))) {
+    x[is.na(x)] <- 0
+  }
+  return(x)
+}
 
 #' Creates the input for the function life.table.
 #'
@@ -147,12 +150,12 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
     # For each Group (k) the deaths per age class (available years i) are summed up equally seperated by ages.
     for(k in 1:length(unique(asd$Group))){
       for(i in which(asd$Group==unique(asd$Group)[k])){
-        restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)]=summe(x=(restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
+        restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)] <- restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)] %+0% (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
       }
     }
     # Also for all Groups all deceased are summed up seperated according to the years.
     for(i in seq_along(asd[,1])){
-      restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=summe(x=(restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
+      restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))] <- (restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]) %+0% (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
     }
 
     # If no groups (male, female, phase, ...) are specified, do the same without considering groups.
@@ -161,7 +164,7 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
     restab=data.frame(Age=seq(0,99,1),Deceased=0)
 
     for(i in seq_along(asd[,1])){
-      restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]=summe(x=(restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]),y=(asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1)))))
+      restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))] <- (restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]) %+0% (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
     }
   }
 

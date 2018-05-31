@@ -61,3 +61,10 @@ test_that("prep.life.table method vector produced age intervalls equal to the ve
     age_vec
   )
 })
+
+test_that("%+0% replace NA with 0 and sum values", {
+  left <- c(NA, 10, 10)
+  right <- c(1, NA, 1)
+  expect_equal(left %+0% right, c(1, 10, 11))
+  expect_equal(left[1] %+0% right[2], 0 )
+  })
