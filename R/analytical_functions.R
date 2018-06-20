@@ -4,7 +4,7 @@
 #' \href{https://en.wikipedia.org/wiki/Life_table}{life table(s)}.
 #' The algorithm is optimised for deceased populations
 #' encountered in archaeological research.
-#' See \emph{Chamberlain 2006}, 27ff., \emph{Hermann et. al 1990}, 303ff.,
+#' See \emph{Chamberlain 2006}, 27ff., \emph{Herrmann et. al 1990}, 303ff.,
 #' \emph{Kokkotidis/Richter 1991}, \emph{Keyfitz et al. 2005}
 #' for selected literature. \cr
 #' The function takes an individual data.frame or a list of
@@ -39,7 +39,7 @@
 #' Default setup is: TRUE.
 #'
 #' @param agecorfac numeric vector, optional. Only applies if agecor == TRUE. Given values
-#' replace the standard values from the first age interval onwards.
+#' replace the standard values from the first age interval onward.
 #'
 #' Default setup is 1/3 for every age class <= 5 life years, and 1/2 for the others.
 #'

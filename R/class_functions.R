@@ -131,7 +131,7 @@ is.mortaar_life_table <- function(x, ...) {"mortaar_life_table" %in% class(x)}
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @return A string representation of the mortaar_life_table or the mortaar_life_table_list.
-#' For format.mortaar_life_table_list each mortaar_life_table is formated by itself and
+#' For format.mortaar_life_table_list each mortaar_life_table is formatted by itself and
 #' strung together. The names of the elements are used to specify the name in the returned header
 #' of the printout.
 #'
