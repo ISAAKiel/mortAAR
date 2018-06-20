@@ -19,7 +19,7 @@ test_that("prep.life.table includes the max of the age ranges when agerange = 'i
 
 test_that("prep.life.table imports a data set correct", {
   example_life_table <- prep.life.table(a_example_raw_dataset,dec="Anzahl.von.Individuum_nr",agebeg = "from", ageend = "to", group = "Geschlecht_kombiniert")
-  expect_equal(names(example_life_table),c("Unbestimmt", "Weiblich", "Männlich", "All"))
+  expect_equal(names(example_life_table),c("Unbestimmt", "Weiblich", "Maennlich", "All"))
   expect_equal(colnames(example_life_table[[1]]),c("x", "a", "Dx"))
   expect_equal(round(example_life_table[[1]]$Dx,6),
                c(22.142857, 24.714286, 3.214286, 3.418745, 6.807823, 10.938156, 8.915338, 7.865943, 8.765211, 5.540914, 4.656715, 4.754955, 4.722697, 4.851219, 4.779182, 1.911673))

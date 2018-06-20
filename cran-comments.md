@@ -1,14 +1,12 @@
-## Resubmission
-This is a resubmission. In this version we have:
+## Increment patch
+This is an increment patch. In this version we have:
 
-* further elaborated the provided functionality in the description field of the DESCRIPTION file.
-
-* to the best of our knowledge, each function visible to the user has now at least two small executable examples. Please elaborate your point if you think otherwise
+* rewritten some of the basic code and removed bugs.
 
 
 ## Test environments
-* local OS X install, R 3.4.0
-* ubuntu 14.04 (on travis-ci), R 3.4.1
+* local OS X install, R 3.5.0
+* ubuntu 14.04 (on travis-ci), R 3.5.0
 * win-builder (devel and release)
 
 ## R CMD check results
