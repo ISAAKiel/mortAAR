@@ -12,7 +12,5 @@ This is an increment patch. In this version we have:
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
-1 NOTE: CRAN incoming feasibility ... 
-
 ## Downstream dependencies
 There are no reverse dependencies yet.
