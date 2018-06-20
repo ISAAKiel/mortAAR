@@ -20,7 +20,7 @@
 For further information about the values see the
 documentation of \code{\link{life.table}}.}
 \description{
-A life table from \emph{Hermann et. al 1990, 305}.
+A life table from \emph{Herrmann et. al 1990, 305}.
 }
 \details{
 This lifetable is compiled from a medieval grave collection from

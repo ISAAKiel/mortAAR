@@ -57,7 +57,7 @@ NULL
 #' @name gallery_graves
 NULL
 
-#' aiterhofen_oedmuehle: Life table example
+#' aiterhofen_oedmuehlen: Life table example
 #'
 #' A life table from \emph{Kokkotidis/Richter 1991, 228}.
 #'
@@ -89,7 +89,7 @@ NULL
 #'
 #' @family lifetables
 #'
-#' @name aiterhofen_oedmuehle
+#' @name aiterhofen_oedmuehlen
 NULL
 
 #' magdalenenberg: Life table example
