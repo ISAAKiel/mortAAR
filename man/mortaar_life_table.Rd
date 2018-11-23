@@ -4,16 +4,33 @@
 \alias{mortaar_life_table}
 \alias{as.mortaar_life_table_list}
 \alias{as.mortaar_life_table}
+\alias{[.mortaar_life_table_list}
+\alias{[<-.mortaar_life_table_list}
+\alias{[[<-.mortaar_life_table_list}
+\alias{$<-.mortaar_life_table_list}
 \title{\strong{mortaar_life_table} and \strong{mortaar_life_table_list}}
 \usage{
 as.mortaar_life_table_list(x, ...)
 
 as.mortaar_life_table(x, ...)
+
+\method{[}{mortaar_life_table_list}(x, i)
+
+\method{[}{mortaar_life_table_list}(x, i) <- value
+
+\method{[[}{mortaar_life_table_list}(x, i) <- value
+
+\method{$}{mortaar_life_table_list}(x, i) <- value
 }
 \arguments{
 \item{x}{an object}
 
 \item{...}{further arguments passed to or from other methods}
+
+\item{i}{an index (name or number)}
+
+\item{value}{an object of class mortaar_life_table or mortaar_life_table_list to
+replace the indexed value}
 }
 \description{
 The \strong{mortaar_life_table} is the central data structure of the
@@ -34,11 +51,20 @@ for plot and print aesthetics.
 # a mortaar_life_table can be put together manually:
 as.mortaar_life_table(data.frame(a = c(20, 20, 20), Dx = c(10, 15, 20)))
 
-as.mortaar_life_table_list(
+# a mortaar_life_table_list can be constructed from multiple mortaar_life_tables
+schleswig <- as.mortaar_life_table_list(
   list(
-    life.table(schleswig_ma[c("a", "Dx")]),
-    life.table(schleswig_ma[c("a", "Dx")])
+    "schleswig data 1" = life.table(schleswig_ma[c("a", "Dx")]),
+    "schleswig data 2" = life.table(schleswig_ma[c("a", "Dx")])
   )
 )
+
+# you can add new mortaar_life_tables to plot them with the others
+schleswig$`schleswig data 3` <- life.table(schleswig_ma[c("a", "Dx")])
+schleswig[["schleswig data 4"]] <- life.table(schleswig_ma[c("a", "Dx")])
+
+# and you can create arbitrary subsets of mortaar_life_table_lists
+schleswig_data_3 <- schleswig$`schleswig data 3`
+schleswig_data_1_3_4 <- schleswig[c(1,3,4)]
 
 }

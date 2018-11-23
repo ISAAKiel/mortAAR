@@ -17,6 +17,9 @@
 #' for plot and print aesthetics.
 #'
 #' @param x an object
+#' @param i an index (name or number)
+#' @param value an object of class mortaar_life_table or mortaar_life_table_list to
+#' replace the indexed value
 #' @param ... further arguments passed to or from other methods
 #'
 #' @rdname mortaar_life_table
@@ -25,12 +28,21 @@
 #' # a mortaar_life_table can be put together manually:
 #' as.mortaar_life_table(data.frame(a = c(20, 20, 20), Dx = c(10, 15, 20)))
 #'
-#' as.mortaar_life_table_list(
+#' # a mortaar_life_table_list can be constructed from multiple mortaar_life_tables
+#' schleswig <- as.mortaar_life_table_list(
 #'   list(
-#'     life.table(schleswig_ma[c("a", "Dx")]),
-#'     life.table(schleswig_ma[c("a", "Dx")])
+#'     "schleswig data 1" = life.table(schleswig_ma[c("a", "Dx")]),
+#'     "schleswig data 2" = life.table(schleswig_ma[c("a", "Dx")])
 #'   )
 #' )
+#'
+#' # you can add new mortaar_life_tables to plot them with the others
+#' schleswig$`schleswig data 3` <- life.table(schleswig_ma[c("a", "Dx")])
+#' schleswig[["schleswig data 4"]] <- life.table(schleswig_ma[c("a", "Dx")])
+#'
+#' # and you can create arbitrary subsets of mortaar_life_table_lists
+#' schleswig_data_3 <- schleswig$`schleswig data 3`
+#' schleswig_data_1_3_4 <- schleswig[c(1,3,4)]
 #'
 NULL
 
@@ -83,6 +95,33 @@ as.mortaar_life_table <- function(x, ...) {
     stop("x is not an object of class data.frame or tibble")
   }
 
+}
+
+#' @rdname mortaar_life_table
+#' @export
+`[.mortaar_life_table_list` <- function(x, i) {
+  as.mortaar_life_table_list(NextMethod())
+}
+
+#' @rdname mortaar_life_table
+#' @export
+`[<-.mortaar_life_table_list` <- function(x, i, value) {
+  stopifnot(is.mortaar_life_table_list(value))
+  NextMethod()
+}
+
+#' @rdname mortaar_life_table
+#' @export
+`[[<-.mortaar_life_table_list` <- function(x, i, value) {
+  stopifnot(is.mortaar_life_table(value))
+  NextMethod()
+}
+
+#' @rdname mortaar_life_table
+#' @export
+`$<-.mortaar_life_table_list` <- function(x, i, value) {
+  stopifnot(is.mortaar_life_table(value))
+  NextMethod()
 }
 
 #' Checks if a variable is of class mortaar_life_table or mortaar_life_table_list
