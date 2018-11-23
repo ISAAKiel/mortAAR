@@ -9,8 +9,8 @@
 \method{plot}{mortaar_life_table}(x, display = c("dx", "qx", "lx", "ex",
   "rel_popx"), prefer.ggplot = TRUE, ...)
 
-\method{plot}{mortaar_life_table_list}(x, display = c("dx", "qx", "lx", "ex",
-  "rel_popx"), prefer.ggplot = TRUE, ...)
+\method{plot}{mortaar_life_table_list}(x, display = c("dx", "qx", "lx",
+  "ex", "rel_popx"), prefer.ggplot = TRUE, ...)
 }
 \arguments{
 \item{x}{a mortaar_life_table or a mortaar_life_table_list.}
