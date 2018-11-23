@@ -36,3 +36,4 @@ be found in \emph{Grupe 1997}.
 Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
   \code{\link{odagsen_cm}}
 }
+\concept{lifetables}

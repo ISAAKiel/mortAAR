@@ -21,3 +21,4 @@ pooled for constructing a life table.
 \seealso{
 Other training, vignette.: \code{\link{muensingen}}
 }
+\concept{training, vignette.}

@@ -36,3 +36,4 @@ found in \emph{Baum 1990}.
 Other lifetables: \code{\link{odagsen_cm}},
   \code{\link{schleswig_ma}}
 }
+\concept{lifetables}

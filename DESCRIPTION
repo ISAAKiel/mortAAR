@@ -28,7 +28,7 @@ Imports:
     Rdpack (>= 0.4-20),
     reshape2 (>= 1.4.2),
     methods (>= 3.3.3)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests:
     testthat,
     knitr,

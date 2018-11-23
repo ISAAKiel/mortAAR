@@ -42,3 +42,4 @@ the published original data in \emph{Grupe/Herrmann 1986}.
 Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
   \code{\link{schleswig_ma}}
 }
+\concept{lifetables}

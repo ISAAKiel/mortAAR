@@ -24,3 +24,4 @@ if the respective burial contained grave goods (yes or no).
 \seealso{
 Other training, vignette.: \code{\link{magdalenenberg}}
 }
+\concept{training, vignette.}
