@@ -43,6 +43,13 @@
 #'
 #' Default setup is 1/3 for every age class <= 5 life years, and 1/2 for the others.
 #'
+#' @param option_spline integer, optional. If > 0, values for adults will be
+#' interpolated by a monotonic cubic spline. Usual options will by '10' or '20' which
+#' will interpolate the values for individuals of an age of 20 or older by 10- or 20-
+#' year cumulated values. To be used carefully, as diagnostic features of the life
+#' table might be smoothed and essentially removed. Only available when the methods
+#' 'Standard' or 'Equal5' in prep.life.table have been chosen.
+#'
 #' @return
 #' An object of class mortaar_life_table or mortaar_life_table_list.
 #' Each mortaar_life_table contains the following variables:
@@ -123,9 +130,10 @@
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom Rdpack reprompt
+#' @importFrom demography cm.spline
 #'
 #' @export
-life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
+life.table <- function(neclist, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
 
   # Check if the input list is a data.frame, if so, it is
   # packed into a list.
@@ -150,7 +158,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
       lapply(., function(necdf) {
         vars <- colnames(necdf)[colnames(necdf) %in% okvars]
         life.table.df(
-          necdf[,vars], agecor = agecor, agecorfac = agecorfac)
+          necdf[,vars], agecor = agecor, agecorfac = agecorfac, option_spline = option_spline)
         }
       ) %>%
         `class<-`(c("mortaar_life_table_list", class(.))) -> res
@@ -159,7 +167,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
     necdf <- neclist[[1]]
     vars <- colnames(necdf)[colnames(necdf) %in% okvars]
     life.table.df(
-      necdf[,vars], agecor = agecor, agecorfac = agecorfac
+      necdf[,vars], agecor = agecor, agecorfac = agecorfac, option_spline = option_spline
     ) -> res
   }
 
@@ -244,7 +252,7 @@ inputchecks <- function(neclist, okvars) {
 
 }
 
-life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
+life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
 
   # x: well readable rownames for age classes.
   limit <- necdf['a'] %>% sum
@@ -269,8 +277,52 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     )
   }
 
+
   # dx: proportion of deaths within x.
   necdf['dx'] <- necdf['Dx'] / sum(necdf['Dx']) * 100
+
+
+  # in case of spline-interpolation, dx-values will be replaced with interpolated once
+
+  if (length(option_spline) > 0) {
+
+  a_cumsum <- necdf['a'] %>% cumsum
+
+  # add index number to resulting data.frame
+  a_cumsum$id <- 1:nrow(a_cumsum)
+
+  repeat_number <- floor((limit - 20) / option_spline)
+
+  a_cumsum_select <- a_cumsum$id[which(a_cumsum$a <= 20)]
+
+  for (t in 1 : repeat_number) {
+    a_cumsum_select <- c(a_cumsum_select, (a_cumsum$id[which(a_cumsum$a == (20 + (t * option_spline)))]))
+  }
+
+  if (((limit - 20) / option_spline) - floor((limit - 20) / option_spline) > 0) {
+    a_cumsum_select <- c(a_cumsum_select, a_cumsum$id[nrow(necdf)])
+  }
+
+  dx_cumsum <- c(cumsum(necdf[, 'dx']))[1:nrow(necdf)]
+  y_spline <- dx_cumsum[a_cumsum_select]
+  x_spline <- a_cumsum$a[a_cumsum_select]
+
+  # interpolating the values with a monotonic cubic spline
+  dem <- cm.spline(x_spline, y_spline, n = (limit/5 + 1), xmin = 0, xmax = limit)
+
+  # the first value of the interpolation has to be discarded and replaced
+  if (nrow(necdf) < length(dem$y)) {
+    dem_dx <- dem$y[c(-1)]
+  }
+  else
+  {
+  dem_dx <- c(necdf$dx[1], dem$y[c(-1)])
+  }
+
+  necdf['dx'] <- dem_dx - c(0, dem_dx[-nrow(necdf)])
+
+  }
+
 
   # lx: proportion of survivorship within x.
   necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx'])
