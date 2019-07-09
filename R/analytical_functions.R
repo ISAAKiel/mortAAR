@@ -130,7 +130,6 @@
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom Rdpack reprompt
-#' @importFrom demography cm.spline
 #'
 #' @export
 life.table <- function(neclist, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
@@ -308,7 +307,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
   x_spline <- a_cumsum$a[a_cumsum_select]
 
   # interpolating the values with a monotonic cubic spline
-  dem <- cm.spline(x_spline, y_spline, n = (limit/5 + 1), xmin = 0, xmax = limit)
+  dem <- stats::spline(x_spline, y_spline, n = (limit/5 + 1), xmin = 0, xmax = limit, method = "hyman")
 
   # the first value of the interpolation has to be discarded and replaced
   if (nrow(necdf) < length(dem$y)) {

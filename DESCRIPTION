@@ -27,8 +27,7 @@ Imports:
     magrittr (>= 1.5),
     Rdpack (>= 0.4-20),
     reshape2 (>= 1.4.2),
-    methods (>= 3.3.3),
-    demography (>= 1.22)
+    methods (>= 3.3.3)
 RoxygenNote: 6.1.1
 Suggests:
     testthat,
