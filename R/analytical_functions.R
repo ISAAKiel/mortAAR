@@ -251,39 +251,14 @@ inputchecks <- function(neclist, okvars) {
 
 }
 
-life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
-
-  # x: well readable rownames for age classes.
-  limit <- necdf['a'] %>% sum
-  lower <- c(0, necdf[, 'a'] %>% cumsum)[1:nrow(necdf)]
-  upper <- necdf[, 'a'] %>% cumsum %>% `-`(1)
-  xvec <- paste0(lower, "--", upper)
-
-  if ("x" %in% colnames(necdf) %>% `!`) {
-    necdf <- cbind(
-      x = xvec,
-      necdf,
-      stringsAsFactors = FALSE
-    )
-  } else if (
-    "x" %in% colnames(necdf) &&
-    (necdf[, 'x'] != xvec) %>% all
-  ) {
-    necdf <- cbind(
-      x_auto = xvec,
-      necdf,
-      stringsAsFactors = FALSE
-    )
+dx_default <- function(Dx) {
+  Dx / sum(Dx) * 100
   }
 
 
-  # dx: proportion of deaths within x.
-  necdf['dx'] <- necdf['Dx'] / sum(necdf['Dx']) * 100
+dx_spline <- function(necdf, a, Dx, limit, option_spline) {
 
-
-  # in case of spline-interpolation, dx-values will be replaced with interpolated once
-
-  if (length(option_spline) > 0) {
+  necdf['dx'] <- dx_default(necdf['Dx'])
 
   a_cumsum <- necdf['a'] %>% cumsum
 
@@ -315,13 +290,60 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
   }
   else
   {
-  dem_dx <- c(necdf$dx[1], dem$y[c(-1)])
+    dem_dx <- c(necdf$dx[1], dem$y[c(-1)])
   }
 
   necdf['dx'] <- dem_dx - c(0, dem_dx[-nrow(necdf)])
 
+  return(necdf)
+
+}
+
+
+life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
+
+  # x: well readable rownames for age classes.
+  limit <- necdf['a'] %>% sum
+  lower <- c(0, necdf[, 'a'] %>% cumsum)[1:nrow(necdf)]
+  upper <- necdf[, 'a'] %>% cumsum %>% `-`(1)
+  xvec <- paste0(lower, "--", upper)
+
+  if ("x" %in% colnames(necdf) %>% `!`) {
+    necdf <- cbind(
+      x = xvec,
+      necdf,
+      stringsAsFactors = FALSE
+    )
+  } else if (
+    "x" %in% colnames(necdf) &&
+    (necdf[, 'x'] != xvec) %>% all
+  ) {
+    necdf <- cbind(
+      x_auto = xvec,
+      necdf,
+      stringsAsFactors = FALSE
+    )
   }
 
+
+  # in case of spline-interpolation, dx-values will be replaced with interpolated once
+
+    if (!(length(option_spline) > 0)) {
+    necdf['dx'] <- dx_default(necdf['Dx'])
+    } else {
+    unique_a <- c(unique(necdf['a']))
+    unique_a <- unlist(unique_a$a)
+    if (!(((length(unique_a) == 1) & (5 %in% unique_a)) ||
+          ((length(unique_a) == 3) & ((5 %in% unique_a[3])
+                                     & (4 %in% unique_a[2])
+                                        & (1 %in% unique_a[1])))
+          )) {
+     stop("Spline-interpolation works only with 5-year-age classes (or 1- and 4-year classes
+        for the first 5 years). Please take a look at ?life.table to determine how your
+          input data should look like for the option_spline option.")
+    }
+    necdf['dx'] <- dx_spline(necdf, necdf['a'], necdf['Dx'], limit, option_spline)
+  }
 
   # lx: proportion of survivorship within x.
   necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx'])
