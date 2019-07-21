@@ -396,9 +396,9 @@ dx_spline <- function(a, Dx, limit, option_spline) {
 
   repeat_number <- floor((limit - 20) / option_spline)
 
-  a_cumsum_select <- working_data$id[which(working_data$a <= 20)]
+  a_cumsum_select <- working_data$id[which(working_data$a_cumsum <= 20)]
   for (t in 1:repeat_number) {
-    a_cumsum_select <- c(a_cumsum_select, (working_data$id[which(working_data$a == (20 + (t * option_spline)))]))
+    a_cumsum_select <- c(a_cumsum_select, (working_data$id[which(working_data$a_cumsum == (20 + (t * option_spline)))]))
   }
   if (((limit - 20) / option_spline) - floor((limit - 20) / option_spline) > 0) {
     a_cumsum_select <- c(a_cumsum_select, working_data$id[length(a)])
