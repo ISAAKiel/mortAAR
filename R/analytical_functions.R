@@ -181,6 +181,8 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c(), option_spline = 
   return(res)
 }
 
+#### input checks ####
+
 inputchecks <- function(neclist, okvars) {
 
   # Checks if the input is a list.
@@ -251,54 +253,7 @@ inputchecks <- function(neclist, okvars) {
 
 }
 
-dx_default <- function(Dx) {
-  Dx / sum(Dx) * 100
-  }
-
-
-dx_spline <- function(necdf, a, Dx, limit, option_spline) {
-
-  necdf['dx'] <- dx_default(necdf['Dx'])
-
-  a_cumsum <- necdf['a'] %>% cumsum
-
-  # add index number to resulting data.frame
-  a_cumsum$id <- 1:nrow(a_cumsum)
-
-  repeat_number <- floor((limit - 20) / option_spline)
-
-  a_cumsum_select <- a_cumsum$id[which(a_cumsum$a <= 20)]
-
-  for (t in 1 : repeat_number) {
-    a_cumsum_select <- c(a_cumsum_select, (a_cumsum$id[which(a_cumsum$a == (20 + (t * option_spline)))]))
-  }
-
-  if (((limit - 20) / option_spline) - floor((limit - 20) / option_spline) > 0) {
-    a_cumsum_select <- c(a_cumsum_select, a_cumsum$id[nrow(necdf)])
-  }
-
-  dx_cumsum <- c(cumsum(necdf[, 'dx']))[1:nrow(necdf)]
-  y_spline <- dx_cumsum[a_cumsum_select]
-  x_spline <- a_cumsum$a[a_cumsum_select]
-
-  # interpolating the values with a monotonic cubic spline
-  dem <- stats::spline(x_spline, y_spline, n = (limit/5 + 1), xmin = 0, xmax = limit, method = "hyman")
-
-  # the first value of the interpolation has to be discarded and replaced
-  if (nrow(necdf) < length(dem$y)) {
-    dem_dx <- dem$y[c(-1)]
-  }
-  else
-  {
-    dem_dx <- c(necdf$dx[1], dem$y[c(-1)])
-  }
-
-  necdf['dx'] <- dem_dx - c(0, dem_dx[-nrow(necdf)])
-
-  return(necdf)
-
-}
-
+#### core algorithm ####
 
 life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
 
@@ -325,11 +280,9 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
     )
   }
 
-
   # in case of spline-interpolation, dx-values will be replaced with interpolated once
-
-    if (!(length(option_spline) > 0)) {
-    necdf['dx'] <- dx_default(necdf['Dx'])
+  if (!(length(option_spline) > 0)) {
+    necdf['dx'] <- dx_default(necdf[['Dx']])
     } else {
     unique_a <- c(unique(necdf['a']))
     unique_a <- unlist(unique_a$a)
@@ -337,17 +290,18 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
           ((length(unique_a) == 3) & ((5 %in% unique_a[3])
                                      & (4 %in% unique_a[2])
                                         & (1 %in% unique_a[1])))
-          )) {
-     stop("Spline-interpolation works only with 5-year-age classes (or 1- and 4-year classes
-        for the first 5 years). Please take a look at ?life.table to determine how your
-          input data should look like for the option_spline option.")
+    )) {
+      paste0(
+        "Spline-interpolation works only with 5-year-age classes (or 1- and ",
+        "4-year classes for the first 5 years). Please take a look at ?life.table ",
+        "to determine how your input data should look like for the option_spline option."
+      ) %>% stop
     }
-    necdf['dx'] <- dx_spline(necdf, necdf['a'], necdf['Dx'], limit, option_spline)
+    necdf['dx'] <- dx_spline(necdf[['a']], necdf[['Dx']], limit, option_spline)
   }
 
   # lx: proportion of survivorship within x.
-  necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx'])
-                   )[1:nrow(necdf)]
+  necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx']))[1:nrow(necdf)]
 
   # qx: probability of death within x.
   necdf['qx'] <- necdf['dx'] / necdf['lx'] * 100
@@ -421,4 +375,51 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
     return()
+}
+
+#### helper functions ####
+
+## dx ##
+dx_default <- function(Dx) {
+  Dx / sum(Dx) * 100
+}
+
+dx_spline <- function(a, Dx, limit, option_spline) {
+
+  working_data <- data.frame(
+    id = 1:length(a),
+    a = a,
+    Dx = Dx,
+    a_cumsum = a %>% cumsum,
+    dx_default = Dx %>% dx_default
+  )
+
+  repeat_number <- floor((limit - 20) / option_spline)
+
+  a_cumsum_select <- working_data$id[which(working_data$a <= 20)]
+  for (t in 1:repeat_number) {
+    a_cumsum_select <- c(a_cumsum_select, (working_data$id[which(working_data$a == (20 + (t * option_spline)))]))
+  }
+  if (((limit - 20) / option_spline) - floor((limit - 20) / option_spline) > 0) {
+    a_cumsum_select <- c(a_cumsum_select, working_data$id[length(a)])
+  }
+
+  x_spline <- working_data$a_cumsum[a_cumsum_select]
+  dx_cumsum <- c(cumsum(working_data$dx_default))[1:length(a)]
+  y_spline <- dx_cumsum[a_cumsum_select]
+
+  # interpolating the values with a monotonic cubic spline
+  dem <- stats::spline(x_spline, y_spline, n = (limit/5 + 1), xmin = 0, xmax = limit, method = "hyman")
+
+  # the first value of the interpolation has to be discarded and replaced
+  if (length(a) < length(dem$y)) {
+    dem_dx <- dem$y[c(-1)]
+  } else {
+    dem_dx <- c(working_data$dx_default[1], dem$y[c(-1)])
+  }
+
+  dx_approx <- dem_dx - c(0, dem_dx[-length(a)])
+
+  return(dx_approx)
+
 }
