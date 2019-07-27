@@ -145,7 +145,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c(), option_spline = 
   okvars <- c("x", "a", "Dx")
 
   # Check the input.
-  inputchecks(neclist, okvars)
+  inputchecks(neclist, okvars, option_spline)
 
   # Apply life.table.vec to every column of the input df
   # and create an output mortaar_life_table_list of
@@ -183,7 +183,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c(), option_spline = 
 
 #### input checks ####
 
-inputchecks <- function(neclist, okvars) {
+inputchecks <- function(neclist, okvars, option_spline) {
 
   # Checks if the input is a list.
   if (neclist %>% is.list %>% `!`) {
@@ -251,6 +251,35 @@ inputchecks <- function(neclist, okvars) {
     ) %>% warning
   }
 
+  # Checks if the special conditions for the option_spline are met
+  if (length(option_spline) > 0) {
+
+    option_spline_test <- function(necdf) {
+      unique_a <- c(unique(necdf['a']))
+      unique_a <- unlist(unique_a$a)
+      return(
+        !(((length(unique_a) == 1) & (5 %in% unique_a)) || (
+          (length(unique_a) == 3) & (
+            (5 %in% unique_a[3]) &
+            (4 %in% unique_a[2]) &
+            (1 %in% unique_a[1])
+          )
+        )
+      ))
+    }
+
+    if (neclist %>% lapply(option_spline_test) %>% unlist %>% any) {
+      paste0(
+        "One of your data.frames does not fulfill the conditions for the spline ",
+        "creation option. ",
+        "Spline-interpolation works only with 5-year-age classes (or 1- and ",
+        "4-year classes for the first 5 years). Please take a look at ?life.table ",
+        "to determine how your input data should look like."
+      ) %>% stop
+    }
+
+  }
+
 }
 
 #### core algorithm ####
@@ -283,20 +312,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
   # in case of spline-interpolation, dx-values will be replaced with interpolated once
   if (!(length(option_spline) > 0)) {
     necdf['dx'] <- dx_default(necdf[['Dx']])
-    } else {
-    unique_a <- c(unique(necdf['a']))
-    unique_a <- unlist(unique_a$a)
-    if (!(((length(unique_a) == 1) & (5 %in% unique_a)) ||
-          ((length(unique_a) == 3) & ((5 %in% unique_a[3])
-                                     & (4 %in% unique_a[2])
-                                        & (1 %in% unique_a[1])))
-    )) {
-      paste0(
-        "Spline-interpolation works only with 5-year-age classes (or 1- and ",
-        "4-year classes for the first 5 years). Please take a look at ?life.table ",
-        "to determine how your input data should look like for the option_spline option."
-      ) %>% stop
-    }
+  } else {
     necdf['dx'] <- dx_spline(necdf[['a']], necdf[['Dx']], limit, option_spline)
   }
 
