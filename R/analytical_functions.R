@@ -43,6 +43,13 @@
 #'
 #' Default setup is 1/3 for every age class <= 5 life years, and 1/2 for the others.
 #'
+#' @param option_spline integer, optional. If > 0, values for adults will be
+#' interpolated by a monotonic cubic spline. Usual options will by '10' or '20' which
+#' will interpolate the values for individuals of an age of 20 or older by 10- or 20-
+#' year cumulated values. To be used carefully, as diagnostic features of the life
+#' table might be smoothed and essentially removed. Only available when the methods
+#' 'Standard' or 'Equal5' in prep.life.table have been chosen.
+#'
 #' @return
 #' An object of class mortaar_life_table or mortaar_life_table_list.
 #' Each mortaar_life_table contains the following variables:
@@ -125,7 +132,7 @@
 #' @importFrom Rdpack reprompt
 #'
 #' @export
-life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
+life.table <- function(neclist, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
 
   # Check if the input list is a data.frame, if so, it is
   # packed into a list.
@@ -138,7 +145,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
   okvars <- c("x", "a", "Dx")
 
   # Check the input.
-  inputchecks(neclist, okvars)
+  inputchecks(neclist, okvars, option_spline)
 
   # Apply life.table.vec to every column of the input df
   # and create an output mortaar_life_table_list of
@@ -150,7 +157,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
       lapply(., function(necdf) {
         vars <- colnames(necdf)[colnames(necdf) %in% okvars]
         life.table.df(
-          necdf[,vars], agecor = agecor, agecorfac = agecorfac)
+          necdf[,vars], agecor = agecor, agecorfac = agecorfac, option_spline = option_spline)
         }
       ) %>%
         `class<-`(c("mortaar_life_table_list", class(.))) -> res
@@ -159,7 +166,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
     necdf <- neclist[[1]]
     vars <- colnames(necdf)[colnames(necdf) %in% okvars]
     life.table.df(
-      necdf[,vars], agecor = agecor, agecorfac = agecorfac
+      necdf[,vars], agecor = agecor, agecorfac = agecorfac, option_spline = option_spline
     ) -> res
   }
 
@@ -174,7 +181,9 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c()) {
   return(res)
 }
 
-inputchecks <- function(neclist, okvars) {
+#### input checks ####
+
+inputchecks <- function(neclist, okvars, option_spline) {
 
   # Checks if the input is a list.
   if (neclist %>% is.list %>% `!`) {
@@ -242,9 +251,40 @@ inputchecks <- function(neclist, okvars) {
     ) %>% warning
   }
 
+  # Checks if the special conditions for the option_spline are met
+  if (length(option_spline) > 0) {
+
+    option_spline_test <- function(necdf) {
+      unique_a <- c(unique(necdf['a']))
+      unique_a <- unlist(unique_a$a)
+      return(
+        !(((length(unique_a) == 1) & (5 %in% unique_a)) || (
+          (length(unique_a) == 3) & (
+            (5 %in% unique_a[3]) &
+            (4 %in% unique_a[2]) &
+            (1 %in% unique_a[1])
+          )
+        )
+      ))
+    }
+
+    if (neclist %>% lapply(option_spline_test) %>% unlist %>% any) {
+      paste0(
+        "One of your data.frames does not fulfill the conditions for the spline ",
+        "creation option. ",
+        "Spline-interpolation works only with 5-year-age classes (or 1- and ",
+        "4-year classes for the first 5 years). Please take a look at ?life.table ",
+        "to determine how your input data should look like."
+      ) %>% stop
+    }
+
+  }
+
 }
 
-life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
+#### core algorithm ####
+
+life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
 
   # x: well readable rownames for age classes.
   limit <- necdf['a'] %>% sum
@@ -269,12 +309,15 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
     )
   }
 
-  # dx: proportion of deaths within x.
-  necdf['dx'] <- necdf['Dx'] / sum(necdf['Dx']) * 100
+  # in case of spline-interpolation, dx-values will be replaced with interpolated once
+  if (!(length(option_spline) > 0)) {
+    necdf['dx'] <- dx_default(necdf[['Dx']])
+  } else {
+    necdf['dx'] <- dx_spline(necdf[['a']], necdf[['Dx']], limit, option_spline)
+  }
 
   # lx: proportion of survivorship within x.
-  necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx'])
-                   )[1:nrow(necdf)]
+  necdf['lx'] <- c(100, 100 - cumsum(necdf[, 'dx']))[1:nrow(necdf)]
 
   # qx: probability of death within x.
   necdf['qx'] <- necdf['dx'] / necdf['lx'] * 100
@@ -348,4 +391,51 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c()) {
   necdf %>%
     `class<-`(c("mortaar_life_table", class(.))) %>%
     return()
+}
+
+#### helper functions ####
+
+## dx ##
+dx_default <- function(Dx) {
+  Dx / sum(Dx) * 100
+}
+
+dx_spline <- function(a, Dx, limit, option_spline) {
+
+  working_data <- data.frame(
+    id = 1:length(a),
+    a = a,
+    Dx = Dx,
+    a_cumsum = a %>% cumsum,
+    dx_default = Dx %>% dx_default
+  )
+
+  repeat_number <- floor((limit - 20) / option_spline)
+
+  a_cumsum_select <- working_data$id[which(working_data$a_cumsum <= 20)]
+  for (t in 1:repeat_number) {
+    a_cumsum_select <- c(a_cumsum_select, (working_data$id[which(working_data$a_cumsum == (20 + (t * option_spline)))]))
+  }
+  if (((limit - 20) / option_spline) - floor((limit - 20) / option_spline) > 0) {
+    a_cumsum_select <- c(a_cumsum_select, working_data$id[length(a)])
+  }
+
+  x_spline <- working_data$a_cumsum[a_cumsum_select]
+  dx_cumsum <- c(cumsum(working_data$dx_default))[1:length(a)]
+  y_spline <- dx_cumsum[a_cumsum_select]
+
+  # interpolating the values with a monotonic cubic spline
+  dem <- stats::spline(x_spline, y_spline, n = (limit/5 + 1), xmin = 0, xmax = limit, method = "hyman")
+
+  # the first value of the interpolation has to be discarded and replaced
+  if (length(a) < length(dem$y)) {
+    dem_dx <- dem$y[c(-1)]
+  } else {
+    dem_dx <- c(working_data$dx_default[1], dem$y[c(-1)])
+  }
+
+  dx_approx <- dem_dx - c(0, dem_dx[-length(a)])
+
+  return(dx_approx)
+
 }

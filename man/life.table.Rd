@@ -4,7 +4,8 @@
 \alias{life.table}
 \title{Calculates a life table}
 \usage{
-life.table(neclist, agecor = TRUE, agecorfac = c())
+life.table(neclist, agecor = TRUE, agecorfac = c(),
+  option_spline = NULL)
 }
 \arguments{
 \item{neclist}{single data.frame or list of data.frames
@@ -28,6 +29,13 @@ Default setup is: TRUE.}
 replace the standard values from the first age interval onward.
 
 Default setup is 1/3 for every age class <= 5 life years, and 1/2 for the others.}
+
+\item{option_spline}{integer, optional. If > 0, values for adults will be
+interpolated by a monotonic cubic spline. Usual options will by '10' or '20' which
+will interpolate the values for individuals of an age of 20 or older by 10- or 20-
+year cumulated values. To be used carefully, as diagnostic features of the life
+table might be smoothed and essentially removed. Only available when the methods
+'Standard' or 'Equal5' in prep.life.table have been chosen.}
 }
 \value{
 An object of class mortaar_life_table or mortaar_life_table_list.
