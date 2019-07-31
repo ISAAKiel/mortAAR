@@ -39,4 +39,8 @@ More information can be found in \emph{Grupe/Herrmann 1986}.
 
 \insertRef{rinne_odagsen_2002}{mortAAR}
 }
-\concept{lifetables.}
+\seealso{
+Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
+  \code{\link{odagsen_cm}}, \code{\link{schleswig_ma}}
+}
+\concept{lifetables}

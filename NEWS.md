@@ -1,3 +1,8 @@
+# mortAAR 1.0.2
+
+- tweaking the class-functions so that class mortaar_life_table is maintained when manipulating a mortaar_life_table_list
+- adding a spline-option when constructing the life table for smoother adult age-groups
+
 # mortAAR 1.0.1
 
 - rewriting of some of the basic code

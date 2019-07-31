@@ -22,6 +22,10 @@ if the respective burial contained grave goods (yes or no).
 \insertRef{moghaddam_et_al_muensingen_2016}{mortAAR}
 }
 \seealso{
-Other training, vignette.: \code{\link{magdalenenberg}}
+Other vignette: \code{\link{magdalenenberg}}
+
+Other training: \code{\link{gallery_graves}},
+  \code{\link{magdalenenberg}}
 }
-\concept{training, vignette.}
+\concept{training}
+\concept{vignette}

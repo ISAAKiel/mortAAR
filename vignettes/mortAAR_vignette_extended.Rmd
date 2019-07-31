@@ -78,7 +78,7 @@ muen %>% dplyr::select(age) %>% dplyr::arrange(nchar(age), age) %>% unique()
 
 As can be easily seen, the data set is comprised of 31 different age ranges. Skimming through the lines it is obvious that the anthropologists were not completely consequent in their age ranges. While „20--40“ clearly should be read as „from 20 to 39 years“ this is certainly not the case with for example „7--8“. The first one is in our terminology exclusive of the maximal age range, the second inclusive. Less clear are cases like „12--14“ or „13--15“. If we want to define 5-year-classes the differentiation does not really matter in the first case, as the individual would fall completely in the age range of 10 to 14. In the second case, the differentiation is unfortunately of importance. Taking it as inclusive, the individual would count with 1/4 to the age class of 15 to 19 while reading it as exlusive the individual would be associated with the younger age class.  
 
-Unfortuantely, we cannot solve this issue but for future reports we can only ask the authors to be more precise in their terminology. For the sake of the example, we assumed that age ranges only one year apart (e.g., „7-8“) are meant as inclusive and had to be adapted, but otherwise treated the age ranges as exclusive. For those individuals with an open end, we assume a maximal age of 70.  
+Unfortunately, we cannot solve this issue but for future reports we can only ask the authors to be more precise in their terminology. For the sake of the example, we assumed that age ranges only one year apart (e.g., „7-8“) are meant as inclusive and had to be adapted, but otherwise treated the age ranges as exclusive. For those individuals with an open end, we assume a maximal age of 70.  
 
 In the next step, not only the aforementioned inconsistencies have to be corrected, but also non-numerical characters (e.g., ">") must be replaced to be able to feed the data into mortAAR.
 
@@ -98,7 +98,7 @@ muen <- muen %>%
   )
 ```
 
-After adjusting the age class categories, the column "age" can be split into two separte columns "from" and "to", which mark the age span. These are then further transformed into numeric columns.  
+After adjusting the age class categories, the column "age" can be split into two separate columns "from" and "to", which mark the age span. These are then further transformed into numeric columns.  
 
 ```{r}
 # split string column
@@ -151,7 +151,7 @@ muen_result %>%
 
 The maximum within the proportion of deaths (dx) of all individuals from Münsingen-Rain is around 40 years. Largely missing are younger individuals below 20, but also the age of 50 and above is only slightly present. Especially the apparent lack of the subadult individuals generates questions concerning the representation of the data. Already a superficial look at any modern life tables leads to the expectation of far higher numbers of younger individuals. Therefore, the obvious conclusion seems that not everybody was buried within the cemetery.  
 
-However, there are also differences between the adult individuals. The maximum in females was in their 40s, while male individuals apparently died somehow later in their 50s. There are virtually no female individuals older than 55, but many males above 60. Accordingly female individuals suffered a much higher probabibilty of death (qx), had less survivorship (lx) within all age categories. The life expectancy differs as much as nearly 13 years (35.0 for females vs. 47.9 for males), but this is also due to the fact that it was obviously possible to sex six subadult females, but nearly no subadult males.  
+However, there are also differences between the adult individuals. The maximum in females was in their 40s, while male individuals apparently died somehow later in their 50s. There are virtually no female individuals older than 55, but many males above 60. Accordingly female individuals suffered a much higher probability of death (qx), had less survivorship (lx) within all age categories. The life expectancy differs as much as nearly 13 years (35.0 for females vs. 47.9 for males), but this is also due to the fact that it was obviously possible to sex six subadult females, but nearly no subadult males.  
 
 As a result the analysis leaves more open questions than answers: Representation is obviously not given, as is demonstrated by the largely missing subadult individuals. However, even with adult individuals, the highly differing mortality pattern between males and females elicits the question if this was really due to the differing life expectancy or differing cultural preferences in burying males and females.
 
@@ -200,7 +200,7 @@ mag <- mag %>%
   transform(from = as.numeric(from), to = as.numeric(to))  
 ```
 
-As `method` we choose this time "Equal5". This way we get 5-year-intervals throughout, as in the original life table. The closing year is meant to be counted as well, therefore `agerange` is set to "included". The biggest difference to the Münsingen example concerns the number of deceased. Within the Münsingen data each line concernes one individual, while within the Magdalenenberg data each line (= age range) concerns more than one individual. This is why it is mandatory this time to define `dec`. Because we analyze all individuals together, no grouping variable is specified and therefore only one life table will be computed.
+As `method` we choose this time "Equal5". This way we get 5-year-intervals throughout, as in the original life table. The closing year is meant to be counted as well, therefore `agerange` is set to "included". The biggest difference to the Münsingen example concerns the number of deceased. Within the Münsingen data each line concerns one individual, while within the Magdalenenberg data each line (= age range) concerns more than one individual. This is why it is mandatory this time to define `dec`. Because we analyze all individuals together, no grouping variable is specified and therefore only one life table will be computed.
 
 ```{r}
 mag_prep <- mag %>% 
@@ -261,7 +261,7 @@ comp_result <- comp %>%
   life.table()  
 ```
 
-We can skip the tabular output because this has alreay been provided above and go straight to the diagrams.  
+We can skip the tabular output because this has already been provided above and go straight to the diagrams.  
 
 ```{r}
 comp_result %>% 
@@ -270,7 +270,7 @@ comp_result %>%
 
 ### Mortality patterns
 
-The similarities, but also the differences between the data sets are striking. On the one hand, the general shape of the curves of the probability of death (dx) is the same with very low values in the younger and older age classes. By far the most prominent age group in both data sets are the middle aged individuals. However, it seems that the peak for the Magdalenenberg individuals are in the 30s, while for the Münsingen population it is 10 years later. This difference is also reflected in the other diagrams: The probability of death (qx) of the Magdalenenberg indidviduals is higher in nearly all age categories within 20+, and their rate of survivorship (lx) is decreasing faster. Consequently, while the Münsingen have a life expectancy of 38.0 years when born, the one for the population interred in Magdalenenberg is only at 32.2 years. This difference in the remaining life expectancy remains more or less the same till the highest age group.  
+The similarities, but also the differences between the data sets are striking. On the one hand, the general shape of the curves of the probability of death (dx) is the same with very low values in the younger and older age classes. By far the most prominent age group in both data sets are the middle aged individuals. However, it seems that the peak for the Magdalenenberg individuals are in the 30s, while for the Münsingen population it is 10 years later. This difference is also reflected in the other diagrams: The probability of death (qx) of the Magdalenenberg individuals is higher in nearly all age categories within 20+, and their rate of survivorship (lx) is decreasing faster. Consequently, while the Münsingen have a life expectancy of 38.0 years when born, the one for the population interred in Magdalenenberg is only at 32.2 years. This difference in the remaining life expectancy remains more or less the same till the highest age group.  
 
 The differences are difficult to explain. First, of course, we have to assess the possibility that the age difference reflects differences present in real life. However, as such a selection is obvious with the subadult individuals it seems hard to exclude a similar preference for older individuals.  
 
@@ -285,9 +285,9 @@ It is neither the aim nor the scope of this paper to solve this issue. However, 
 
 ## Conclusion
 
-Currently, paleodemography seems to undergo a sea change. While the early criticism from the early 1980s about the representation of aging characteristics (@bocquet-appel_masset_farewell_1982) had been fervidly been rebutted (e.g., @van_gerven_armelagos_rumors_1983), the problematics of getting to mortality patterns is now common knowledge. Some recent solutions by paleodemographers have been to remodel life tables, to introduce complex statistic measurements like Bayesian statistics or to revert the logic of aging skeletons (see the examples in @hoppa_vaupel_paleodemography_2002).  
+Currently, paleodemography seems to undergo a sea change. While the early criticism from the early 1980s about the representation of aging characteristics (@bocquet-appel_masset_farewell_1982) had been fervidly been rebutted (e.g., @van_gerven_armelagos_rumors_1983), the problems of getting to mortality patterns is now common knowledge. Some recent solutions by paleodemographers have been to remodel life tables, to introduce complex statistic measurements like Bayesian statistics or to revert the logic of aging skeletons (see the examples in @hoppa_vaupel_paleodemography_2002).  
 
-Our own attempt on life tables is (still) a far cry from the recent course of research. The reason why we still think this method is valid is simple: While we do not dismiss the problematics of life tables with their assumption of stationary populations, we still think that even in their simple form they provide useful information, not necessarily for the paleodemographist, but for the archaeologist. What tends to be forgotten is that the treatment of the deceased is always a conscious decision of the surviving members of the society in question. Even the non-treatment of the dead, e.g., by excarnation, still demands a decision. Therefore, even if the age-pattern is as distorted as in the examples above -- and it remains the question if such a situation should not be regarded as the norm for much of prehistory --, it still provides highly relevant information about cultural behaviour and preferences. To elucidate even more hints on prehistoric practices it is of primordial importance that archaeologists, anthropologists and paleodemographers work closer together than they have in the past to get to grips with actual population developments, representation of burial data and possible sources of bias. If our package helps in this process, we would be more than happy.
+Our own attempt on life tables is (still) a far cry from the recent course of research. The reason why we still think this method is valid is simple: While we do not dismiss the problems of life tables with their assumption of stationary populations, we still think that even in their simple form they provide useful information, not necessarily for the paleodemographist, but for the archaeologist. What tends to be forgotten is that the treatment of the deceased is always a conscious decision of the surviving members of the society in question. Even the non-treatment of the dead, e.g., by excarnation, still demands a decision. Therefore, even if the age-pattern is as distorted as in the examples above -- and it remains the question if such a situation should not be regarded as the norm for much of prehistory --, it still provides highly relevant information about cultural behaviour and preferences. To elucidate even more hints on prehistoric practices it is of primordial importance that archaeologists, anthropologists and paleodemographers work closer together than they have in the past to get to grips with actual population developments, representation of burial data and possible sources of bias. If our package helps in this process, we would be more than happy.
 
 ---
 
