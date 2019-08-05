@@ -21,7 +21,6 @@ A list with the following indices and vectors:
   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
   according to \emph{McFadden & Oxenham 2018} if infants are represented
   well.
-  \item \bold{mortality}:   list of mortalities 5q0, 5q10, 5q15, 45q15.
   \item \bold{e0}:   life expectancy at age 0.
 }
 }

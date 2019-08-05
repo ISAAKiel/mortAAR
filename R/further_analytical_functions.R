@@ -58,17 +58,17 @@ lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spl
   indx <- lt.indices(life_table)
 
   # corrected life expectancy at birth after Bocquet-Appel and Masset
-  e0 <- 78.721 * log10(sqrt(1 / indx$juvenile_i$d5_14_d20plus)) - 3.384
+  e0 <- 78.721 * log10(sqrt(1 / indx$juvenile_i)) - 3.384
   e0_range_start <- round(e0 - 1.503,1)
   e0_range_end <- round(e0 + 1.503,1)
 
   # corrected mortality for age group 1q0 after Bocquet-Appel and Masset
-  q1_0 <- 0.568 * sqrt((log10(200 * indx$juvenile_i$d5_14_d20plus))) - 0.438
+  q1_0 <- 0.568 * sqrt((log10(200 * indx$juvenile_i))) - 0.438
   q1_0_range_start <- round(q1_0 - 0.016,3)
   q1_0_range_end <- round(q1_0 + 0.016,3)
 
   # corrected mortality for age group 5q0 after Bocquet-Appel and Masset
-  q5_0 <- 1.154 * sqrt((log10(200 * indx$juvenile_i$d5_14_d20plus))) - 1.014
+  q5_0 <- 1.154 * sqrt((log10(200 * indx$juvenile_i))) - 1.014
   q5_0_range_start <- round(q5_0 - 0.041,3)
   q5_0_range_end <- round(q5_0 + 0.041,3)
 

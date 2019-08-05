@@ -71,7 +71,7 @@ arrived at by summing the product of the GRR, the age specific
 fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 the age specific survival taken from the life table and dividing the
 result by 10000. The formulas for r and Dt are directly taken from
-\emph{Hassan 1981}, 140).
+\emph{Hassan} (1981, 140).
 }
 \examples{
 # Calculate reproduction indices from real life dataset.
