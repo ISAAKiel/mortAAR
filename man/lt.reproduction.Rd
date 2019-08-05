@@ -9,13 +9,13 @@ lt.reproduction(life_table, fertility_rate = "BA_log", gen_len = 20)
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
 
-\item{fertility_rate}{string or numeric. Either fertility rate according to McFadden and
-Oxenham 2017 if infants are represented well or fertility rate according
-to data by McFadden and Oxenham 2017 for P(5-19) index after
-Bocquet-Appel. Options: 'McO' (McFadden/Oxenham), 'BA_linear' (linear
-fit), 'BA_power' (power fit) or 'BA_log' (logistic fit). Default:
-'BA_log'. Additionally, the user can specify an arbitrary number
-in lieu of the fertility rate.}
+\item{fertility_rate}{string or numeric. Either fertility rate according
+to \emph{McFadden & Oxenham 2018} if infants are represented well or
+fertility rate according to data by \emph{McFadden & Oxenham 2018} for
+P(5-19) index after \emph{Bocquet-Appel 2002}. Options: 'McO'
+(McFadden/Oxenham), 'BA_linear' (linear fit), 'BA_power' (power fit)
+or 'BA_log' (logistic fit). Default: BA_log'. Additionally, the
+user can specify an arbitrary number in lieu of the fertility rate.}
 
 \item{gen_len}{numeric. Length of generation for determining
 the rate of doubling the population. Default: 20.}
@@ -52,26 +52,26 @@ are unrealistic high or low.
 }
 \details{
 There are different approaches to calculate reproduction rates (e. g.
-Henneberg 1978). We largely follow the methodology by Hassan 1981.
-Typically, a Total fertility rate (TFR) of 6-8 is assumed for
-prehistoric populations (Ascadi/Nemeskeri 1970; Henneberg 1978; Hassan
-1981). Recently, McFadden and Oxenham (2017) have published a formula
-to estimate the Total fertility rate from archaeological data,
-provided that infants are represented fully in the archaeological
-record.\cr
+\emph{Henneberg 1978}). We largely follow the methodology by
+\emph{Hassan 1981}. Typically, a Total fertility rate (TFR) of 6-8 is
+assumed for prehistoric populations (\emph{Ascadi/Nemeskeri 1970};
+\emph{Henneberg 1978}; \emph{Hassan 1981}). Recently, \emph{McFadden
+and Oxenham 2018} have published a formula to estimate the Total
+fertility rate from archaeological data, provided that infants are
+represented fully in the archaeological record.\cr
 Unfortunately, this will not be the case for most archaeological
 datasets. Therefore, we used the data published by McFadden and
-Oxenham to apply it to the P(5-19)-index after Bocquet-Appel. We
-approximated the ratio by three different methods of fitting (linear,
-logistic, power) and recommend logistic fitting, but the others are
-available as well.\cr
+Oxenham to apply it to the P(5-19)-index after \emph{Bocquet-Appel
+2002}. We approximated the ratio by three different methods of
+fitting (linear, logistic, power) and recommend logistic fitting,
+but the others are available as well.\cr
 The Gross reproduction rate (GRR) is calculated by multiplying the TFR
 with the ratio of female newborns. The Net reproduction rate is
 arrived at by summing the product of the GRR, the age specific
-fertility rate as defined by Hassan (1981, 137 tab. 8.7) and the age
-specific survival taken from the life table and dividing the result
-by 10000. The formulas for r and Dt are directly taken from Hassan
-(1981, 140).
+fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
+the age specific survival taken from the life table and dividing the
+result by 10000. The formulas for r and Dt are directly taken from
+\emph{Hassan 1981}, 140).
 }
 \examples{
 # Calculate reproduction indices from real life dataset.
@@ -85,4 +85,15 @@ agebeg = "from", ageend = "to", method = "Equal5",
 agerange = "included")
 mag_result <- mag_prep \%>\% life.table()
 lt.reproduction(mag_result)
+}
+\references{
+\insertRef{acsadi_history_1970}{mortAAR}
+
+\insertRef{bocquet_appel_2002}{mortAAR}
+
+\insertRef{hassan_1981}{mortAAR}
+
+\insertRef{henneberg_1976}{mortAAR}
+
+\insertRef{mcfadden_oxenham_2018}{mortAAR}
 }

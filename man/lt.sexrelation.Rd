@@ -5,11 +5,9 @@
 \title{Calculate masculinity index and maternal mortality
 from a mortAAR life table list}
 \usage{
-lt.sexrelation(life_table, females, males)
+lt.sexrelation(females, males)
 }
 \arguments{
-\item{life_table}{an object of class mortaar_life_table_list.}
-
 \item{females}{an object of class mortaar_life_table for females}
 
 \item{males}{an object of class mortaar_life_table for males}
@@ -30,10 +28,13 @@ Output of masculinity index and maternal mortality.
 The proportional relation between adult males and females (=
 Masculinity index) is interesting for a number of reasons: (1)
 it can point to basic problems in the datasets in that, say,
-one sex is grossly over- or underrepresented. (2) it may hint
-towards cultural reaons like sex-specific mobility.\cr
+one sex is grossly over- or underrepresented (\emph{Herrmann et al.
+1990}, 310). (2) it may hint towards cultural reasons like sex-
+specific mobility.\cr
 Maternal mortality is a basic indicator for the health system of a
-given population. Recently, McFadden and Oxenham (2019) have
+given population. Maternal mortality is defined as dying during
+pregnancy or within the first 42 days after birth due to
+complications. Recently, \emph{McFadden and Oxenham 2019} have
 provided a formula to calculate it from archaeological data.
 }
 \details{
@@ -41,7 +42,7 @@ The Masculinity index (MI) is defined for juvenile and older
 individuals. Note that with a higher mortality rate of adult females,
 an MI < 100 does not necesssarily speak for an unbalanced MI in life.\cr
 Maternal mortality is calculated according to the formula
-provided by McFadden and Oxenham (2019). McFadden and Oxenham show
+provided by \emph{McFadden & Oxenham 2019}. McFadden and Oxenham show
 that with modern data a very high correlation is achieved by only
 comparing the absolute numbers of the age group 20 to 24. This has the
 additional advantage that for this age group anthropological aging
@@ -65,6 +66,11 @@ muen_prep <- muen \%>\% prep.life.table(group = "sex",
 agebeg = "from", ageend = "to", method = "Standard",
 agerange = "excluded")
 muen_result <- muen_prep \%>\% life.table()
-lt.sexrelation(muen_result,"female","male")
+lt.sexrelation(muen_result$female,muen_result$male)
 
+}
+\references{
+\insertRef{herrmann_prahistorische_1990}{mortAAR}
+
+\insertRef{mcfadden_oxenham_2019}{mortAAR}
 }

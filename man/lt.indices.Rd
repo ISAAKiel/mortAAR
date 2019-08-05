@@ -13,21 +13,26 @@ lt.indices(life_table)
 A list with the following indices and vectors:
 \itemize{
   \item \bold{child_i}:   ratio of individuals aged 5--9 to those aged
-  10--14 according to Bocquet-Appel and Masset.
+  10--14 according to \emph{Masset and Bocquet 1977}.
   \item \bold{juvenile_i}:   ratio of individuals aged 5--14 to adults
-  according to Bocquet-Appel and Masset.
+  according to \emph{Masset and Bocquet 1977}.
   \item \bold{P(5-19)}:  ratio of individuals aged 5--19 to those aged
-  5 or above according to Bocquet-Appel 2002.
+  5 or above according to \emph{Bocquet-Appel 2002}.
   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
-  according to McFadden and Oxenham 2017 if infants are represented
+  according to \emph{McFadden & Oxenham 2018} if infants are represented
   well.
   \item \bold{mortality}:   list of mortalities 5q0, 5q10, 5q15, 45q15.
-  \item \bold{repro_indx}: vector of survival rates of individuals
-  aged 15--45.
   \item \bold{e0}:   life expectancy at age 0.
 }
 }
 \description{
 This function bundles a number of indices and vectors from a mortAAR
 life table which are needed by other functions in mortAAR.
+}
+\references{
+\insertRef{bocquet_appel_2002}{mortAAR}
+
+\insertRef{masset_bocquet_1977}{mortAAR}
+
+\insertRef{mcfadden_oxenham_2018}{mortAAR}
 }

@@ -17,10 +17,10 @@ lt.correction(life_table, agecor = TRUE, agecorfac = c(),
 \item{option_spline}{integer, optional.}
 }
 \value{
-a list containing a data.frame with indices according to
-Bocquet-Appel and Masset showing the computed exact value as well
-as ranges and an object of class mortaar_life_table with the corrected
-values.
+a list containing a data.frame with indices e0, 1q0 and 5q0
+according to Bocquet-Appel and Masset showing the computed exact value
+as well as ranges and an object of class mortaar_life_table with the
+corrected values.
 \itemize{
   \item \bold{e0}:   Corrected life expectancy.
   \item \bold{1q0}:   Mortality of age group 0--1.
@@ -33,7 +33,8 @@ youngest age group. Life tables resulting from such populations
 will necessarily be misleading as they lead to believe that the
 mortality of younger children was lower than it actually was and
 that life expectancy was higher. For correcting these missing
-individuals, Bocquet-Appel and Masset conceived of several
+individuals, \emph{Bocquet-Appel and Masset} (1977; see also
+\emph{Herrmann et al. 1990}, 307) conceived of several
 calculations based on regression analyses of modern comparable
 mortality data. However, the applicability of these indices
 to archaeological data is highly debated and does not necessarily
@@ -57,4 +58,9 @@ agerange = "included")
 mag_result <- mag_prep \%>\% life.table()
 lt.correction(mag_result)
 
+}
+\references{
+\insertRef{masset_bocquet_1977}{mortAAR}
+
+\insertRef{herrmann_prahistorische_1990}{mortAAR}
 }

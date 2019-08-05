@@ -14,10 +14,11 @@ lt.representativity(life_table)
 Output showing the indices and explaining their interpretation.
 }
 \description{
-Weiss 1973 and Bocquet-Appel and Masset 1978 have devised indices
-which check if the non-adult age groups are represented in proportions
-as can be expected from modern comparable data. Whether this is really
-applicable to archaeological data-sets is a matter of debate.
+\emph{Weiss 1973} and \emph{Bocquet-Appel and Masset 1977} (see also
+\emph{Herrmann et al. 1990, 306f.} have devised indices which check
+if the non-adult age groups are represented in proportions as can be
+expected from modern comparable data. Whether this is really applicable
+to archaeological data-sets is a matter of debate.
 }
 \details{
 Weiss choose the mortality (qx) as deciding factor and claimed that
@@ -44,4 +45,11 @@ agerange = "included")
 mag_result <- mag_prep \%>\% life.table()
 lt.representativity(mag_result)
 
+}
+\references{
+\insertRef{herrmann_prahistorische_1990}{mortAAR}
+
+\insertRef{masset_bocquet_1977}{mortAAR}
+
+\insertRef{weiss_demography_1973}{mortAAR}
 }
