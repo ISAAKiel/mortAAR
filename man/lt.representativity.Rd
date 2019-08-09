@@ -11,25 +11,25 @@ lt.representativity(life_table)
 \item{life_table}{an object of class mortaar_life_table.}
 }
 \value{
-Output showing the indices and explaining their interpretation.
+data.frame showing the indices and explaining their interpretation.
 }
 \description{
-\emph{Weiss 1973} and \emph{Bocquet-Appel and Masset 1977} (see also
-\emph{Herrmann et al. 1990, 306f.} have devised indices which check
+\emph{Weiss 1973}, 46f. and \emph{Bocquet-Appel and Masset 1977} (see also
+\emph{Herrmann et al. 1990}, 306f.) have devised indices which check
 if the non-adult age groups are represented in proportions as can be
 expected from modern comparable data. Whether this is really applicable
 to archaeological data-sets is a matter of debate.
 }
 \details{
-Weiss choose the mortality (qx) as deciding factor and claimed that
+Weiss chose the mortality (qx) as deciding factor and claimed that
 (1) the probability of death of the age group 10--15 (5q10)
 should be lower than that of the group 15--20 (5q15) and that (2)
 the latter in turn should be lower than that of age group 0--5
 (5q0).\cr
 In contrast, Bocquet-Appel and Masset took the raw number of dead (Dx)
 and asserted that (1) the ratio of those having died between 5 and 10
-(5D5) to those having died between 10 and 15 (5D15) should be larger
-than 2 and that (2) the ratio of those having died between 5 and 15
+(5D5) to those having died between 10 and 15 (5D15) should be equal or
+larger than 2 and that (2) the ratio of those having died between 5 and 15
 (10D5) and all adults (>= 20) should be 0.1 or larger.
 }
 \examples{

@@ -78,8 +78,8 @@ lt.indices <- function(life_table) {
   # Life expectancy at age 0
   e0 <- life_table$ex[[1]]
 
-  result_list <- list(child_i = d5_9_d10_14,
-                      juvenile_i = d5_14_d20plus,
+  result_list <- list(child_i = d5_9_d10_14, d5_9 = d5_9, d10_14 = d10_14,
+                      juvenile_i = d5_14_d20plus, d5_14 = d5_14, d20plus = d20plus,
                       p5_19 = p5_19,
                       D0_14_D = D0_14_D,
                       e0 = e0)
