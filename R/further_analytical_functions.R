@@ -39,17 +39,8 @@
 #'
 #'
 #' @examples
-#' # Calculate representativity indices from real life dataset.
-#' library(magrittr)
-#' mag <- magdalenenberg
-#' mag <- mag %>% replace(mag == "60-x", "60-69")
-#' mag <- mag %>% tidyr::separate(a, c("from", "to")) %>%
-#' transform(from = as.numeric(from), to = as.numeric(to))
-#' mag_prep <- mag %>% prep.life.table(dec = "Dx",
-#' agebeg = "from", ageend = "to", method = "Equal5",
-#' agerange = "included")
-#' mag_result <- mag_prep %>% life.table()
-#' lt.correction(mag_result)
+#' # Calculate a corrected life table from real life dataset.
+#' lt.correction(as.mortaar_life_table(schleswig_ma))
 #'
 #' @export
 #'
@@ -288,16 +279,8 @@ lt.sexrelation <- function(females, males) {
 #'
 #' @examples
 #' # Calculate reproduction indices from real life dataset.
-#' library(magrittr)
-#' mag <- magdalenenberg
-#' mag <- mag %>% replace(mag == "60-x", "60-69")
-#' mag <- mag %>% tidyr::separate(a, c("from", "to")) %>%
-#' transform(from = as.numeric(from), to = as.numeric(to))
-#' mag_prep <- mag %>% prep.life.table(dec = "Dx",
-#' agebeg = "from", ageend = "to", method = "Equal5",
-#' agerange = "included")
-#' mag_result <- mag_prep %>% life.table()
-#' lt.reproduction(mag_result)
+#' lt_aiterhofen <- life.table(aiterhofen_oedmuehlen[,2:3])
+#' lt.reproduction(lt_aiterhofen)
 #
 #' @export
 #'
