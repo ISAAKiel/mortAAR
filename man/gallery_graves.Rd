@@ -21,4 +21,8 @@ not well prepared and needs some adjustment.
 \references{
 \insertRef{czarnetzki_menschlichen_1966}{mortAAR}
 }
-\concept{training.}
+\seealso{
+Other training: \code{\link{magdalenenberg}},
+  \code{\link{muensingen}}
+}
+\concept{training}

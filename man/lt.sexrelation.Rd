@@ -49,24 +49,11 @@ additional advantage that for this age group anthropological aging
 methods are reasonable exact.
 }
 \examples{
-# Calculate Masculinity index and maternal mortality from real life
+# Calculate Masculinity index and maternal mortality from Nitra
 # dataset.
-library(magrittr)
-muen <- muensingen
-muen \%>\% dplyr::select(age) \%>\% dplyr::arrange(nchar(age), age) \%>\%
-unique()
-muen <- muen \%>\% dplyr::mutate( age = dplyr::case_when(
-.$age == ">50"    ~ "50-70", .$age == ">60"    ~ "60-70",
-.$age == "10+/-1" ~ "9-12", .$age == "10"     ~ "10-11",
-.$age == "7-8"    ~ "7-9", .$age == "9-10"   ~ "9-11",
-TRUE ~  .$age))
-muen <- muen \%>\% tidyr::separate(age, c("from", "to")) \%>\%
-transform(from = as.numeric(from), to = as.numeric(to))
-muen_prep <- muen \%>\% prep.life.table(group = "sex",
-agebeg = "from", ageend = "to", method = "Standard",
-agerange = "excluded")
-muen_result <- muen_prep \%>\% life.table()
-lt.sexrelation(muen_result$female,muen_result$male)
+nitra_prep <- prep.life.table(nitra, group="sex", agebeg = "age_start", ageend = "age_end")
+nitra_life <- life.table(nitra_prep)
+lt.sexrelation(nitra_life$f, nitra_life$m)
 
 }
 \references{

@@ -75,16 +75,8 @@ result by 10000. The formulas for r and Dt are directly taken from
 }
 \examples{
 # Calculate reproduction indices from real life dataset.
-library(magrittr)
-mag <- magdalenenberg
-mag <- mag \%>\% replace(mag == "60-x", "60-69")
-mag <- mag \%>\% tidyr::separate(a, c("from", "to")) \%>\%
-transform(from = as.numeric(from), to = as.numeric(to))
-mag_prep <- mag \%>\% prep.life.table(dec = "Dx",
-agebeg = "from", ageend = "to", method = "Equal5",
-agerange = "included")
-mag_result <- mag_prep \%>\% life.table()
-lt.reproduction(mag_result)
+lt_aiterhofen <- life.table(aiterhofen_oedmuehlen[,2:3])
+lt.reproduction(lt_aiterhofen)
 }
 \references{
 \insertRef{acsadi_history_1970}{mortAAR}

@@ -40,6 +40,7 @@ the published original data in \emph{Grupe/Herrmann 1986}.
 }
 \seealso{
 Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
+  \code{\link{nitra}}, \code{\link{odagsen_mo}},
   \code{\link{schleswig_ma}}
 }
 \concept{lifetables}
