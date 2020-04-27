@@ -44,6 +44,6 @@ odagsen <- life.table(list(
   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 ))
 plot(odagsen)
-plot(odagsen, display = "lx")
+plot(odagsen, display = "lx", line_kind="color")
 
 }
