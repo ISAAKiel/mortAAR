@@ -20,7 +20,8 @@ some of the alternatives \code{dx} for the proportion of deaths, \code{qx} for t
 death, \code{lx} for the survivorship, \code{ex} for the life expectancy and \code{rel_popx} for
 the population age structure.}
 
-\item{line_kind}{string. Differentiate groups either by linetype or by color. Default to lty.}
+\item{line_kind}{optional string. Differentiate groups either by linetype (lty = default) or by color
+(any other string).}
 
 \item{prefer.ggplot}{should ggplot be preferred, if available. Default to TRUE.}
 

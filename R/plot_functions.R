@@ -9,7 +9,8 @@
 #' some of the alternatives \code{dx} for the proportion of deaths, \code{qx} for the probability of
 #' death, \code{lx} for the survivorship, \code{ex} for the life expectancy and \code{rel_popx} for
 #' the population age structure.
-#' @param line_kind string. Differentiate groups either by linetype or by color. Default to lty.
+#' @param line_kind optional string. Differentiate groups either by linetype (lty = default) or by color
+#' (any other string).
 #' @param prefer.ggplot should ggplot be preferred, if available. Default to TRUE.
 #' @param ... further arguments passed to or from other methods.
 #'
