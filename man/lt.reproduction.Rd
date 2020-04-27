@@ -24,6 +24,10 @@ the rate of doubling the population. Default: 20.}
 A data.frame with basic reproduction indices:
 
 \itemize{
+  \item \bold{DR}:  Dependency ratio.
+
+                   \eqn{DR = (sum(D0--14) + sum(D60+)) / sum(D15--59) }
+
   \item \bold{TFR}:  Total fertility rate.
   \item \bold{GRR}:  Gross reproduction rate.
 
@@ -71,7 +75,10 @@ arrived at by summing the product of the GRR, the age specific
 fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 the age specific survival taken from the life table and dividing the
 result by 10000. The formulas for r and Dt are directly taken from
-\emph{Hassan} (1981, 140).
+\emph{Hassan} (1981, 140).\cr
+Also calculated is the ratio of dependent individuals which is usually
+(but probably erroneously for archaic societies (\emph{Grupe et al.
+2015}, 423) assumed to apply to those aged below 15 or 60 and above.
 }
 \examples{
 # Calculate reproduction indices from real life dataset.
@@ -82,6 +89,8 @@ lt.reproduction(lt_aiterhofen)
 \insertRef{acsadi_history_1970}{mortAAR}
 
 \insertRef{bocquet_appel_2002}{mortAAR}
+
+\insertRef{grupe_et_al_2015}{mortAAR}
 
 \insertRef{hassan_1981}{mortAAR}
 

@@ -12,7 +12,16 @@
 #' to archaeological data is highly debated and does not necessarily
 #' lead to reliable results. Therefore, the correction needs to be
 #' weighted carefully and ideally only after the representativity of the
-#' base data has been checked with function lt.representativity.
+#' base data has been checked with function lt.representativity.\cr
+#' Building on the same regression analyses, Bocquet-Appel and Masset
+#' also supplied estimates for the mortality rate m (which in
+#' archaeological case necessarily is the same as the natality
+#' rate n because it has to be assumed that the population is
+#' stationary). A value of 0.01, for example, means that 1 among
+#' 100 individuals died per year. The intrinsic growth rate r is
+#' computed based on the proportion of subadults and might be
+#' interesting to compare with the growth rate based on fertility
+#' indices (function lt.reproduction).
 #'
 #' For the parameters see the documentation of \code{\link{life.table}}.
 #'
@@ -21,14 +30,16 @@
 #' @param agecorfac numeric vector, optional.
 #' @param option_spline integer, optional.
 #'
-#' @return a list containing a data.frame with indices e0, 1q0 and 5q0
-#' according to Bocquet-Appel and Masset showing the computed exact value
-#' as well as ranges and an object of class mortaar_life_table with the
-#' corrected values.
+#' @return a list containing a data.frame with indices e0, 1q0 and 5q0 as
+#' well as mortality rate m and growth rate r according to Bocquet-Appel
+#' and Masset showing the computed exact value as well as ranges and an
+#' object of class mortaar_life_table with the corrected values.
 #' \itemize{
 #'   \item \bold{e0}:   Corrected life expectancy.
 #'   \item \bold{1q0}:   Mortality of age group 0--1.
 #'   \item \bold{5q0}:   Mortality of age group 0--5.
+#'   \item \bold{m}:   Mortality rate (= natality rate n).
+#'   \item \bold{r}:   Intrinsic growth rate.
 #'}
 #'
 #'
@@ -50,8 +61,8 @@ lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spl
 
   # corrected life expectancy at birth after Bocquet-Appel and Masset
   e0 <- 78.721 * log10(sqrt(1 / indx$juvenile_i)) - 3.384
-  e0_range_start <- round(e0 - 1.503,1)
-  e0_range_end <- round(e0 + 1.503,1)
+  e0_range_start <- round(e0 - 1.503, 3)
+  e0_range_end <- round(e0 + 1.503, 3)
 
   # corrected mortality for age group 1q0 after Bocquet-Appel and Masset
   q1_0 <- 0.568 * sqrt((log10(200 * indx$juvenile_i))) - 0.438
@@ -62,6 +73,16 @@ lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spl
   q5_0 <- 1.154 * sqrt((log10(200 * indx$juvenile_i))) - 1.014
   q5_0_range_start <- round(q5_0 - 0.041,3)
   q5_0_range_end <- round(q5_0 + 0.041,3)
+
+  # mortality rate according to Bocquet/Masset 1977
+  mortality_rate <- 0.127 * indx$juvenile_i + 0.016
+  mortality_rate_range_start <- round(mortality_rate - 0.002, 3)
+  mortality_rate_range_end <- round(mortality_rate + 0.002, 3)
+
+  # growth rate according to Bocquet/Masset 1977
+  growth_rate <- (1.484 * (log10(200 * indx$juvenile_i * indx$senility_i))**0.03 - 1.485)
+  growth_rate_range_start <- round(growth_rate - 0.006, 3)
+  growth_rate_range_end <- round(growth_rate + 0.006, 3)
 
   # calculation of life table correction
   Dx_sum_corrected <- (life_table$Dx %>% sum - life_table$Dx[1]) / (1 - q5_0)
@@ -83,12 +104,14 @@ lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spl
                                 agecorfac = agecorfac, option_spline = option_spline)
 
   # putting together the indices data.frame
-  row_e0 <- c(round(e0, 1), e0_range_start, e0_range_end)
+  row_e0 <- c(round(e0, 3), e0_range_start, e0_range_end)
   row_q1_0 <- c(round(q1_0, 3), q1_0_range_start, q1_0_range_end)
   row_q5_0 <- c(round(q5_0, 3), q5_0_range_start, q5_0_range_end)
-  e0_q5_0 <- data.frame(rbind(row_e0, row_q1_0, row_q5_0))
+  row_mortality_rate <- c(round(mortality_rate, 3), mortality_rate_range_start, mortality_rate_range_end)
+  row_growth_rate <- c(round(growth_rate, 3), growth_rate_range_start, growth_rate_range_end)
+  e0_q5_0 <- data.frame(rbind(row_e0, row_q1_0, row_q5_0, row_mortality_rate, row_growth_rate))
   colnames(e0_q5_0) <- c("value", "range_start", "range_end")
-  rownames(e0_q5_0) <- c("e0", "1q0", "5q0")
+  rownames(e0_q5_0) <- c("e0", "1q0", "5q0", "m", "r")
 
   # returning the indices data.frame as well as the corrected life table
   return(list(indices = e0_q5_0, life_table_corr = life_table_corr))
@@ -218,7 +241,10 @@ lt.sexrelation <- function(females, males) {
 #' fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 #' the age specific survival taken from the life table and dividing the
 #' result by 10000. The formulas for r and Dt are directly taken from
-#' \emph{Hassan} (1981, 140).
+#' \emph{Hassan} (1981, 140).\cr
+#' Also calculated is the ratio of dependent individuals which is usually
+#' (but probably erroneously for archaic societies (\emph{Grupe et al.
+#' 2015}, 423) assumed to apply to those aged below 15 or 60 and above.
 #'
 #' @param life_table an object of class mortaar_life_table.
 #' @param fertility_rate string or numeric. Either fertility rate according
@@ -234,6 +260,10 @@ lt.sexrelation <- function(females, males) {
 #' @return A data.frame with basic reproduction indices:
 #'
 #' \itemize{
+#'   \item \bold{DR}:  Dependency ratio.
+#'
+#'                    \eqn{DR = (sum(D0--14) + sum(D60+)) / sum(D15--59) }
+#'
 #'   \item \bold{TFR}:  Total fertility rate.
 #'   \item \bold{GRR}:  Gross reproduction rate.
 #'
@@ -257,6 +287,8 @@ lt.sexrelation <- function(females, males) {
 #' \insertRef{acsadi_history_1970}{mortAAR}
 #'
 #' \insertRef{bocquet_appel_2002}{mortAAR}
+#'
+#' \insertRef{grupe_et_al_2015}{mortAAR}
 #'
 #' \insertRef{hassan_1981}{mortAAR}
 #'
@@ -295,6 +327,9 @@ lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20
       message
   }
 
+  # dependency ratio according to Grupe et al. 2015
+  dependency_ratio <- (indx$d0_14 + indx$d60plus) / indx$d20_50
+
   # Survival rates of individuals aged 15--45.
   all_age <- life_table$a %>% cumsum
   fertil_lx <- life_table$lx[which(all_age >15 & all_age <=45)]
@@ -315,11 +350,12 @@ lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20
 
   fertiliy_rate <- c(round(fertil_rate, 1), "Total fertility rate")
   R_pot_fem <- c(round(R_pot_fem, 1), "Gross reproduction rate")
-  R_0 <- c(round(R_0, 2), description = "Net reproduction rate")
+  R_0 <- c(round(R_0, 2), "Net reproduction rate")
   intr_grow <- c(round(intr_grow, 2), "Intrinsic growth rate (perc/y)")
   Dt <- c(round(Dt, 1), "Doubling time in years")
-  result <- data.frame(rbind(fertiliy_rate, R_pot_fem, R_0, intr_grow, Dt))
+  DR <- c(round(dependency_ratio*100,1), "Dependency ratio")
+  result <- data.frame(rbind(DR, fertiliy_rate, R_pot_fem, R_0, intr_grow, Dt))
   colnames(result) <- c("value", "description")
-  rownames(result) <- c("TFR","GRR", "NRR","r", "Dt")
+  rownames(result) <- c("DR", "TFR","GRR", "NRR","r", "Dt")
   return(result)
 }

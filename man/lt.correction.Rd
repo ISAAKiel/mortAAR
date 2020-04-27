@@ -17,14 +17,16 @@ lt.correction(life_table, agecor = TRUE, agecorfac = c(),
 \item{option_spline}{integer, optional.}
 }
 \value{
-a list containing a data.frame with indices e0, 1q0 and 5q0
-according to Bocquet-Appel and Masset showing the computed exact value
-as well as ranges and an object of class mortaar_life_table with the
-corrected values.
+a list containing a data.frame with indices e0, 1q0 and 5q0 as
+well as mortality rate m and growth rate r according to Bocquet-Appel
+and Masset showing the computed exact value as well as ranges and an
+object of class mortaar_life_table with the corrected values.
 \itemize{
   \item \bold{e0}:   Corrected life expectancy.
   \item \bold{1q0}:   Mortality of age group 0--1.
   \item \bold{5q0}:   Mortality of age group 0--5.
+  \item \bold{m}:   Mortality rate (= natality rate n).
+  \item \bold{r}:   Intrinsic growth rate.
 }
 }
 \description{
@@ -40,7 +42,16 @@ mortality data. However, the applicability of these indices
 to archaeological data is highly debated and does not necessarily
 lead to reliable results. Therefore, the correction needs to be
 weighted carefully and ideally only after the representativity of the
-base data has been checked with function lt.representativity.
+base data has been checked with function lt.representativity.\cr
+Building on the same regression analyses, Bocquet-Appel and Masset
+also supplied estimates for the mortality rate m (which in
+archaeological case necessarily is the same as the natality
+rate n because it has to be assumed that the population is
+stationary). A value of 0.01, for example, means that 1 among
+100 individuals died per year. The intrinsic growth rate r is
+computed based on the proportion of subadults and might be
+interesting to compare with the growth rate based on fertility
+indices (function lt.reproduction).
 }
 \details{
 For the parameters see the documentation of \code{\link{life.table}}.

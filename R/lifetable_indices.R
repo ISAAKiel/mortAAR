@@ -65,6 +65,13 @@ lt.indices <- function(life_table) {
   d20plus <- life_table$Dx[which(all_age > 20)] %>% sum
   d5_14_d20plus <- d5_14 / d20plus
 
+    # Senility index according to Masset and Bocquet 1977
+  d60plus <- life_table$Dx[which(all_age > 60)] %>% sum
+  d20plus <- life_table$Dx[which(all_age > 20)] %>% sum
+  d60_d20plus <- d60plus / d20plus
+
+  d20_50 <- life_table$Dx[which(all_age >20 & all_age <=60)] %>% sum
+
   # P(5-19) index according to Bocquet-Appel 2002
   d5_19 <- life_table$Dx[which(all_age >=10 & all_age <=20)] %>% sum
   d5plus <- life_table$Dx[which(all_age >=10)] %>% sum
@@ -80,8 +87,10 @@ lt.indices <- function(life_table) {
 
   result_list <- list(child_i = d5_9_d10_14, d5_9 = d5_9, d10_14 = d10_14,
                       juvenile_i = d5_14_d20plus, d5_14 = d5_14, d20plus = d20plus,
+                      senility_i = d60_d20plus, d60plus = d60plus,
+                      d20_50 = d20_50,
                       p5_19 = p5_19,
-                      D0_14_D = D0_14_D,
+                      D0_14_D = D0_14_D, d0_14 = d0_14,
                       e0 = e0)
   result_list
 }
