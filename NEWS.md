@@ -1,3 +1,7 @@
+# mortAAR master
+- adding an option for plotting in color instead of linetype
+- adding more functions for ##
+
 # mortAAR 1.0.2
 
 - tweaking the class-functions so that class mortaar_life_table is maintained when manipulating a mortaar_life_table_list
