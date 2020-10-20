@@ -41,6 +41,7 @@ More information can be found in \emph{Grupe/Herrmann 1986}.
 }
 \seealso{
 Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
-  \code{\link{odagsen_cm}}, \code{\link{schleswig_ma}}
+  \code{\link{nitra}}, \code{\link{odagsen_cm}},
+  \code{\link{schleswig_ma}}
 }
 \concept{lifetables}
