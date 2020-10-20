@@ -112,6 +112,7 @@ context("plot.mortaar_life_table_list")
 
 test_that("plot produces no error", {
   expect_error(plot( a_live_table, display = "dx" ), NA)
+  expect_error(plot( a_live_table, display = "dx", line_vis = "colour" ), NA)
   expect_error(plot( a_live_table, display = "qx" ), NA)
   expect_error(plot( a_live_table, display = "lx" ), NA)
   expect_error(plot( a_live_table, display = "ex" ), NA)
@@ -134,6 +135,7 @@ context("plot.mortaar_life_table")
 
 test_that("plot produces no error", {
   expect_error(plot( a_live_table$schleswig_ma, display = "dx" ), NA)
+  expect_error(plot( a_live_table$schleswig_ma, display = "dx", line_vis = "colour" ), NA)
   expect_error(plot( a_live_table$schleswig_ma, display = "qx" ), NA)
   expect_error(plot( a_live_table$schleswig_ma, display = "lx" ), NA)
   expect_error(plot( a_live_table$schleswig_ma, display = "ex" ), NA)
