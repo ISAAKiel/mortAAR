@@ -1,22 +1,3 @@
-lt.check <- function(life_table) {
-
-  # check if life_table is of class "mortaar_life_table"
-
-  if (!is.mortaar_life_table_list(life_table)
-      & !is.mortaar_life_table(life_table))  {
-    paste0(
-      "The dataset does not seem to be a mortAAR life table."
-    ) %>%
-      message
-  } else if (!is.mortaar_life_table(life_table))  {
-    paste0(
-      "Please select only one life table."
-    ) %>%
-      message
-  }
-}
-
-
 #' Generates indices from a mortAAR life table for use in other functions
 #'
 #' This function bundles a number of indices and vectors from a mortAAR
@@ -79,7 +60,6 @@ lt.indices.mortaar_life_table_list <- function(life_table) {
 #' @export
 lt.indices.mortaar_life_table <- function(life_table) {
 
-  lt.check(life_table)
   all_age <- life_table$a %>% cumsum
 
   # Children index according to Masset and Bocquet 1977
@@ -138,7 +118,6 @@ lt.indices.mortaar_life_table <- function(life_table) {
 #'
 lt.mortality <- function(life_table) {
 
-  lt.check(life_table)
   all_age <- life_table$a %>% cumsum
 
   # Indices for representativity after Weiss 1973 and Model life tables
