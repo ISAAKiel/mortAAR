@@ -7,10 +7,10 @@
 \title{Plot a mortaar_life_table or a mortaar_life_table_list}
 \usage{
 \method{plot}{mortaar_life_table}(x, display = c("dx", "qx", "lx", "ex",
-  "rel_popx"), prefer.ggplot = TRUE, ...)
+  "rel_popx"), line_kind = "lty", prefer.ggplot = TRUE, ...)
 
 \method{plot}{mortaar_life_table_list}(x, display = c("dx", "qx", "lx",
-  "ex", "rel_popx"), prefer.ggplot = TRUE, ...)
+  "ex", "rel_popx"), line_kind = "lty", prefer.ggplot = TRUE, ...)
 }
 \arguments{
 \item{x}{a mortaar_life_table or a mortaar_life_table_list.}
@@ -19,6 +19,9 @@
 some of the alternatives \code{dx} for the proportion of deaths, \code{qx} for the probability of
 death, \code{lx} for the survivorship, \code{ex} for the life expectancy and \code{rel_popx} for
 the population age structure.}
+
+\item{line_kind}{optional string. Differentiate groups either by linetype (lty = default) or by color
+(any other string).}
 
 \item{prefer.ggplot}{should ggplot be preferred, if available. Default to TRUE.}
 
@@ -41,6 +44,6 @@ odagsen <- life.table(list(
   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 ))
 plot(odagsen)
-plot(odagsen, display = "lx")
+plot(odagsen, display = "lx", line_kind="color")
 
 }

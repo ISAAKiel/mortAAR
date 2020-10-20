@@ -9,6 +9,8 @@
 #' some of the alternatives \code{dx} for the proportion of deaths, \code{qx} for the probability of
 #' death, \code{lx} for the survivorship, \code{ex} for the life expectancy and \code{rel_popx} for
 #' the population age structure.
+#' @param line_kind optional string. Differentiate groups either by linetype (lty = default) or by color
+#' (any other string).
 #' @param prefer.ggplot should ggplot be preferred, if available. Default to TRUE.
 #' @param ... further arguments passed to or from other methods.
 #'
@@ -24,7 +26,7 @@
 #'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 #' ))
 #' plot(odagsen)
-#' plot(odagsen, display = "lx")
+#' plot(odagsen, display = "lx", line_kind="color")
 #'
 #' @importFrom graphics axis grid legend lines par plot
 #'
@@ -33,7 +35,8 @@ NULL
 
 #' @rdname plot
 #' @export
-plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), prefer.ggplot=TRUE, ...) {
+plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"),
+                                    line_kind = "lty", prefer.ggplot=TRUE, ...) {
   ask_before = par()$ask
 
   if(length(display)>1) {
@@ -54,7 +57,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
     this_variable <- display[i]
 
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      make_ggplot(my_x,this_variable, variable_labels)
+      make_ggplot(my_x,this_variable, variable_labels, line_kind)
     } else {
       eval(parse(text=paste("mortaar_plot_", this_variable, "_frame(my_x[[1]], my_subsets, n)", sep="")))
       eval(parse(text=paste("mortaar_plot_", this_variable, "(my_x[[1]], lty=i)", sep="")))
@@ -67,7 +70,8 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 
 #' @rdname plot
 #' @export
-plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"), prefer.ggplot=TRUE, ...){
+plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"),
+                                         line_kind = "lty", prefer.ggplot=TRUE, ...){
   ask_before = par()$ask
 
   if(length(display)>1) {
@@ -82,7 +86,7 @@ plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", 
     this_variable <- display[i]
 
     if (prefer.ggplot==TRUE && requireNamespace("ggplot2", quietly = TRUE)) {
-      make_ggplot(x,this_variable, variable_labels)
+      make_ggplot(x,this_variable, variable_labels, line_kind)
     } else {
       eval(parse(text=paste("mortaar_plot_", this_variable, "_frame(x[[1]], my_subsets, n)", sep="")))
       for(t in 1:length(x)){
@@ -108,11 +112,15 @@ make_variable_labels <- function() {
   return(variable_labels)
 }
 
-make_ggplot <- function(data, variable_name, variable_labels) {
+make_ggplot <- function(data, variable_name, variable_labels, line_kind) {
   my_x <- reshape2::melt(data,id="a",measure.vars=c(variable_name))
   colnames(my_x) <- c("a", "variable", variable_name, "dataset")
   my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x))) - my_x$a
-  my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name,lty="dataset"))
+  if (line_kind == "lty") {
+    my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name, lty="dataset"))
+  } else {
+    my_plot <- ggplot2::ggplot(my_x, ggplot2::aes_string(x="a",y=variable_name, color="dataset"))
+  }
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age") + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
   # check if group attribute is present to pass it on for plot legend title
   group <- attributes(data)$group
