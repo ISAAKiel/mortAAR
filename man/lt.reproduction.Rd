@@ -2,9 +2,18 @@
 % Please edit documentation in R/further_analytical_functions.R
 \name{lt.reproduction}
 \alias{lt.reproduction}
+\alias{lt.reproduction.default}
+\alias{lt.reproduction.mortaar_life_table_list}
+\alias{lt.reproduction.mortaar_life_table}
 \title{Calculates reproduction indices from a mortAAR life table}
 \usage{
 lt.reproduction(life_table, fertility_rate = "BA_log", gen_len = 20)
+
+\method{lt.reproduction}{default}(life_table, fertility_rate = "BA_log", gen_len = 20)
+
+\method{lt.reproduction}{mortaar_life_table_list}(life_table, fertility_rate = "BA_log", gen_len = 20)
+
+\method{lt.reproduction}{mortaar_life_table}(life_table, fertility_rate = "BA_log", gen_len = 20)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
@@ -81,9 +90,14 @@ Also calculated is the ratio of dependent individuals which is usually
 2015}, 423) assumed to apply to those aged below 15 or 60 and above.
 }
 \examples{
-# Calculate reproduction indices from real life dataset.
-lt_aiterhofen <- life.table(aiterhofen_oedmuehlen[,2:3])
-lt.reproduction(lt_aiterhofen)
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig)
+
+odagsen <- life.table(list(
+  "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+))
+lt.reproduction(odagsen)
 }
 \references{
 \insertRef{acsadi_history_1970}{mortAAR}

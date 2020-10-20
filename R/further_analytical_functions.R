@@ -51,11 +51,32 @@
 #'
 #' @examples
 #' # Calculate a corrected life table from real life dataset.
-#' lt.correction(as.mortaar_life_table(schleswig_ma))
+#' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+#' lt.correction(schleswig)
 #'
+#'
+#' @rdname lt.correction
+#' @export
+lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
+  UseMethod("lt.correction")
+}
+
+#' @rdname lt.correction
+#' @export
+lt.correction.default <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
+  stop("x is not an object of class mortaar_life_table.")
+}
+
+#' @rdname lt.correction
+#' @export
+lt.correction.mortaar_life_table_list <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
+  lapply(life_table, lt.correction)
+}
+
+#' @rdname lt.correction
 #' @export
 #'
-lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
+lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
 
   indx <- lt.indices(life_table)
 
@@ -171,9 +192,22 @@ lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spl
 #' nitra_life <- life.table(nitra_prep)
 #' lt.sexrelation(nitra_life$f, nitra_life$m)
 #'
+#' @rdname lt.sexrelation
+#' @export
+lt.sexrelation <- function(females,males) {
+  UseMethod("lt.sexrelation")
+}
+
+#' @rdname lt.sexrelation
+#' @export
+lt.sexrelation.default <- function(females,males) {
+  stop("x or y is not an object of class mortaar_life_table.")
+}
+
+#' @rdname lt.sexrelation
 #' @export
 #'
-lt.sexrelation <- function(females, males) {
+lt.sexrelation.mortaar_life_table <- function(females, males) {
 
   # check if life tables for females and males are of class "mortaar_life_table"
   if (!inherits(females,"mortaar_life_table") |
@@ -297,13 +331,36 @@ lt.sexrelation <- function(females, males) {
 #' \insertRef{mcfadden_oxenham_2018}{mortAAR}
 #'
 #' @examples
-#' # Calculate reproduction indices from real life dataset.
-#' lt_aiterhofen <- life.table(aiterhofen_oedmuehlen[,2:3])
-#' lt.reproduction(lt_aiterhofen)
-#
+#' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+#' lt.reproduction(schleswig)
+#'
+#' odagsen <- life.table(list(
+#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+#' ))
+#' lt.reproduction(odagsen)
+#' @rdname lt.reproduction
+#' @export
+lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+  UseMethod("lt.reproduction")
+}
+
+#' @rdname lt.reproduction
+#' @export
+lt.reproduction.default <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+  stop("x is not an object of class mortaar_life_table.")
+}
+
+#' @rdname lt.reproduction
+#' @export
+lt.reproduction.mortaar_life_table_list <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+  lapply(life_table, lt.reproduction)
+}
+
+#' @rdname lt.reproduction
 #' @export
 #'
-lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
 
   indx <- lt.indices(life_table)
 
