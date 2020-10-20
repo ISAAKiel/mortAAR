@@ -47,7 +47,7 @@ lt.indices <- function(life_table) {
 #' @rdname lt.indices
 #' @export
 lt.indices.default <- function(life_table) {
-  stop("x is not an object of class mortaar_life_table.")
+  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list..")
 }
 
 #' @rdname lt.indices
@@ -116,7 +116,23 @@ lt.indices.mortaar_life_table <- function(life_table) {
 #'   \item \bold{mortality}:   list of mortalities 5q0, 5q10, 5q15, 45q15.
 #'}
 #'
+#' @rdname lt.mortality
 lt.mortality <- function(life_table) {
+  UseMethod("lt.mortality")
+}
+
+#' @rdname lt.mortality
+lt.mortality.default <- function(life_table) {
+  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
+}
+
+#' @rdname lt.mortality
+lt.mortality.mortaar_life_table_list <- function(life_table) {
+  lapply(life_table, lt.mortality)
+}
+
+#' @rdname lt.mortality
+lt.mortality.mortaar_life_table <- function(life_table) {
 
   all_age <- life_table$a %>% cumsum
 

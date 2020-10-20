@@ -30,14 +30,37 @@
 #'
 #' \insertRef{weiss_demography_1973}{mortAAR}
 #'
-#'
 #' @examples
-#' # Calculate representativity indices from real life dataset.
-#' lt.representativity(as.mortaar_life_table(schleswig_ma))
+#' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+#' lt.representativity(schleswig)
 #'
-#'@export
+#' odagsen <- life.table(list(
+#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+#' ))
+#' lt.representativity(odagsen)
 #'
+#' @rdname lt.representativity
+#' @export
 lt.representativity <- function(life_table) {
+  UseMethod("lt.representativity")
+}
+
+#' @rdname lt.representativity
+#' @export
+lt.representativity.default <- function(life_table) {
+  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list..")
+}
+
+#' @rdname lt.representativity
+#' @export
+lt.representativity.mortaar_life_table_list <- function(life_table) {
+  lapply(life_table, lt.representativity)
+}
+
+#' @rdname lt.representativity
+#' @export
+lt.representativity.mortaar_life_table <- function(life_table) {
 
   mortality <- lt.mortality(life_table)
   indx <- lt.indices(life_table)

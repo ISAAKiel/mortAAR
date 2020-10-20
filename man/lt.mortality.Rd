@@ -2,9 +2,18 @@
 % Please edit documentation in R/lifetable_indices.R
 \name{lt.mortality}
 \alias{lt.mortality}
+\alias{lt.mortality.default}
+\alias{lt.mortality.mortaar_life_table_list}
+\alias{lt.mortality.mortaar_life_table}
 \title{Generates mortality indices from a mortAAR life table for use in other functions}
 \usage{
 lt.mortality(life_table)
+
+\method{lt.mortality}{default}(life_table)
+
+\method{lt.mortality}{mortaar_life_table_list}(life_table)
+
+\method{lt.mortality}{mortaar_life_table}(life_table)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
