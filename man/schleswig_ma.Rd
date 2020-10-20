@@ -3,7 +3,8 @@
 \name{schleswig_ma}
 \alias{schleswig_ma}
 \title{schleswig_ma: Life table example}
-\format{A data frame with 11 rows and 9 variables.
+\format{
+A data frame with 11 rows and 9 variables.
 \itemize{
   \item \bold{x:} fa, ma, sa -> früh-, mittel-, spätadult;
                   fm, mm, sm -> früh-, mittel-, spätmatur;
@@ -18,7 +19,8 @@
   \item \bold{ex}
 }
 For further information about the values see the
-documentation of \code{\link{life.table}}.}
+documentation of \code{\link{life.table}}.
+}
 \description{
 A life table from \emph{Herrmann et. al 1990, 305}.
 }
@@ -33,8 +35,10 @@ be found in \emph{Grupe 1997}.
 \insertRef{grupe_anthropologische_1997}{mortAAR}
 }
 \seealso{
-Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
-  \code{\link{nitra}}, \code{\link{odagsen_cm}},
-  \code{\link{odagsen_mo}}
+Other lifetables: 
+\code{\link{aiterhofen_oedmuehlen}},
+\code{\link{nitra}},
+\code{\link{odagsen_cm}},
+\code{\link{odagsen_mo}}
 }
 \concept{lifetables}

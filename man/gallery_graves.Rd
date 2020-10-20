@@ -3,14 +3,16 @@
 \name{gallery_graves}
 \alias{gallery_graves}
 \title{gallery_graves: Life table example}
-\format{A data frame with 128 rows and 4 variables.
+\format{
+A data frame with 128 rows and 4 variables.
 \itemize{
   \item \bold{indnr:} ID of the individual represented by
                       a skull.
   \item \bold{sex:} sex determination, w -> female, m -> male.
   \item \bold{age:} age class.
   \item \bold{site:} collective grave.
-}}
+}
+}
 \description{
 A dataset from \emph{Czarnetzki 1966}.
 }
@@ -22,7 +24,8 @@ not well prepared and needs some adjustment.
 \insertRef{czarnetzki_menschlichen_1966}{mortAAR}
 }
 \seealso{
-Other training: \code{\link{magdalenenberg}},
-  \code{\link{muensingen}}
+Other training: 
+\code{\link{magdalenenberg}},
+\code{\link{muensingen}}
 }
 \concept{training}

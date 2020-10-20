@@ -4,8 +4,7 @@
 \alias{life.table}
 \title{Calculates a life table}
 \usage{
-life.table(neclist, agecor = TRUE, agecorfac = c(),
-  option_spline = NULL)
+life.table(neclist, agecor = TRUE, agecorfac = c(), option_spline = NULL)
 }
 \arguments{
 \item{neclist}{single data.frame or list of data.frames

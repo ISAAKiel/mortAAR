@@ -3,13 +3,15 @@
 \name{nitra}
 \alias{nitra}
 \title{Anthropological data from the Neolithic cemetery of Nitra}
-\format{A data frame with 4 variables and 75 observations
+\format{
+A data frame with 4 variables and 75 observations
 \itemize{
   \item \bold{no:} individual
   \item \bold{sex:} sex determination if available
   \item \bold{age_start:} start of the ageing interval
   \item \bold{age_end:} end of the ageing interval (inclusive)
-}}
+}
+}
 \description{
 The Early Neolithic cemetery of Nitra is one of the best published
 data sets of the \emph{Linearbandkeramik} (LBK). The individuals were
@@ -26,8 +28,10 @@ the determinations by L. Fibiger.
 \insertRef{tvrdy_2016}{mortAAR}
 }
 \seealso{
-Other lifetables: \code{\link{aiterhofen_oedmuehlen}},
-  \code{\link{odagsen_cm}}, \code{\link{odagsen_mo}},
-  \code{\link{schleswig_ma}}
+Other lifetables: 
+\code{\link{aiterhofen_oedmuehlen}},
+\code{\link{odagsen_cm}},
+\code{\link{odagsen_mo}},
+\code{\link{schleswig_ma}}
 }
 \concept{lifetables}

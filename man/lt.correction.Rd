@@ -4,8 +4,7 @@
 \alias{lt.correction}
 \title{Calculates a corrected life table from a mortAAR life table}
 \usage{
-lt.correction(life_table, agecor = TRUE, agecorfac = c(),
-  option_spline = NULL)
+lt.correction(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}

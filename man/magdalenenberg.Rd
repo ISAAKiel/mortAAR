@@ -3,11 +3,13 @@
 \name{magdalenenberg}
 \alias{magdalenenberg}
 \title{magdalenenberg: Life table example}
-\format{A data frame with 13 rows and 2 variables.
+\format{
+A data frame with 13 rows and 2 variables.
 \itemize{
   \item \bold{a:} age range.
   \item \bold{Dx:} number of deceased.
-}}
+}
+}
 \description{
 A data set from \emph{zaeuner_wahl_magdalenenberg_2013}.
 }
@@ -19,10 +21,12 @@ pooled for constructing a life table.
 \insertRef{zaeuner_wahl_magdalenenberg_2013}{mortAAR}
 }
 \seealso{
-Other vignette: \code{\link{muensingen}}
+Other vignette: 
+\code{\link{muensingen}}
 
-Other training: \code{\link{gallery_graves}},
-  \code{\link{muensingen}}
+Other training: 
+\code{\link{gallery_graves}},
+\code{\link{muensingen}}
 }
 \concept{training}
 \concept{vignette}

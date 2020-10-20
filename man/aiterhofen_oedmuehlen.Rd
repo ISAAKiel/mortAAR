@@ -3,7 +3,8 @@
 \name{aiterhofen_oedmuehlen}
 \alias{aiterhofen_oedmuehlen}
 \title{aiterhofen_oedmuehlen: Life table example}
-\format{A data frame with 13 rows and 11 variables.
+\format{
+A data frame with 13 rows and 11 variables.
 \itemize{
   \item \bold{Alter} (age)
   \item \bold{a} (added to the original dataset)
@@ -18,7 +19,8 @@
   \item \bold{rel.Bevx}
 }
 For further information about the values see the
-documentation of \code{\link{life.table}}.}
+documentation of \code{\link{life.table}}.
+}
 \description{
 A life table from \emph{Kokkotidis/Richter 1991, 228}.
 }
@@ -33,8 +35,10 @@ found in \emph{Baum 1990}.
 \insertRef{baum_aiterhofen-odmuhle_1990}{mortAAR}
 }
 \seealso{
-Other lifetables: \code{\link{nitra}},
-  \code{\link{odagsen_cm}}, \code{\link{odagsen_mo}},
-  \code{\link{schleswig_ma}}
+Other lifetables: 
+\code{\link{nitra}},
+\code{\link{odagsen_cm}},
+\code{\link{odagsen_mo}},
+\code{\link{schleswig_ma}}
 }
 \concept{lifetables}

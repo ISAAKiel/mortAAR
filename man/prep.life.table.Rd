@@ -4,8 +4,15 @@
 \alias{prep.life.table}
 \title{Creates the input for the function life.table.}
 \usage{
-prep.life.table(x, dec = NA, agebeg, ageend, group = NA,
-  method = "Standard", agerange = "included")
+prep.life.table(
+  x,
+  dec = NA,
+  agebeg,
+  ageend,
+  group = NA,
+  method = "Standard",
+  agerange = "included"
+)
 }
 \arguments{
 \item{x}{single dataframe containing sex age and quantity of deceased (individuals or group of individuals).}
