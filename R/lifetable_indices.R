@@ -47,10 +47,25 @@ lt.check <- function(life_table) {
 #'
 #' \insertRef{mcfadden_oxenham_2018}{mortAAR}
 #'
+#' @examples
+#' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+#' lt.indices(schleswig)
 #'
+#' @rdname lt.indices
 #' @export
-#'
 lt.indices <- function(life_table) {
+  UseMethod("lt.indices")
+}
+
+#' @rdname lt.indices
+#' @export
+lt.indices.default <- function(life_table) {
+  stop("x is not an object of class mortaar_life_table.")
+}
+
+#' @rdname lt.indices
+#' @export
+lt.indices.mortaar_life_table <- function(life_table) {
 
   lt.check(life_table)
   all_age <- life_table$a %>% cumsum

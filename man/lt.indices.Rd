@@ -2,9 +2,15 @@
 % Please edit documentation in R/lifetable_indices.R
 \name{lt.indices}
 \alias{lt.indices}
+\alias{lt.indices.default}
+\alias{lt.indices.mortaar_life_table}
 \title{Generates indices from a mortAAR life table for use in other functions}
 \usage{
 lt.indices(life_table)
+
+\method{lt.indices}{default}(life_table)
+
+\method{lt.indices}{mortaar_life_table}(life_table)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
@@ -27,6 +33,11 @@ A list with the following indices and vectors:
 \description{
 This function bundles a number of indices and vectors from a mortAAR
 life table which are needed by other functions in mortAAR.
+}
+\examples{
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.indices(schleswig)
+
 }
 \references{
 \insertRef{bocquet_appel_2002}{mortAAR}
