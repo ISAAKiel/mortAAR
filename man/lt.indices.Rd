@@ -3,12 +3,15 @@
 \name{lt.indices}
 \alias{lt.indices}
 \alias{lt.indices.default}
+\alias{lt.indices.mortaar_life_table_list}
 \alias{lt.indices.mortaar_life_table}
 \title{Generates indices from a mortAAR life table for use in other functions}
 \usage{
 lt.indices(life_table)
 
 \method{lt.indices}{default}(life_table)
+
+\method{lt.indices}{mortaar_life_table_list}(life_table)
 
 \method{lt.indices}{mortaar_life_table}(life_table)
 }
@@ -37,6 +40,12 @@ life table which are needed by other functions in mortAAR.
 \examples{
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 lt.indices(schleswig)
+
+odagsen <- life.table(list(
+  "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+))
+lt.indices(odagsen)
 
 }
 \references{

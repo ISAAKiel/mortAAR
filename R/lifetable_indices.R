@@ -51,6 +51,12 @@ lt.check <- function(life_table) {
 #' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 #' lt.indices(schleswig)
 #'
+#' odagsen <- life.table(list(
+#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+#' ))
+#' lt.indices(odagsen)
+#'
 #' @rdname lt.indices
 #' @export
 lt.indices <- function(life_table) {
@@ -61,6 +67,12 @@ lt.indices <- function(life_table) {
 #' @export
 lt.indices.default <- function(life_table) {
   stop("x is not an object of class mortaar_life_table.")
+}
+
+#' @rdname lt.indices
+#' @export
+lt.indices.mortaar_life_table_list <- function(life_table) {
+  lapply(life_table, lt.indices)
 }
 
 #' @rdname lt.indices
