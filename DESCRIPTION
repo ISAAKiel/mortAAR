@@ -39,6 +39,6 @@ Suggests:
     ggplot2,
     RCurl
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.5.0)
 RdMacros: Rdpack
 VignetteBuilder: knitr
