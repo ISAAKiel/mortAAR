@@ -44,31 +44,15 @@ lt.representativity <- function(life_table) {
 
   # Criteria for representativity after Weiss 1973
 
-   weiss_i1 <- if (mortality$q0_5 > mortality$q15_5) {
-   TRUE
-  } else {
-    FALSE
-  }
+  weiss_i1 <- mortality$q0_5 > mortality$q15_5
 
-  weiss_i2 <-  if (mortality$q10_5 < mortality$q15_5) {
-    TRUE
-  } else {
-    FALSE
-  }
+  weiss_i2 <- mortality$q10_5 < mortality$q15_5
 
   # Criteria for representativity after Bocquet-Appel and Masset
 
-  child_i <- if (indx$child_i >= 2) {
-    TRUE
-  } else {
-    FALSE
-  }
+  child_i <- indx$child_i >= 2
 
-  juvenile_i <- if (indx$juvenile_i >= 0.1) {
-    TRUE
-  } else {
-    FALSE
-  }
+  juvenile_i <- indx$juvenile_i >= 0.1
 
   condition <- c("5q0 > 5q15", "5q10 < 5q15", "(5D5 / 5D10) >= 2", "(10D5 / D20+) >= 0.1")
   value1 <- c(round(mortality$q0_5, 2), round(mortality$q10_5, 2), round(indx$d5_9, 2), round(indx$d5_14, 2))
