@@ -2,10 +2,19 @@
 % Please edit documentation in R/representativity.R
 \name{lt.representativity}
 \alias{lt.representativity}
+\alias{lt.representativity.default}
+\alias{lt.representativity.mortaar_life_table_list}
+\alias{lt.representativity.mortaar_life_table}
 \title{Checks the representativity of the non-adult age groups in a mortAAR
 life table}
 \usage{
 lt.representativity(life_table)
+
+\method{lt.representativity}{default}(life_table)
+
+\method{lt.representativity}{mortaar_life_table_list}(life_table)
+
+\method{lt.representativity}{mortaar_life_table}(life_table)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
@@ -33,8 +42,14 @@ larger than 2 and that (2) the ratio of those having died between 5 and 15
 (10D5) and all adults (>= 20) should be 0.1 or larger.
 }
 \examples{
-# Calculate representativity indices from real life dataset.
-lt.representativity(as.mortaar_life_table(schleswig_ma))
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.representativity(schleswig)
+
+odagsen <- life.table(list(
+  "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
+  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
+))
+lt.representativity(odagsen)
 
 }
 \references{
