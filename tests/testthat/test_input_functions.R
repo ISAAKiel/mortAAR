@@ -1,6 +1,3 @@
-
-context("prep.life.table")
-
 a_example_raw_dataset <- read.csv("Siedlungsbestattungen_ueberblick_for_prep_function.csv")
 
 test_that("prep.life.table excludes the max of the age ranges when agerange = 'excluded'", {

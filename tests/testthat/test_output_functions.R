@@ -1,5 +1,3 @@
-context("as.mortaar_life_table_list")
-
 test_that("as transformation works or fails depending on input dataset", {
   expect_s3_class(
     as.mortaar_life_table_list(list(a_live_table[[1]], a_live_table[[2]])),

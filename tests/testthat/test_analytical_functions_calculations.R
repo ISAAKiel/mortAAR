@@ -1,5 +1,3 @@
-context("life.table calculations")
-
 test_that("life.table does the mathing correctly", {
   # dx
   expect_true(
