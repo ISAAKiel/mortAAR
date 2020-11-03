@@ -42,3 +42,4 @@ Depends:
     R (>= 3.5.0)
 RdMacros: Rdpack
 VignetteBuilder: knitr
+Config/testthat/edition: 3

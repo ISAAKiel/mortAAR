@@ -7,14 +7,14 @@ test_that("a mortaar_life_table_list is only produced from a list", {
 
 test_that("a mortaar_life_table is produced from a data.frame, results in a dataframe", {
   expect_error(life.table(an_input_dataset$schleswig_ma), NA)
-  expect_is(life.table(an_input_dataset$schleswig_ma),"mortaar_life_table")
-  expect_is(life.table(an_input_dataset$schleswig_ma),"data.frame")
+  expect_s3_class(life.table(an_input_dataset$schleswig_ma),"mortaar_life_table")
+  expect_s3_class(life.table(an_input_dataset$schleswig_ma),"data.frame")
   expect_false("list" %in% class(life.table(an_input_dataset$schleswig_ma)))
 })
 
 test_that("a mortaar_life_table is produced from a list results in a list", {
-  expect_is(life.table(an_input_dataset),"list")
-  expect_is(life.table(an_input_dataset),"mortaar_life_table_list")
+  expect_s3_class(life.table(an_input_dataset),"list")
+  expect_s3_class(life.table(an_input_dataset),"mortaar_life_table_list")
   expect_false("data.frame" %in% class(life.table(an_input_dataset)))
 })
 

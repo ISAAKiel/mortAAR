@@ -54,7 +54,7 @@ test_that("format is delegated to format.mortaar_life_table_list on a mortaar_li
 })
 
 test_that("format.mortaar_life_table_list returns a character string", {
-  expect_is(format(a_live_table),"character")
+  expect_type(format(a_live_table),"character")
 })
 
 test_that("format.mortaar_life_table_list returns no output", {
@@ -68,7 +68,7 @@ test_that("format is delegated to format.mortaar_life_table on a mortaar_life_ta
 })
 
 test_that("format.mortaar_life_table returns a character string", {
-  expect_is(format(a_live_table$schleswig_ma),"character")
+  expect_type(format(a_live_table$schleswig_ma),"character")
 })
 
 test_that("format.mortaar_life_table returns no output", {
