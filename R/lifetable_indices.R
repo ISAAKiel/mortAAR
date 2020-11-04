@@ -47,7 +47,7 @@ lt.indices <- function(life_table) {
 #' @rdname lt.indices
 #' @export
 lt.indices.default <- function(life_table) {
-  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list..")
+  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.indices
@@ -63,43 +63,47 @@ lt.indices.mortaar_life_table <- function(life_table) {
   all_age <- life_table$a %>% cumsum
 
   # Children index according to Masset and Bocquet 1977
-  d5_9 <- life_table$Dx[which(all_age == 10)]
-  d10_14 <- life_table$Dx[which(all_age == 15)]
+  d5_9 <- life_table$Dx[all_age == 10]
+  d10_14 <- life_table$Dx[all_age == 15]
   d5_9_d10_14 <- d5_9 / d10_14
 
   # Juvenility index according to Masset and Bocquet 1977
-  d5_14 <- life_table$Dx[which(all_age >=10 & all_age <=15)] %>% sum
-  d20plus <- life_table$Dx[which(all_age > 20)] %>% sum
+  d5_14 <- life_table$Dx[all_age >=10 & all_age <=15] %>% sum
+  d20plus <- life_table$Dx[all_age > 20] %>% sum
   d5_14_d20plus <- d5_14 / d20plus
 
     # Senility index according to Masset and Bocquet 1977
-  d60plus <- life_table$Dx[which(all_age > 60)] %>% sum
-  d20plus <- life_table$Dx[which(all_age > 20)] %>% sum
+  d60plus <- life_table$Dx[all_age > 60] %>% sum
+  d20plus <- life_table$Dx[all_age > 20] %>% sum
   d60_d20plus <- d60plus / d20plus
 
-  d20_50 <- life_table$Dx[which(all_age >20 & all_age <=60)] %>% sum
+  d20_50 <- life_table$Dx[all_age >20 & all_age <=60] %>% sum
 
   # P(5-19) index according to Bocquet-Appel 2002
-  d5_19 <- life_table$Dx[which(all_age >=10 & all_age <=20)] %>% sum
-  d5plus <- life_table$Dx[which(all_age >=10)] %>% sum
+  d5_19 <- life_table$Dx[all_age >=10 & all_age <=20] %>% sum
+  d5plus <- life_table$Dx[all_age >=10] %>% sum
   p5_19 <- d5_19 / d5plus
 
   # D0_14_D index according to McFadden and Oxenham 2018 if infants are represented well
-  d0_14 <- life_table$Dx[which(all_age <=15)] %>% sum
+  d0_14 <- life_table$Dx[all_age <=15] %>% sum
   d0plus <- life_table$Dx %>% sum
   D0_14_D <- d0_14 / d0plus
 
   # Life expectancy at age 0
   e0 <- life_table$ex[[1]]
 
-  result_list <- list(child_i = d5_9_d10_14, d5_9 = d5_9, d10_14 = d10_14,
-                      juvenile_i = d5_14_d20plus, d5_14 = d5_14, d20plus = d20plus,
-                      senility_i = d60_d20plus, d60plus = d60plus,
-                      d20_50 = d20_50,
-                      p5_19 = p5_19,
-                      D0_14_D = D0_14_D, d0_14 = d0_14,
-                      e0 = e0)
-  result_list
+  # compile result list
+  result_list <- list(
+    child_i = d5_9_d10_14, d5_9 = d5_9, d10_14 = d10_14,
+    juvenile_i = d5_14_d20plus, d5_14 = d5_14, d20plus = d20plus,
+    senility_i = d60_d20plus, d60plus = d60plus,
+    d20_50 = d20_50,
+    p5_19 = p5_19,
+     D0_14_D = D0_14_D, d0_14 = d0_14,
+    e0 = e0
+  )
+
+  return(result_list)
 }
 
 
