@@ -98,6 +98,7 @@ odagsen <- life.table(list(
   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 ))
 lt.reproduction(odagsen)
+
 }
 \references{
 \insertRef{acsadi_history_1970}{mortAAR}

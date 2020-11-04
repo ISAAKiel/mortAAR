@@ -149,8 +149,9 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   R_pot_fem <- fertil_rate * 0.488
 
   # Net reproduction rate after Hassan
-  fertility_perc <- c(10.9, 23.1, 24.1, 19.5, 14.4, 6.2, 1.6)
-  R_0 <- (fertil_lx * fertility_perc * R_pot_fem / 10000) %>% sum
+  #fertility_perc <- c(10.9, 23.1, 24.1, 19.5, 14.4, 6.2, 1.6)
+  #R_0 <- (fertil_lx * fertility_perc * R_pot_fem / 10000) %>% sum
+  R_0 <- NA
 
   # Intrinsic growth rate in percent per year after Hassan
   intr_grow <- 100 * log(R_0) / gen_len
