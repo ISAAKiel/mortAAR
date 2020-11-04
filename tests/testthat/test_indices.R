@@ -17,3 +17,11 @@ test_that("lt.indices produces the right output", {
     style = c("json2")
   )
 })
+
+test_that("helper function lt.mortality produces the right output", {
+  sl <- life.table(schleswig_ma[c("a", "Dx")])
+  expect_snapshot_value(
+    round_5_xs(lt.mortality(sl)),
+    style = c("json2")
+  )
+})

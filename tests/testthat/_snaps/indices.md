@@ -251,3 +251,38 @@
       ]
     }
 
+# helper function lt.mortality produces the right output
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["q0_5", "q10_5", "q15_5", "q15_45"]
+        }
+      },
+      "value": [
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [20.24291]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [6.85714]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [4.90798]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [68.57143]
+        }
+      ]
+    }
+

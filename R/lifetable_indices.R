@@ -106,7 +106,6 @@ lt.indices.mortaar_life_table <- function(life_table) {
   return(result_list)
 }
 
-
 #' Generates mortality indices from a mortAAR life table for use in other functions
 #'
 #' This function computes mortality indices from a mortAAR
@@ -120,40 +119,30 @@ lt.indices.mortaar_life_table <- function(life_table) {
 #'   \item \bold{mortality}:   list of mortalities 5q0, 5q10, 5q15, 45q15.
 #'}
 #'
-#' @rdname lt.mortality
+#' @examples
+#' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+#' lt.mortality(schleswig)
+#'
+#' @noRd
+#' @keywords internal
 lt.mortality <- function(life_table) {
-  UseMethod("lt.mortality")
-}
-
-#' @rdname lt.mortality
-lt.mortality.default <- function(life_table) {
-  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
-}
-
-#' @rdname lt.mortality
-lt.mortality.mortaar_life_table_list <- function(life_table) {
-  lapply(life_table, lt.mortality)
-}
-
-#' @rdname lt.mortality
-lt.mortality.mortaar_life_table <- function(life_table) {
 
   all_age <- life_table$a %>% cumsum
 
   # Indices for representativity after Weiss 1973 and Model life tables
 
   # 5q0: Probability of dying between age 0 and age 5
-  q0_5 <- life_table$dx[which(all_age <=5)] %>% sum
+  q0_5 <- life_table$dx[all_age <=5] %>% sum
 
   # 5q10: Probability of dying between age 10 and age 15
-  q10_5 <- life_table$qx[which(all_age == 15)]
+  q10_5 <- life_table$qx[all_age == 15]
 
   # 5q15: Probability of dying between age 15 and age 20
-  q15_5 <- life_table$qx[which(all_age == 20)]
+  q15_5 <- life_table$qx[all_age == 20]
 
   # 45q15: Probability of dying between age 15 and age 60
-  d15_45 <- life_table$dx[which(all_age >15 & all_age <=60)] %>% sum
-  lx10 <- life_table$lx[which(all_age == 15)]
+  d15_45 <- life_table$dx[all_age >15 & all_age <=60] %>% sum
+  lx10 <- life_table$lx[all_age == 15]
   q15_45 <- d15_45 / lx10 * 100
 
   result_list <- list(q0_5 = q0_5, q10_5 = q10_5, q15_5 = q15_5, q15_45 = q15_45)
