@@ -91,6 +91,7 @@
 #'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 #' ))
 #' lt.reproduction(odagsen)
+#'
 #' @rdname lt.reproduction
 #' @export
 lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
@@ -100,7 +101,7 @@ lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20
 #' @rdname lt.reproduction
 #' @export
 lt.reproduction.default <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
-  stop("x is not an object of class mortaar_life_table.")
+  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.reproduction
@@ -157,14 +158,26 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   # Doubling time in years after Hassan
   Dt <- 100 * 0.6931 / intr_grow
 
-  fertiliy_rate <- c(round(fertil_rate, 1), "Total fertility rate")
-  R_pot_fem <- c(round(R_pot_fem, 1), "Gross reproduction rate")
-  R_0 <- c(round(R_0, 2), "Net reproduction rate")
-  intr_grow <- c(round(intr_grow, 2), "Intrinsic growth rate (perc/y)")
-  Dt <- c(round(Dt, 1), "Doubling time in years")
-  DR <- c(round(dependency_ratio*100,1), "Dependency ratio")
-  result <- data.frame(rbind(DR, fertiliy_rate, R_pot_fem, R_0, intr_grow, Dt))
-  colnames(result) <- c("value", "description")
-  rownames(result) <- c("DR", "TFR","GRR", "NRR","r", "Dt")
+  # compiling result table
+  result <- data.frame(
+    method = c("DR", "TFR","GRR", "NRR","r", "Dt"),
+    value = c(
+      round(dependency_ratio*100,1),
+      round(fertil_rate, 1),
+      round(R_pot_fem, 1),
+      round(R_0, 2),
+      round(intr_grow, 2),
+      round(Dt, 1)
+    ),
+    description = c(
+      "Dependency ratio",
+      "Total fertility rate",
+      "Gross reproduction rate",
+      "Net reproduction rate",
+      "Intrinsic growth rate (perc/y)",
+      "Doubling time in years"
+    )
+  )
+
   return(result)
 }
