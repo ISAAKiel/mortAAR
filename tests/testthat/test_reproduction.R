@@ -5,7 +5,27 @@ test_that("lt.reproduction failes for wrong input", {
 test_that("lt.reproduction produces the right output", {
   sl <- life.table(schleswig_ma[c("a", "Dx")])
   expect_snapshot_value(
-    lt.reproduction(sl),
+    lt.reproduction(sl, fertility_rate = "McO"),
+    style = c("json2")
+  )
+  expect_snapshot_value(
+    lt.reproduction(sl, fertility_rate = "BA_linear"),
+    style = c("json2")
+  )
+  expect_snapshot_value(
+    lt.reproduction(sl, fertility_rate = "BA_power"),
+    style = c("json2")
+  )
+  expect_snapshot_value(
+    lt.reproduction(sl, fertility_rate = "BA_log"),
+    style = c("json2")
+  )
+  expect_snapshot_value(
+    lt.reproduction(sl, fertility_rate = 5),
+    style = c("json2")
+  )
+  expect_snapshot_value(
+    lt.reproduction(sl, gen_len = 25),
     style = c("json2")
   )
   od <- life.table(list(

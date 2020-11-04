@@ -32,6 +32,206 @@
         {
           "type": "double",
           "attributes": {},
+          "value": [113.4, 4.9, 2.4, "NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Intrinsic growth rate (perc/y)", "Doubling time in years"]
+        }
+      ]
+    }
+
+---
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["method", "value", "description"]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2, 3, 4, 5, 6]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["DR", "TFR", "GRR", "NRR", "r", "Dt"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [113.4, 8.3, 4.1, "NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Intrinsic growth rate (perc/y)", "Doubling time in years"]
+        }
+      ]
+    }
+
+---
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["method", "value", "description"]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2, 3, 4, 5, 6]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["DR", "TFR", "GRR", "NRR", "r", "Dt"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [113.4, 7.5, 3.7, "NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Intrinsic growth rate (perc/y)", "Doubling time in years"]
+        }
+      ]
+    }
+
+---
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["method", "value", "description"]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2, 3, 4, 5, 6]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["DR", "TFR", "GRR", "NRR", "r", "Dt"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [113.4, 7, 3.4, "NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Intrinsic growth rate (perc/y)", "Doubling time in years"]
+        }
+      ]
+    }
+
+---
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["method", "value", "description"]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2, 3, 4, 5, 6]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["DR", "TFR", "GRR", "NRR", "r", "Dt"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [113.4, 5, 2.4, "NA", "NA", "NA"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Intrinsic growth rate (perc/y)", "Doubling time in years"]
+        }
+      ]
+    }
+
+---
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["method", "value", "description"]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2, 3, 4, 5, 6]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["DR", "TFR", "GRR", "NRR", "r", "Dt"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
           "value": [113.4, 7, 3.4, "NA", "NA", "NA"]
         },
         {
