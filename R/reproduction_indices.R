@@ -117,24 +117,25 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
 
   indx <- lt.indices(life_table)
 
-  if (fertility_rate == "McO") {
-    fertil_rate <- indx$D0_14_D[[1]] * 7.734 + 2.224
-  } else if (fertility_rate == "BA_linear"){
-    # Linear regression
-    fertil_rate <- indx$p5_19[[1]] * 25.7557 + 2.85273
-  } else if (fertility_rate == "BA_power"){
-    # power fit
-    fertil_rate <- 13.4135 * (indx$p5_19[[1]])**0.374708
-  } else if (fertility_rate == "BA_log"){
-    # logarithmic fit
-    fertil_rate <- log(indx$p5_19[[1]]) * 1.58341 + 9.45601
-  } else if (length(fertility_rate) > 0 & is.numeric(fertility_rate)) {
+  # switch to set fertil_rate
+  if (is.character(fertility_rate)) {
+    switch(fertility_rate,
+      McO = { fertil_rate <- indx$D0_14_D[[1]] * 7.734 + 2.224 },
+      # Linear regression
+      BA_linear = { fertil_rate <- indx$p5_19[[1]] * 25.7557 + 2.85273 },
+      # power fit
+      BA_power = { fertil_rate <- 13.4135 * (indx$p5_19[[1]])**0.374708 },
+      # logarithmic fit
+      BA_log = { fertil_rate <- log(indx$p5_19[[1]]) * 1.58341 + 9.45601 },
+      { stop(paste(
+          "Please choose a valid fertility rate",
+          "(either 'McO', 'BA_linear', 'BA_log' or 'BA_power' or a number)."
+        )) }
+    )
+  } else if (is.numeric(fertility_rate)) {
     fertil_rate <- fertility_rate
   } else {
-    paste0(
-      "Please choose a valid fertility rate (either 'McO', 'BA_linear', 'BA_log' or 'BA_power' or a number)."
-    ) %>%
-      message
+    stop("Please choose a valid fertility rate")
   }
 
   # dependency ratio according to Grupe et al. 2015
@@ -142,7 +143,7 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
 
   # Survival rates of individuals aged 15--45.
   all_age <- life_table$a %>% cumsum
-  fertil_lx <- life_table$lx[which(all_age >15 & all_age <=45)]
+  fertil_lx <- life_table$lx[all_age >15 & all_age <=45]
   fertil_lx <- c(fertil_lx,100)
 
   # Gross reproductive rate only for females according to Hassan
