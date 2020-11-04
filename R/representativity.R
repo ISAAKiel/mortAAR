@@ -49,7 +49,7 @@ lt.representativity <- function(life_table) {
 #' @rdname lt.representativity
 #' @export
 lt.representativity.default <- function(life_table) {
-  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list..")
+  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.representativity

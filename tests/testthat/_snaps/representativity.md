@@ -1,0 +1,178 @@
+# lt.representativity failes for wrong input
+
+    x is not an object of class mortaar_life_table or mortaar_life_table_list.
+
+# lt.representativity produces the right output
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["approach", "condition", "value1", "value2", "result", "outcome"]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2, 3, 4]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["weiss_i1", "weiss_i2", "child_i", "juvenile_i"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["5q0 > 5q15", "5q10 < 5q15", "(5D5 / 5D10) >= 2", "(10D5 / D20+) >= 0.1"]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [20.24, 6.86, 22, 34]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [6.86, 4.91, 12, 155]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [2.95, 1.4, 1.83, 0.22]
+        },
+        {
+          "type": "logical",
+          "attributes": {},
+          "value": [true, false, false, true]
+        }
+      ]
+    }
+
+---
+
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["corpus mandibulae", "margo orbitalis"]
+        }
+      },
+      "value": [
+        {
+          "type": "list",
+          "attributes": {
+            "names": {
+              "type": "character",
+              "attributes": {},
+              "value": ["approach", "condition", "value1", "value2", "result", "outcome"]
+            },
+            "class": {
+              "type": "character",
+              "attributes": {},
+              "value": ["data.frame"]
+            },
+            "row.names": {
+              "type": "integer",
+              "attributes": {},
+              "value": [1, 2, 3, 4]
+            }
+          },
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["weiss_i1", "weiss_i2", "child_i", "juvenile_i"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["5q0 > 5q15", "5q10 < 5q15", "(5D5 / 5D10) >= 2", "(10D5 / D20+) >= 0.1"]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [0, 7.5, 0, 7.5]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [53.7, 53.7, 53.7, 53.7]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [0.14, 0.14, 0.14, 0.14]
+            },
+            {
+              "type": "logical",
+              "attributes": {},
+              "value": [true, true, true, true]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "attributes": {
+            "names": {
+              "type": "character",
+              "attributes": {},
+              "value": ["approach", "condition", "value1", "value2", "result", "outcome"]
+            },
+            "class": {
+              "type": "character",
+              "attributes": {},
+              "value": ["data.frame"]
+            },
+            "row.names": {
+              "type": "integer",
+              "attributes": {},
+              "value": [1, 2, 3, 4]
+            }
+          },
+          "value": [
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["weiss_i1", "weiss_i2", "child_i", "juvenile_i"]
+            },
+            {
+              "type": "character",
+              "attributes": {},
+              "value": ["5q0 > 5q15", "5q10 < 5q15", "(5D5 / 5D10) >= 2", "(10D5 / D20+) >= 0.1"]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [0, 4, 0, 4]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [62.3, 62.3, 62.3, 62.3]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [0.06, 0.06, 0.06, 0.06]
+            },
+            {
+              "type": "logical",
+              "attributes": {},
+              "value": [false, false, false, false]
+            }
+          ]
+        }
+      ]
+    }
+
