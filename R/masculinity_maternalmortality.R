@@ -60,7 +60,7 @@ lt.sexrelation <- function(females,males) {
 #' @rdname lt.sexrelation
 #' @export
 lt.sexrelation.default <- function(females,males) {
-  stop("x or y is not an object of class mortaar_life_table.")
+  stop("First argument is not an object of class mortaar_life_table.")
 }
 
 #' @rdname lt.sexrelation
@@ -71,10 +71,9 @@ lt.sexrelation.mortaar_life_table <- function(females, males) {
   # check if life tables for females and males are of class "mortaar_life_table"
   if (!inherits(females,"mortaar_life_table") |
       !inherits(males,"mortaar_life_table"))  {
-    paste0(
+    stop(
       "At least one of the datasets does not seem to be a mortAAR life table."
-    ) %>%
-      message
+    )
   } else {
 
     # Masculinity index (MI) for juvenile and older individuals: males * 100 / females
