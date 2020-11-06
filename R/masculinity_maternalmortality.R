@@ -94,12 +94,22 @@ lt.sexrelation.mortaar_life_table <- function(females, males) {
     maternal_mortality <- 333.33 * f_m_ratio - 76.07
 
     # putting together the sex-relation data.frame
-    value <- c(masculinity_index, round(f_m_ratio, 2),
-               round(maternal_mortality,1), round(maternal_mortality / 100,2))
-    description <- c("Masculinity index","Ratio of females to males aged 20--24",
-                     "Maternal mortality per 100,000 births","Maternal mortality per 1,000 births")
-    sexrelation_df <- data.frame(cbind(value, description))
-    row.names(sexrelation_df) <- c("MI","Ratio_F_M","MMR1","MMR2")
+    sexrelation_df <- data.frame(
+      method = c("MI","Ratio_F_M","MMR1","MMR2"),
+      value = c(
+        masculinity_index,
+        round(f_m_ratio, 2),
+        round(maternal_mortality,1),
+        round(maternal_mortality / 100,2)
+      ),
+      description = c(
+        "Masculinity index",
+        "Ratio of females to males aged 20--24",
+        "Maternal mortality per 100,000 births",
+        "Maternal mortality per 1,000 births"
+      )
+    )
+
     return(sexrelation_df)
   }
 }
