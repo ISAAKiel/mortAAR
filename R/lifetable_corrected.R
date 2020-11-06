@@ -147,7 +147,8 @@ lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfa
       q5_0_range_end,
       mortality_rate_range_end,
       growth_rate_range_end
-    )
+    ),
+    stringsAsFactors = FALSE
   )
 
   # returning the indices data.frame as well as the corrected life table
