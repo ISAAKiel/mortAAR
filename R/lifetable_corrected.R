@@ -125,15 +125,31 @@ lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfa
                                 agecorfac = agecorfac, option_spline = option_spline)
 
   # putting together the indices data.frame
-  row_e0 <- c(round(e0, 3), e0_range_start, e0_range_end)
-  row_q1_0 <- c(round(q1_0, 3), q1_0_range_start, q1_0_range_end)
-  row_q5_0 <- c(round(q5_0, 3), q5_0_range_start, q5_0_range_end)
-  row_mortality_rate <- c(round(mortality_rate, 3), mortality_rate_range_start, mortality_rate_range_end)
-  row_growth_rate <- c(round(growth_rate, 3), growth_rate_range_start, growth_rate_range_end)
-  e0_q5_0 <- data.frame(rbind(row_e0, row_q1_0, row_q5_0, row_mortality_rate, row_growth_rate))
-  colnames(e0_q5_0) <- c("value", "range_start", "range_end")
-  rownames(e0_q5_0) <- c("e0", "1q0", "5q0", "m", "r")
+  e0_q5_0 <- data.frame(
+    method = c("e0", "1q0", "5q0", "m", "r"),
+    value = c(
+      round(e0, 3),
+      round(q1_0, 3),
+      round(q5_0, 3),
+      round(mortality_rate, 3),
+      round(growth_rate, 3)
+    ),
+    range_start = c(
+      e0_range_start,
+      q1_0_range_start,
+      q5_0_range_start,
+      mortality_rate_range_start,
+      growth_rate_range_start
+    ),
+    range_end = c(
+      e0_range_end,
+      q1_0_range_end,
+      q5_0_range_end,
+      mortality_rate_range_end,
+      growth_rate_range_end
+    )
+  )
 
   # returning the indices data.frame as well as the corrected life table
   return(list(indices = e0_q5_0, life_table_corr = life_table_corr))
-  }
+}
