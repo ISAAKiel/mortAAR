@@ -26,9 +26,9 @@
 #' For the parameters see the documentation of \code{\link{life.table}}.
 #'
 #' @param life_table an object of class mortaar_life_table.
-#' @param agecor logical, optional.
-#' @param agecorfac numeric vector, optional.
-#' @param option_spline integer, optional.
+#' @param agecor logical, optional. Passed to \code{\link{life.table}}.
+#' @param agecorfac numeric vector, optional. Passed to \code{\link{life.table}}.
+#' @param option_spline integer, optional. Passed to \code{\link{life.table}}.
 #'
 #' @return a list containing a data.frame with indices e0, 1q0 and 5q0 as
 #' well as mortality rate m and growth rate r according to Bocquet-Appel
@@ -116,13 +116,19 @@ lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfa
     life_table$Dx[[1]] <- Dx1_0_corrected
     life_table$Dx[[2]] <- Dx5_0_corrected - Dx1_0_corrected
   } else {
-    stop("Life table correction works only with one 5-year-age class or 1- and 4-year classes
-         for the first 5 years. Please take a look at ?life.table to determine how your
-         input data should look like for accomplishing this.")
+    stop(paste(
+      "Life table correction works only with one 5-year-age class or 1- and 4-year classes",
+      "for the first 5 years. Please take a look at ?life.table to determine how your",
+      "input data should look like for accomplishing this."
+    ))
   }
-  life_table_prep_corrected <- data.frame(cbind(a = life_table$a, Dx = life_table$Dx))
-  life_table_corr <- life.table(life_table_prep_corrected, agecor = agecor,
-                                agecorfac = agecorfac, option_spline = option_spline)
+
+  life_table_corr <- life.table(
+    life_table[, c("a", "Dx")],
+    agecor = agecor,
+    agecorfac = agecorfac,
+    option_spline = option_spline
+  )
 
   # putting together the indices data.frame
   e0_q5_0 <- data.frame(
@@ -147,7 +153,8 @@ lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfa
       q5_0_range_end,
       mortality_rate_range_end,
       growth_rate_range_end
-    )
+    ),
+    stringsAsFactors = FALSE
   )
 
   # returning the indices data.frame as well as the corrected life table
