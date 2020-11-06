@@ -103,7 +103,8 @@ lt.sexrelation.mortaar_life_table <- function(females, males) {
         "Ratio of females to males aged 20--24",
         "Maternal mortality per 100,000 births",
         "Maternal mortality per 1,000 births"
-      )
+      ),
+      stringsAsFactors = FALSE
     )
 
     return(sexrelation_df)

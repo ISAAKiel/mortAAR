@@ -178,7 +178,8 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
       "Net reproduction rate",
       "Intrinsic growth rate (perc/y)",
       "Doubling time in years"
-    )
+    ),
+    stringsAsFactors = FALSE
   )
 
   return(result)

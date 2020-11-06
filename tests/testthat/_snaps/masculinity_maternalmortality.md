@@ -25,20 +25,9 @@
       },
       "value": [
         {
-          "type": "integer",
-          "attributes": {
-            "levels": {
-              "type": "character",
-              "attributes": {},
-              "value": ["MI", "MMR1", "MMR2", "Ratio_F_M"]
-            },
-            "class": {
-              "type": "character",
-              "attributes": {},
-              "value": ["factor"]
-            }
-          },
-          "value": [1, 4, 2, 3]
+          "type": "character",
+          "attributes": {},
+          "value": ["MI", "Ratio_F_M", "MMR1", "MMR2"]
         },
         {
           "type": "double",
@@ -46,20 +35,9 @@
           "value": [66.7, 2.36, 711.6, 7.12]
         },
         {
-          "type": "integer",
-          "attributes": {
-            "levels": {
-              "type": "character",
-              "attributes": {},
-              "value": ["Masculinity index", "Maternal mortality per 1,000 births", "Maternal mortality per 100,000 births", "Ratio of females to males aged 20--24"]
-            },
-            "class": {
-              "type": "character",
-              "attributes": {},
-              "value": ["factor"]
-            }
-          },
-          "value": [1, 4, 3, 2]
+          "type": "character",
+          "attributes": {},
+          "value": ["Masculinity index", "Ratio of females to males aged 20--24", "Maternal mortality per 100,000 births", "Maternal mortality per 1,000 births"]
         }
       ]
     }

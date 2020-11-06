@@ -86,7 +86,8 @@ lt.representativity.mortaar_life_table <- function(life_table) {
       # Criteria for representativity after Bocquet-Appel and Masset
       indx$child_i >= 2,
       indx$juvenile_i >= 0.1
-    )
+    ),
+    stringsAsFactors = FALSE
   )
 
   representativity_verdict
