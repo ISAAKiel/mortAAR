@@ -77,18 +77,15 @@ lt.sexrelation.mortaar_life_table <- function(females, males) {
   } else {
 
     # Masculinity index (MI) for juvenile and older individuals: males * 100 / females
-
     fem_age <- females$a %>% cumsum
-    fem_sum <- females$Dx[which(fem_age >= 20)] %>% sum
+    fem_sum <- females$Dx[fem_age >= 20] %>% sum
     male_age <- males$a %>% cumsum
-    male_sum <- males$Dx[which(male_age >= 20)] %>% sum
-
+    male_sum <- males$Dx[male_age >= 20] %>% sum
     masculinity_index <- round(male_sum * 100 / fem_sum, 1)
 
-
     # compute maternal mortality according to McFaden/Oxenham 2019
-    f_mort <- females$Dx[which(females$x=="20--24")]
-    m_mort <- males$Dx[which(males$x=="20--24")]
+    f_mort <- females$Dx[females$x=="20--24"]
+    m_mort <- males$Dx[males$x=="20--24"]
     f_m_ratio <- f_mort / m_mort
     maternal_mortality <- 333.33 * f_m_ratio - 76.07
 
