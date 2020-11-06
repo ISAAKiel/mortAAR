@@ -5,11 +5,11 @@ test_that("lt.correction failes for wrong input", {
 test_that("lt.correction produces the right output", {
   sl <- life.table(schleswig_ma[c("a", "Dx")])
   expect_snapshot_value(
-    lt.correction(sl),
+    round_list_of_dfs(lt.correction(sl)),
     style = c("json2")
   )
   expect_snapshot_value(
-    lt.correction(sl, agecor = FALSE),
+    round_list_of_dfs(lt.correction(sl, agecor = FALSE)),
     style = c("json2")
   )
   od <- life.table(list(
@@ -17,7 +17,7 @@ test_that("lt.correction produces the right output", {
     "sl2" = schleswig_ma[c("a", "Dx")]
   ))
   expect_snapshot_value(
-    lt.correction(od),
+    lapply(lt.correction(od), round_list_of_dfs),
     style = c("json2")
   )
 })
