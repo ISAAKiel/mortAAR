@@ -22,11 +22,13 @@
 #' fitting (linear, logistic, power) and recommend logistic fitting,
 #' but the others are available as well.\cr
 #' The Gross reproduction rate (GRR) is calculated by multiplying the TFR
-#' with the ratio of female newborns. The Net reproduction rate is
+#' with the ratio of female newborns, assumed to be a constant of 48.8%
+#' of all children (\emph{Hassan} 1981, 136). The Net reproduction rate is
 #' arrived at by summing the product of the GRR, the age specific
 #' fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 #' the age specific survival taken from the life table and dividing the
-#' result by 10000. The formulas for r and Dt are directly taken from
+#' result by 10000. The formulas for the Intrinsic growth rate r (growth
+#' in per cent per year) and the Doubling time Dt are directly taken from
 #' \emph{Hassan} (1981, 140).\cr
 #' Also calculated is the ratio of dependent individuals which is usually
 #' (but probably erroneously for archaic societies (\emph{Grupe et al.
@@ -91,6 +93,7 @@
 #'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 #' ))
 #' lt.reproduction(odagsen)
+#'
 #' @rdname lt.reproduction
 #' @export
 lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
@@ -100,7 +103,7 @@ lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20
 #' @rdname lt.reproduction
 #' @export
 lt.reproduction.default <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
-  stop("x is not an object of class mortaar_life_table.")
+  stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.reproduction
@@ -116,39 +119,46 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
 
   indx <- lt.indices(life_table)
 
-  if (fertility_rate == "McO") {
-    fertil_rate <- indx$D0_14_D[[1]] * 7.734 + 2.224
-  } else if (fertility_rate == "BA_linear"){
-    # Linear regression
-    fertil_rate <- indx$p5_19[[1]] * 25.7557 + 2.85273
-  } else if (fertility_rate == "BA_power"){
-    # power fit
-    fertil_rate <- 13.4135 * (indx$p5_19[[1]])**0.374708
-  } else if (fertility_rate == "BA_log"){
-    # logarithmic fit
-    fertil_rate <- log(indx$p5_19[[1]]) * 1.58341 + 9.45601
-  } else if (length(fertility_rate) > 0 & is.numeric(fertility_rate)) {
+  # switch to set fertil_rate
+  if (is.character(fertility_rate)) {
+    switch(fertility_rate,
+      McO = { fertil_rate <- indx$D0_14_D[[1]] * 7.734 + 2.224 },
+      # Linear regression
+      BA_linear = { fertil_rate <- indx$p5_19[[1]] * 25.7557 + 2.85273 },
+      # power fit
+      BA_power = { fertil_rate <- 13.4135 * (indx$p5_19[[1]])**0.374708 },
+      # logarithmic fit
+      BA_log = { fertil_rate <- log(indx$p5_19[[1]]) * 1.58341 + 9.45601 },
+      { stop(paste(
+          "Please choose a valid fertility rate",
+          "(either 'McO', 'BA_linear', 'BA_log' or 'BA_power' or a number)."
+        )) }
+    )
+  } else if (is.numeric(fertility_rate)) {
     fertil_rate <- fertility_rate
   } else {
-    paste0(
-      "Please choose a valid fertility rate (either 'McO', 'BA_linear', 'BA_log' or 'BA_power' or a number)."
-    ) %>%
-      message
+    stop("Please choose a valid fertility rate")
   }
 
   # dependency ratio according to Grupe et al. 2015
   dependency_ratio <- (indx$d0_14 + indx$d60plus) / indx$d20_50
 
-  # Survival rates of individuals aged 15--45.
+  # Survival rates of individuals aged 15--50.
   all_age <- life_table$a %>% cumsum
-  fertil_lx <- life_table$lx[which(all_age >15 & all_age <=45)]
-  fertil_lx <- c(fertil_lx,100)
+  all_age_with_0 <- c(0, (all_age[-length(all_age)]))
+  fertil_lx <- life_table$lx[all_age_with_0 >15 & all_age_with_0 <=50]
+  age_cat <- all_age_with_0[all_age >15 & all_age <=50] + life_table$Ax[all_age >15 & all_age <=50]
 
   # Gross reproductive rate only for females according to Hassan
   R_pot_fem <- fertil_rate * 0.488
 
-  # Net reproduction rate after Hassan
-  fertility_perc <- c(10.9, 23.1, 24.1, 19.5, 14.4, 6.2, 1.6)
+  # Net reproduction rate after Acsadi/Nemeskeri with interpolation of data by Hassan
+  fertil.comp <- function(x) {
+    y_ <-    -202.679 + 23.9831 * x - 0.884417 * x^2 + 0.0133778 * x^3 - 0.000073333 * x^4
+    y_sum <- sum(y_)
+    y_/y_sum * 100
+  }
+  fertility_perc <- fertil.comp(age_cat)
   R_0 <- (fertil_lx * fertility_perc * R_pot_fem / 10000) %>% sum
 
   # Intrinsic growth rate in percent per year after Hassan
@@ -157,14 +167,28 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   # Doubling time in years after Hassan
   Dt <- 100 * 0.6931 / intr_grow
 
-  fertiliy_rate <- c(round(fertil_rate, 1), "Total fertility rate")
-  R_pot_fem <- c(round(R_pot_fem, 1), "Gross reproduction rate")
-  R_0 <- c(round(R_0, 2), "Net reproduction rate")
-  intr_grow <- c(round(intr_grow, 2), "Intrinsic growth rate (perc/y)")
-  Dt <- c(round(Dt, 1), "Doubling time in years")
-  DR <- c(round(dependency_ratio*100,1), "Dependency ratio")
-  result <- data.frame(rbind(DR, fertiliy_rate, R_pot_fem, R_0, intr_grow, Dt))
-  colnames(result) <- c("value", "description")
-  rownames(result) <- c("DR", "TFR","GRR", "NRR","r", "Dt")
+  # compiling result table
+  result <- data.frame(
+    method = c("DR", "TFR","GRR", "NRR","r", "Dt"),
+    value = c(
+      round(dependency_ratio*100,1),
+      round(fertil_rate, 1),
+      round(R_pot_fem, 1),
+      round(R_0, 2),
+      round(intr_grow, 2),
+      round(Dt, 1)
+    ),
+    description = c(
+      "Dependency ratio",
+      "Total fertility rate",
+      "Gross reproduction rate",
+      "Net reproduction rate",
+      "Intrinsic growth rate",
+      "Doubling time in years"
+    ),
+    stringsAsFactors = FALSE
+  )
+
   return(result)
 }
+

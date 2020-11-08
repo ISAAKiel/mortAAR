@@ -18,11 +18,11 @@ lt.correction(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL)
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
 
-\item{agecor}{logical, optional.}
+\item{agecor}{logical, optional. Passed to \code{\link{life.table}}.}
 
-\item{agecorfac}{numeric vector, optional.}
+\item{agecorfac}{numeric vector, optional. Passed to \code{\link{life.table}}.}
 
-\item{option_spline}{integer, optional.}
+\item{option_spline}{integer, optional. Passed to \code{\link{life.table}}.}
 }
 \value{
 a list containing a data.frame with indices e0, 1q0 and 5q0 as

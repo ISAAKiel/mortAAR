@@ -60,7 +60,7 @@ lt.sexrelation <- function(females,males) {
 #' @rdname lt.sexrelation
 #' @export
 lt.sexrelation.default <- function(females,males) {
-  stop("x or y is not an object of class mortaar_life_table.")
+  stop("First argument is not an object of class mortaar_life_table.")
 }
 
 #' @rdname lt.sexrelation
@@ -71,35 +71,42 @@ lt.sexrelation.mortaar_life_table <- function(females, males) {
   # check if life tables for females and males are of class "mortaar_life_table"
   if (!inherits(females,"mortaar_life_table") |
       !inherits(males,"mortaar_life_table"))  {
-    paste0(
+    stop(
       "At least one of the datasets does not seem to be a mortAAR life table."
-    ) %>%
-      message
+    )
   } else {
 
     # Masculinity index (MI) for juvenile and older individuals: males * 100 / females
-
     fem_age <- females$a %>% cumsum
-    fem_sum <- females$Dx[which(fem_age >= 20)] %>% sum
+    fem_sum <- females$Dx[fem_age >= 20] %>% sum
     male_age <- males$a %>% cumsum
-    male_sum <- males$Dx[which(male_age >= 20)] %>% sum
-
+    male_sum <- males$Dx[male_age >= 20] %>% sum
     masculinity_index <- round(male_sum * 100 / fem_sum, 1)
 
-
     # compute maternal mortality according to McFaden/Oxenham 2019
-    f_mort <- females$Dx[which(females$x=="20--24")]
-    m_mort <- males$Dx[which(males$x=="20--24")]
+    f_mort <- females$Dx[females$x=="20--24"]
+    m_mort <- males$Dx[males$x=="20--24"]
     f_m_ratio <- f_mort / m_mort
     maternal_mortality <- 333.33 * f_m_ratio - 76.07
 
     # putting together the sex-relation data.frame
-    value <- c(masculinity_index, round(f_m_ratio, 2),
-               round(maternal_mortality,1), round(maternal_mortality / 100,2))
-    description <- c("Masculinity index","Ratio of females to males aged 20--24",
-                     "Maternal mortality per 100,000 births","Maternal mortality per 1,000 births")
-    sexrelation_df <- data.frame(cbind(value, description))
-    row.names(sexrelation_df) <- c("MI","Ratio_F_M","MMR1","MMR2")
+    sexrelation_df <- data.frame(
+      method = c("MI","Ratio_F_M","MMR1","MMR2"),
+      value = c(
+        masculinity_index,
+        round(f_m_ratio, 2),
+        round(maternal_mortality,1),
+        round(maternal_mortality / 100,2)
+      ),
+      description = c(
+        "Masculinity index",
+        "Ratio of females to males aged 20--24",
+        "Maternal mortality per 100,000 births",
+        "Maternal mortality per 1,000 births"
+      ),
+      stringsAsFactors = FALSE
+    )
+
     return(sexrelation_df)
   }
 }
