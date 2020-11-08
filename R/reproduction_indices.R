@@ -22,11 +22,13 @@
 #' fitting (linear, logistic, power) and recommend logistic fitting,
 #' but the others are available as well.\cr
 #' The Gross reproduction rate (GRR) is calculated by multiplying the TFR
-#' with the ratio of female newborns. The Net reproduction rate is
+#' with the ratio of female newborns, assumed to be a constant of 48.8%
+#' of all children (\emph{Hassan} 1981, 136). The Net reproduction rate is
 #' arrived at by summing the product of the GRR, the age specific
 #' fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 #' the age specific survival taken from the life table and dividing the
-#' result by 10000. The formulas for r and Dt are directly taken from
+#' result by 10000. The formulas for the Intrinsic growth rate r (growth
+#' in per cent per year) and the Doubling time Dt are directly taken from
 #' \emph{Hassan} (1981, 140).\cr
 #' Also calculated is the ratio of dependent individuals which is usually
 #' (but probably erroneously for archaic societies (\emph{Grupe et al.
@@ -141,18 +143,23 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   # dependency ratio according to Grupe et al. 2015
   dependency_ratio <- (indx$d0_14 + indx$d60plus) / indx$d20_50
 
-  # Survival rates of individuals aged 15--45.
+  # Survival rates of individuals aged 15--50.
   all_age <- life_table$a %>% cumsum
-  fertil_lx <- life_table$lx[all_age >15 & all_age <=45]
-  fertil_lx <- c(fertil_lx,100)
+  all_age_with_0 <- c(0, (all_age[-length(all_age)]))
+  fertil_lx <- life_table$lx[all_age_with_0 >15 & all_age_with_0 <=50]
+  age_cat <- all_age_with_0[all_age >15 & all_age <=50] + life_table$Ax[all_age >15 & all_age <=50]
 
   # Gross reproductive rate only for females according to Hassan
   R_pot_fem <- fertil_rate * 0.488
 
-  # Net reproduction rate after Hassan
-  #fertility_perc <- c(10.9, 23.1, 24.1, 19.5, 14.4, 6.2, 1.6)
-  #R_0 <- (fertil_lx * fertility_perc * R_pot_fem / 10000) %>% sum
-  R_0 <- NA
+  # Net reproduction rate after Acsadi/Nemeskeri with interpolation of data by Hassan
+  fertil.comp <- function(x) {
+    y_ <-    -202.679 + 23.9831 * x - 0.884417 * x^2 + 0.0133778 * x^3 - 0.000073333 * x^4
+    y_sum <- sum(y_)
+    y_/y_sum * 100
+  }
+  fertility_perc <- fertil.comp(age_cat)
+  R_0 <- (fertil_lx * fertility_perc * R_pot_fem / 10000) %>% sum
 
   # Intrinsic growth rate in percent per year after Hassan
   intr_grow <- 100 * log(R_0) / gen_len
@@ -176,7 +183,7 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
       "Total fertility rate",
       "Gross reproduction rate",
       "Net reproduction rate",
-      "Intrinsic growth rate (perc/y)",
+      "Intrinsic growth rate",
       "Doubling time in years"
     ),
     stringsAsFactors = FALSE
@@ -184,3 +191,4 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
 
   return(result)
 }
+

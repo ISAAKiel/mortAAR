@@ -7,6 +7,7 @@
 # Example code in package build process
 *-Ex.R
 # Output files from R CMD build
+.Rbuildignore
 /*.tar.gz
 # Output files from R CMD check
 /*.Rcheck/
@@ -25,3 +26,5 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 inst/doc
+# File system
+.DS_Store

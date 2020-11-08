@@ -79,11 +79,13 @@ Oxenham to apply it to the P(5-19)-index after \emph{Bocquet-Appel
 fitting (linear, logistic, power) and recommend logistic fitting,
 but the others are available as well.\cr
 The Gross reproduction rate (GRR) is calculated by multiplying the TFR
-with the ratio of female newborns. The Net reproduction rate is
+with the ratio of female newborns, assumed to be a constant of 48.8%
+of all children (\emph{Hassan} 1981, 136). The Net reproduction rate is
 arrived at by summing the product of the GRR, the age specific
 fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 the age specific survival taken from the life table and dividing the
-result by 10000. The formulas for r and Dt are directly taken from
+result by 10000. The formulas for the Intrinsic growth rate r (growth
+in per cent per year) and the Doubling time Dt are directly taken from
 \emph{Hassan} (1981, 140).\cr
 Also calculated is the ratio of dependent individuals which is usually
 (but probably erroneously for archaic societies (\emph{Grupe et al.
