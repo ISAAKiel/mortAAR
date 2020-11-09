@@ -1,6 +1,4 @@
-#' @name mortaar_life_table
-#'
-#' @title \strong{mortaar_life_table} and \strong{mortaar_life_table_list}
+#' {mortaar_life_table} and {mortaar_life_table_list}
 #'
 #' @description The \strong{mortaar_life_table} is the central data structure of the
 #' \code{mortAAR} package. It's a data.frame with set of custom methods and
@@ -17,12 +15,7 @@
 #' for plot and print aesthetics.
 #'
 #' @param x an object
-#' @param i an index (name or number)
-#' @param value an object of class mortaar_life_table or mortaar_life_table_list to
-#' replace the indexed value
 #' @param ... further arguments passed to or from other methods
-#'
-#' @rdname mortaar_life_table
 #'
 #' @examples
 #' # a mortaar_life_table can be put together manually:
@@ -44,6 +37,7 @@
 #' schleswig_data_3 <- schleswig$`schleswig data 3`
 #' schleswig_data_1_3_4 <- schleswig[c(1,3,4)]
 #'
+#' @name mortaar_life_table
 NULL
 
 #' @rdname mortaar_life_table
@@ -66,8 +60,8 @@ as.mortaar_life_table_list <- function(x, ...) {
   } else {
     stop("x is not an object of class list")
   }
-
 }
+NULL
 
 #' @rdname mortaar_life_table
 #' @export
@@ -99,12 +93,14 @@ as.mortaar_life_table <- function(x, ...) {
 
 #' @rdname mortaar_life_table
 #' @export
+#' @noRd
 `[.mortaar_life_table_list` <- function(x, i) {
   as.mortaar_life_table_list(NextMethod())
 }
 
 #' @rdname mortaar_life_table
 #' @export
+#' @noRd
 `[<-.mortaar_life_table_list` <- function(x, i, value) {
   stopifnot(is.mortaar_life_table_list(value))
   NextMethod()
@@ -112,6 +108,7 @@ as.mortaar_life_table <- function(x, ...) {
 
 #' @rdname mortaar_life_table
 #' @export
+#' @noRd
 `[[<-.mortaar_life_table_list` <- function(x, i, value) {
   stopifnot(is.mortaar_life_table(value))
   NextMethod()
@@ -119,19 +116,20 @@ as.mortaar_life_table <- function(x, ...) {
 
 #' @rdname mortaar_life_table
 #' @export
+#' @noRd
 `$<-.mortaar_life_table_list` <- function(x, i, value) {
   stopifnot(is.mortaar_life_table(value))
   NextMethod()
 }
 
-#' Checks if a variable is of class mortaar_life_table or mortaar_life_table_list
+#' @name is
 #'
-#' Checks class membership.
+#' @title Checks if a variable is of class mortaar_life_table or mortaar_life_table_list
 #'
 #' @param x a variable.
 #' @param ... further arguments passed to or from other methods.
 #'
-#' @return true if x is a mortaar_life_table_list, otherwise false.
+#' @return true if x is a mortaar_life_table or a mortaar_life_table_list, otherwise false.
 #'
 #' @examples
 #' # Create a mortaar_life_table from a prepared dataset.
@@ -150,15 +148,18 @@ as.mortaar_life_table <- function(x, ...) {
 #' ))
 #' is.mortaar_life_table_list(odagsen)
 #'
-#' @name is
+#' @rdname is
+#' @keywords internal
 NULL
 
 #' @rdname is
 #' @export
+#' @keywords internal
 is.mortaar_life_table_list <- function(x, ...) {"mortaar_life_table_list" %in% class(x)}
 
 #' @rdname is
 #' @export
+#' @keywords internal
 is.mortaar_life_table <- function(x, ...) {"mortaar_life_table" %in% class(x)}
 
 #' Encode and print a mortaar_life_table or a mortaar_life_table_list
@@ -193,6 +194,7 @@ NULL
 
 #' @rdname print
 #' @export
+#' @noRd
 format.mortaar_life_table_list <- function(x, ...) {
   return_value <- ""
   list_names <- names(x)
@@ -211,6 +213,7 @@ format.mortaar_life_table_list <- function(x, ...) {
 
 #' @rdname print
 #' @export
+#' @noRd
 format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
 {
   out_str <- list()
@@ -238,8 +241,10 @@ format.mortaar_life_table <- function(x, class_of_deceased = NULL, ...)
 
 #' @rdname print
 #' @export
+#' @noRd
 print.mortaar_life_table_list <- function(x, ...) cat(format(x, ...), "\n")
 
 #' @rdname print
 #' @export
+#' @noRd
 print.mortaar_life_table <- function(x, ...) cat(format(x, ...), "\n")

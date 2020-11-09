@@ -2,7 +2,7 @@
 % Please edit documentation in R/data.R
 \name{nitra}
 \alias{nitra}
-\title{Anthropological data from the Neolithic cemetery of Nitra}
+\title{nitra: Life table example}
 \format{
 A data frame with 4 variables and 75 observations
 \itemize{
@@ -30,6 +30,9 @@ the determinations by L. Fibiger.
 \seealso{
 Other lifetables: 
 \code{\link{aiterhofen_oedmuehlen}},
+\code{\link{gallery_graves}},
+\code{\link{magdalenenberg}},
+\code{\link{muensingen}},
 \code{\link{odagsen_cm}},
 \code{\link{odagsen_mo}},
 \code{\link{schleswig_ma}}

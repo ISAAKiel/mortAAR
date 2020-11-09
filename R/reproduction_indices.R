@@ -102,18 +102,21 @@ lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20
 
 #' @rdname lt.reproduction
 #' @export
+#' @noRd
 lt.reproduction.default <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
   stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.reproduction
 #' @export
+#' @noRd
 lt.reproduction.mortaar_life_table_list <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
   lapply(life_table, lt.reproduction)
 }
 
 #' @rdname lt.reproduction
 #' @export
+#' @noRd
 #'
 lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
 

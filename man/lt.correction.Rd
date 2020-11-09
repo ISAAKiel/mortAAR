@@ -2,18 +2,9 @@
 % Please edit documentation in R/lifetable_corrected.R
 \name{lt.correction}
 \alias{lt.correction}
-\alias{lt.correction.default}
-\alias{lt.correction.mortaar_life_table_list}
-\alias{lt.correction.mortaar_life_table}
 \title{Calculates a corrected life table from a mortAAR life table}
 \usage{
 lt.correction(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL)
-
-\method{lt.correction}{default}(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL)
-
-\method{lt.correction}{mortaar_life_table_list}(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL)
-
-\method{lt.correction}{mortaar_life_table}(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}

@@ -2,18 +2,9 @@
 % Please edit documentation in R/reproduction_indices.R
 \name{lt.reproduction}
 \alias{lt.reproduction}
-\alias{lt.reproduction.default}
-\alias{lt.reproduction.mortaar_life_table_list}
-\alias{lt.reproduction.mortaar_life_table}
 \title{Calculates reproduction indices from a mortAAR life table}
 \usage{
 lt.reproduction(life_table, fertility_rate = "BA_log", gen_len = 20)
-
-\method{lt.reproduction}{default}(life_table, fertility_rate = "BA_log", gen_len = 20)
-
-\method{lt.reproduction}{mortaar_life_table_list}(life_table, fertility_rate = "BA_log", gen_len = 20)
-
-\method{lt.reproduction}{mortaar_life_table}(life_table, fertility_rate = "BA_log", gen_len = 20)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}

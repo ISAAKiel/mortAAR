@@ -2,19 +2,10 @@
 % Please edit documentation in R/representativity.R
 \name{lt.representativity}
 \alias{lt.representativity}
-\alias{lt.representativity.default}
-\alias{lt.representativity.mortaar_life_table_list}
-\alias{lt.representativity.mortaar_life_table}
 \title{Checks the representativity of the non-adult age groups in a mortAAR
 life table}
 \usage{
 lt.representativity(life_table)
-
-\method{lt.representativity}{default}(life_table)
-
-\method{lt.representativity}{mortaar_life_table_list}(life_table)
-
-\method{lt.representativity}{mortaar_life_table}(life_table)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}

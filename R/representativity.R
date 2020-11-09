@@ -48,18 +48,21 @@ lt.representativity <- function(life_table) {
 
 #' @rdname lt.representativity
 #' @export
+#' @noRd
 lt.representativity.default <- function(life_table) {
   stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.representativity
 #' @export
+#' @noRd
 lt.representativity.mortaar_life_table_list <- function(life_table) {
   lapply(life_table, lt.representativity)
 }
 
 #' @rdname lt.representativity
 #' @export
+#' @noRd
 lt.representativity.mortaar_life_table <- function(life_table) {
 
   mortality <- lt.mortality(life_table)

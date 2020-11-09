@@ -2,26 +2,13 @@
 % Please edit documentation in R/class_functions.R
 \name{print}
 \alias{print}
-\alias{format.mortaar_life_table_list}
-\alias{format.mortaar_life_table}
-\alias{print.mortaar_life_table_list}
-\alias{print.mortaar_life_table}
 \title{Encode and print a mortaar_life_table or a mortaar_life_table_list}
-\usage{
-\method{format}{mortaar_life_table_list}(x, ...)
-
-\method{format}{mortaar_life_table}(x, class_of_deceased = NULL, ...)
-
-\method{print}{mortaar_life_table_list}(x, ...)
-
-\method{print}{mortaar_life_table}(x, ...)
-}
 \arguments{
 \item{x}{a mortaar_life_table or a mortaar_life_table_list.}
 
-\item{...}{further arguments passed to or from other methods.}
-
 \item{class_of_deceased}{optional string, specify the class of deceased (male, female, phase, ...).}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 A string representation of the mortaar_life_table or the mortaar_life_table_list.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/input_functions.R
 \name{prep.life.table}
 \alias{prep.life.table}
-\title{Creates the input for the function life.table.}
+\title{Creates the input for the function life.table}
 \usage{
 prep.life.table(
   x,

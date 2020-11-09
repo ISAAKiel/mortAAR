@@ -52,7 +52,7 @@ NULL
 #'   \item \bold{site:} collective grave.
 #' }
 #'
-#' @family training
+#' @family lifetables
 #'
 #' @name gallery_graves
 NULL
@@ -108,8 +108,7 @@ NULL
 #'   \item \bold{Dx:} number of deceased.
 #' }
 #'
-#' @family vignette
-#' @family training
+#' @family lifetables
 #'
 #' @name magdalenenberg
 NULL
@@ -133,8 +132,7 @@ NULL
 #'   \item \bold{grave_goods:} did the grave contain grave goods?
 #' }
 #'
-#' @family vignette
-#' @family training
+#' @family lifetables
 #'
 #' @name muensingen
 NULL
@@ -223,7 +221,7 @@ NULL
 #' @name odagsen_mo
 NULL
 
-#' Anthropological data from the Neolithic cemetery of Nitra
+#' nitra: Life table example
 #'
 #' The Early Neolithic cemetery of Nitra is one of the best published
 #' data sets of the \emph{Linearbandkeramik} (LBK). The individuals were

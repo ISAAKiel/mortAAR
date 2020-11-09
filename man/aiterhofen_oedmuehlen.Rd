@@ -36,6 +36,9 @@ found in \emph{Baum 1990}.
 }
 \seealso{
 Other lifetables: 
+\code{\link{gallery_graves}},
+\code{\link{magdalenenberg}},
+\code{\link{muensingen}},
 \code{\link{nitra}},
 \code{\link{odagsen_cm}},
 \code{\link{odagsen_mo}},

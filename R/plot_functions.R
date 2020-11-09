@@ -34,6 +34,7 @@ NULL
 
 #' @rdname plot
 #' @export
+#' @noRd
 plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"),
                                     line_vis = "linetype", prefer.ggplot=TRUE, ...) {
   ask_before = par()$ask
@@ -69,6 +70,7 @@ plot.mortaar_life_table <- function(x, display = c("dx", "qx", "lx", "ex", "rel_
 
 #' @rdname plot
 #' @export
+#' @noRd
 plot.mortaar_life_table_list <- function(x, display = c("dx", "qx", "lx", "ex", "rel_popx"),
                                          line_vis = "linetype", prefer.ggplot=TRUE, ...){
   ask_before = par()$ask

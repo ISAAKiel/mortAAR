@@ -2,18 +2,9 @@
 % Please edit documentation in R/lifetable_indices.R
 \name{lt.indices}
 \alias{lt.indices}
-\alias{lt.indices.default}
-\alias{lt.indices.mortaar_life_table_list}
-\alias{lt.indices.mortaar_life_table}
 \title{Generates indices from a mortAAR life table for use in other functions}
 \usage{
 lt.indices(life_table)
-
-\method{lt.indices}{default}(life_table)
-
-\method{lt.indices}{mortaar_life_table_list}(life_table)
-
-\method{lt.indices}{mortaar_life_table}(life_table)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}

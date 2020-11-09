@@ -46,18 +46,21 @@ lt.indices <- function(life_table) {
 
 #' @rdname lt.indices
 #' @export
+#' @noRd
 lt.indices.default <- function(life_table) {
   stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.indices
 #' @export
+#' @noRd
 lt.indices.mortaar_life_table_list <- function(life_table) {
   lapply(life_table, lt.indices)
 }
 
 #' @rdname lt.indices
 #' @export
+#' @noRd
 lt.indices.mortaar_life_table <- function(life_table) {
 
   all_age <- life_table$a %>% cumsum

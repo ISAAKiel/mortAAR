@@ -63,18 +63,21 @@ lt.correction <- function(life_table, agecor = TRUE, agecorfac = c(), option_spl
 
 #' @rdname lt.correction
 #' @export
+#' @noRd
 lt.correction.default <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
   stop("x is not an object of class mortaar_life_table.")
 }
 
 #' @rdname lt.correction
 #' @export
+#' @noRd
 lt.correction.mortaar_life_table_list <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
   lapply(life_table, lt.correction)
 }
 
 #' @rdname lt.correction
 #' @export
+#' @noRd
 #'
 lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfac = c(), option_spline = NULL) {
 

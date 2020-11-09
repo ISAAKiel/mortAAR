@@ -11,7 +11,7 @@ NA_to_0 <- function(x) {
   return(x)
 }
 
-#' Creates the input for the function life.table.
+#' Creates the input for the function life.table
 #'
 #' Prepares the input for \code{life.table()}. An individual based approach is supported as well
 #' as already pooled data (e. g. from an already existing life table). In the latter case, the user
