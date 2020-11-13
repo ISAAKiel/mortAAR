@@ -19,7 +19,7 @@ A list with the following indices and vectors:
   \item \bold{P(5-19)}:  ratio of individuals aged 5--19 to those aged
   5 or above according to \emph{Bocquet-Appel 2002}.
   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
-  according to \emph{McFadden & Oxenham 2018} if infants are represented
+  according to \emph{McFadden & Oxenham 2018a} if infants are represented
   well.
   \item \bold{e0}:   life expectancy at age 0.
 }
@@ -44,5 +44,5 @@ lt.indices(odagsen)
 
 \insertRef{masset_bocquet_1977}{mortAAR}
 
-\insertRef{mcfadden_oxenham_2018}{mortAAR}
+\insertRef{mcfadden_oxenham_2018a}{mortAAR}
 }

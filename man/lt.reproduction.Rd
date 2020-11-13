@@ -10,8 +10,8 @@ lt.reproduction(life_table, fertility_rate = "BA_log", gen_len = 20)
 \item{life_table}{an object of class mortaar_life_table.}
 
 \item{fertility_rate}{string or numeric. Either fertility rate according
-to \emph{McFadden & Oxenham 2018} if infants are represented well or
-fertility rate according to data by \emph{McFadden & Oxenham 2018} for
+to \emph{McFadden & Oxenham 2018a} if infants are represented well or
+fertility rate according to data by \emph{McFadden & Oxenham 2018a} for
 P(5-19) index after \emph{Bocquet-Appel 2002}. Options: 'McO'
 (McFadden/Oxenham), 'BA_linear' (linear fit), 'BA_power' (power fit)
 or 'BA_log' (logistic fit). Default: BA_log'. Additionally, the
@@ -37,13 +37,17 @@ A data.frame with basic reproduction indices:
 
                    \eqn{NRR = sum(GRR * age specific fertility * age specific survival / 10000)}
 
-  \item \bold{r}:  Intrinsic growth rate in percent per year.
+  \item \bold{r}:  Intrinsic growth rate in per cent per year.
 
                    \eqn{r = 100 * log(NRR) / generation length}
 
   \item \bold{Dt}: Doubling time in years.
 
                    \eqn{Dt = 100 * 0.6931 / r}
+
+  \item \bold{RNI}: Rate of Natural Increase in per cent per year.
+
+                   \eqn{RNI = 10.06 * D0--14/D) -- 1.61}
  }
 }
 \description{
@@ -60,7 +64,7 @@ There are different approaches to calculate reproduction rates (e. g.
 \emph{Hassan 1981}. Typically, a Total fertility rate (TFR) of 6-8 is
 assumed for prehistoric populations (\emph{Ascadi/Nemeskeri 1970};
 \emph{Henneberg 1978}; \emph{Hassan 1981}). Recently, \emph{McFadden
-and Oxenham 2018} have published a formula to estimate the Total
+and Oxenham 2018a} have published a formula to estimate the Total
 fertility rate from archaeological data, provided that infants are
 represented fully in the archaeological record.\cr
 Unfortunately, this will not be the case for most archaeological
@@ -78,6 +82,15 @@ the age specific survival taken from the life table and dividing the
 result by 10000. The formulas for the Intrinsic growth rate r (growth
 in per cent per year) and the Doubling time Dt are directly taken from
 \emph{Hassan} (1981, 140).\cr
+An alternative way to calculate the intrinsic growth rate, here named
+Rate of Natural Increase to avoid confusion, has recently described by
+\emph{McFadden and Oxenham 2018b}. They present a regression calculation based on
+the index D0--15/D also used for fertility calculations (see above) in
+connections with modern data. It must not astonished that even with
+the McFadden/Oxenham-index used for the fertility rate, the actual
+numbers for the computed intrinisc rate of growth and the Rate of
+Natural Increase can highly diverge, as with the former formula, further
+life table data is taken into account.\cr
 Also calculated is the ratio of dependent individuals which is usually
 (but probably erroneously for archaic societies (\emph{Grupe et al.
 2015}, 423) assumed to apply to those aged below 15 or 60 and above.
@@ -104,5 +117,7 @@ lt.reproduction(odagsen)
 
 \insertRef{henneberg_1976}{mortAAR}
 
-\insertRef{mcfadden_oxenham_2018}{mortAAR}
+\insertRef{mcfadden_oxenham_2018a}{mortAAR}
+
+\insertRef{mcfadden_oxenham_2018b}{mortAAR}
 }
