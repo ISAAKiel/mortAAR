@@ -26,17 +26,13 @@ A list with the following indices and vectors:
 }
 \description{
 This function bundles a number of indices and vectors from a mortAAR
-life table which are needed by other functions in mortAAR.
+life table which are needed by other functions in mortAAR. The results
+are only meaningful if 5-year-categories have been chosen to construct
+the life table.
 }
 \examples{
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 lt.indices(schleswig)
-
-odagsen <- life.table(list(
-  "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
-  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
-))
-lt.indices(odagsen)
 
 }
 \references{

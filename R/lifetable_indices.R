@@ -1,7 +1,9 @@
 #' Generates indices from a mortAAR life table for use in other functions
 #'
 #' This function bundles a number of indices and vectors from a mortAAR
-#' life table which are needed by other functions in mortAAR.
+#' life table which are needed by other functions in mortAAR. The results
+#' are only meaningful if 5-year-categories have been chosen to construct
+#' the life table.
 #'
 #' @param life_table an object of class mortaar_life_table.
 #'
@@ -31,12 +33,6 @@
 #' @examples
 #' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 #' lt.indices(schleswig)
-#'
-#' odagsen <- life.table(list(
-#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
-#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
-#' ))
-#' lt.indices(odagsen)
 #'
 #' @rdname lt.indices
 #' @export

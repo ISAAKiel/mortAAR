@@ -16,7 +16,9 @@
 #' and asserted that (1) the ratio of those having died between 5 and 10
 #' (5D5) to those having died between 10 and 15 (5D15) should be equal or
 #' larger than 2 and that (2) the ratio of those having died between 5 and 15
-#' (10D5) and all adults (>= 20) should be 0.1 or larger.
+#' (10D5) and all adults (>= 20) should be 0.1 or larger.\cr
+#' Due to the specific nature of the indices, they only give meaningful
+#' results if 5-year-age categories have been chosen for the non-adults.
 #'
 #' @param life_table an object of class mortaar_life_table.
 #'
@@ -33,12 +35,6 @@
 #' @examples
 #' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 #' lt.representativity(schleswig)
-#'
-#' odagsen <- life.table(list(
-#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
-#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
-#' ))
-#' lt.representativity(odagsen)
 #'
 #' @rdname lt.representativity
 #' @export

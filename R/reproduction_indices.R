@@ -27,41 +27,52 @@
 #' arrived at by summing the product of the GRR, the age specific
 #' fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 #' the age specific survival taken from the life table and dividing the
-#' result by 10000. The formulas for the Intrinsic growth rate r (growth
-#' in per cent per year) and the Doubling time Dt are directly taken from
-#' \emph{Hassan} (1981, 140).\cr
-#' An alternative way to calculate the intrinsic growth rate, here named
-#' Rate of Natural Increase to avoid confusion, has recently described by
-#' \emph{McFadden and Oxenham 2018b}. They present a regression calculation based on
-#' the index D0--15/D also used for fertility calculations (see above) in
-#' connections with modern data. It must not astonished that even with
-#' the McFadden/Oxenham-index used for the fertility rate, the actual
-#' numbers for the computed intrinisc rate of growth and the Rate of
-#' Natural Increase can highly diverge, as with the former formula, further
-#' life table data is taken into account.\cr
-#' Also calculated is the ratio of dependent individuals which is usually
-#' (but probably erroneously for archaic societies (\emph{Grupe et al.
-#' 2015}, 423) assumed to apply to those aged below 15 or 60 and above.
+#' result by 10000.\cr
+#' The Rate of natural increase or Intrinsic growth rate r (growth in per cent
+#' per year) can be computed from the fertility following \emph{Hassan}
+#' (1981, 140). Alternative ways to calculate the intrinsic growth rate
+#' derive from \emph{Bocquet-Appel and Masset} (1977) and recently from
+#' \emph{McFadden and Oxenham 2018b}. The latter present a regression
+#' analysis based on the index D0--15/D also used for fertility
+#' calculations (see above) in connections with modern data.\cr
+#' Whatever is chosen as base for the growth rate calculations is used
+#' for computing the doubling time in years, assuming exponential steady growth.\cr
+#' Also calculated is the mortality rate m after \emph{Bocquet-Appel and Masset}
+#' (1977) in per cent of a given population. Furthermore, the ratio of dependent individuals
+#' is reported that is usually (but probably erroneously for archaic societies
+#' (\emph{Grupe et al. 2015}, 423) assumed to apply to those aged below 15 or
+#' 60 and above.
 #'
 #' @param life_table an object of class mortaar_life_table.
-#' @param fertility_rate string or numeric. Either fertility rate according
-#' to \emph{McFadden & Oxenham 2018a} if infants are represented well or
-#' fertility rate according to data by \emph{McFadden & Oxenham 2018a} for
-#' P(5-19) index after \emph{Bocquet-Appel 2002}. Options: 'McO'
-#' (McFadden/Oxenham), 'BA_linear' (linear fit), 'BA_power' (power fit)
-#' or 'BA_log' (logistic fit). Default: BA_log'. Additionally, the
-#' user can specify an arbitrary number in lieu of the fertility rate.
+#' @param fertility_rate string or numeric. Either fertility rate according to
+#' \emph{McFadden & Oxenham 2018a} if infants are represented well or fertility
+#' rate according to data by \emph{McFadden & Oxenham 2018a} for P(5-19) index
+#' after \emph{Bocquet-Appel 2002}. Options: 'McFO' (McFadden/Oxenham), 'BA_linear'
+#' (linear fit), 'BA_power' (power fit) or 'BA_log' (logistic fit). Default: BA_log'.
+#' Additionally, the user can specify an arbitrary number in lieu of the fertility rate.
+#' @param growth_rate string or numeric. Either derived directly from the fertility
+#' calculations or from regression analysis by either \emph{McFadden & Oxenham 2018b}
+#' (\eqn{10.06 * D0--14/D) -- 1.61}) or \emph{Bocquet-Appel and Masset}
+#' (\eqn{(1.484 * (log10(200 * d5--14/d20 * d60/d20))**0.03 - 1.485)}).
+#' Options: 'fertility', 'MBA', McFO'. Additionally, the user can specify an
+#' arbitrary number in lieu of the growth rate.
 #' @param gen_len numeric. Length of generation for determining
 #' the rate of doubling the population. Default: 20.
 #'
 #' @return A data.frame with basic reproduction indices:
 #'
 #' \itemize{
+#'
+#'   \item \bold{m}:   Mortality rate (= natality rate n).
+#'
+#'                    \eqn{0.127 * d5--14/d20 + 0.016}
+#'
 #'   \item \bold{DR}:  Dependency ratio.
 #'
 #'                    \eqn{DR = (sum(D0--14) + sum(D60+)) / sum(D15--59) }
 #'
 #'   \item \bold{TFR}:  Total fertility rate.
+#'
 #'   \item \bold{GRR}:  Gross reproduction rate.
 #'
 #'                    \eqn{GRR = TFR * 0.488}
@@ -72,20 +83,16 @@
 #'
 #'   \item \bold{r}:  Intrinsic growth rate in per cent per year.
 #'
-#'                    \eqn{r = 100 * log(NRR) / generation length}
-#'
 #'   \item \bold{Dt}: Doubling time in years.
 #'
-#'                    \eqn{Dt = 100 * 0.6931 / r}
-#'
-#'   \item \bold{RNI}: Rate of Natural Increase in per cent per year.
-#'
-#'                    \eqn{RNI = 10.06 * D0--14/D) -- 1.61}
+#'                    \eqn{Dt = 100 * ln(2) / r}
 #'  }
 #'
 #' @references
 #'
 #' \insertRef{acsadi_history_1970}{mortAAR}
+#'
+#' \insertRef{masset_bocquet_1977}{mortAAR}
 #'
 #' \insertRef{bocquet_appel_2002}{mortAAR}
 #'
@@ -111,21 +118,21 @@
 #'
 #' @rdname lt.reproduction
 #' @export
-lt.reproduction <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+lt.reproduction <- function(life_table, fertility_rate = "BA_log", growth_rate = "fertility",  gen_len = 20) {
   UseMethod("lt.reproduction")
 }
 
 #' @rdname lt.reproduction
 #' @export
 #' @noRd
-lt.reproduction.default <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+lt.reproduction.default <- function(life_table, fertility_rate = "BA_log", growth_rate = "fertility",  gen_len = 20) {
   stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.reproduction
 #' @export
 #' @noRd
-lt.reproduction.mortaar_life_table_list <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+lt.reproduction.mortaar_life_table_list <- function(life_table, fertility_rate = "BA_log", growth_rate = "fertility",  gen_len = 20) {
   lapply(life_table, lt.reproduction)
 }
 
@@ -133,14 +140,14 @@ lt.reproduction.mortaar_life_table_list <- function(life_table, fertility_rate =
 #' @export
 #' @noRd
 #'
-lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_log",  gen_len = 20) {
+lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_log", growth_rate = "fertility",  gen_len = 20) {
 
   indx <- lt.indices(life_table)
 
   # switch to set fertil_rate
   if (is.character(fertility_rate)) {
     switch(fertility_rate,
-      McO = { fertil_rate <- indx$D0_14_D[[1]] * 7.734 + 2.224 },
+      McFO = { fertil_rate <- indx$D0_14_D[[1]] * 7.734 + 2.224 },
       # Linear regression
       BA_linear = { fertil_rate <- indx$p5_19[[1]] * 25.7557 + 2.85273 },
       # power fit
@@ -179,35 +186,52 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   fertility_perc <- fertil.comp(age_cat)
   R_0 <- (fertil_lx * fertility_perc * R_pot_fem / 10000) %>% sum
 
-  # Intrinsic growth rate in percent per year after Hassan
-  intr_grow <- 100 * log(R_0) / gen_len
+  # mortality rate according to Bocquet/Masset 1977
+  mortality_rate <- 0.127 * indx$juvenile_i + 0.016
 
-  # Doubling time in years after Hassan
-  Dt <- 100 * 0.6931 / intr_grow
+  # switch to set growthl_rate
+  if (is.character(growth_rate)) {
+    switch(growth_rate,
+           # Intrinsic growth rate in percent per year after Hassan
+           fertility = { r <- 100 * log(R_0) / gen_len },
+           # Rate of Natural Increase after McFadden/Oxenham
+           McFO = { r <- (10.06 * indx$D0_14_D) - 1.61 },
+           # growth rate according to Bocquet/Masset 1977
+           MBA = { r <- (1.484 * (log10(200 * indx$juvenile_i * indx$senility_i))**0.03 - 1.485) },
+           { stop(paste(
+             "Please choose a valid growth rate",
+             "(either 'fertility', 'McFO' or 'MBA')."
+           )) }
+    )
+  } else if (is.numeric(growth_rate)) {
+    r <- growth_rate
+  } else {
+    stop("Please choose a valid growth rate")
+  }
 
-  # Rate of Natural Increase after McFadden/Oxenham
-  RNI <- (10.06 * indx$D0_14_D) - 1.61
+  # Doubling time in years for exponential steady growth
+  Dt <- 100 * log(2) / r
 
   # compiling result table
   result <- data.frame(
-    method = c("DR", "TFR","GRR", "NRR","r", "Dt", "RNI"),
+    method = c("m", "DR", "TFR","GRR", "NRR","r", "Dt"),
     value = c(
-      round(dependency_ratio*100,1),
-      round(fertil_rate, 1),
-      round(R_pot_fem, 1),
+      round(mortality_rate*100, 2),
+      round(dependency_ratio*100, 2),
+      round(fertil_rate, 2),
+      round(R_pot_fem, 2),
       round(R_0, 2),
-      round(intr_grow, 2),
-      round(Dt, 1),
-      round(RNI, 2)
+      round(r, 2),
+      round(Dt, 2)
     ),
     description = c(
+      "Mortality",
       "Dependency ratio",
       "Total fertility rate",
       "Gross reproduction rate",
       "Net reproduction rate",
-      "Intrinsic growth rate",
-      "Doubling time in years",
-      "Rate of Natural Increase"
+      "Rate of natural increase",
+      "Doubling time in years"
     ),
     stringsAsFactors = FALSE
   )

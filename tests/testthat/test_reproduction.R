@@ -1,11 +1,11 @@
-test_that("lt.reproduction failes for wrong input", {
+test_that("lt.reproduction fails for wrong input", {
   expect_snapshot_error(lt.reproduction(1))
 })
 
 test_that("lt.reproduction produces the right output", {
   sl <- life.table(schleswig_ma[c("a", "Dx")])
   expect_snapshot_value(
-    lt.reproduction(sl, fertility_rate = "McO"),
+    lt.reproduction(sl, fertility_rate = "McFO"),
     style = c("json2")
   )
   expect_snapshot_value(
@@ -22,6 +22,22 @@ test_that("lt.reproduction produces the right output", {
   )
   expect_snapshot_value(
     lt.reproduction(sl, fertility_rate = 5),
+    style = c("json2")
+  )
+  expect_snapshot_value(
+    lt.reproduction(sl, growth_rate = "fertility"),
+    style = c("json2")
+  )
+  expect_snapshot_value(
+    lt.reproduction(sl, growth_rate = "MBA"),
+    style = c("json2")
+  )
+    expect_snapshot_value(
+    lt.reproduction(sl, growth_rate = "McFO"),
+    style = c("json2")
+  )
+    expect_snapshot_value(
+    lt.reproduction(sl,growth_rate = 1.1),
     style = c("json2")
   )
   expect_snapshot_value(

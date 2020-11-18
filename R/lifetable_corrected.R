@@ -12,16 +12,7 @@
 #' to archaeological data is highly debated and does not necessarily
 #' lead to reliable results. Therefore, the correction needs to be
 #' weighted carefully and ideally only after the representativity of the
-#' base data has been checked with function lt.representativity.\cr
-#' Building on the same regression analyses, Bocquet-Appel and Masset
-#' also supplied estimates for the mortality rate m (which in
-#' archaeological case necessarily is the same as the natality
-#' rate n because it has to be assumed that the population is
-#' stationary). A value of 0.01, for example, means that 1 among
-#' 100 individuals died per year. The intrinsic growth rate r is
-#' computed based on the proportion of subadults and might be
-#' interesting to compare with the growth rate based on fertility
-#' indices (function lt.reproduction).
+#' base data has been checked with function lt.representativity.
 #'
 #' For the parameters see the documentation of \code{\link{life.table}}.
 #'
@@ -38,8 +29,6 @@
 #'   \item \bold{e0}:   Corrected life expectancy.
 #'   \item \bold{1q0}:   Mortality of age group 0--1.
 #'   \item \bold{5q0}:   Mortality of age group 0--5.
-#'   \item \bold{m}:   Mortality rate (= natality rate n).
-#'   \item \bold{r}:   Intrinsic growth rate.
 #'}
 #'
 #'
@@ -98,16 +87,6 @@ lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfa
   q5_0_range_start <- round(q5_0 - 0.041,3)
   q5_0_range_end <- round(q5_0 + 0.041,3)
 
-  # mortality rate according to Bocquet/Masset 1977
-  mortality_rate <- 0.127 * indx$juvenile_i + 0.016
-  mortality_rate_range_start <- round(mortality_rate - 0.002, 3)
-  mortality_rate_range_end <- round(mortality_rate + 0.002, 3)
-
-  # growth rate according to Bocquet/Masset 1977
-  growth_rate <- (1.484 * (log10(200 * indx$juvenile_i * indx$senility_i))**0.03 - 1.485)
-  growth_rate_range_start <- round(growth_rate - 0.006, 3)
-  growth_rate_range_end <- round(growth_rate + 0.006, 3)
-
   # calculation of life table correction
   Dx_sum_corrected <- (life_table$Dx %>% sum - life_table$Dx[1]) / (1 - q5_0)
   Dx5_0_corrected <- q5_0 * Dx_sum_corrected
@@ -135,27 +114,21 @@ lt.correction.mortaar_life_table <- function(life_table, agecor = TRUE, agecorfa
 
   # putting together the indices data.frame
   e0_q5_0 <- data.frame(
-    method = c("e0", "1q0", "5q0", "m", "r"),
+    method = c("e0", "1q0", "5q0"),
     value = c(
       round(e0, 3),
       round(q1_0, 3),
-      round(q5_0, 3),
-      round(mortality_rate, 3),
-      round(growth_rate, 3)
+      round(q5_0, 3)
     ),
     range_start = c(
       e0_range_start,
       q1_0_range_start,
-      q5_0_range_start,
-      mortality_rate_range_start,
-      growth_rate_range_start
+      q5_0_range_start
     ),
     range_end = c(
       e0_range_end,
       q1_0_range_end,
-      q5_0_range_end,
-      mortality_rate_range_end,
-      growth_rate_range_end
+      q5_0_range_end
     ),
     stringsAsFactors = FALSE
   )
