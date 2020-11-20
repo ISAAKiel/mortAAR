@@ -4,33 +4,16 @@
 \alias{mortaar_life_table}
 \alias{as.mortaar_life_table_list}
 \alias{as.mortaar_life_table}
-\alias{[.mortaar_life_table_list}
-\alias{[<-.mortaar_life_table_list}
-\alias{[[<-.mortaar_life_table_list}
-\alias{$<-.mortaar_life_table_list}
-\title{\strong{mortaar_life_table} and \strong{mortaar_life_table_list}}
+\title{{mortaar_life_table} and {mortaar_life_table_list}}
 \usage{
 as.mortaar_life_table_list(x, ...)
 
 as.mortaar_life_table(x, ...)
-
-\method{[}{mortaar_life_table_list}(x, i)
-
-\method{[}{mortaar_life_table_list}(x, i) <- value
-
-\method{[[}{mortaar_life_table_list}(x, i) <- value
-
-\method{$}{mortaar_life_table_list}(x, i) <- value
 }
 \arguments{
 \item{x}{an object}
 
 \item{...}{further arguments passed to or from other methods}
-
-\item{i}{an index (name or number)}
-
-\item{value}{an object of class mortaar_life_table or mortaar_life_table_list to
-replace the indexed value}
 }
 \description{
 The \strong{mortaar_life_table} is the central data structure of the

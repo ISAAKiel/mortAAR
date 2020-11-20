@@ -2,18 +2,9 @@
 % Please edit documentation in R/lifetable_indices.R
 \name{lt.indices}
 \alias{lt.indices}
-\alias{lt.indices.default}
-\alias{lt.indices.mortaar_life_table_list}
-\alias{lt.indices.mortaar_life_table}
 \title{Generates indices from a mortAAR life table for use in other functions}
 \usage{
 lt.indices(life_table)
-
-\method{lt.indices}{default}(life_table)
-
-\method{lt.indices}{mortaar_life_table_list}(life_table)
-
-\method{lt.indices}{mortaar_life_table}(life_table)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
@@ -28,24 +19,20 @@ A list with the following indices and vectors:
   \item \bold{P(5-19)}:  ratio of individuals aged 5--19 to those aged
   5 or above according to \emph{Bocquet-Appel 2002}.
   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
-  according to \emph{McFadden & Oxenham 2018} if infants are represented
+  according to \emph{McFadden & Oxenham 2018a} if infants are represented
   well.
   \item \bold{e0}:   life expectancy at age 0.
 }
 }
 \description{
 This function bundles a number of indices and vectors from a mortAAR
-life table which are needed by other functions in mortAAR.
+life table which are needed by other functions in mortAAR. The results
+are only meaningful if 5-year-categories have been chosen to construct
+the life table.
 }
 \examples{
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 lt.indices(schleswig)
-
-odagsen <- life.table(list(
-  "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
-  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
-))
-lt.indices(odagsen)
 
 }
 \references{
@@ -53,5 +40,5 @@ lt.indices(odagsen)
 
 \insertRef{masset_bocquet_1977}{mortAAR}
 
-\insertRef{mcfadden_oxenham_2018}{mortAAR}
+\insertRef{mcfadden_oxenham_2018a}{mortAAR}
 }

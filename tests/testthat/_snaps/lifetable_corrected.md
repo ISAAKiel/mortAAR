@@ -25,7 +25,7 @@
             "row.names": {
               "type": "integer",
               "attributes": {},
-              "value": [1, 2, 3, 4, 5]
+              "value": [1, 2, 3]
             },
             "class": {
               "type": "character",
@@ -37,22 +37,22 @@
             {
               "type": "character",
               "attributes": {},
-              "value": ["e0", "1q0", "5q0", "m", "r"]
+              "value": ["e0", "1q0", "5q0"]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [22.549, 0.29, 0.465, 0.044, 0.003]
+              "value": [22.549, 0.29, 0.465]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [21.046, 0.274, 0.424, 0.042, -0.003]
+              "value": [21.046, 0.274, 0.424]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [24.052, 0.306, 0.506, 0.046, 0.009]
+              "value": [24.052, 0.306, 0.506]
             }
           ]
         },
@@ -159,7 +159,7 @@
             "row.names": {
               "type": "integer",
               "attributes": {},
-              "value": [1, 2, 3, 4, 5]
+              "value": [1, 2, 3]
             },
             "class": {
               "type": "character",
@@ -171,22 +171,22 @@
             {
               "type": "character",
               "attributes": {},
-              "value": ["e0", "1q0", "5q0", "m", "r"]
+              "value": ["e0", "1q0", "5q0"]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [22.549, 0.29, 0.465, 0.044, 0.003]
+              "value": [22.549, 0.29, 0.465]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [21.046, 0.274, 0.424, 0.042, -0.003]
+              "value": [21.046, 0.274, 0.424]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [24.052, 0.306, 0.506, 0.046, 0.009]
+              "value": [24.052, 0.306, 0.506]
             }
           ]
         },
@@ -303,7 +303,7 @@
                 "row.names": {
                   "type": "integer",
                   "attributes": {},
-                  "value": [1, 2, 3, 4, 5]
+                  "value": [1, 2, 3]
                 },
                 "class": {
                   "type": "character",
@@ -315,22 +315,22 @@
                 {
                   "type": "character",
                   "attributes": {},
-                  "value": ["e0", "1q0", "5q0", "m", "r"]
+                  "value": ["e0", "1q0", "5q0"]
                 },
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [22.549, 0.29, 0.465, 0.044, 0.003]
+                  "value": [22.549, 0.29, 0.465]
                 },
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [21.046, 0.274, 0.424, 0.042, -0.003]
+                  "value": [21.046, 0.274, 0.424]
                 },
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [24.052, 0.306, 0.506, 0.046, 0.009]
+                  "value": [24.052, 0.306, 0.506]
                 }
               ]
             },
@@ -434,7 +434,7 @@
                 "row.names": {
                   "type": "integer",
                   "attributes": {},
-                  "value": [1, 2, 3, 4, 5]
+                  "value": [1, 2, 3]
                 },
                 "class": {
                   "type": "character",
@@ -446,22 +446,22 @@
                 {
                   "type": "character",
                   "attributes": {},
-                  "value": ["e0", "1q0", "5q0", "m", "r"]
+                  "value": ["e0", "1q0", "5q0"]
                 },
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [22.549, 0.29, 0.465, 0.044, 0.003]
+                  "value": [22.549, 0.29, 0.465]
                 },
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [21.046, 0.274, 0.424, 0.042, -0.003]
+                  "value": [21.046, 0.274, 0.424]
                 },
                 {
                   "type": "double",
                   "attributes": {},
-                  "value": [24.052, 0.306, 0.506, 0.046, 0.009]
+                  "value": [24.052, 0.306, 0.506]
                 }
               ]
             },

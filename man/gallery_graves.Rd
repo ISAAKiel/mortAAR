@@ -24,8 +24,13 @@ not well prepared and needs some adjustment.
 \insertRef{czarnetzki_menschlichen_1966}{mortAAR}
 }
 \seealso{
-Other training: 
+Other lifetables: 
+\code{\link{aiterhofen_oedmuehlen}},
 \code{\link{magdalenenberg}},
-\code{\link{muensingen}}
+\code{\link{muensingen}},
+\code{\link{nitra}},
+\code{\link{odagsen_cm}},
+\code{\link{odagsen_mo}},
+\code{\link{schleswig_ma}}
 }
-\concept{training}
+\concept{lifetables}

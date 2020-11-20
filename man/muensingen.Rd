@@ -24,12 +24,13 @@ if the respective burial contained grave goods (yes or no).
 \insertRef{moghaddam_et_al_muensingen_2016}{mortAAR}
 }
 \seealso{
-Other vignette: 
-\code{\link{magdalenenberg}}
-
-Other training: 
+Other lifetables: 
+\code{\link{aiterhofen_oedmuehlen}},
 \code{\link{gallery_graves}},
-\code{\link{magdalenenberg}}
+\code{\link{magdalenenberg}},
+\code{\link{nitra}},
+\code{\link{odagsen_cm}},
+\code{\link{odagsen_mo}},
+\code{\link{schleswig_ma}}
 }
-\concept{training}
-\concept{vignette}
+\concept{lifetables}

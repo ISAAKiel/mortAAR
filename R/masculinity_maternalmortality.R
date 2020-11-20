@@ -59,12 +59,14 @@ lt.sexrelation <- function(females,males) {
 
 #' @rdname lt.sexrelation
 #' @export
+#' @noRd
 lt.sexrelation.default <- function(females,males) {
   stop("First argument is not an object of class mortaar_life_table.")
 }
 
 #' @rdname lt.sexrelation
 #' @export
+#' @noRd
 #'
 lt.sexrelation.mortaar_life_table <- function(females, males) {
 

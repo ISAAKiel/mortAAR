@@ -1,6 +1,8 @@
 # mortAAR master
 - adding an option for plotting in color instead of linetype
-- adding more functions for ##
+- adding more functions for checking representativity of age data, calculating reproduction indices, masculinity index, maternal mortality rate as well as corrected life tables
+- major re-factoring
+- rewriting of tests to work with testthat's new snapshot-functionality
 
 # mortAAR 1.0.2
 

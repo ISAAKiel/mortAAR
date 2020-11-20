@@ -16,10 +16,10 @@ is.mortaar_life_table(x, ...)
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-true if x is a mortaar_life_table_list, otherwise false.
+true if x is a mortaar_life_table or a mortaar_life_table_list, otherwise false.
 }
 \description{
-Checks class membership.
+Checks if a variable is of class mortaar_life_table or mortaar_life_table_list
 }
 \examples{
 # Create a mortaar_life_table from a prepared dataset.
@@ -39,3 +39,4 @@ odagsen <- life.table(list(
 is.mortaar_life_table_list(odagsen)
 
 }
+\keyword{internal}

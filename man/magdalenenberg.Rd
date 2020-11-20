@@ -21,12 +21,13 @@ pooled for constructing a life table.
 \insertRef{zaeuner_wahl_magdalenenberg_2013}{mortAAR}
 }
 \seealso{
-Other vignette: 
-\code{\link{muensingen}}
-
-Other training: 
+Other lifetables: 
+\code{\link{aiterhofen_oedmuehlen}},
 \code{\link{gallery_graves}},
-\code{\link{muensingen}}
+\code{\link{muensingen}},
+\code{\link{nitra}},
+\code{\link{odagsen_cm}},
+\code{\link{odagsen_mo}},
+\code{\link{schleswig_ma}}
 }
-\concept{training}
-\concept{vignette}
+\concept{lifetables}

@@ -2,26 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{plot}
 \alias{plot}
-\alias{plot.mortaar_life_table}
-\alias{plot.mortaar_life_table_list}
 \title{Plot a mortaar_life_table or a mortaar_life_table_list}
-\usage{
-\method{plot}{mortaar_life_table}(
-  x,
-  display = c("dx", "qx", "lx", "ex", "rel_popx"),
-  line_vis = "linetype",
-  prefer.ggplot = TRUE,
-  ...
-)
-
-\method{plot}{mortaar_life_table_list}(
-  x,
-  display = c("dx", "qx", "lx", "ex", "rel_popx"),
-  line_vis = "linetype",
-  prefer.ggplot = TRUE,
-  ...
-)
-}
 \arguments{
 \item{x}{a mortaar_life_table or a mortaar_life_table_list.}
 

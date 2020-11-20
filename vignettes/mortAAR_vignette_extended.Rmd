@@ -1,17 +1,17 @@
 ---
-title: "Vignette >>Extended discussion<<"
+title: "Vignette >Extended discussion<"
 author: "Nils Müller-Scheeßel"
 date: "October 2017"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
-csl: "`r library(RCurl); ifelse(url.exists('https://www.zotero.org/styles/journal-of-archaeological-science'), 'https://www.zotero.org/styles/journal-of-archaeological-science', '')`"
+csl: "`r library(RCurl); ifelse(url.exists('https://www.zotero.org/styles/offa'), 'https://www.zotero.org/styles/offa', '')`"
 vignette: >
-  %\VignetteIndexEntry{Vignette >>Extended discussion<<}
+  %\VignetteIndexEntry{Vignette >Extended discussion<}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-# Introduction
+## Introduction
 
 Life tables have only a marginal position in archaeological research, for different reasons. Columns with rows of multidigit numbers carrying strange labels can be daunting, and indeed the mathematics behind the construction of life tables based on modern census data are not for the faint-of-heart. Compared to life tables based on real census data, archaeological ones are more straightforward, but their interpretation carries its own problems. First and foremost, they pretend to have a degree of exactness which is not supported by the underlying data. This is another reason, why life-tables are considered with a certain degree of suspiciousness by archaeologists. And finally, despite the fact that the construction of archaeological life tables can be straightforward, it involves a lot of computation and number-crunching compared to other methods used in the archaeological discourse. To our current knowledge, an easy to use and accessible tool for computing life tables is missing. This is why we sat down and created mortAAR for R. We hope it will be of use for archaeologists world-wide.  
   
@@ -21,7 +21,7 @@ However, perhaps even more important than the different methods of computing, ar
 
 ---
 
-# Overview of features
+## Overview of features
 In our view, mortAAR shines in the following areas:
 
 ### Ease and flexibility of the input
@@ -29,35 +29,35 @@ We worked hard to allow the user as many customisations as feasible. First and f
 
 In most data sets, the date ranges are defined rather loosely, reflecting the belief that one year more or less does not count taking the basic methods of age estimation into account. However, for the construction of life tables it should be obvious that 20--40 is not the same as 20--39.In the former case the individual in question will also contribute to the age class of 40--44 (using 5-year-classes). Therefore, the user should check the methodology the data-set uses carefully - if they did not generate it themselves. To spare the user the possible inconvenience to transform the data to match any given methodology, both possibilities -- labelled „included“ (e.g., 20--39) and „excluded“ (e.g. 20--40) -- are made available.
 
-The custom method of constructing the life table follows the approach used in modern data. It uses 5 year-classes, except for the youngest class. Following Ascadi and Nemeskeri [@acsadi_history_1970], for Central Europe it has become practice to publish either the full life table or a collapsed form with five year-intervals (@herrmann_prahistorische_1990, 304ff., @kokkotidis_graberfeld-_1991). However, in the international demographic discourse (e.g., @keyfitz_world_population_1968), the first 5-year-age group is subdivided into those having died in their first year of life (0) and those having died in the second to fifth year (1--4). Because the differences are highly relevant in many archaeological contexts and the information is also -- contrary to the possibilities in the higher age groups -- anthropologically available, we decided to choose this as default methodology. With that, we hope to enhance the comparability of historic or present-day demographic data with that of archaeological origin. However, if the user has good reasons to do it differently, they are also allowed to define their own age classes. Furthermore, the user is encouraged to define any possible variable as a grouping variable. For an individual cemetery, this will mostly include the sex of the deceased, but it might as well be defined as marking different populations.
+The custom method of constructing the life table follows the approach used in modern data. It uses 5 year-classes, except for the youngest class. Following Ascadi and Nemeskeri [-@acsadi_history_1970], for Central Europe it has become practice to publish either the full life table or a collapsed form with five year-intervals [@herrmann_prahistorische_1990, 304ff.; @kokkotidis_graberfeld-_1991]. However, in the international demographic discourse [e.g., @keyfitz_world_population_1968], the first 5-year-age group is subdivided into those having died in their first year of life (0) and those having died in the second to fifth year (1--4). Because the differences are highly relevant in many archaeological contexts and the information is also -- contrary to the possibilities in the higher age groups -- anthropologically available, we decided to choose this as default methodology. With that, we hope to enhance the comparability of historic or present-day demographic data with that of archaeological origin. However, if the user has good reasons to do it differently, they are also allowed to define their own age classes. Furthermore, the user is encouraged to define any possible variable as a grouping variable. For an individual cemetery, this will mostly include the sex of the deceased, but it might as well be defined as marking different populations.
 
 ### Sophisticated means of computation
-To get discrete age classes from time spans of individuals or groups of individuals, as they are usually provided by anthropological studies, the time span is spread across single years; the individual values for these years are afterwards pooled together to whichever age class the user chose initially. It is tempting to define different kernels for the spreading process (e.g., Gaussian), but in our view this solution would not reflect the anthropological diagnosis correctly: An individual diagnosed of being of adult age in Central European terminology -- that is, 20 to 39 years old -- has the same chances of being in reality, say, 22 or 38. The Gaussian kernel, however, would imply the highest probability of it being 30 years. This is why we decided to follow an equi-divisional approach (called "proportional" by J. L. Boldsen@boldsen_methods_1988). Each year of the reported time interval of an individual or a group of individuals is assigned the same value, essentially the same probability of being the true age.  
+To get discrete age classes from time spans of individuals or groups of individuals, as they are usually provided by anthropological studies, the time span is spread across single years; the individual values for these years are afterwards pooled together to whichever age class the user chose initially. It is tempting to define different kernels for the spreading process (e.g., Gaussian), but in our view this solution would not reflect the anthropological diagnosis correctly: An individual diagnosed of being of adult age in Central European terminology -- that is, 20 to 39 years old -- has the same chances of being in reality, say, 22 or 38. The Gaussian kernel, however, would imply the highest probability of it being 30 years. This is why we decided to follow an equi-divisional approach [called "proportional" by J. L. @boldsen_methods_1988]. Each year of the reported time interval of an individual or a group of individuals is assigned the same value, essentially the same probability of being the true age.  
 
-While the general steps for computing an archaeological life table are straightforward -- leaving idiosyncracies like the choice of the size of the radix and the exact formulas aside --, that is: all formulas circulating in archaeological textbooks reach the same results (except possible rounding errors), one detail tends to be overlooked. This detail concerns the average number of years lived by an individual that died within a specific age class (here called A(x) following the UN tables, elsewhere specified as „nax“). A(x) is of importance for computing L(x), the overall number of years lived within an age class, ultimately used to calculate life expectancy and the reconstruction of population. In virtually all archaeological text books, A(x) is defined as a/2, essentially splitting the length of the age interval in question in half. As we cannot know the exact date of death, given the current set of age estimation methods, this method seems beneficial for the beginning. The verdict of N. Keyfitz (@keyfitz_applied_1977, 13) -- „The uniform distribution of deaths […] leads to nax = n/2, but this is not acceptable when the age interval n is as wide as 5 years.“ -- has certainly its validity when dealing with modern census data, but might be disregarded for older individuals, as the empirical value for age classes > 5 years is very close to 2.5, the computed value (empirically, it mostly hovers between 2.45 and 2.65 as older individuals tend to die later than within the middle of their class. This is far more difficult to generalize than for the younger age classes [see below]). Interestingly, this problem is valid even for empiric modern life tables for the first age group (0-1 years) where the age of death is recorded only in years, not in months. It seems that Keyfitz (@keyfitz_probabilities_1970, 31) was the first to assume a value for nax to overcome this problem. From empirical data, he came to the following values for the youngest age classes: $a_0 = 0.07 + 1.7M_0$, and for ages from 1 to 4 to $_4a_1 = 1.5$. Elsewhere (@keyfitz_applied_1977) he has called this the "separation factor". Counterintuitively this separation factor for the youngest age groups is relatively small in developed countries (e.g., ibid. p. 15), but large in developing countries or historical data (and, supposedly, also in prehistoric times). This means that if young children die at all in developed countries, they do this very young. In life tables of developing countries, the average of lived years for a=0 and a=1--4 hovers around 0.3 and 1.3, thus, we decided to approximate A(x) for age classes <5 with a/3, as we think that taking the separation factor into account is well backed by empirical data (also implied by [@chamberlain_demography_2006], 30; for anthropological data already: @weiss_demography_1973, 37). The computation with this factor is the default setting. However, if the user does not agree, she is, of course, able to supply her own factor values or to disregard the factor approach altogether.
+While the general steps for computing an archaeological life table are straightforward -- leaving idiosyncracies like the choice of the size of the radix and the exact formulas aside --, that is: all formulas circulating in archaeological textbooks reach the same results (except possible rounding errors), one detail tends to be overlooked. This detail concerns the average number of years lived by an individual that died within a specific age class (here called A(x) following the UN tables, elsewhere specified as „nax“). A(x) is of importance for computing L(x), the overall number of years lived within an age class, ultimately used to calculate life expectancy and the reconstruction of population. In virtually all archaeological text books, A(x) is defined as a/2, essentially splitting the length of the age interval in question in half. As we cannot know the exact date of death, given the current set of age estimation methods, this method seems beneficial for the beginning. The verdict of N. Keyfitz [-@keyfitz_applied_1977, 13] -- „The uniform distribution of deaths […] leads to nax = n/2, but this is not acceptable when the age interval n is as wide as 5 years.“ -- has certainly its validity when dealing with modern census data, but might be disregarded for older individuals, as the empirical value for age classes > 5 years is very close to 2.5, the computed value (empirically, it mostly hovers between 2.45 and 2.65 as older individuals tend to die later than within the middle of their class. This is far more difficult to generalize than for the younger age classes [see below]). Interestingly, this problem is valid even for empiric modern life tables for the first age group (0-1 years) where the age of death is recorded only in years, not in months. It seems that Keyfitz [-@keyfitz_probabilities_1970, 31] was the first to assume a value for nax to overcome this problem. From empirical data, he came to the following values for the youngest age classes: $a_0 = 0.07 + 1.7M_0$, and for ages from 1 to 4 to $_4a_1 = 1.5$. Elsewhere [@keyfitz_applied_1977] he has called this the "separation factor". Counterintuitively this separation factor for the youngest age groups is relatively small in developed countries (e.g., ibid. p. 15), but large in developing countries or historical data (and, supposedly, also in prehistoric times). This means that if young children die at all in developed countries, they do this very young. In life tables of developing countries, the average of lived years for a=0 and a=1--4 hovers around 0.3 and 1.3, thus, we decided to approximate A(x) for age classes <5 with a/3, as we think that taking the separation factor into account is well backed by empirical data [also implied by @chamberlain_demography_2006, 30; for anthropological data already: @weiss_demography_1973, 37]. The computation with this factor is the default setting. However, if the user does not agree, she is, of course, able to supply her own factor values or to disregard the factor approach altogether.
 
 ### Comprehensiveness of output
 mortAAR provides life tables for every group the user specified and on its own one table for all groups combined. Furthermore, it allows to visualize the resulting data sets via curve plots. The user can simply click through the plots for the different key values and thereby get a clear picture about the specificities of each data set, also -- if more than one category was specified -- about the differences between the data sets.  
 
-Finally, we added the reconstruction of age distribution of the given population as an additional column (rel_popx). This is usually not provided by modern standard life tables. Following @kokkotidis_graberfeld-_1991, 227, this is achieved by dividing L(x) by T0 (for a different equation see @weiss_demography_1973, 38).
+Finally, we added the reconstruction of age distribution of the given population as an additional column (rel_popx). This is usually not provided by modern standard life tables. Following Kokkotidis and Richter [-@kokkotidis_graberfeld-_1991, 227], this is achieved by dividing L(x) by T0 [for a different equation see @weiss_demography_1973, 38].
 
 ---
 
-# Archaeological example
+## Archaeological example
 
-## Münsingen
+### Münsingen
 
-### Archaeological background
+#### Archaeological background
 
-The cemetery of Münsingen-Rain was discovered in 1904 during quarrying and then extensively excavated in 1906. The dead were buried singly and supine in wodden coffins, often lavishly equipped with jewelry or weapons. The documentation and subsequent publication of the graves in 1908 (@wiedmer-stern_graeberfeld_1908) was outstanding for that time. This and the fact that Münsingen-Rain with 220--230 individuals and its occupation of roughly 300 years covers much of the Latène period secured it one of the most important places in typological and chronological studies of that period (@hodson_cemetery_1968; see also @mueller_muensingen_1998).  
+The cemetery of Münsingen-Rain was discovered in 1904 during quarrying and then extensively excavated in 1906. The dead were buried singly and supine in wodden coffins, often lavishly equipped with jewelry or weapons. The documentation and subsequent publication of the graves in 1908 [@wiedmer-stern_graeberfeld_1908] was outstanding for that time. This and the fact that Münsingen-Rain with 220--230 individuals and its occupation of roughly 300 years covers much of the Latène period secured it one of the most important places in typological and chronological studies of that period [@hodson_cemetery_1968; see also @mueller_muensingen_1998].  
 
-Recently, in a number of studies, the anthropological and archaeological material has been reanalysed from different angles (@jud_untersuchungen_1998; @alt_et_al_verwandtschaft_2005; @mueller_et_al_artefacts_2008; @scheeres_et_al_investigations_in_press; @moghaddam_et_al_muensingen_2016). Though some papers explicitly dealt with the age and sex structure of the cemetery (e.g., @hinton_analysis_1986; @jud_untersuchungen_1998, 125ff.), interestingly, none has yet presented a thorough demographic analysis of the individuals from Münsingen-Rain.  
+Recently, in a number of studies, the anthropological and archaeological material has been reanalysed from different angles [@jud_untersuchungen_1998; @alt_et_al_verwandtschaft_2005; @mueller_et_al_artefacts_2008; @scheeres_et_al_investigations_in_press; @moghaddam_et_al_muensingen_2016]. Though some papers explicitly dealt with the age and sex structure of the cemetery [e.g., @hinton_analysis_1986; @jud_untersuchungen_1998, 125ff.], interestingly, none has yet presented a thorough demographic analysis of the individuals from Münsingen-Rain.  
 
-### The data set
+#### The data set
 
-The data originates from a published report of recent scientific analyses of the surviving skeletal material (@moghaddam_et_al_muensingen_2016) of 71 individuals. The data is available as supplemental online material and was directly taken from the respective xlsx-file. Beside the age-range of each individuals the sex, the archaeological phase and the binary information if grave goods, if existing, are included. Further columns that are not of interest in the present context were omitted. The authors do not compare their results with those of an older investigation of the same individuals. However, a comparison with @hug_sammlung_1956 shows that generally there is a very good agreement in age as well as sex determination.  
+The data originates from a published report of recent scientific analyses of the surviving skeletal material [@moghaddam_et_al_muensingen_2016] of 71 individuals. The data is available as supplemental online material and was directly taken from the respective xlsx-file. Beside the age-range of each individuals the sex, the archaeological phase and the binary information if grave goods, if existing, are included. Further columns that are not of interest in the present context were omitted. The authors do not compare their results with those of an older investigation of the same individuals. However, a comparison with Hug [-@hug_sammlung_1956] shows that generally there is a very good agreement in age as well as sex determination.  
 
-### Constructing the life table
+#### Constructing the life table
 
 ```{r, message=FALSE}
 # load package dependencies
@@ -147,7 +147,7 @@ muen_result %>%
   plot(display = c("dx","qx", "lx", "ex", "rel_popx"))  
 ```
 
-### Mortality patterns
+#### Mortality patterns
 
 The maximum within the proportion of deaths (dx) of all individuals from Münsingen-Rain is around 40 years. Largely missing are younger individuals below 20, but also the age of 50 and above is only slightly present. Especially the apparent lack of the subadult individuals generates questions concerning the representation of the data. Already a superficial look at any modern life tables leads to the expectation of far higher numbers of younger individuals. Therefore, the obvious conclusion seems that not everybody was buried within the cemetery.  
 
@@ -155,31 +155,31 @@ However, there are also differences between the adult individuals. The maximum i
 
 As a result the analysis leaves more open questions than answers: Representation is obviously not given, as is demonstrated by the largely missing subadult individuals. However, even with adult individuals, the highly differing mortality pattern between males and females elicits the question if this was really due to the differing life expectancy or differing cultural preferences in burying males and females.
 
-We invite the reader to regroup the data with the variables "latene_phase" and "grave_goods" and compare her results with the conclusions by P. Hinton (@hinton_analysis_1986).
+We invite the reader to regroup the data with the variables "latene_phase" and "grave_goods" and compare her results with the conclusions by P. Hinton [-@hinton_analysis_1986].
   
 
 
-## Magdalenenberg
+### Magdalenenberg
 
-### Archaeological Background
+#### Archaeological Background
 
 One of the biggest burial mounds in Central Europe is the so-called [‘Magdalenenberg‘](http://en.wikipedia.org/wiki/Magdalenenberg) near Villingen-Schwenningen in Baden-Württemberg. Within the Early Iron Age it dates into the beginning of the Upper Hallstatt Period (c. 620--450 calBC). It had a diameter of over 100 metres and has still a height of 6,5 metres. For complete excavation 45000 cubic metres of earth and stone had to be moved. The first excavations took place in 1887 and 1890 and are in an excellent state of preservation. A modern excavation was done between 1970 and 1973 by Konrad Spindler.  
 
-The central grave was probably erected in 616 BC, as established by dendrochronology (@billamboz_neyses_fuerstengrab_1999); it had already been reopened in ancient times, but the wooden chamber was still in pristine condition when excavated. Furthermore, more than 100 additional burials were found which were dug into the burial mound a relatively short period after the installation of the central grave. These proved to be of great importance for relative chronology as well as for the social interpretation of the Hallstatt period.  
+The central grave was probably erected in 616 BC, as established by dendrochronology [@billamboz_neyses_fuerstengrab_1999]; it had already been reopened in ancient times, but the wooden chamber was still in pristine condition when excavated. Furthermore, more than 100 additional burials were found which were dug into the burial mound a relatively short period after the installation of the central grave. These proved to be of great importance for relative chronology as well as for the social interpretation of the Hallstatt period.  
 
-The importance of the ‘Magdalenenberg‘ does not only derived from the excellent preservation and the many burials that were uncovered, but also from the fact that the excavator Spindler did not choose to wait for the publication until everything was excavated or studied. He started to publish the raw results already in 1971 when the excavation was still under way. By 1980 all graves were published in six volumes (@spindler_magdalenenberg_i, @spindler_magdalenenberg_ii, @spindler_magdalenenberg_iii, @spindler_magdalenenberg_iv, @spindler_magdalenenberg_v, @spindler_magdalenenberg_vi).  
+The importance of the ‘Magdalenenberg‘ does not only derived from the excellent preservation and the many burials that were uncovered, but also from the fact that the excavator Spindler did not choose to wait for the publication until everything was excavated or studied. He started to publish the raw results already in 1971 when the excavation was still under way. By 1980 all graves were published in six volumes [@spindler_magdalenenberg_i; -@spindler_magdalenenberg_ii; -@spindler_magdalenenberg_iii; -@spindler_magdalenenberg_iv; -@spindler_magdalenenberg_v; -@spindler_magdalenenberg_vi].  
 
-In recent years the anthropological material has been subjected to stable isotope analyses (@oelze_et_al_analysis_2012). In this context the whole material was analysed again by established anthropological methods to get more information on the age and sex of the deceased. This resulted into a paper on the demographic structure of the population of 'Magdalenenberg' (@zaeuner_wahl_magdalenenberg_2013). The new analyses were able to specify the results in some respects done in the 1970s, but for the sake of this paper it is important to emphasize that in general, they are both congruent.  
+In recent years the anthropological material has been subjected to stable isotope analyses [@oelze_et_al_analysis_2012]. In this context the whole material was analysed again by established anthropological methods to get more information on the age and sex of the deceased. This resulted into a paper on the demographic structure of the population of 'Magdalenenberg' [@zaeuner_wahl_magdalenenberg_2013]. The new analyses were able to specify the results in some respects done in the 1970s, but for the sake of this paper it is important to emphasize that in general, they are both congruent.  
 
 
-### The data set
+#### The data set
 
-The aforementioned paper (@zaeuner_wahl_magdalenenberg_2013) provides a complete table of the findings, but as this is very detailed, it is easier to refer to the life table the authors generated. They refrained from including an age range of 0--1, so we followed them in this. As explained above, mortAAR allows this easily. For the oldest age, we assumed, similar to Münsingen, a maximal age of 69 (because the age ranges are in this case inclusive). 
+The aforementioned paper [@zaeuner_wahl_magdalenenberg_2013] provides a complete table of the findings, but as this is very detailed, it is easier to refer to the life table the authors generated. They refrained from including an age range of 0--1, so we followed them in this. As explained above, mortAAR allows this easily. For the oldest age, we assumed, similar to Münsingen, a maximal age of 69 (because the age ranges are in this case inclusive). 
 
 Because of one peculiarity their life table differs from the one mortAAR generates: they estimated the lived years of the oldest age group, 4.72 individuals, with 0, which means that they assumed that the individuals died after reaching their 60th birthday. This does not seem very plausible to us, and we think that the result of mortAAR is more realistic (average death in the middle of the age class). The differences apply specifically to the sum of lived years (Lx) and thus also to Tx, ex and the relative population measure (rel_popx).  
 
 
-### Constructing the life table
+#### Constructing the life table
 
 The preparing steps for the construction of the life table of the population from 'Magdalenenberg' are less extensive than from Münsingen-Rain because the data already came from a life table and is thus better prepared.  
 
@@ -229,18 +229,18 @@ mag_result %>%
   plot(display = c("dx","qx","ex"))  
 ```
 
-### Mortality patterns
+#### Mortality patterns
 
 Very similar to the Münsingen example, the maximum within the proportion of deaths (dx) of all individuals is in early grown up years, this time around 30 years. Again, largely missing are younger individuals below 20, but also the age of 50 and above. Because of the lack of younger individuals, life expectancy at birth is relatively high at 32.2 years. Already observed by Zäuner and Wahl, the fact that life expectancy is steadily declining from birth onwards is completely atypical. Remarkable, but certainly an artefact due to the necessary artifical age ranges, is the steep decline of the probability of death (qx) after 40 and 60, respectively.
 
 
 
-## Comparing Early Iron Age (Magdalenenberg) and Late Iron Age (Münsingen-Rain)
+### Comparing Early Iron Age (Magdalenenberg) and Late Iron Age (Münsingen-Rain)
 
 As a last step for our analysis, we will compare the curves of the life tables of the cemeteries from the 'Magdalenenberg' and Münsingen-Rain.  
 
 
-### Constructing the life table
+#### Constructing the life table
 
 The output of the function `prep.life.table` can be addressed separately by their grouping names. We use this option to collect the results of the above examples Münsingen-Rain and Magdalenenberg. For 'Magdalenenberg' with no grouping variable the name is "Deceased" by default. Because we want to have comparable data from Münsingen-Rain we choose the output for all individuals ("All" by default).  
 
@@ -268,7 +268,7 @@ comp_result %>%
   plot(display = c("dx","qx", "lx","ex"))  
 ```
 
-### Mortality patterns
+#### Mortality patterns
 
 The similarities, but also the differences between the data sets are striking. On the one hand, the general shape of the curves of the probability of death (dx) is the same with very low values in the younger and older age classes. By far the most prominent age group in both data sets are the middle aged individuals. However, it seems that the peak for the Magdalenenberg individuals are in the 30s, while for the Münsingen population it is 10 years later. This difference is also reflected in the other diagrams: The probability of death (qx) of the Magdalenenberg individuals is higher in nearly all age categories within 20+, and their rate of survivorship (lx) is decreasing faster. Consequently, while the Münsingen have a life expectancy of 38.0 years when born, the one for the population interred in Magdalenenberg is only at 32.2 years. This difference in the remaining life expectancy remains more or less the same till the highest age group.  
 
@@ -278,17 +278,17 @@ Therefore, another possible reason for the differences could be different cultur
 
 Finally, for both data sets it has been emphasized that the skeletal material underwent repeated studies, which reached very similar results, it seems hard to justify fundamental differences in aging by different anthropologists. However, a possible reason could be the varying material that survived. For Münsingen, due to selection processes after excavation, only skulls are available for analysis, while for the Magdalenenberg whole skeletons are existent.  
 
-In the past scholars have taken very different stances to these peculiar age distributions and differences. Already P. Jud (@jud_untersuchungen_1998, 129) in reference to the population from Magdalenenberg regarded the male individuals from Münsingen-Rain as too old. However, from a paleodemographic perspective the opposite could also be argued, that is that the population of Magdalenenberg is too young.
+In the past scholars have taken very different stances to these peculiar age distributions and differences. Already P. Jud [-@jud_untersuchungen_1998, 129] in reference to the population from Magdalenenberg regarded the male individuals from Münsingen-Rain as too old. However, from a paleodemographic perspective the opposite could also be argued, that is that the population of Magdalenenberg is too young.
 
-It is neither the aim nor the scope of this paper to solve this issue. However, in line with a recent overview by Eggl (@eggl_ueberlegungen_2009) we would like to emphasize the need for more systematic studies that also take not only the paleodemographic, but also the archaeological uncertainties into account.
+It is neither the aim nor the scope of this paper to solve this issue. However, in line with a recent overview by Eggl [-@eggl_ueberlegungen_2009] we would like to emphasize the need for more systematic studies that also take not only the paleodemographic, but also the archaeological uncertainties into account.
 
 
 ## Conclusion
 
-Currently, paleodemography seems to undergo a sea change. While the early criticism from the early 1980s about the representation of aging characteristics (@bocquet-appel_masset_farewell_1982) had been fervidly been rebutted (e.g., @van_gerven_armelagos_rumors_1983), the problems of getting to mortality patterns is now common knowledge. Some recent solutions by paleodemographers have been to remodel life tables, to introduce complex statistic measurements like Bayesian statistics or to revert the logic of aging skeletons (see the examples in @hoppa_vaupel_paleodemography_2002).  
+Currently, paleodemography seems to undergo a sea change. While the early criticism from the early 1980s about the representation of aging characteristics [@bocquet-appel_masset_farewell_1982] had been fervidly been rebutted [e.g., @van_gerven_armelagos_rumors_1983], the problems of getting to mortality patterns is now common knowledge. Some recent solutions by paleodemographers have been to remodel life tables, to introduce complex statistic measurements like Bayesian statistics or to revert the logic of aging skeletons [see the examples in @hoppa_vaupel_paleodemography_2002].  
 
 Our own attempt on life tables is (still) a far cry from the recent course of research. The reason why we still think this method is valid is simple: While we do not dismiss the problems of life tables with their assumption of stationary populations, we still think that even in their simple form they provide useful information, not necessarily for the paleodemographist, but for the archaeologist. What tends to be forgotten is that the treatment of the deceased is always a conscious decision of the surviving members of the society in question. Even the non-treatment of the dead, e.g., by excarnation, still demands a decision. Therefore, even if the age-pattern is as distorted as in the examples above -- and it remains the question if such a situation should not be regarded as the norm for much of prehistory --, it still provides highly relevant information about cultural behaviour and preferences. To elucidate even more hints on prehistoric practices it is of primordial importance that archaeologists, anthropologists and paleodemographers work closer together than they have in the past to get to grips with actual population developments, representation of burial data and possible sources of bias. If our package helps in this process, we would be more than happy.
 
 ---
 
-# References
+## References

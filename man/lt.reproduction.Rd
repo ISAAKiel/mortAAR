@@ -2,29 +2,31 @@
 % Please edit documentation in R/reproduction_indices.R
 \name{lt.reproduction}
 \alias{lt.reproduction}
-\alias{lt.reproduction.default}
-\alias{lt.reproduction.mortaar_life_table_list}
-\alias{lt.reproduction.mortaar_life_table}
 \title{Calculates reproduction indices from a mortAAR life table}
 \usage{
-lt.reproduction(life_table, fertility_rate = "BA_log", gen_len = 20)
-
-\method{lt.reproduction}{default}(life_table, fertility_rate = "BA_log", gen_len = 20)
-
-\method{lt.reproduction}{mortaar_life_table_list}(life_table, fertility_rate = "BA_log", gen_len = 20)
-
-\method{lt.reproduction}{mortaar_life_table}(life_table, fertility_rate = "BA_log", gen_len = 20)
+lt.reproduction(
+  life_table,
+  fertility_rate = "BA_log",
+  growth_rate = "fertility",
+  gen_len = 20
+)
 }
 \arguments{
 \item{life_table}{an object of class mortaar_life_table.}
 
-\item{fertility_rate}{string or numeric. Either fertility rate according
-to \emph{McFadden & Oxenham 2018} if infants are represented well or
-fertility rate according to data by \emph{McFadden & Oxenham 2018} for
-P(5-19) index after \emph{Bocquet-Appel 2002}. Options: 'McO'
-(McFadden/Oxenham), 'BA_linear' (linear fit), 'BA_power' (power fit)
-or 'BA_log' (logistic fit). Default: BA_log'. Additionally, the
-user can specify an arbitrary number in lieu of the fertility rate.}
+\item{fertility_rate}{string or numeric. Either fertility rate according to
+\emph{McFadden & Oxenham 2018a} if infants are represented well or fertility
+rate according to data by \emph{McFadden & Oxenham 2018a} for P(5-19) index
+after \emph{Bocquet-Appel 2002}. Options: 'McFO' (McFadden/Oxenham), 'BA_linear'
+(linear fit), 'BA_power' (power fit) or 'BA_log' (logistic fit). Default: BA_log'.
+Additionally, the user can specify an arbitrary number in lieu of the fertility rate.}
+
+\item{growth_rate}{string or numeric. Either derived directly from the fertility
+calculations or from regression analysis by either \emph{McFadden & Oxenham 2018b}
+(\eqn{10.06 * D0--14/D) -- 1.61}) or \emph{Bocquet-Appel and Masset}
+(\eqn{(1.484 * (log10(200 * d5--14/d20 * d60/d20))**0.03 - 1.485)}).
+Options: 'fertility', 'MBA', McFO'. Additionally, the user can specify an
+arbitrary number in lieu of the growth rate.}
 
 \item{gen_len}{numeric. Length of generation for determining
 the rate of doubling the population. Default: 20.}
@@ -33,11 +35,17 @@ the rate of doubling the population. Default: 20.}
 A data.frame with basic reproduction indices:
 
 \itemize{
+
+  \item \bold{m}:   Mortality rate (= natality rate n).
+
+                   \eqn{0.127 * d5--14/d20 + 0.016}
+
   \item \bold{DR}:  Dependency ratio.
 
                    \eqn{DR = (sum(D0--14) + sum(D60+)) / sum(D15--59) }
 
   \item \bold{TFR}:  Total fertility rate.
+
   \item \bold{GRR}:  Gross reproduction rate.
 
                    \eqn{GRR = TFR * 0.488}
@@ -46,13 +54,11 @@ A data.frame with basic reproduction indices:
 
                    \eqn{NRR = sum(GRR * age specific fertility * age specific survival / 10000)}
 
-  \item \bold{r}:  Intrinsic growth rate in percent per year.
-
-                   \eqn{r = 100 * log(NRR) / generation length}
+  \item \bold{r}:  Intrinsic growth rate in per cent per year.
 
   \item \bold{Dt}: Doubling time in years.
 
-                   \eqn{Dt = 100 * 0.6931 / r}
+                   \eqn{Dt = 100 * ln(2) / r}
  }
 }
 \description{
@@ -69,7 +75,7 @@ There are different approaches to calculate reproduction rates (e. g.
 \emph{Hassan 1981}. Typically, a Total fertility rate (TFR) of 6-8 is
 assumed for prehistoric populations (\emph{Ascadi/Nemeskeri 1970};
 \emph{Henneberg 1978}; \emph{Hassan 1981}). Recently, \emph{McFadden
-and Oxenham 2018} have published a formula to estimate the Total
+and Oxenham 2018a} have published a formula to estimate the Total
 fertility rate from archaeological data, provided that infants are
 represented fully in the archaeological record.\cr
 Unfortunately, this will not be the case for most archaeological
@@ -79,15 +85,26 @@ Oxenham to apply it to the P(5-19)-index after \emph{Bocquet-Appel
 fitting (linear, logistic, power) and recommend logistic fitting,
 but the others are available as well.\cr
 The Gross reproduction rate (GRR) is calculated by multiplying the TFR
-with the ratio of female newborns. The Net reproduction rate is
+with the ratio of female newborns, assumed to be a constant of 48.8%
+of all children (\emph{Hassan} 1981, 136). The Net reproduction rate is
 arrived at by summing the product of the GRR, the age specific
 fertility rate as defined by \emph{Hassan} (1981, 137 tab. 8.7) and
 the age specific survival taken from the life table and dividing the
-result by 10000. The formulas for r and Dt are directly taken from
-\emph{Hassan} (1981, 140).\cr
-Also calculated is the ratio of dependent individuals which is usually
-(but probably erroneously for archaic societies (\emph{Grupe et al.
-2015}, 423) assumed to apply to those aged below 15 or 60 and above.
+result by 10000.\cr
+The Rate of natural increase or Intrinsic growth rate r (growth in per cent
+per year) can be computed from the fertility following \emph{Hassan}
+(1981, 140). Alternative ways to calculate the intrinsic growth rate
+derive from \emph{Bocquet-Appel and Masset} (1977) and recently from
+\emph{McFadden and Oxenham 2018b}. The latter present a regression
+analysis based on the index D0--15/D also used for fertility
+calculations (see above) in connections with modern data.\cr
+Whatever is chosen as base for the growth rate calculations is used
+for computing the doubling time in years, assuming exponential steady growth.\cr
+Also calculated is the mortality rate m after \emph{Bocquet-Appel and Masset}
+(1977) in per cent of a given population. Furthermore, the ratio of dependent individuals
+is reported that is usually (but probably erroneously for archaic societies
+(\emph{Grupe et al. 2015}, 423) assumed to apply to those aged below 15 or
+60 and above.
 }
 \examples{
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
@@ -103,6 +120,8 @@ lt.reproduction(odagsen)
 \references{
 \insertRef{acsadi_history_1970}{mortAAR}
 
+\insertRef{masset_bocquet_1977}{mortAAR}
+
 \insertRef{bocquet_appel_2002}{mortAAR}
 
 \insertRef{grupe_et_al_2015}{mortAAR}
@@ -111,5 +130,7 @@ lt.reproduction(odagsen)
 
 \insertRef{henneberg_1976}{mortAAR}
 
-\insertRef{mcfadden_oxenham_2018}{mortAAR}
+\insertRef{mcfadden_oxenham_2018a}{mortAAR}
+
+\insertRef{mcfadden_oxenham_2018b}{mortAAR}
 }

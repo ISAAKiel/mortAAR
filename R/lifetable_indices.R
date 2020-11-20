@@ -1,7 +1,9 @@
 #' Generates indices from a mortAAR life table for use in other functions
 #'
 #' This function bundles a number of indices and vectors from a mortAAR
-#' life table which are needed by other functions in mortAAR.
+#' life table which are needed by other functions in mortAAR. The results
+#' are only meaningful if 5-year-categories have been chosen to construct
+#' the life table.
 #'
 #' @param life_table an object of class mortaar_life_table.
 #'
@@ -15,7 +17,7 @@
 #'   \item \bold{P(5-19)}:  ratio of individuals aged 5--19 to those aged
 #'   5 or above according to \emph{Bocquet-Appel 2002}.
 #'   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
-#'   according to \emph{McFadden & Oxenham 2018} if infants are represented
+#'   according to \emph{McFadden & Oxenham 2018a} if infants are represented
 #'   well.
 #'   \item \bold{e0}:   life expectancy at age 0.
 #'}
@@ -26,17 +28,11 @@
 #'
 #' \insertRef{masset_bocquet_1977}{mortAAR}
 #'
-#' \insertRef{mcfadden_oxenham_2018}{mortAAR}
+#' \insertRef{mcfadden_oxenham_2018a}{mortAAR}
 #'
 #' @examples
 #' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 #' lt.indices(schleswig)
-#'
-#' odagsen <- life.table(list(
-#'   "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
-#'   "margo orbitalis" = odagsen_mo[c("a", "Dx")]
-#' ))
-#' lt.indices(odagsen)
 #'
 #' @rdname lt.indices
 #' @export
@@ -46,18 +42,21 @@ lt.indices <- function(life_table) {
 
 #' @rdname lt.indices
 #' @export
+#' @noRd
 lt.indices.default <- function(life_table) {
   stop("x is not an object of class mortaar_life_table or mortaar_life_table_list.")
 }
 
 #' @rdname lt.indices
 #' @export
+#' @noRd
 lt.indices.mortaar_life_table_list <- function(life_table) {
   lapply(life_table, lt.indices)
 }
 
 #' @rdname lt.indices
 #' @export
+#' @noRd
 lt.indices.mortaar_life_table <- function(life_table) {
 
   all_age <- life_table$a %>% cumsum

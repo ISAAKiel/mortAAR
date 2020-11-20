@@ -2,16 +2,10 @@
 % Please edit documentation in R/masculinity_maternalmortality.R
 \name{lt.sexrelation}
 \alias{lt.sexrelation}
-\alias{lt.sexrelation.default}
-\alias{lt.sexrelation.mortaar_life_table}
 \title{Calculate masculinity index and maternal mortality
 from a mortAAR life table list}
 \usage{
 lt.sexrelation(females, males)
-
-\method{lt.sexrelation}{default}(females, males)
-
-\method{lt.sexrelation}{mortaar_life_table}(females, males)
 }
 \arguments{
 \item{females}{an object of class mortaar_life_table for females}
