@@ -28,7 +28,8 @@ Imports:
     Rdpack (>= 0.4-20),
     reshape2 (>= 1.4.2),
     methods (>= 3.3.3),
-    crayon (>= 1.3.4)
+    crayon (>= 1.3.4),
+    tibble (>= 3.0.3)
 RoxygenNote: 7.1.1
 Suggests:
     testthat,

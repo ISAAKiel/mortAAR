@@ -83,7 +83,7 @@ as.mortaar_life_table <- function(x, ...) {
     if (all(present)) {
       # do the actual conversion!
       x %>%
-        `class<-`(c("mortaar_life_table", class(.))) %>%
+        tibble::new_tibble(., nrow = nrow(.), class = "mortaar_life_table") %>%
         return()
     } else {
       stop(
