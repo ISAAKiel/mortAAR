@@ -72,7 +72,7 @@
             "class": {
               "type": "character",
               "attributes": {},
-              "value": ["mortaar_life_table", "data.frame"]
+              "value": ["mortaar_life_table", "tbl_df", "tbl", "data.frame"]
             }
           },
           "value": [
@@ -206,7 +206,7 @@
             "class": {
               "type": "character",
               "attributes": {},
-              "value": ["mortaar_life_table", "data.frame"]
+              "value": ["mortaar_life_table", "tbl_df", "tbl", "data.frame"]
             }
           },
           "value": [
@@ -350,7 +350,7 @@
                 "class": {
                   "type": "character",
                   "attributes": {},
-                  "value": ["mortaar_life_table", "data.frame"]
+                  "value": ["mortaar_life_table", "tbl_df", "tbl", "data.frame"]
                 }
               },
               "value": [
@@ -481,7 +481,7 @@
                 "class": {
                   "type": "character",
                   "attributes": {},
-                  "value": ["mortaar_life_table", "data.frame"]
+                  "value": ["mortaar_life_table", "tbl_df", "tbl", "data.frame"]
                 }
               },
               "value": [

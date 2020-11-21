@@ -136,7 +136,7 @@ life.table <- function(neclist, agecor = TRUE, agecorfac = c(), option_spline = 
 
   # Check if the input list is a data.frame, if so, it is
   # packed into a list.
-  if ("data.frame" %in% class(neclist)) {
+  if (is.data.frame(neclist)) {
     neclist %>% substitute %>% deparse -> dfname
     neclist <- list(dfname = neclist)
   }
@@ -288,8 +288,8 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
 
   # x: well readable rownames for age classes.
   limit <- necdf['a'] %>% sum
-  lower <- c(0, necdf[, 'a'] %>% cumsum)[1:nrow(necdf)]
-  upper <- necdf[, 'a'] %>% cumsum %>% `-`(1)
+  lower <- c(0, necdf[['a']] %>% cumsum)[1:nrow(necdf)]
+  upper <- necdf[['a']] %>% cumsum %>% `-`(1)
   xvec <- paste0(lower, "--", upper)
 
   if ("x" %in% colnames(necdf) %>% `!`) {
@@ -300,7 +300,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
     )
   } else if (
     "x" %in% colnames(necdf) &&
-    (necdf[, 'x'] != xvec) %>% all
+    all(necdf[['x']] != xvec)
   ) {
     necdf <- cbind(
       x_auto = xvec,
@@ -389,7 +389,7 @@ life.table.df <- function(necdf, agecor = TRUE, agecorfac = c(), option_spline =
 
   # Ouput.
   necdf %>%
-    `class<-`(c("mortaar_life_table", class(.))) %>%
+    as.mortaar_life_table() %>%
     return()
 }
 
