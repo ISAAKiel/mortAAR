@@ -68,27 +68,34 @@ The result is a dataframe where the individual conditions with the actual result
 
 ## Correction of life table data after Bocquet-Appel and Masset
 
-It is generally assumed that most skeletal populations lack the youngest age group. Life tables resulting from such populations will necessarily be misleading as they lead to believe that the mortality of younger children was lower than it actually was and that life expectancy was higher. For correcting these missing individuals, Masset and Bocquet-Appel [-@masset_bocquet_1977; see also @herrmann_prahistorische_1990, 307] conceived of several calculations based on regression analyses of modern comparable mortality data. However, the applicability of these indices to archaeological data is debatable and does not necessarily lead to reliable results. Therefore, the correction needs to be weighted carefully and ideally only after the representativity of the base data has been checked with function `lt.representativity`.
+It is generally assumed that most skeletal populations lack the youngest age group. Life tables resulting from such populations will necessarily be misleading as they lead to believe that the mortality of younger children was lower than it actually was and that life expectancy was higher. For correcting these missing individuals, Masset and Bocquet-Appel [-@masset_bocquet_1977; see also @herrmann_prahistorische_1990, 307] conceived of several calculations based on regression analyses of modern comparable mortality data. Despite the fact that these recommendations are more than 40 years old, they still surface in text books [e. g. @grupe_et_al_2015, 418--419]. However, the applicability of these indices to archaeological data is debatable and does not necessarily lead to reliable results. Therefore, the correction needs to be weighted carefully and ideally only after the representativity of the base data has been checked with function `lt.representativity`.
 
 The equations conceived by Masset and Bocquet-Appel are relatively complex. Life expectancy at the time of birth is computed as follows: 
 
-$e^0_x = 78.721 * log_{10} ((D_{20-𝜔} / D_{5-14})^{-2}) - 3.384 \pm 1.503$
+$e^0_x = 78.721 * log_{10} \sqrt{\frac{D_{20-𝜔}}{ D_{5-14}}} - 3.384 \pm 1.503$
 
-The equation will strive towards 75 years of life expectancy when there is a ratio of adults to 5--14-year old of 100 to 1 as the term $log_{10} ((D_{20-𝜔} / D_{5-14})^{-2})$ will then tend towards 1. Higher numbers of non-adults will likewise lead to lower life expectancy values.
+The equation will strive towards 75 years of life expectancy when there is a ratio of adults to 5--14-year old of 100 to 1 as the term $log_{10} \sqrt{\frac{D_{20-𝜔}}{ D_{5-14}}})$ will then tend towards 1. Higher numbers of non-adults will likewise lead to lower life expectancy values.
 
 The probability of death in the first and the first five years is similarly constructed:
 
-$_1q_0 = 0.568 * (log_{10} (200 * D_{5-14} / D_{20-𝜔} ))^{-2} - 0.438 \pm 0.016$
+$_1q_0 = 0.568 * \sqrt{log_{10}(\frac{200*D_{5-14}}{D_{20-𝜔}}}) - 0.438 \pm 0.016$
+
+$_5q_0 = 1.154 * \sqrt{log_{10}(\frac{200*D_{5-14}}{D_{20-𝜔}}}) - 1.014 \pm 0.041$
 
 
-$_5q_0 = 1.154 * (log_{10} (200 * D_{5-14} / D_{20-𝜔} ))^{-2} - 1.014 \pm 0.041$
-
-
-The corrected Schleswig data^[The values differ from that published by Herrmann et al. [-@herrmann_prahistorische_1990, 307] because here no correction of the age group 5--10 years was applied.] is as follows:
+The corrected Schleswig data^[The values differ from that published by Herrmann et al. [-@herrmann_prahistorische_1990, 307] because here no correction of the age group 5--10 years was applied.] are as follows:
 
 ```{r}
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 lt.correction(schleswig)
 ```
+
+Apart from the corrected life table, it also lists -- as separate data.frame -- the indices ($e^0$, $_1q_0$ and $_5q_0$) computed by the formulas of Masset and Bocquet-Appel. Compare this to the uncorrected values:
+
+```{r}
+life.table(schleswig_ma[c("a", "Dx")])
+```
+
+With the uncorrected data, the youngest age group (years 0--4) 'only' comprises around 20% of the population. However, according to the formulas by Masset and Bocquet-Appel, this number should be more than doubled (46%). This would mean that in reality nearly 50% of the individuals died before they reached their 5^th^ birthday. Applying this value to the life table, the number of individuals increases from 247 to 368.1 and at the same time the life expectancy at birth decreases from 30.7 to 21.1 years. Please note that this value differs somehow from that which is computed by the formula by Masset and Bocquet-Appel (22.5 years). This is easily explainable as the life expectancy of the life table includes _all_ individuals. However, the value of 21.1 years is still in the range of 21.0 to 24.1 years (see indices) given by Masset and Bocquet-Appel.
 
 ## References
