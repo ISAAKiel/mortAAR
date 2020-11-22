@@ -5,7 +5,7 @@ schleswig_ma <- read.csv(
   stringsAsFactors = FALSE,
   check.names = FALSE
 )
-devtools::use_data(schleswig_ma, overwrite = TRUE)
+usethis::use_data(schleswig_ma, overwrite = TRUE)
 
 gallery_graves <- read.table(
   "data-raw/gallery_graves.txt",
@@ -14,14 +14,14 @@ gallery_graves <- read.table(
   stringsAsFactors = FALSE,
   check.names = FALSE
 )
-devtools::use_data(gallery_graves, overwrite = TRUE)
+usethis::use_data(gallery_graves, overwrite = TRUE)
 
 aiterhofen_oedmuehlen <- read.table(
   "data-raw/aiterhofen_oedmuehlen.txt",
   header = TRUE,
   sep = ";"
 )
-devtools::use_data(aiterhofen_oedmuehlen, overwrite = TRUE)
+usethis::use_data(aiterhofen_oedmuehlen, overwrite = TRUE)
 
 magdalenenberg <- read.table(
   "data-raw/magdalenenberg.txt",
@@ -29,7 +29,7 @@ magdalenenberg <- read.table(
   stringsAsFactors = FALSE,
   sep = "\t"
 )
-devtools::use_data(magdalenenberg, overwrite = TRUE)
+usethis::use_data(magdalenenberg, overwrite = TRUE)
 
 muensingen <- read.table(
   "data-raw/muensingen.txt",
@@ -38,7 +38,7 @@ muensingen <- read.table(
   sep = "\t",
   row.names = 1
 )
-devtools::use_data(muensingen, overwrite = TRUE)
+usethis::use_data(muensingen, overwrite = TRUE)
 
 odagsen_cm <- read.table(
   "data-raw/odagsen_corpus.mandibulae.txt",
@@ -46,7 +46,7 @@ odagsen_cm <- read.table(
   stringsAsFactors = FALSE,
   sep = "\t"
 )
-devtools::use_data(odagsen_cm, overwrite = TRUE)
+usethis::use_data(odagsen_cm, overwrite = TRUE)
 
 odagsen_mo <- read.table(
   "data-raw/odagsen_margo.orbitalis.txt",
@@ -54,7 +54,7 @@ odagsen_mo <- read.table(
   stringsAsFactors = FALSE,
   sep = "\t"
 )
-devtools::use_data(odagsen_mo, overwrite = TRUE)
+usethis::use_data(odagsen_mo, overwrite = TRUE)
 
 nitra <- read.table(
   "data-raw/nitra.txt",
@@ -62,4 +62,4 @@ nitra <- read.table(
   stringsAsFactors = FALSE,
   sep = "\t"
 )
-devtools::use_data(nitra, overwrite = TRUE)
+usethis::use_data(nitra, overwrite = TRUE)
