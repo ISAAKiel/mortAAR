@@ -55,3 +55,11 @@ odagsen_mo <- read.table(
   sep = "\t"
 )
 devtools::use_data(odagsen_mo, overwrite = TRUE)
+
+nitra <- read.table(
+  "data-raw/nitra.txt",
+  header = TRUE,
+  stringsAsFactors = FALSE,
+  sep = "\t"
+)
+devtools::use_data(nitra, overwrite = TRUE)
