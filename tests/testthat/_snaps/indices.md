@@ -1,4 +1,4 @@
-# lt.indices failes for wrong input
+# lt.indices fails for wrong input
 
     x is not an object of class mortaar_life_table or mortaar_life_table_list.
 
@@ -10,7 +10,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d60plus", "d20_50", "p5_19", "D0_14_D", "d0_14", "e0"]
+          "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D0_14_D", "d0_14", "e0"]
         }
       },
       "value": [
@@ -52,12 +52,12 @@
         {
           "type": "double",
           "attributes": {},
-          "value": [43]
+          "value": [247]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [112]
+          "value": [43]
         },
         {
           "type": "double",
@@ -100,7 +100,7 @@
             "names": {
               "type": "character",
               "attributes": {},
-              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d60plus", "d20_50", "p5_19", "D0_14_D", "d0_14", "e0"]
+              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D0_14_D", "d0_14", "e0"]
             }
           },
           "value": [
@@ -142,12 +142,12 @@
             {
               "type": "double",
               "attributes": {},
-              "value": [14.3]
+              "value": [67.2]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [39.4]
+              "value": [14.3]
             },
             {
               "type": "double",
@@ -177,7 +177,7 @@
             "names": {
               "type": "character",
               "attributes": {},
-              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d60plus", "d20_50", "p5_19", "D0_14_D", "d0_14", "e0"]
+              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D0_14_D", "d0_14", "e0"]
             }
           },
           "value": [
@@ -219,12 +219,12 @@
             {
               "type": "double",
               "attributes": {},
-              "value": [9.5]
+              "value": [74.8]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [52.8]
+              "value": [9.5]
             },
             {
               "type": "double",

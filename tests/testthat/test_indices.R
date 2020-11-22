@@ -1,4 +1,4 @@
-test_that("lt.indices failes for wrong input", {
+test_that("lt.indices fails for wrong input", {
   expect_snapshot_error(lt.indices(1))
 })
 

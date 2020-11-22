@@ -166,7 +166,7 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   }
 
   # dependency ratio according to Grupe et al. 2015
-  dependency_ratio <- (indx$d0_14 + indx$d60plus) / indx$d20_50
+  dependency_ratio <- (indx$d0_14 + indx$d60plus) / (indx$d0plus-(indx$d0_14 + indx$d60plus))
 
   # Survival rates of individuals aged 15--50.
   all_age <- life_table$a %>% cumsum

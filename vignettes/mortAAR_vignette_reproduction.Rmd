@@ -24,40 +24,125 @@ library(mortAAR)
 library(magrittr)
 ```
 
-For population studies it is of vital importance to estimate growth or decline of a population. For archaeological datasets this is rarely attempted, probably because the data quality seems to scanty. Nevertheless, the calculation of such measures seems worth the try, at least it should give an impression if the resulting values are unrealistic high or low.
+## Introduction
 
-There are different approaches to calculate reproduction rates [e. g. @henneberg_1976]. We largely follow the methodology by [Hassan 1981}. Typically, a Total fertility rate (TFR) of 6--8 is assumed for prehistoric populations ([Ascadi/Nemeskeri 1970}; @henneberg_1976; [Hassan 1981}). That means that a woman living at least to her climacteric period is expected to have given birth to 6 to 8 children.
+For population studies it is of vital importance to estimate growth or decline of a population. For anthropological datasets this is rarely attempted, probably because the data quality seems to scanty. Nevertheless, the calculation of such measures seems worth the try, at least it should give an impression if the resulting values are unrealistic high or low.
+
+
+## Indices of reproduction
+
+### Mortaliy rate
+
+The mortality rate `m` is calculated after C. Masset and J.-P. Bocquet-Appel and Masset [-@masset_bocquet_1977] in per cent of a given population, on the basis of the indices $D_{5-14}$ and $D_{20-𝜔}$.
+
+$m = 12.7 * \frac{D_{5-14}}{D_{20-𝜔}}$
+
+A value of 1.0, for example, means that 1 among 100 individuals died per year. In archaeological cases `m` is usueally the same as the natality rate `n` because it has to be assumed that the population is stationary.
+
+```{r}
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig)[1,]
+```
+
+
+### Reproduction rates
+
+There are different approaches to calculate reproduction rates [e. g. @henneberg_1976]. We largely follow the methodology by F. A. Hassan [-@hassan_1981]. Typically, a Total fertility rate (TFR) of 6--8 is assumed for prehistoric populations [@acsadi_history_1970, 177; @henneberg_1976; @hassan_1981, 130]. That means that a woman living at least to her climacteric period is expected to have given birth to on average 6 to 8 children.
 
 Recently, C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018a] have published a formula to estimate the Total fertility rate from archaeological data, provided that infants are represented fully in the archaeological record. Unfortunately, this will not be the case for most archaeological datasets. Therefore, we used the data published by McFadden and Oxenham to apply it to the $P_{5-19}$-index after J.-P. Bocquet-Appel [-@bocquet_appel_2002]. We approximated the ratio by three different methods of fitting (linear, logistic, power) and recommend logistic fitting, but the others are available as well.
 
-The Gross reproduction rate (GRR) is calculated by multiplying the TFR with the ratio of female newborns, assumed to be a constant of 48.8% of all children [@hassan_1981, 136]. The Net reproduction rate is arrived at by summing the product of the GRR, the age specific fertility rate as defined by Hassan [-@hassan_1981, 137 tab. 8.7] and the age specific survival taken from the life table and dividing the result by 10000.
+The Gross reproduction rate (GRR) is calculated by multiplying the TFR with the ratio of female newborns, assumed to be a constant of 48.8% of all children [@hassan_1981, 136]. The Net reproduction rate is arrived at by summing the product of the GRR, the age specific fertility rate calculated from the data given by Hassan [-@hassan_1981, 137 tab. 8.7] and the age specific survival taken from the life table and dividing the result by 10000.
 
-The Rate of natural increase or Intrinsic growth rate r (growth in per cent per year) can be computed from the fertility following Hassan [-@hassan_1981, 140]. An alternative way to calculate the intrinsic growth rate, has recently described by C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018b]. They present a regression calculation based on the index $D_{0-15}/D$ also used for fertility calculations (see above) in connections with modern data. It must not astonish that even with the McFadden/Oxenham-index used for the fertility rate, the actual numbers for the computed intrinisc rate of growth and the Rate of Natural Increase can highly diverge, as with the former formula, further life table data is taken into account.
+The Rate of natural increase or Intrinsic growth rate `r` (growth in per cent per year) can be computed from the fertility following Hassan [-@hassan_1981, 140]. An alternative way to calculate the intrinsic growth rate has recently described by C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018b]. They present a regression calculation based on the index $D_{0-15}/D$ also used for fertility calculations (see above) in connections with modern data. It must not astonish that even with the McFadden/Oxenham-index used for the fertility rate, the actual numbers for the computed intrinisc rate of growth and the Rate of Natural Increase can highly diverge, as with the former formula, further life table data is taken into account.
 
-Also calculated is the mortality rate m after C. Masset and J.-P. Bocquet-Appel and Masset [-@masset_bocquet_1977] in per cent of a given population which in archaeological case necessarily is the same as the natality rate n because it has to be assumed that the population is stationary. A value of 1.0, for example, means that 1 among 100 individuals died per year.
+Depending on the values chosen for the Total fertility rate and the Intrinsic growth rate, the Doubling time `Dt` will also vary. This can be found in any textbook as follows:
 
-Furthermore, the ratio of dependent individuals is reported that is usually (but probably erroneously for archaic societies [@grupe_et_al_2015, 423] assumed to apply to those aged below 15 or 60 and above.
+$Dt = \frac{100 * ln(2)}{r}$
 
-## Relation betwen female and male individuals
-The proportional relation between adult males and females (= Masculinity index) is interesting for a number of reasons:
+In the following, the dataset of the medieval cemetery of Schleswig is used again to demonstrate the different outcome of the varying options.
 
-1. It can point to basic problems in the datasets in that, say, one sex is grossly over- or underrepresented [@herrmann_prahistorische_1990, 310].
+```{r}
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig, fertility_rate = "McFO", growth_rate = "fertility")[c(-1,-2),]
+```
 
-2. It may hint towards cultural reasons like sex-specific mobility.
+```{r}
+lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
+```
 
-The Masculinity index (MI) is defined for juvenile and older individuals. Note that with a higher mortality rate of adult females, an MI < 100 does not necesssarily speak for an unbalanced MI in life.
+```{r}
+lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "MBA")[c(-1,-2),]
+```
+
+```{r}
+lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "McFO")[c(-1,-2),]
+```
+
+```{r}
+lt.reproduction(lt.correction(schleswig)$life_table_corr, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
+```
+
+
+### Rate of dependent individuals
+
+The ratio of dependent individuals [@hassan_1981, 147] is usually [but probably erroneously for archaic societies @grupe_et_al_2015, 423] assumed to apply to those aged below 15 or 60 and above, and this is put into relation of the individuals aged in-between:
+
+$DR = \frac{\sum{D_{0-14}} + \sum{D_{60-𝜔}}}{\sum{D_{15--59}}}$
+
+```{r}
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig)[2,]
+```
+
+The example dataset of the Schleswig produces a Dependency ratio of around 106. That would mean that in Schleswig there would have been roughly as much dependent individuals as those available to support them. This number even doubles if we apply the life table corrections devised by C. Masset and J.-P. Bocquet-Appel via the function `lt.correction` (see vignette "[Life table corrections](http://mortAAR_vignette_lt_correction.html)").
+
+```{r}
+lt.reproduction(lt.correction(schleswig)$life_table_corr)[2,]
+```
+
+
+### Relation betwen female and male individuals
+
+The proportional relation between adult males and females (= Masculinity index) is defined for juvenile and older individuals:
 
 $MI = 100 * D_{\geq15 _{male}}/{D_{\geq15 _{female}}}$
 
+It is interesting for a number of reasons [@herrmann_prahistorische_1990, 310]:
+
+1. It can point to basic problems in the datasets in that, say, one sex is grossly over- or underrepresented.
+
+2. It may hint towards cultural reasons like sex-specific mobility.
+
+Note that with a higher mortality rate of adult females, an MI < 100 does not necesssarily speak for an unbalanced MI in life.
+
+As example, we choose the Early Neolithic cemetery of Nitra in Slovakia.
+
+```{r}
+nitra_prep <- prep.life.table(nitra, group="sex", agebeg = "age_start", ageend = "age_end")
+nitra_life <- life.table(nitra_prep)
+lt.sexrelation(nitra_life$f, nitra_life$m)[1,]
+```
+
+The first row of the function `lt.sexrelation` reports the Masculinity index. With 66.7 it is quite low and points to a surplus of female individuals. However, as pointed out above, this has to be weighted carefully as it could also be due to a higher mortality of female adults.
+
+
 ## Maternal mortality
+
 Maternal mortality rate (MMR) is a basic indicator for the health system of a given population. Maternal mortality is defined as dying during pregnancy or within the first 42 days after birth due to complications. Recently, McFadden and Oxenham [-@mcfadden_oxenham_2019] have provided a formula to calculate it from archaeological data. They show that with modern data a very high correlation is achieved by only comparing the absolute numbers of the age group 20 to 24. This has the additional advantage that for this age group anthropological aging methods are reasonable exact.
 
 $MMR = 333.33 * D_{20-24_{female}} / D_{20-24_{male}} - 76.07$
 
+```{r}
 nitra_prep <- prep.life.table(nitra, group="sex", agebeg = "age_start", ageend = "age_end")
-
 nitra_life <- life.table(nitra_prep)
+lt.sexrelation(nitra_life$f, nitra_life$m)[c(-1),]
+```
 
-lt.sexrelation(nitra_life$f, nitra_life$m)
+
+
+## Population size
+
+_still to be added_
+
 
 ## References
