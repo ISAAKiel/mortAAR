@@ -77,7 +77,13 @@ As stated above, the index assumes, somehow unrealistically, that the youngest a
 lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
 ```
 
-On contrast, the log-regression derived from the $P_{5-19}$-index by Bocquet-Appel arrives at a much higher Total fertility rate of around 7, in line with the expectation (see above). This higher value, not surprisingly, leads to much higher numbers in all the other indices, including a much higher Rate of natural increase and a much shorter doubling time of only 26.4 years.
+On contrast, the log-regression derived from the $P_{5-19}$-index by Bocquet-Appel arrives at aTotal fertility rate of around 7, also in line with the expectation (see above). This higher value, not surprisingly, leads to much higher numbers in all the other indices, including a much higher Rate of natural increase and a much shorter doubling time of only 26.4 years.
+
+```{r}
+lt.reproduction(lt.correction(schleswig)$life_table_corr, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
+```
+
+Because the $P_{5-19}$-index is not depended on the age-group 0--4 years, the Total fertility and Gross reproduction rates do not change if the life table correction is applied. Still, the other values are affected, and the Net reproduction rate decreases to 1.13. The Rate of natural increase is then 0.63 and the doubling time 110 years.
 
 ```{r}
 lt.reproduction(schleswig, growth_rate = "MBA")[c(6,7),]
@@ -91,7 +97,7 @@ lt.reproduction(schleswig, growth_rate = "McFO")[c(6,7),]
 
 The McFadden/Oxenham-index for the Rate of natural increase lies somewhere in-between. It gives a value of 1.81 and thus a doubling time of 38 years.
 
-In sum, the differing outcomes underline the importance of the fertility and the mortality among the youngest for the growth direction of a given population. Following Hassan [-@hassan_1981, 140], one would credit the corrected McFO-fertility rate to produce the most probably result as Hassan deems a growth rate of 0.5% per year as the maximum for prehistoric populations. On the other hand, also growth rates of 2.7% per year are known from ethnographic cases [@hassan_1981, 142].
+In sum, the differing outcomes underline the importance of the fertility and the mortality among the youngest for the growth direction of a given population. Following Hassan [-@hassan_1981, 140], one would credit the corrected McFO-fertility rate to produce the most probable result as Hassan deems a growth rate of 0.5% per year as the maximum for prehistoric populations. On the other hand, also growth rates of 2.7% per year are known from ethnographic cases [@hassan_1981, 142].
 
 
 ### Rate of dependent individuals
@@ -139,21 +145,18 @@ The first row of the function `lt.sexrelation` reports the Masculinity index. Wi
 
 ## Maternal mortality
 
-Maternal mortality rate (MMR) is a basic indicator for the health system of a given population. Maternal mortality is defined as dying during pregnancy or within the first 42 days after birth due to complications. Recently, McFadden and Oxenham [-@mcfadden_oxenham_2019] have provided a formula to calculate it from archaeological data. They show that with modern data a very high correlation is achieved by only comparing the absolute numbers of the age group 20 to 24. This has the additional advantage that for this age group anthropological aging methods are reasonable exact.
+Maternal mortality rate (MMR) is a basic indicator for the health system of a given population. Maternal mortality is defined as dying during pregnancy or within the first 42 days after birth due to complications. Recently, C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2019] have provided a formula to calculate it from archaeological data. They show that with modern data a very high correlation is achieved by only comparing the absolute numbers of the age group 20 to 24. This has the additional advantage that for this age group anthropological aging methods are reasonable exact.
 
 $MMR = 333.33 * D_{20-24_{female}} / D_{20-24_{male}} - 76.07$
 
 ```{r}
-nitra_prep <- prep.life.table(nitra, group="sex", agebeg = "age_start", ageend = "age_end")
-nitra_life <- life.table(nitra_prep)
 lt.sexrelation(nitra_life$f, nitra_life$m)[c(-1),]
 ```
 
+In Nitra, more than twice the number of females of the age 20-24 have been found than males of the same age. This gives a Maternal mortality rate of 712, meaning that of 100,000 births, 712 would have ended fatally for the mothers. In percentage, this number translates to 0.7%.
 
+McFadden and Oxenham based their formula on modern data which, of course, allow the most precise calculations. However, for early modern census data, much higher Maternal mortality rates are estimated [@schofield_1986], easily topping 1,000 and more. For these numbers, the formula by McFadden and Oxenham does not work, as their sample data-sets do not exceed 700. This is a problem which still needs more in-depth research. 
 
-## Population size
-
-_still to be added_
-
+Therefore, Maternal mortality rates computed for prehistoric populations should only very carefully compared to modern data. Regardless if the actual regression calculation is in need of adjustment or not, the McFadden/Oxenham-formula still seems capable to allow comparisons _between_ prehistoric populations.
 
 ## References
