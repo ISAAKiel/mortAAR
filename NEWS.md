@@ -3,6 +3,7 @@
 - adding more functions for checking representativity of age data, calculating reproduction indices, masculinity index, maternal mortality rate as well as corrected life tables
 - major re-factoring
 - rewriting of tests to work with testthat's new snapshot-functionality
+- adding two vignettes for life table correction and reproduction indices
 
 # mortAAR 1.0.2
 
