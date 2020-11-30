@@ -1,4 +1,4 @@
-# mortAAR master
+# mortAAR 1.1
 - adding an option for plotting in color instead of linetype
 - adding more functions for checking representativity of age data, calculating reproduction indices, masculinity index, maternal mortality rate as well as corrected life tables
 - major re-factoring

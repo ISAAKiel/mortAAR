@@ -242,7 +242,7 @@ As a last step for our analysis, we will compare the curves of the life tables o
 
 #### Constructing the life table
 
-The output of the function `prep.life.table` can be addressed separately by their grouping names. We use this option to collect the results of the above examples Münsingen-Rain and Magdalenenberg. For 'Magdalenenberg' with no grouping variable the name is "Deceased" by default. Because we want to have comparable data from Münsingen-Rain we choose the output for all individuals ("All" by default).  
+The output of the function `prep.life.table` can be addressed separately by their grouping names. We use this option to collect the results of the above examples Münsingen-Rain and Magdalenenberg. For 'Magdalenenberg' with no grouping variable the name of the corresponding `data.frame` within the list of results is "Deceased" by default. Because we want to have comparable data from Münsingen-Rain we choose the output for all individuals (`data.frame` named "All" by default).  
 
 ```{r}
 comp <- list(mag_prep$Deceased, muen_prep$All)  

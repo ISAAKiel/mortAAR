@@ -77,7 +77,7 @@ As stated above, the index assumes, somehow unrealistically, that the youngest a
 lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
 ```
 
-On contrast, the log-regression derived from the $P_{5-19}$-index by Bocquet-Appel arrives at a Total fertility rate of around 7, also in line with the expectation (see above). This higher value, not surprisingly, leads to much higher numbers in all the other indices, including a much higher Rate of natural increase and a much shorter doubling time of only 26.4 years.
+On contrast, the log-regression derived from the $P_{5-19}$-index by Bocquet-Appel arrives at a Total fertility rate of around 7, also in line with the expectation (see above). This higher value, not surprisingly, leads to much higher numbers in all the other indices, including a much higher Rate of natural increase and a much shorter doubling time of only 26 years.
 
 ```{r}
 lt.reproduction(lt.correction(schleswig)$life_table_corr, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
