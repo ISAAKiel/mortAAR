@@ -27,3 +27,5 @@ vignettes/*.pdf
 inst/doc
 # File system
 .DS_Store
+doc
+Meta

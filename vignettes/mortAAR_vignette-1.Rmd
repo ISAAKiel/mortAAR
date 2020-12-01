@@ -1,21 +1,15 @@
 ---
-title: "mortAAR: Vignette >Basic usage<"
+title: "Vignette >Basic usage<"
 author: "Clemens Schmid"
 date: "March 2017"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 csl: "`r library(RCurl); ifelse(url.exists('https://www.zotero.org/styles/journal-of-archaeological-science'), 'https://www.zotero.org/styles/journal-of-archaeological-science', '')`"
 vignette: >
-  %\VignetteIndexEntry{Vignette >Create a lifetable from an ordinary burial dataset<}
+  %\VignetteIndexEntry{Vignette >Basic usage<}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-Other vignettes related to mortAAR:
-
-* [Extended discussion](http://mortAAR_vignette_extended.html)
-* [Life table corrections](http://mortAAR_vignette_lt_correction.html)
-* [Indices of Reproduction](http://mortAAR_vignette_reproduction.html)
 
 # Load libraries
 

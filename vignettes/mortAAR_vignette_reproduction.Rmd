@@ -11,12 +11,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Other vignettes related to mortAAR:
-
-* [Basic usage](http://mortAAR_vignette-1.html)
-* [Extended discussion](http://mortAAR_vignette_extended.html)
-* [Life table corrections](http://mortAAR_vignette_lt_correction.html)
-
 ## Load libraries
 
 ```{r, message=FALSE}
@@ -33,9 +27,9 @@ For population studies it is of vital importance to estimate growth or decline o
 
 ### Mortaliy rate
 
-The mortality rate `m` is calculated after C. Masset and J.-P. Bocquet-Appel and Masset [-@masset_bocquet_1977] in per cent of a given population, on the basis of the indices $D_{5-14}$ and $D_{20-𝜔}$.
+The mortality rate `m` is calculated after C. Masset and J.-P. Bocquet-Appel and Masset [-@masset_bocquet_1977] in per cent of a given population, on the basis of the indices $D_{5-14}$ and $D_{20+}$.
 
-$m = 12.7 * \frac{D_{5-14}}{D_{20-𝜔}}$
+$m = 12.7 * \frac{D_{5-14}}{D_{20+}}$
 
 A value of 1.0, for example, means that 1 among 100 individuals died per year. In archaeological cases `m` is usually the same as the natality rate `n` because it has to be assumed that the population is stationary.
 
@@ -71,7 +65,7 @@ The McFadden/Oxenham-index gives a Total fertility rate of 4.85 which equals a t
 lt.reproduction(lt.correction(schleswig)$life_table_corr, fertility_rate = "McFO", growth_rate = "fertility")[c(-1,-2),]
 ```
 
-As stated above, the index assumes, somehow unrealistically, that the youngest age-groups are fully represented in the skeletal population. If we apply the life table corrections as advised by C. Masset and J.-P. Bocquet-Appel via the function `lt.correction` (see vignette "[Life table corrections](http://mortAAR_vignette_lt_correction.html)"), the values change dramatically. The Total fertility and Gross reproduction rates increase, but because of the much higher mortality among the youngest, the Net reproduction rate and thus the Rate of natural increase shrink. The doubling time is extended to nearly 250 years.
+As stated above, the index assumes, somehow unrealistically, that the youngest age-groups are fully represented in the skeletal population. If we apply the life table corrections as advised by C. Masset and J.-P. Bocquet-Appel via the function `lt.correction` (see vignette "Life table corrections"), the values change dramatically. The Total fertility and Gross reproduction rates increase, but because of the much higher mortality among the youngest, the Net reproduction rate and thus the Rate of natural increase shrink. The doubling time is extended to nearly 250 years.
 
 ```{r}
 lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
@@ -104,14 +98,14 @@ In sum, the differing outcomes underline the importance of the fertility and the
 
 The ratio of dependent individuals [@hassan_1981, 147] is usually [but probably erroneously for archaic societies @grupe_et_al_2015, 423] assumed to apply to those aged below 15 or 60 and above, and this is put into relation of the individuals aged in-between:
 
-$DR = \frac{\sum{D_{0-14}} + \sum{D_{60-𝜔}}}{\sum{D_{15--59}}}$
+$DR = \frac{\sum{D_{0-14}} + \sum{D_{60+}}}{\sum{D_{15--59}}}$
 
 ```{r}
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 lt.reproduction(schleswig)[2,]
 ```
 
-The example dataset of the Schleswig produces a Dependency ratio of around 106. That would mean that in Schleswig there would have been roughly as much dependent individuals as those available to support them. This number even doubles if we apply the life table corrections devised by C. Masset and J.-P. Bocquet-Appel via the function `lt.correction` (see vignette "[Life table corrections](http://mortAAR_vignette_lt_correction.html)").
+The example dataset of the Schleswig produces a Dependency ratio of around 106. That would mean that in Schleswig there would have been roughly as much dependent individuals as those available to support them. This number even doubles if we apply the life table corrections devised by C. Masset and J.-P. Bocquet-Appel via the function `lt.correction` (see vignette "Life table corrections").
 
 ```{r}
 lt.reproduction(lt.correction(schleswig)$life_table_corr)[2,]

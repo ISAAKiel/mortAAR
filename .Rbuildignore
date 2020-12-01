@@ -5,3 +5,6 @@
 ^cran-comments\.md$
 data-raw
 ^CRAN-RELEASE$
+^revdep$
+^doc$
+^Meta$

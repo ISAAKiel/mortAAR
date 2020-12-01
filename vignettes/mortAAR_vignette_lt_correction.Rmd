@@ -11,12 +11,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Other vignettes related to mortAAR:
-
-* [Basic usage](http://mortAAR_vignette-1.html)
-* [Extended discussion](http://mortAAR_vignette_extended.html)
-* [Indices of Reproduction](http://mortAAR_vignette_reproduction.html)
-
 ## Load libraries
 
 ```{r, message=FALSE}
@@ -72,15 +66,15 @@ It is generally assumed that most skeletal populations lack the youngest age gro
 
 The equations conceived by Masset and Bocquet-Appel are relatively complex. Life expectancy at the time of birth is computed as follows: 
 
-$e^0_x = 78.721 * log_{10} \sqrt{\frac{D_{20-𝜔}}{ D_{5-14}}} - 3.384 \pm 1.503$
+$e^0_x = 78.721 * log_{10} \sqrt{\frac{D_{20+}}{ D_{5-14}}} - 3.384 \pm 1.503$
 
-The equation will strive towards 75 years of life expectancy when there is a ratio of adults to 5--14-year old of 100 to 1 as the term $log_{10} \sqrt{\frac{D_{20-𝜔}}{ D_{5-14}}})$ will then tend towards 1. Higher numbers of non-adults will likewise lead to lower life expectancy values.
+The equation will strive towards 75 years of life expectancy when there is a ratio of adults to 5--14-year old of 100 to 1 as the term $log_{10} \sqrt{\frac{D_{20+}}{ D_{5-14}}})$ will then tend towards 1. Higher numbers of non-adults will likewise lead to lower life expectancy values.
 
 The probability of death in the first and the first five years is similarly constructed:
 
-$_1q_0 = 0.568 * \sqrt{log_{10}(\frac{200*D_{5-14}}{D_{20-𝜔}}}) - 0.438 \pm 0.016$
+$_1q_0 = 0.568 * \sqrt{log_{10}(\frac{200*D_{5-14}}{D_{20+}}}) - 0.438 \pm 0.016$
 
-$_5q_0 = 1.154 * \sqrt{log_{10}(\frac{200*D_{5-14}}{D_{20-𝜔}}}) - 1.014 \pm 0.041$
+$_5q_0 = 1.154 * \sqrt{log_{10}(\frac{200*D_{5-14}}{D_{20+}}}) - 1.014 \pm 0.041$
 
 
 The corrected Schleswig data^[The values differ from that published by Herrmann et al. [-@herrmann_prahistorische_1990, 307] because here no correction of the age group 5--10 years was applied.] are as follows:
