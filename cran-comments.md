@@ -1,3 +1,11 @@
+## Resubmission
+This is a resubmission because ver. 1.0.2 was archived on 2020-10-02 as check issues were not corrected in time.
+Fixed/removed links.
+Fiexed missing '()' after 'return' in the function 'inputchecks'.
+
+## Possibly mis-spelled words in DESCRIPTION
+"indices" and "survivorship" are correct.
+
 ## Increment patch
 This is an increment minor. In this version we have:
 

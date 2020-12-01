@@ -220,7 +220,7 @@ inputchecks <- function(neclist, okvars, option_spline) {
         necdf['Dx'] %>% unlist %>% is.numeric,
         FALSE
       )
-    ) %>% return
+    ) %>% return()
   }
 
   if (neclist %>% lapply(aDxcheck) %>% unlist %>% all %>%
