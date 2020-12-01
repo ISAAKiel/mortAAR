@@ -40,7 +40,7 @@ provided a formula to calculate it from archaeological data.
 \details{
 The Masculinity index (MI) is defined for juvenile and older
 individuals. Note that with a higher mortality rate of adult females,
-an MI < 100 does not necesssarily speak for an unbalanced MI in life.\cr
+an MI < 100 does not necessarily speak for an unbalanced MI in life.\cr
 Maternal mortality is calculated according to the formula
 provided by \emph{McFadden & Oxenham 2019}. McFadden and Oxenham show
 that with modern data a very high correlation is achieved by only

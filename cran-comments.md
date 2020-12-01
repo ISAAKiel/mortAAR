@@ -15,6 +15,7 @@ This is an increment minor. In this version we have:
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.
+There was one NOTE on "checking CRAN incoming feasibility".
 
 ## Reverse dependencies
-revdepcheck::revdep_check() showed no errors.
+There are no reverse dependencies.

@@ -22,7 +22,7 @@ library(magrittr)
 
 Due to the nature of most anthropological ageing methods, life tables from archaeological series often contain artificial jumps in the data. To counteract this effect, mortAAR provides the option to interpolate values for adults by a monotonic cubic spline. Usual options will by '10', '15' or '20' which will interpolate the values for individuals of an age of 20 or older by 10-, 15- or 20-year cumulated values. This is to be used carefully, as diagnostic features of the life table might be smoothed and essentially removed. This option is only available when the methods `Standard` or `Equal5` in `prep.life.table` have been chosen.
 
-As an example, we work with the Early Neolithic cemetery of Nitra. First, we prepare the data, calculate the life table and plot d<sub>x</sub>- and q<sub>x</sub>-diagrams. The age-classes 25-44 show a bimodal distribution which might be artifical. Furthermore, the curve sharply drops after 40 which also looks very unnatural.
+As an example, we work with the Early Neolithic cemetery of Nitra. First, we prepare the data, calculate the life table and plot d<sub>x</sub>- and q<sub>x</sub>-diagrams. The age-classes 25-44 show a bimodal distribution which might be artificial. Furthermore, the curve sharply drops after 40 which also looks very unnatural.
 
 ```{r}
 nitra_prep <- prep.life.table(nitra, method="Equal5", agebeg = "age_start", ageend = "age_end")
@@ -41,7 +41,7 @@ plot(nitra_life, display=c("dx","qx"))
 
 As expected, applying the option leads to much smoother curves. However, for the 10-option, the oldest age group shows a local maximum which is not reflected in the original data and therefore is an artefact of the smoothing algorithm working on the available data. In this case, the 20-year-option seems to offer a better compromise between a much more natural looking curve and still trueness to the original data.
 
-## Representivity of data
+## Representativity of data
 
 Anthropological data from archaeological contexts is necessarily fragmentary. The question remains if this fragmentation leads to completely unreliable inferences when statistical methods are applied to it. K. M. Weiss [-@weiss_demography_1973, 46f.] and C. Masset and J.-P. Bocquet-Appel [-@masset_bocquet_1977; see also @herrmann_prahistorische_1990, 306f.] have therefore devised indices which check if the non-adult age groups are represented in proportions as can be expected from modern comparable data. Whether this is really applicable to archaeological data-sets is a matter of debate.
 

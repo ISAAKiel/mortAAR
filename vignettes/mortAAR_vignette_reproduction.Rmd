@@ -25,7 +25,7 @@ For population studies it is of vital importance to estimate growth or decline o
 
 ## Indices of reproduction
 
-### Mortaliy rate
+### Mortality rate
 
 The mortality rate `m` is calculated after C. Masset and J.-P. Bocquet-Appel and Masset [-@masset_bocquet_1977] in per cent of a given population, on the basis of the indices $D_{5-14}$ and $D_{20+}$.
 
@@ -47,7 +47,7 @@ Recently, C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018a] have publishe
 
 The Gross reproduction rate (GRR) is calculated by multiplying the TFR with the ratio of female newborns, assumed to be a constant of 48.8% of all children [@hassan_1981, 136]. The Net reproduction rate is arrived at by summing the product of the GRR, the age specific fertility rate calculated from the data given by Hassan [-@hassan_1981, 137 tab. 8.7] and the age specific survival taken from the life table and dividing the result by 10000.
 
-The Rate of natural increase or Intrinsic growth rate `r` (growth in per cent per year) can be computed from the fertility calculations following Hassan [-@hassan_1981, 140]. An alternative way to calculate the intrinsic growth rate has recently described by C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018b]. They present a regression calculation based on the index $D_{0-15}/D$ also used for fertility calculations (see above) in connections with modern data. It must not astonish that even with the McFadden/Oxenham-index used for the fertility rate, the actual numbers for the computed Intrinisc rate of growth and the Rate of Natural Increase can highly diverge, as with the former formula, further life table data is taken into account.
+The Rate of natural increase or Intrinsic growth rate `r` (growth in per cent per year) can be computed from the fertility calculations following Hassan [-@hassan_1981, 140]. An alternative way to calculate the intrinsic growth rate has recently described by C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018b]. They present a regression calculation based on the index $D_{0-15}/D$ also used for fertility calculations (see above) in connections with modern data. It must not astonish that even with the McFadden/Oxenham-index used for the fertility rate, the actual numbers for the computed Intrinsic rate of growth and the Rate of Natural Increase can highly diverge, as with the former formula, further life table data is taken into account.
 
 Depending on the values chosen for the Total fertility rate and the Intrinsic growth rate, the Doubling time `Dt` will also vary. This can be found in any textbook as follows:
 
@@ -112,7 +112,7 @@ lt.reproduction(lt.correction(schleswig)$life_table_corr)[2,]
 ```
 
 
-### Relation betwen female and male individuals
+### Relation between female and male individuals
 
 The proportional relation between adult males and females (= Masculinity index) is defined for juvenile and older individuals:
 
@@ -124,7 +124,7 @@ It is interesting for a number of reasons [@herrmann_prahistorische_1990, 310]:
 
 2. It may hint towards cultural reasons like sex-specific mobility.
 
-Note that with a higher mortality rate of adult females, an MI < 100 does not necesssarily speak for an unbalanced MI in life.
+Note that with a higher mortality rate of adult females, an MI < 100 does not necessarily speak for an unbalanced MI in life.
 
 As example, we choose the Early Neolithic cemetery of Nitra in Slovakia.
 
