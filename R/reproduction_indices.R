@@ -133,7 +133,7 @@ lt.reproduction.default <- function(life_table, fertility_rate = "BA_log", growt
 #' @export
 #' @noRd
 lt.reproduction.mortaar_life_table_list <- function(life_table, fertility_rate = "BA_log", growth_rate = "fertility",  gen_len = 20) {
-  lapply(life_table, lt.reproduction)
+  lapply(life_table, lt.reproduction, fertility_rate = fertility_rate, growth_rate = growth_rate, gen_len = gen_len)
 }
 
 #' @rdname lt.reproduction
