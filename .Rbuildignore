@@ -8,3 +8,4 @@ data-raw
 ^revdep$
 ^doc$
 ^Meta$
+^\.github$
