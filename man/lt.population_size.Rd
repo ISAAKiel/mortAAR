@@ -12,8 +12,8 @@ lt.population_size(x, e0, k = 1.1, t)
 mortaar_life_table_list or an arbitrary numeric value representing
 the number of deaths.}
 
-\item{e0}{life expectancy at birth (either calculated directly
-from the life table or arbitrary numeric value).}
+\item{e0}{numeric. life expectancy at birth (default: derived directly
+from the life table's ex column).}
 
 \item{k}{numeric. Arbitrary number to cater for
 individuals not represented in the number of deaths. Default: 1.1.}
