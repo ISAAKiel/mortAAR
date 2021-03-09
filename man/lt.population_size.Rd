@@ -12,7 +12,8 @@ lt.population_size(x, e0, k = 1.1, t)
 mortaar_life_table_list or an arbitrary numeric value representing
 the number of deaths.}
 
-\item{e0}{numeric. life expectancy at birth (default: derived directly
+\item{e0}{numeric. life expectancy at birth
+(if x is of class mortaar_life_table then e0 can be derived directly
 from the life table's ex column).}
 
 \item{k}{numeric. Arbitrary number to cater for
@@ -52,7 +53,7 @@ odagsen <- life.table(list(
 "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
  ))
- lt.population_size(odagsen, t = 100)
+lt.population_size(odagsen, e0 = 30, t = 100)
 
 lt.population_size(x = 111, e0 = 32.2, k = 1.2, t = 100)
 }

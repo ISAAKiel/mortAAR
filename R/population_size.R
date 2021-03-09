@@ -21,7 +21,8 @@
 #' mortaar_life_table_list or an arbitrary numeric value representing
 #' the number of deaths.
 #'
-#' @param e0 numeric. life expectancy at birth (default: derived directly
+#' @param e0 numeric. life expectancy at birth
+#' (if x is of class mortaar_life_table then e0 can be derived directly
 #' from the life table's ex column).
 #'
 #' @param k numeric. Arbitrary number to cater for
@@ -51,7 +52,7 @@
 #' "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
 #'  "margo orbitalis" = odagsen_mo[c("a", "Dx")]
 #'  ))
-#'  lt.population_size(odagsen, t = 100)
+#' lt.population_size(odagsen, e0 = 30, t = 100)
 #'
 #' lt.population_size(x = 111, e0 = 32.2, k = 1.2, t = 100)
 
@@ -64,20 +65,23 @@ lt.population_size <- function(x, e0, k = 1.1, t) {
 #' @rdname lt.population_size
 #' @export
 #' @noRd
-lt.population_size.default <- function(x, e0 = x$ex[1], k = 1.1, t) {
-  if (is.numeric(x)) {
-    D <- x
-  } else {
-    stop("Please choose a valid mortAAR life table or numeric value.")
-  }
-  result <- population_size_output(D, e0 = x$ex[1], k, t)
+lt.population_size.default <- function(x, e0, k = 1.1, t) {
+  stop("x must be a valid mortAAR life table or a numeric value.")
+}
+
+#' @rdname lt.population_size
+#' @export
+#' @noRd
+lt.population_size.numeric <- function(x, e0, k = 1.1, t) {
+  D <- x
+  result <- population_size_output(D, e0, k, t)
   return(result)
 }
 
 #' @rdname lt.population_size
 #' @export
 #' @noRd
-lt.population_size.mortaar_life_table_list <- function(x, e0 = x$ex[1], k = 1.1, t) {
+lt.population_size.mortaar_life_table_list <- function(x, e0, k = 1.1, t) {
   lapply(x, lt.population_size, e0 = e0, k = k,  t = t)
 }
 
