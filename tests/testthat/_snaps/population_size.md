@@ -1,6 +1,6 @@
 # lt.population_size fails for wrong input
 
-    Argument "e0" fehlt (ohne Standardwert)
+    argument "e0" is missing, with no default
 
 # lt.population_size produces the right output
 
