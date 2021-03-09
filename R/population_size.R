@@ -4,7 +4,7 @@
 #' The estimation of the population size for a given cemetery is
 #' only possible if a stationary population is assumed. In this
 #' case, the number of deaths is simply multiplied with the
-#' life expectancy at birth and divided be the time span
+#' life expectancy at birth and divided be the time span in years
 #' the cemetery was in use. Additionally, it is assumed
 #' that an unknown number of individuals
 #' is not represented in the cemetery and, therefore, the
@@ -21,23 +21,23 @@
 #' mortaar_life_table_list or an arbitrary numeric value representing
 #' the number of deaths.
 #'
-#' @param e0 numeric. life expectancy at birth
+#' @param e0 numeric. life expectancy at birth in years
 #' (if x is of class mortaar_life_table then e0 can be derived directly
 #' from the life table's ex column).
 #'
 #' @param k numeric. Arbitrary number to cater for
 #' individuals not represented in the number of deaths. Default: 1.1.
 #'
-#' @param t numeric. Time span of usage of cemetery.
+#' @param t numeric. Time span of usage of cemetery in years.
 #'
 #' @return
 #' A data.frame with the following items:
 #'
 #' \itemize{
 #'   \item \bold{D}:  Number of deaths.
-#'   \item \bold{e0}:  Life expectancy at birth.
+#'   \item \bold{e0}: Life expectancy at birth in years.
 #'   \item \bold{k}:  Correction factor.
-#'   \item \bold{t}: Time span of usage of cemetery.
+#'   \item \bold{t}: Time span of usage of cemetery in years.
 #'   \item \bold{P}: Population size calcuated by the formula
 #'  \eqn{P = D * e0 * k / t}
 #'  }
