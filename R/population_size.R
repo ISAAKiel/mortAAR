@@ -32,7 +32,7 @@
 #'   \item \bold{e0}: Life expectancy at birth in years.
 #'   \item \bold{k}:  Correction factor.
 #'   \item \bold{t}: Time span of usage of cemetery in years.
-#'   \item \bold{P}: Population size calcuated by the formula
+#'   \item \bold{P}: Population size calculated by the formula
 #'  \eqn{P = D * e0 * k / t}
 #'  }
 #'

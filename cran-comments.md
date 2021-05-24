@@ -4,6 +4,8 @@
 ## Increment patch
 This is a minor increment. In this version we have:
 - added calculations for population size
+- added more reproduction indices
+- deleted import of crayon as it was not used any longer
 
 ## Test environments
 * local OS X install, R 4.0.3

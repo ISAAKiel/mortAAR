@@ -27,7 +27,7 @@ For population studies it is of vital importance to estimate growth or decline o
 
 ### Mortality rate
 
-The mortality rate `m` is calculated after C. Masset and J.-P. Bocquet-Appel and Masset [-@masset_bocquet_1977] in per cent of a given population, on the basis of the indices $D_{5-14}$ and $D_{20+}$.
+The mortality rate `m` is calculated after C. Masset and J.-P. Bocquet-Appel [-@masset_bocquet_1977] in per cent of a given population, on the basis of the indices $D_{5-14}$ and $D_{20+}$.
 
 $m = 12.7 * \frac{D_{5-14}}{D_{20+}}$
 
@@ -37,6 +37,29 @@ A value of 1.0, for example, means that 1 among 100 individuals died per year. I
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 lt.reproduction(schleswig)[1,]
 ```
+
+
+### Birth and death rates according to Buikstra et al. 1986
+
+Buikstra et al. [-@buikstra_et_al_1986] have offered a different formula. They made the interesting observation that the relation of those individuals aged 30 years and above to those aged 5 years and above is very closely related to the birth rate and also closely (but less significantly) related to the death rate. Despite the high correlations, Buikstra et al. decided against calculating direct birth and death rates but rather used the D30+/D5+-index to compare different archaeological populations.
+
+Here, apart from the $\frac{D_{30+}}{D_{5+}}$-ratio, the birth and death rates are calculated as well from the regression formulas supplied by Buikstra et al., knowing that their merit is questionable. The values are supposed to specify the number of births and deaths, respectively, per year and per 100 individuals.
+$BR = -11.493 * \frac{D_{30+}}{D_{5+}} + 12.712$
+$DR = -5.287 * \frac{D_{30+}}{D_{5+}} + 6.179$
+
+```{r}
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig)[c(1,8:10),]
+```
+
+For the Schleswig data, the ratio of $D_{5+}$ and $D_{30+}$ is 0.57, which means that the number of individuals aged 5 and above nearly doubles that of those aged 30 and above. This speaks for a moderate to high birth rate. Applying the formulas by Buikstra et al., the birth rate would be 6.2, nearly doubling the death rate of 3.2. The latter value is lower than the value of 4.4 computed by the formula of Masset and Bocquet-Appel.
+
+```{r}
+odagsen <- life.table(list("corpus mandibulae" = odagsen_cm[c("a", "Dx")],"margo orbitalis" = odagsen_mo[c("a", "Dx")]))
+lt.reproduction(odagsen)
+```
+
+Interesting is the case of Odagsen, where age and sex were determined on two different parts of the skeleton (margo orbitalis and corpus mandibulae). The other reproduction indices differ between the two data-sets, but the $\frac{D_{30+}}{D_{5+}}$-ratios are nearly identical at 0.69. This might be seen as speaking for the robustness of this index. The value itself indicates a higher percentage of older individuals and thus a lower birth rate than we have seen for Schleswig. The birth rate is computed to have been 4.7%. and the death rate 2.5%.
 
 
 ### Reproduction rates

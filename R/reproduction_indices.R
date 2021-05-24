@@ -41,7 +41,12 @@
 #' (1977) in per cent of a given population. Furthermore, the ratio of dependent individuals
 #' is reported that is usually (but probably erroneously for archaic societies
 #' (\emph{Grupe et al. 2015}, 423) assumed to apply to those aged below 15 or
-#' 60 and above.
+#' 60 and above.\cr
+#' Finally, \emph{Buikstra et al. 1986}. have made the interesting observation that
+#' the relation of those individuals aged 30 years and above to those aged
+#' 5 years and above is very closely related to the birth rate and also closely
+#' (but less significantly) related to the death rate. Therefore, these indices
+#' are calculated as well.
 #'
 #' @param life_table an object of class mortaar_life_table.
 #' @param fertility_rate string or numeric. Either fertility rate according to
@@ -67,7 +72,7 @@
 #'
 #'                    \eqn{0.127 * d5--14/d20 + 0.016}
 #'
-#'   \item \bold{DR}:  Dependency ratio.
+#'   \item \bold{dep}:  Dependency ratio.
 #'
 #'                    \eqn{DR = (sum(D0--14) + sum(D60+)) / sum(D15--59) }
 #'
@@ -86,6 +91,16 @@
 #'   \item \bold{Dt}: Doubling time in years.
 #'
 #'                    \eqn{Dt = 100 * ln(2) / r}
+#'
+#'   \item \bold{D30_D5}: Ratio D30+/D5+ after Buikstra et al.
+#'
+#'   \item \bold{BR}: Birth rate from ratio D30+/D5+.
+#'
+#'                    \eqn{BR = -11.493 * D30_D5 + 12.712}
+#'
+#'   \item \bold{DR}: Death rate from ratio D30+/D5+.
+#'
+#'                    \eqn{DR = -5.287 * D30_D5 + 6.179}
 #'  }
 #'
 #' @references
@@ -95,6 +110,8 @@
 #' \insertRef{masset_bocquet_1977}{mortAAR}
 #'
 #' \insertRef{bocquet_appel_2002}{mortAAR}
+#'
+#' \insertRef{buikstra_et_al_1986}{mortAAR}
 #'
 #' \insertRef{grupe_et_al_2015}{mortAAR}
 #'
@@ -212,9 +229,13 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   # Doubling time in years for exponential steady growth
   Dt <- 100 * log(2) / r
 
+  # Birth and death rates after Buikstra et al. 1986
+  birth_rate <- -11.493 * indx$D30_D5 + 12.712
+  death_rate <- -5.287 * indx$D30_D5 + 6.179
+
   # compiling result table
   result <- data.frame(
-    method = c("m", "DR", "TFR","GRR", "NRR","r", "Dt"),
+    method = c("m", "dep", "TFR","GRR", "NRR","r", "Dt", "D30_D5","BR", "DR"),
     value = c(
       round(mortality_rate*100, 2),
       round(dependency_ratio*100, 2),
@@ -222,7 +243,10 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
       round(R_pot_fem, 2),
       round(R_0, 2),
       round(r, 2),
-      round(Dt, 2)
+      round(Dt, 2),
+      round(indx$D30_D5, 2),
+      round(birth_rate, 2),
+      round(death_rate, 2)
     ),
     description = c(
       "Mortality",
@@ -231,7 +255,10 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
       "Gross reproduction rate",
       "Net reproduction rate",
       "Rate of natural increase",
-      "Doubling time in years"
+      "Doubling time in years",
+      "ratio D30+/D5+",
+      "Birth rate",
+      "Death rate"
     ),
     stringsAsFactors = FALSE
   )

@@ -40,7 +40,7 @@ A data.frame with basic reproduction indices:
 
                    \eqn{0.127 * d5--14/d20 + 0.016}
 
-  \item \bold{DR}:  Dependency ratio.
+  \item \bold{dep}:  Dependency ratio.
 
                    \eqn{DR = (sum(D0--14) + sum(D60+)) / sum(D15--59) }
 
@@ -59,6 +59,16 @@ A data.frame with basic reproduction indices:
   \item \bold{Dt}: Doubling time in years.
 
                    \eqn{Dt = 100 * ln(2) / r}
+
+  \item \bold{D30_D5}: Ratio D30+/D5+ after Buikstra et al.
+
+  \item \bold{BR}: Birth rate from ratio D30+/D5+.
+
+                   \eqn{BR = -11.493 * D30_D5 + 12.712}
+
+  \item \bold{DR}: Death rate from ratio D30+/D5+.
+
+                   \eqn{DR = -5.287 * D30_D5 + 6.179}
  }
 }
 \description{
@@ -104,7 +114,12 @@ Also calculated is the mortality rate m after \emph{Bocquet-Appel and Masset}
 (1977) in per cent of a given population. Furthermore, the ratio of dependent individuals
 is reported that is usually (but probably erroneously for archaic societies
 (\emph{Grupe et al. 2015}, 423) assumed to apply to those aged below 15 or
-60 and above.
+60 and above.\cr
+Finally, \emph{Buikstra et al. 1986}. have made the interesting observation that
+the relation of those individuals aged 30 years and above to those aged
+5 years and above is very closely related to the birth rate and also closely
+(but less significantly) related to the death rate. Therefore, these indices
+are calculated as well.
 }
 \examples{
 schleswig <- life.table(schleswig_ma[c("a", "Dx")])
@@ -123,6 +138,8 @@ lt.reproduction(odagsen)
 \insertRef{masset_bocquet_1977}{mortAAR}
 
 \insertRef{bocquet_appel_2002}{mortAAR}
+
+\insertRef{buikstra_et_al_1986}{mortAAR}
 
 \insertRef{grupe_et_al_2015}{mortAAR}
 

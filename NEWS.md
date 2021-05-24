@@ -1,8 +1,11 @@
 # mortAAR 1.1.1
+
 - using the Stabilized MMR formula for maternal mortality
 - adding the possibility to calculate population size from skeletal populations
+- adding more reproduction indices
 
 # mortAAR 1.1.0
+
 - adding an option for plotting in color instead of linetype
 - adding more functions for checking representativity of age data, calculating reproduction indices, masculinity index, maternal mortality rate as well as corrected life tables
 - major re-factoring

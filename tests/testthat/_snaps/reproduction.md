@@ -20,24 +20,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 4.85, 2.37, 1.17, 0.79, 87.77]
+          "value": [4.39, 105.83, 4.85, 2.37, 1.17, 0.79, 87.77, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -60,24 +60,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 8.34, 4.07, 2.01, 3.5, 19.81]
+          "value": [4.39, 105.83, 8.34, 4.07, 2.01, 3.5, 19.81, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -100,24 +100,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 7.52, 3.67, 1.81, 2.98, 23.29]
+          "value": [4.39, 105.83, 7.52, 3.67, 1.81, 2.98, 23.29, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -140,24 +140,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 2.63, 26.39]
+          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 2.63, 26.39, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -180,24 +180,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 5, 2.44, 1.21, 0.94, 73.92]
+          "value": [4.39, 105.83, 5, 2.44, 1.21, 0.94, 73.92, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -220,24 +220,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 2.63, 26.39]
+          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 2.63, 26.39, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -260,24 +260,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 0, 26163.39]
+          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 0, 26163.39, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -300,24 +300,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 1.81, 38.27]
+          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 1.81, 38.27, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -340,24 +340,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 1.1, 63.01]
+          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 1.1, 63.01, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -380,24 +380,24 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       "value": [
         {
           "type": "character",
           "attributes": {},
-          "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+          "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 2.1, 32.99]
+          "value": [4.39, 105.83, 7.01, 3.42, 1.69, 2.1, 32.99, 0.57, 6.2, 3.18]
         },
         {
           "type": "character",
           "attributes": {},
-          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+          "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
         }
       ]
     }
@@ -430,24 +430,24 @@
             "row.names": {
               "type": "integer",
               "attributes": {},
-              "value": [1, 2, 3, 4, 5, 6, 7]
+              "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             }
           },
           "value": [
             {
               "type": "character",
               "attributes": {},
-              "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+              "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [3.37, 62.32, 6.46, 3.15, 1.82, 2.98, 23.24]
+              "value": [3.37, 62.32, 6.46, 3.15, 1.82, 2.98, 23.24, 0.69, 4.74, 2.51]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+              "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
             }
           ]
         },
@@ -467,24 +467,24 @@
             "row.names": {
               "type": "integer",
               "attributes": {},
-              "value": [1, 2, 3, 4, 5, 6, 7]
+              "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             }
           },
           "value": [
             {
               "type": "character",
               "attributes": {},
-              "value": ["m", "DR", "TFR", "GRR", "NRR", "r", "Dt"]
+              "value": ["m", "dep", "TFR", "GRR", "NRR", "r", "Dt", "D30_D5", "BR", "DR"]
             },
             {
               "type": "double",
               "attributes": {},
-              "value": [2.42, 34.05, 5.83, 2.84, 1.45, 1.87, 37.09]
+              "value": [2.42, 34.05, 5.83, 2.84, 1.45, 1.87, 37.09, 0.69, 4.77, 2.52]
             },
             {
               "type": "character",
               "attributes": {},
-              "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years"]
+              "value": ["Mortality", "Dependency ratio", "Total fertility rate", "Gross reproduction rate", "Net reproduction rate", "Rate of natural increase", "Doubling time in years", "ratio D30+/D5+", "Birth rate", "Death rate"]
             }
           ]
         }
