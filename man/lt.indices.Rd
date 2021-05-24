@@ -18,6 +18,8 @@ A list with the following indices and vectors:
   according to \emph{Masset and Bocquet 1977}.
   \item \bold{P(5-19)}:  ratio of individuals aged 5--19 to those aged
   5 or above according to \emph{Bocquet-Appel 2002}.
+  \item \bold{D30_D5)}:  ratio of individuals aged 30 and above to those aged
+  5 or above according to \emph{Buikstra et al. 1986}.
   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
   according to \emph{McFadden & Oxenham 2018a} if infants are represented
   well.
@@ -39,6 +41,8 @@ lt.indices(schleswig)
 \insertRef{bocquet_appel_2002}{mortAAR}
 
 \insertRef{masset_bocquet_1977}{mortAAR}
+
+\insertRef{buikstra_et_al_1986}{mortAAR}
 
 \insertRef{mcfadden_oxenham_2018a}{mortAAR}
 }

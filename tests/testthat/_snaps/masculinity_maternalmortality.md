@@ -32,7 +32,7 @@
         {
           "type": "double",
           "attributes": {},
-          "value": [66.7, 2.36, 711.6, 7.12]
+          "value": [0.67, 2.36, 449, 4.49]
         },
         {
           "type": "character",

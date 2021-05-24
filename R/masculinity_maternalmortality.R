@@ -10,14 +10,15 @@
 #' Maternal mortality is a basic indicator for the health system of a
 #' given population. Maternal mortality is defined as dying during
 #' pregnancy or within the first 42 days after birth due to
-#' complications. Recently, \emph{McFadden and Oxenham 2019} have
-#' provided a formula to calculate it from archaeological data.
+#' complications. Recently, \emph{McFadden and colleagues 2020} have
+#' provided an updated formula to calculate it from archaeological data.
 #'
 #' The Masculinity index (MI) is defined for juvenile and older
 #' individuals. Note that with a higher mortality rate of adult females,
 #' an MI < 100 does not necessarily speak for an unbalanced MI in life.\cr
 #' Maternal mortality is calculated according to the formula
-#' provided by \emph{McFadden & Oxenham 2019}. McFadden and Oxenham show
+#' provided by \emph{McFadden & Oxenham 2019} in the updated version of
+#' \emph{McFadden et al. 2020}. McFadden and Oxenham show
 #' that with modern data a very high correlation is achieved by only
 #' comparing the absolute numbers of the age group 20 to 24. This has the
 #' additional advantage that for this age group anthropological aging
@@ -30,17 +31,19 @@
 #' \itemize{
 #'   \item \bold{Masculinity index}.
 #'
-#'                    \eqn{MI = D>=15male * 100 / D>=15female}
+#'                    \eqn{MI = D>=15male / D>=15female}
 #'
 #'   \item \bold{Maternal mortality}.
 #'
-#'                    \eqn{333.33 * D20-24female / D20-24male - 76.07}
+#'                    \eqn{333.33 * (D20-24female / D20-24male) * MI - 76.07}
 #'}
 #' @references
 #'
 #' \insertRef{herrmann_prahistorische_1990}{mortAAR}
 #'
 #' \insertRef{mcfadden_oxenham_2019}{mortAAR}
+#'
+#' \insertRef{mcfadden_et_al_2020}{mortAAR}
 #'
 #'
 #'
@@ -80,23 +83,23 @@ lt.sexrelation.mortaar_life_table <- function(females, males) {
 
     # Masculinity index (MI) for juvenile and older individuals: males * 100 / females
     fem_age <- females$a %>% cumsum
-    fem_sum <- females$Dx[fem_age >= 20] %>% sum
+    fem_sum <- females$Dx[fem_age >= 15] %>% sum
     male_age <- males$a %>% cumsum
-    male_sum <- males$Dx[male_age >= 20] %>% sum
-    masculinity_index <- round(male_sum * 100 / fem_sum, 1)
+    male_sum <- males$Dx[male_age >= 15] %>% sum
+    masculinity_index <- male_sum / fem_sum
 
-    # compute maternal mortality according to McFaden/Oxenham 2019
-    f_mort <- females$Dx[females$x=="20--24"]
-    m_mort <- males$Dx[males$x=="20--24"]
-    f_m_ratio <- f_mort / m_mort
-    maternal_mortality <- 333.33 * f_m_ratio - 76.07
+    # compute maternal mortality according to McFaden et al. 2020
+    f_mort_20 <- females$Dx[females$x=="20--24"]
+    m_mort_20 <- males$Dx[males$x=="20--24"]
+    f_m_20_ratio <- f_mort_20 / m_mort_20
+    maternal_mortality <- 333.33 * f_m_20_ratio * masculinity_index - 76.07
 
     # putting together the sex-relation data.frame
     sexrelation_df <- data.frame(
       method = c("MI","Ratio_F_M","MMR1","MMR2"),
       value = c(
-        masculinity_index,
-        round(f_m_ratio, 2),
+        round(masculinity_index, 2),
+        round(f_m_20_ratio, 2),
         round(maternal_mortality,1),
         round(maternal_mortality / 100,2)
       ),

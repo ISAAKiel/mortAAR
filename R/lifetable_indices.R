@@ -16,6 +16,8 @@
 #'   according to \emph{Masset and Bocquet 1977}.
 #'   \item \bold{P(5-19)}:  ratio of individuals aged 5--19 to those aged
 #'   5 or above according to \emph{Bocquet-Appel 2002}.
+#'   \item \bold{D30_D5)}:  ratio of individuals aged 30 and above to those aged
+#'   5 or above according to \emph{Buikstra et al. 1986}.
 #'   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
 #'   according to \emph{McFadden & Oxenham 2018a} if infants are represented
 #'   well.
@@ -27,6 +29,8 @@
 #' \insertRef{bocquet_appel_2002}{mortAAR}
 #'
 #' \insertRef{masset_bocquet_1977}{mortAAR}
+#'
+#' \insertRef{buikstra_et_al_1986}{mortAAR}
 #'
 #' \insertRef{mcfadden_oxenham_2018a}{mortAAR}
 #'
@@ -80,6 +84,11 @@ lt.indices.mortaar_life_table <- function(life_table) {
   d5plus <- life_table$Dx[all_age >=10] %>% sum
   p5_19 <- d5_19 / d5plus
 
+  # D30+/D5+ index according to Buikstra et al. 1986
+  d5plus <- life_table$Dx[all_age >=5] %>% sum
+  d30plus <- life_table$Dx[all_age > 30] %>% sum
+  D30_D5 <- d30plus / d5plus
+
   # D0_14_D index according to McFadden and Oxenham 2018 if infants are represented well
   d0_14 <- life_table$Dx[all_age <=15] %>% sum
   d0plus <- life_table$Dx %>% sum
@@ -93,7 +102,7 @@ lt.indices.mortaar_life_table <- function(life_table) {
     child_i = d5_9_d10_14, d5_9 = d5_9, d10_14 = d10_14,
     juvenile_i = d5_14_d20plus, d5_14 = d5_14, d20plus = d20plus,
     senility_i = d60_d20plus, d0plus= d0plus, d60plus = d60plus,
-    p5_19 = p5_19,
+    p5_19 = p5_19,D30_D5 = D30_D5,
      D0_14_D = D0_14_D, d0_14 = d0_14,
     e0 = e0
   )

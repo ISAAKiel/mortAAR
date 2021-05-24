@@ -21,7 +21,7 @@ In our view, `mortAAR` shines in the following areas:
 - Sophisticated means of computation (exploding of age ranges, separation factor for average lived years)
 - Comprehensiveness of output (life tables for all groups specified, plots for the most important measures, relative population calculation)
 
-For further information, please have a look at the Vignettes – [Basic usage](https://cran.r-project.org/web/packages/mortAAR/vignettes/mortAAR_vignette-1.html), [Extended discussion](https://cran.r-project.org/web/packages/mortAAR/vignettes/mortAAR_vignette_extended.html), [Life table correction](https://cran.r-project.org/web/packages/mortAAR/vignettes/mortAAR_vignette_lt_correction.html) and [Reproduction](https://cran.r-project.org/web/packages/mortAAR/vignettes/mortAAR_vignette_reproduction.html) – and the [Manual](https://cran.r-project.org/web/packages/mortAAR/mortAAR.pdf). 
+For further information, please have a look at the Vignettes – [Basic usage](https://CRAN.R-project.org/package=mortAAR/vignettes/mortAAR_vignette-1.html), [Extended discussion](https://CRAN.R-project.org/package=mortAAR/vignettes/mortAAR_vignette_extended.html), [Life table correction](https://CRAN.R-project.org/package=mortAAR/vignettes/mortAAR_vignette_lt_correction.html) and [Reproduction](https://CRAN.R-project.org/package=mortAAR/vignettes/mortAAR_vignette_reproduction.html) – and the [Manual](https://CRAN.R-project.org/package=mortAAR/mortAAR.pdf). 
 
 Installation
 ------------

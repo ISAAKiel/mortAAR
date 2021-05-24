@@ -51,7 +51,7 @@ The Rate of natural increase or Intrinsic growth rate `r` (growth in per cent pe
 
 Depending on the values chosen for the Total fertility rate and the Intrinsic growth rate, the Doubling time `Dt` will also vary. This can be found in any textbook as follows:
 
-$Dt = \frac{100 * ln(2)}{r}$
+$Dt = \frac{100 \;* \;ln(2)}{r}$
 
 In the following, the dataset of the medieval cemetery of Schleswig is used again to demonstrate the different outcome of the varying options.
 
@@ -116,7 +116,7 @@ lt.reproduction(lt.correction(schleswig)$life_table_corr)[2,]
 
 The proportional relation between adult males and females (= Masculinity index) is defined for juvenile and older individuals:
 
-$MI = 100 * D_{\geq15 _{male}}/{D_{\geq15 _{female}}}$
+$MI = \frac{D_{\geq15 _{male}}}{D_{\geq15 _{female}}}$
 
 It is interesting for a number of reasons [@herrmann_prahistorische_1990, 310]:
 
@@ -124,7 +124,7 @@ It is interesting for a number of reasons [@herrmann_prahistorische_1990, 310]:
 
 2. It may hint towards cultural reasons like sex-specific mobility.
 
-Note that with a higher mortality rate of adult females, an MI < 100 does not necessarily speak for an unbalanced MI in life.
+Note that with a higher mortality rate of adult females, an MI < 1 does not necessarily speak for an unbalanced MI in life.
 
 As example, we choose the Early Neolithic cemetery of Nitra in Slovakia.
 
@@ -134,23 +134,68 @@ nitra_life <- life.table(nitra_prep)
 lt.sexrelation(nitra_life$f, nitra_life$m)[1,]
 ```
 
-The first row of the function `lt.sexrelation` reports the Masculinity index. With 66.7 it is quite low and points to a surplus of female individuals. However, as pointed out above, this has to be weighted carefully as it could also be due to a higher mortality of female adults.
+The first row of the function `lt.sexrelation` reports the Masculinity index. With 0.67 it is quite low and points to a surplus of female individuals. However, as pointed out above, this has to be weighted carefully as it could also be due to a higher mortality of female adults.
 
 
 ## Maternal mortality
 
-Maternal mortality rate (MMR) is a basic indicator for the health system of a given population. Maternal mortality is defined as dying during pregnancy or within the first 42 days after birth due to complications. Recently, C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2019] have provided a formula to calculate it from archaeological data. They show that with modern data a very high correlation is achieved by only comparing the absolute numbers of the age group 20 to 24. This has the additional advantage that for this age group anthropological aging methods are reasonable exact.
+Maternal mortality rate (MMR) is a basic indicator for the health system of a given population. Maternal mortality is defined as dying during pregnancy or within the first 42 days after birth due to complications. Recently, C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2019] have provided a formula to calculate it from archaeological data. They show that with modern data a very high correlation is achieved by only comparing the absolute numbers of the age group 20 to 24. This has the additional advantage that for this age group anthropological aging methods are reasonable exact. Recently, McFadden et al. [-@mcfadden_et_al_2020] have presented a stabilized version of this formula to cater for highly biased ratios in terms of the relation between male and female individuals.
 
-$MMR = 333.33 * D_{20-24_{female}} / D_{20-24_{male}} - 76.07$
+$Stabilized\; MMR = 333.33 * \frac{D_{20-24_{female}}}{D_{20-24_{male}}} * \frac{D_{15+_{male}}}{D_{15+_{female}}} - 76.07$
 
 ```{r}
 lt.sexrelation(nitra_life$f, nitra_life$m)[c(-1),]
 ```
 
-In Nitra, more than twice the number of females of the age 20-24 have been found than males of the same age. This gives a Maternal mortality rate of 712, meaning that of 100,000 births, 712 would have ended fatally for the mothers. In percentage, this number translates to 0.7%.
+In Nitra, more than twice the number of females of the age 20-24 have been found than males of the same age. This gives a unstabilized Maternal mortality rate of 712 (not shown). However, because the ratio of female and male individuals is so unbalanced (Masculinity index = 0.67, see above), the stabilized version used here calculates an actual rate of 449 per 100,000 births or 4.49 per 1,000 births. In percentage, this number translates to 0.45% maternal deaths per birth.
 
 McFadden and Oxenham based their formula on modern data which, of course, allow the most precise calculations. However, for early modern census data, much higher Maternal mortality rates are estimated [@schofield_1986], easily topping 1,000 and more. For these numbers, the formula by McFadden and Oxenham does not work, as their sample data-sets do not exceed 700. This is a problem which still needs more in-depth research. 
 
 Therefore, Maternal mortality rates computed for prehistoric populations should only very carefully compared to modern data. Regardless if the actual regression calculation is in need of adjustment or not, the McFadden/Oxenham-formula still seems capable to allow comparisons _between_ prehistoric populations.
+
+
+## Population size
+
+The estimation of the population size for a given cemetery is only possible if a stationary population is assumed. In this case, the number of deaths is simply multiplied with the life expectancy at birth and divided be the time span in years the cemetery was in use. Additionally, it is assumed that an unknown number of individuals is not represented in the cemetery and, therefore, the resulting number is multiplied by an arbitrary value k [@herrmann_prahistorische_1990]. By default, this is assumed to be 1.1. Still, in many cases, the actual numbers calculated seem too small to yield viable population sizes.
+
+The simple formula is as follows:
+
+$P = \frac{D\; *\; e0\; *\; k}{t}$
+
+This time, we use all individuals from Nitra to calculate the size of the population burying their dead here.
+
+```{oxcal}
+ Sequence()
+ {
+  Boundary("A");
+  Phase("Nitra-Gräber")
+  {
+   R_Date("OxA-24574", 6222, 37);
+   R_Date("OxA-24575", 6226, 36);
+   R_Date("OxA-24095", 6298, 33);
+   R_Date("OxA-24576", 6196, 36);
+   R_Date("OxA-24577", 6216, 36);
+   R_Date("OxA-23793", 6221, 35);
+   R_Date("OxA-24578", 6138, 34);
+   R_Date("OxA-24579", 6317, 34);
+   R_Date("OxA-24580", 6227, 35);
+   R_Date("OxA-23794", 6219, 35);
+   R_Date("OxA-24582", 6328, 36);
+   First("Nitra-Beginn");
+   Last("Nitra-Ende");
+   Span("Nitra-Dauer");
+  };
+  Boundary("B");
+ };
+```
+
+The median of the span of a phase-model (OxCal 4.4.) of the available <sup>14</sup>C-dates [@griffiths_2013] indicates that the cemetery was used for 147 years. However, the actual 95.4%-span is 0--260 years, and a strong wiggle in-between probably distorts the picture. Therefore, 80 years could be a more realistic value.
+
+```{r}
+lt.population_size(nitra_life$All,t = 147)
+lt.population_size(nitra_life$All,t = 80)
+```
+
+In the first case, the Nitra population would have had a size of only 16 individuals. In the second, the population burying in this cemetery would have comprised about 29 individuals at any given time during its existence.
 
 ## References

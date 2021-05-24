@@ -11,12 +11,6 @@
 #' resulting number is multiplied by an arbitrary value k
 #' (\emph{Herrmann et al. 1990}, 311f.).
 #'
-#'
-#' @references
-#'
-#' \insertRef{herrmann_prahistorische_1990}{mortAAR}
-#'
-#'
 #' @param x either an object of class mortaar_life_table or
 #' mortaar_life_table_list or an arbitrary numeric value representing
 #' the number of deaths.
@@ -42,6 +36,9 @@
 #'  \eqn{P = D * e0 * k / t}
 #'  }
 #'
+#' @references
+#'
+#' \insertRef{herrmann_prahistorische_1990}{mortAAR}
 #'
 #' @examples
 #'
@@ -81,8 +78,16 @@ lt.population_size.numeric <- function(x, e0, k = 1.1, t) {
 #' @rdname lt.population_size
 #' @export
 #' @noRd
-lt.population_size.mortaar_life_table_list <- function(x, e0, k = 1.1, t) {
-  lapply(x, lt.population_size, e0 = e0, k = k,  t = t)
+lt.population_size.mortaar_life_table_list <- function(x, e0 = NULL, k = 1.1, t) {
+  if (is.null(e0)) {
+    stored_attributes <- names(x)
+    result <- lapply(seq_along(x), y = x, function(y, i)
+      {lt.population_size(y[[i]], e0 = y[[i]]$ex[1], k = k, t = t)})
+    names(result) <- stored_attributes
+    return(result)
+  } else {
+    lapply(x, lt.population_size, e0 = e0, k = k, t = t)
+  }
 }
 
 #' @rdname lt.population_size

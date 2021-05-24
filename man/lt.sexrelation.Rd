@@ -17,11 +17,11 @@ Output of masculinity index and maternal mortality.
 \itemize{
   \item \bold{Masculinity index}.
 
-                   \eqn{MI = D>=15male * 100 / D>=15female}
+                   \eqn{MI = D>=15male / D>=15female}
 
   \item \bold{Maternal mortality}.
 
-                   \eqn{333.33 * D20-24female / D20-24male - 76.07}
+                   \eqn{333.33 * (D20-24female / D20-24male) * MI - 76.07}
 }
 }
 \description{
@@ -34,15 +34,16 @@ specific mobility.\cr
 Maternal mortality is a basic indicator for the health system of a
 given population. Maternal mortality is defined as dying during
 pregnancy or within the first 42 days after birth due to
-complications. Recently, \emph{McFadden and Oxenham 2019} have
-provided a formula to calculate it from archaeological data.
+complications. Recently, \emph{McFadden and colleagues 2020} have
+provided an updated formula to calculate it from archaeological data.
 }
 \details{
 The Masculinity index (MI) is defined for juvenile and older
 individuals. Note that with a higher mortality rate of adult females,
 an MI < 100 does not necessarily speak for an unbalanced MI in life.\cr
 Maternal mortality is calculated according to the formula
-provided by \emph{McFadden & Oxenham 2019}. McFadden and Oxenham show
+provided by \emph{McFadden & Oxenham 2019} in the updated version of
+\emph{McFadden et al. 2020}. McFadden and Oxenham show
 that with modern data a very high correlation is achieved by only
 comparing the absolute numbers of the age group 20 to 24. This has the
 additional advantage that for this age group anthropological aging
@@ -60,4 +61,6 @@ lt.sexrelation(nitra_life$f, nitra_life$m)
 \insertRef{herrmann_prahistorische_1990}{mortAAR}
 
 \insertRef{mcfadden_oxenham_2019}{mortAAR}
+
+\insertRef{mcfadden_et_al_2020}{mortAAR}
 }

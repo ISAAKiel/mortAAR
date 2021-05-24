@@ -10,7 +10,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D0_14_D", "d0_14", "e0"]
+          "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "e0"]
         }
       },
       "value": [
@@ -67,6 +67,11 @@
         {
           "type": "double",
           "attributes": {},
+          "value": [0.5668]
+        },
+        {
+          "type": "double",
+          "attributes": {},
           "value": [0.34008]
         },
         {
@@ -100,7 +105,7 @@
             "names": {
               "type": "character",
               "attributes": {},
-              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D0_14_D", "d0_14", "e0"]
+              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "e0"]
             }
           },
           "value": [
@@ -157,6 +162,11 @@
             {
               "type": "double",
               "attributes": {},
+              "value": [0.69345]
+            },
+            {
+              "type": "double",
+              "attributes": {},
               "value": [0.17113]
             },
             {
@@ -177,7 +187,7 @@
             "names": {
               "type": "character",
               "attributes": {},
-              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D0_14_D", "d0_14", "e0"]
+              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "e0"]
             }
           },
           "value": [
@@ -230,6 +240,11 @@
               "type": "double",
               "attributes": {},
               "value": [0.10101]
+            },
+            {
+              "type": "double",
+              "attributes": {},
+              "value": [0.69118]
             },
             {
               "type": "double",
