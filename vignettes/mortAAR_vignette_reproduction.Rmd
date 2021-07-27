@@ -187,6 +187,12 @@ $P = \frac{D\; *\; e0\; *\; k}{t}$
 
 This time, we use all individuals from Nitra to calculate the size of the population burying their dead here.
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+knitr::knit_engines$set(oxcal = function(options) {
+ # no changes
+})
+```
+
 ```{oxcal}
  Sequence()
  {
