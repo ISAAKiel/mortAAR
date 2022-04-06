@@ -23,7 +23,7 @@ NA_to_0 <- function(x) {
 #' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
-#' @param dec numeric vector or a column name (as character) of the count of deceased.
+#' @param dec column name (as character) of the count of deceased, optional.
 #' @param agebeg numeric vector or a column name (as character) for the beginning of an age range.
 #' @param ageend numeric vector or a column name (as character) for the end of an age range.
 #' @param group numeric vector or a column name (as character) of the grouping field (e.g., sex),
