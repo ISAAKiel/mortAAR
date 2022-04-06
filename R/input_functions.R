@@ -24,9 +24,9 @@ NA_to_0 <- function(x) {
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
 #' @param dec column name (as character) of the count of deceased, optional.
-#' @param agebeg numeric vector or a column name (as character) for the beginning of an age range.
-#' @param ageend numeric vector or a column name (as character) for the end of an age range.
-#' @param group numeric vector or a column name (as character) of the grouping field (e.g., sex),
+#' @param agebeg column name (as character) for the beginning of an age range.
+#' @param ageend column name (as character) for the end of an age range.
+#' @param group column name (as character) of the grouping field (e.g., sex),
 #' optional. Default setup is: \code{NA}.
 #' @param method character string, optional. Default options is \code{Standard}, which will create age classes beginning with 1 year,
 #' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distribution, stepped by 5 years (5,5,...) until the maximum age is reached.
