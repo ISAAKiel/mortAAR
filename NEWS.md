@@ -1,3 +1,7 @@
+# mortAAR 1.1.2
+
+- maintenance: removing references in the vignettes to csl-file as this caused an error
+
 # mortAAR 1.1.1
 
 - using the Stabilized MMR formula for maternal mortality

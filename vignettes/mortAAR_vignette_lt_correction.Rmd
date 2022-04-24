@@ -4,7 +4,6 @@ author: "Nils Müller-Scheeßel"
 date: "December 2020"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
-csl: "`r library(RCurl); ifelse(url.exists('https://www.zotero.org/styles/offa'), 'https://www.zotero.org/styles/offa', '')`"
 vignette: >
   %\VignetteIndexEntry{Vignette >Life table correction<}
   %\VignetteEngine{knitr::rmarkdown}
