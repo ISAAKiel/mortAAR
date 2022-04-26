@@ -11,7 +11,7 @@ Authors@R: c(
   person("Wolfgang", "Hamer", email = "hamer@geographie.uni-kiel.de", role = c("aut")),
   person("Dirk", "Seidensticker", email = "dirk.seidensticker@uni-tuebingen.de", role = c("aut")),
   person("Franziska", "Faupel", email = "ffaupel@ufg.uni-kiel.de", role = c("aut")),
-  person("Carolin", "Tietze", email = "Carolin Tietze <ctietze1991@gmail.com>", role = c("aut")),
+  person("Carolin", "Tietze", email = "ctietze1991@gmail.com", role = c("aut")),
   person("Nicole", "Grunert", email = "nicolegrunert@gmail.com", role = c("aut")))
 Maintainer: Nils Mueller-Scheessel <nils.mueller-scheessel@ufg.uni-kiel.de>
 Description: A collection of functions for the analysis of archaeological mortality
@@ -19,7 +19,7 @@ Description: A collection of functions for the analysis of archaeological mortal
     <https://books.google.de/books?id=nG5FoO_becAC&lpg=PA27&ots=LG0b_xrx6O&dq=life%20table%20archaeology&pg=PA27#v=onepage&q&f=false>). 
     It takes demographic data in different formats and displays the result in a standard life table
     as well as plots the relevant indices (percentage of deaths, survivorship, probability of death, life expectancy, percentage of population).
-Date: 2022-04-24
+Date: 2022-04-26
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true

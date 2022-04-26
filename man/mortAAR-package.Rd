@@ -24,7 +24,7 @@ Authors:
   \item Wolfgang Hamer \email{hamer@geographie.uni-kiel.de}
   \item Dirk Seidensticker \email{dirk.seidensticker@uni-tuebingen.de}
   \item Franziska Faupel \email{ffaupel@ufg.uni-kiel.de}
-  \item Carolin Tietze \email{Carolin Tietze <ctietze1991@gmail.com>}
+  \item Carolin Tietze \email{ctietze1991@gmail.com}
   \item Nicole Grunert \email{nicolegrunert@gmail.com}
 }
 

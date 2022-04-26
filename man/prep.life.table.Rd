@@ -17,13 +17,13 @@ prep.life.table(
 \arguments{
 \item{x}{single dataframe containing sex age and quantity of deceased (individuals or group of individuals).}
 
-\item{dec}{numeric vector or a column name (as character) of the count of deceased.}
+\item{dec}{column name (as character) of the count of deceased, optional.}
 
-\item{agebeg}{numeric vector or a column name (as character) for the beginning of an age range.}
+\item{agebeg}{column name (as character) for the beginning of an age range.}
 
-\item{ageend}{numeric vector or a column name (as character) for the end of an age range.}
+\item{ageend}{column name (as character) for the end of an age range.}
 
-\item{group}{numeric vector or a column name (as character) of the grouping field (e.g., sex),
+\item{group}{column name (as character) of the grouping field (e.g., sex),
 optional. Default setup is: \code{NA}.}
 
 \item{method}{character string, optional. Default options is \code{Standard}, which will create age classes beginning with 1 year,
