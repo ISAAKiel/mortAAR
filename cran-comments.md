@@ -9,7 +9,7 @@ This is a minor increment. In this version we have:
 
 ## Test environments
 * local OS X install, R 4.3.1
-* ubuntu 20.04 (on github-action), R 4.2.0
+* ubuntu 20.04 (on github-action), R 4.3.1
 * win-builder (devel and release)
 
 ## R CMD check results
