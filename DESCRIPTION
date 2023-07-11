@@ -29,7 +29,7 @@ Imports:
     reshape2 (>= 1.4.2),
     methods (>= 3.3.3),
     tibble (>= 3.0.3)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Suggests:
     testthat,
     knitr,

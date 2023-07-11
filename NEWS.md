@@ -1,3 +1,8 @@
+# mortAAR 1.1.3
+- fixed an error in the representativity calculations (thanks to hrncirv on github for
+ pointing this out!)
+- fixed deprecated "aes_string" of ggplot2
+
 # mortAAR 1.1.2
 
 - maintenance: removing references in the vignettes to csl-file as this caused an error

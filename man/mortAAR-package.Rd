@@ -6,11 +6,7 @@
 \alias{mortAAR-package}
 \title{mortAAR: Analysis of Archaeological Mortality Data}
 \description{
-A collection of functions for the analysis of archaeological mortality
-    data (on the topic see e.g. Chamberlain 2006 
-    <https://books.google.de/books?id=nG5FoO_becAC&lpg=PA27&ots=LG0b_xrx6O&dq=life%20table%20archaeology&pg=PA27#v=onepage&q&f=false>). 
-    It takes demographic data in different formats and displays the result in a standard life table
-    as well as plots the relevant indices (percentage of deaths, survivorship, probability of death, life expectancy, percentage of population).
+A collection of functions for the analysis of archaeological mortality data (on the topic see e.g. Chamberlain 2006 \url{https://books.google.de/books?id=nG5FoO_becAC&lpg=PA27&ots=LG0b_xrx6O&dq=life\%20table\%20archaeology&pg=PA27#v=onepage&q&f=false}). It takes demographic data in different formats and displays the result in a standard life table as well as plots the relevant indices (percentage of deaths, survivorship, probability of death, life expectancy, percentage of population).
 }
 \author{
 \strong{Maintainer}: Nils Mueller-Scheessel \email{nils.mueller-scheessel@ufg.uni-kiel.de} [copyright holder]

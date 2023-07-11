@@ -1,4 +1,4 @@
-# lt.representativity failes for wrong input
+# lt.representativity fails for wrong input
 
     x is not an object of class mortaar_life_table or mortaar_life_table_list.
 
@@ -37,7 +37,7 @@
         {
           "type": "double",
           "attributes": {},
-          "value": [20.24, 6.86, 22, 34]
+          "value": [20.24, 4.91, 22, 34]
         },
         {
           "type": "double",
@@ -47,7 +47,7 @@
         {
           "type": "double",
           "attributes": {},
-          "value": [2.95, 1.4, 1.83, 0.22]
+          "value": [4.12, 1.4, 1.83, 0.22]
         },
         {
           "type": "logical",
