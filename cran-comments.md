@@ -1,8 +1,14 @@
+## Resubmission
+This is a resubmission. In this version I have corrected the following (possibly) invalid URLs:
+
+https://codecov.io/github/ISAAKiel/mortAAR?branch=master
+
+was corrected to
+
+https://app.codecov.io/github/ISAAKiel/mortAAR?branch=master
+
 ## Possibly mis-spelled words in DESCRIPTION
 "indices" and "survivorship" are correct.
-
-## Found the following (possibly) invalid URLs:
-URL: https://codecov.io/github/ISAAKiel/mortAAR?branch=master was corrected to https://app.codecov.io/github/ISAAKiel/mortAAR?branch=master
 
 ## Increment patch
 This is a minor increment. In this version we have:
