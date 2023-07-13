@@ -1,7 +1,7 @@
 Package: mortAAR
 Type: Package
 Title: Analysis of Archaeological Mortality Data
-Version: 1.1.3
+Version: 1.1.4
 Authors@R: c(
   person("Nils", "Mueller-Scheessel", email = "nils.mueller-scheessel@ufg.uni-kiel.de", role = c("aut", "cre", "cph")), 
   person("Martin", "Hinz", email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")),
