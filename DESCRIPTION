@@ -19,7 +19,7 @@ Description: A collection of functions for the analysis of archaeological mortal
     <https://books.google.de/books?id=nG5FoO_becAC&lpg=PA27&ots=LG0b_xrx6O&dq=life%20table%20archaeology&pg=PA27#v=onepage&q&f=false>). 
     It takes demographic data in different formats and displays the result in a standard life table
     as well as plots the relevant indices (percentage of deaths, survivorship, probability of death, life expectancy, percentage of population).
-Date: 2023-07-12
+Date: 2023-07-13
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
