@@ -1,20 +1,7 @@
-## Resubmission
-This is a resubmission. In this version I have corrected the following (possibly) invalid URLs:
-
-https://codecov.io/github/ISAAKiel/mortAAR?branch=master
-
-was corrected to
-
-https://app.codecov.io/github/ISAAKiel/mortAAR?branch=master
-
-## Possibly mis-spelled words in DESCRIPTION
-"indices" and "survivorship" are correct.
-
 ## Increment patch
 This is a minor increment. In this version we have:
-- fixed an error in the representativity calculations (thanks to hrncirv on github for
- pointing this out!)
-- fixed deprecated "aes_string" of ggplot2
+- fixed an error in plotting that occurred after the fix of "aes_string" of ggplot2
+- enabled easier input of known-age data-sets
 
 ## Test environments
 * local OS X install, R 4.3.1
