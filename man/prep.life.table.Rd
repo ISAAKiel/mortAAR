@@ -8,7 +8,7 @@ prep.life.table(
   x,
   dec = NA,
   agebeg,
-  ageend,
+  ageend = NA,
   group = NA,
   method = "Standard",
   agerange = "included"
@@ -21,17 +21,20 @@ prep.life.table(
 
 \item{agebeg}{column name (as character) for the beginning of an age range.}
 
-\item{ageend}{column name (as character) for the end of an age range.}
+\item{ageend}{column name (as character) for the end of an age range, optional.}
 
 \item{group}{column name (as character) of the grouping field (e.g., sex),
 optional. Default setup is: \code{NA}.}
 
-\item{method}{character string, optional. Default options is \code{Standard}, which will create age classes beginning with 1 year,
-up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distribution, stepped by 5 years (5,5,...) until the maximum age is reached.}
+\item{method}{character string, optional. Default options is \code{Standard}, which will create age
+classes beginning with 1 year, up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the
+maximum age is reached. \code{Equal5} will create age classes with an even distribution, stepped
+by 5 years (5,5,...) until the maximum age is reached. If method is a single numeric, this number will be
+repeated until the maximum age is reached. Thereby, it is possible to create a year-wise life table.}
 
 \item{agerange}{character string, optional. Default setup is: \code{included}.
 If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
-to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
+to prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
 where the year 39 is meant to be counted.}
 }
 \value{
@@ -50,8 +53,11 @@ has to specify a numerical variable (\bold{dec}) which defines the count for eac
 If no life table exists, this function will process a dataframe including the age ranges of
 individuals or groups of individuals to discrete the age classes. The age range is spread to
 single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
-as \bold{ageend} for the end of an age range. The \bold{method} defines in which way the single years between the different age classes are split.
-If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
+as \bold{ageend} for the end of an age range. If a data-set with year-known individuals is
+used, \bold{ageend} can be omitted but then the parameter \bold{agerange} has to left on its
+default value (\code{included}). The \bold{method} defines in which way the single years between
+the different age classes are split. If the data set comprises a grouping variable (e.g., sex),
+this can be specified with \bold{group}.
 }
 \examples{
 # Separate age ranges in your data set.

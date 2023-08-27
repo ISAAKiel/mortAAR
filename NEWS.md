@@ -1,3 +1,7 @@
+# mortAAR 1.1.5
+- fixed an error in plotting that occurred after the fix of "aes_string" of ggplot2
+- enabled easier input of known-age data-sets
+
 # mortAAR 1.1.4
 - fixed an invalid url
  

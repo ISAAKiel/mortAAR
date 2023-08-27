@@ -19,20 +19,26 @@ NA_to_0 <- function(x) {
 #' If no life table exists, this function will process a dataframe including the age ranges of
 #' individuals or groups of individuals to discrete the age classes. The age range is spread to
 #' single years. \bold{agebeg} has to be specified for the beginning of an age range, as well
-#' as \bold{ageend} for the end of an age range. The \bold{method} defines in which way the single years between the different age classes are split.
-#' If the data set comprises a grouping variable (e.g., sex), this can be specified with \bold{group}.
+#' as \bold{ageend} for the end of an age range. If a data-set with year-known individuals is
+#' used, \bold{ageend} can be omitted but then the parameter \bold{agerange} has to left on its
+#' default value (\code{included}). The \bold{method} defines in which way the single years between
+#' the different age classes are split. If the data set comprises a grouping variable (e.g., sex),
+#' this can be specified with \bold{group}.
 #'
 #' @param x single dataframe containing sex age and quantity of deceased (individuals or group of individuals).
 #' @param dec column name (as character) of the count of deceased, optional.
 #' @param agebeg column name (as character) for the beginning of an age range.
-#' @param ageend column name (as character) for the end of an age range.
+#' @param ageend column name (as character) for the end of an age range, optional.
 #' @param group column name (as character) of the grouping field (e.g., sex),
 #' optional. Default setup is: \code{NA}.
-#' @param method character string, optional. Default options is \code{Standard}, which will create age classes beginning with 1 year,
-#' up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the maximum age is reached. \code{Equal5} will create age classes with an even distribution, stepped by 5 years (5,5,...) until the maximum age is reached.
+#' @param method character string, optional. Default options is \code{Standard}, which will create age
+#' classes beginning with 1 year, up to 4 years, followed by steps of 5 years (1,4,5,5,...) until the
+#' maximum age is reached. \code{Equal5} will create age classes with an even distribution, stepped
+#' by 5 years (5,5,...) until the maximum age is reached. If method is a single numeric, this number will be
+#' repeated until the maximum age is reached. Thereby, it is possible to create a year-wise life table.
 #' @param agerange character string, optional. Default setup is: \code{included}.
 #' If the age ranges from "20 to 40" and "40 to 60", \code{excluded} will exclude the year 40 from "20 to 40",
-#' to  prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
+#' to prevent overlapping age classes. \code{included} is for age ranges like "20 to 39"
 #' where the year 39 is meant to be counted.
 #'
 #' @return A list of input parameter needed for the function \code{life.table}.
@@ -72,9 +78,9 @@ NA_to_0 <- function(x) {
 #' life.table(magda_prep)
 #'
 #' @export
-prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Standard", agerange= "included"){
+prep.life.table=function(x, dec = NA, agebeg, ageend = NA, group = NA, method = "Standard", agerange= "included"){
 
-  asd <- x
+  asd <- data.frame(x)
 
   # Ask if "dec" is set / if a count of deceased people exists.
   # Otherwise one deceased person is assumed for each row.
@@ -86,7 +92,11 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
 
   # Change the names of agebeg and ageend for further processes to "beg" and "ende".
   names(asd)[which(names(asd)==agebeg)] <- "beg"
-  names(asd)[which(names(asd)==ageend)] <- "ende"
+  if (!is.na(ageend)) {
+    names(asd)[which(names(asd)==ageend)] <- "ende"
+  } else {
+    asd$ende <- asd$beg
+  }
 
   # Filters potential NA values from the begin or end column.
   # asd=asd %>% filter(!is.na(beg), !is.na(ende))
@@ -134,15 +144,19 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
     # Set the age values from 0 to the maximum age +1.
     restab$Age=seq(0,max(asd$ende,na.rm=T),1)
 
-    # For each Group (k) the deaths per age class (available years i) are summed up equally seperated by ages.
+    # For each Group (k) the deaths per age class (available years i) are summed up equally separated by ages.
     for(k in 1:length(unique(asd$Group))){
       for(i in which(asd$Group==unique(asd$Group)[k])){
-        restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)] <- restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)] %+0% (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
+        restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)] <-
+          restab[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1)),(k+1)] %+0%
+          (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
       }
     }
-    # Also for all Groups all deceased are summed up seperated according to the years.
+    # Also for all Groups all deceased are summed up separated according to the years.
     for(i in seq_along(asd[,1])){
-      restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))] <- (restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]) %+0% (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
+      restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))] <-
+        (restab$All[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]) %+0%
+        (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
     }
 
     # If no groups (male, female, phase, ...) are specified, do the same without considering groups.
@@ -151,7 +165,9 @@ prep.life.table=function(x, dec = NA, agebeg, ageend, group = NA, method = "Stan
     restab=data.frame(Age=seq(0,99,1),Deceased=0)
 
     for(i in seq_along(asd[,1])){
-      restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))] <- (restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]) %+0% (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
+      restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))] <-
+        (restab$Deceased[is.element(restab$Age,seq(asd$beg[i],asd$ende[i],1))]) %+0%
+        (asd$cof[i]/(length(seq(asd$beg[i],asd$ende[i],1))))
     }
   }
 

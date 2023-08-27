@@ -1,7 +1,7 @@
 Package: mortAAR
 Type: Package
 Title: Analysis of Archaeological Mortality Data
-Version: 1.1.4
+Version: 1.1.5
 Authors@R: c(
   person("Nils", "Mueller-Scheessel", email = "nils.mueller-scheessel@ufg.uni-kiel.de", role = c("aut", "cre", "cph")), 
   person("Martin", "Hinz", email = "martin.hinz@ufg.uni-kiel.de", role = c("aut")),
@@ -19,7 +19,7 @@ Description: A collection of functions for the analysis of archaeological mortal
     <https://books.google.de/books?id=nG5FoO_becAC&lpg=PA27&ots=LG0b_xrx6O&dq=life%20table%20archaeology&pg=PA27#v=onepage&q&f=false>). 
     It takes demographic data in different formats and displays the result in a standard life table
     as well as plots the relevant indices (percentage of deaths, survivorship, probability of death, life expectancy, percentage of population).
-Date: 2023-07-17
+Date: 2023-08-27
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -28,7 +28,8 @@ Imports:
     Rdpack (>= 0.4-20),
     reshape2 (>= 1.4.2),
     methods (>= 3.3.3),
-    tibble (>= 3.0.3)
+    tibble (>= 3.0.3),
+    rlang (>= 1.1.1)
 RoxygenNote: 7.2.3
 Suggests:
     testthat,
