@@ -118,9 +118,9 @@ make_ggplot <- function(data, variable_name, variable_labels, line_vis) {
   colnames(my_x) <- c("a", "variable", variable_name, "dataset")
   my_x$a <- unlist(by(my_x$a, my_x$dataset, function(x) cumsum(x))) - my_x$a
   if (line_vis == "linetype") {
-    my_plot <- ggplot2::ggplot(my_x, ggplot2::aes(x=!! rlang::sym("a"),y=!! rlang::sym(variable_name), linetype="dataset"))
+    my_plot <- ggplot2::ggplot(my_x, ggplot2::aes(x=!! rlang::sym("a"),y=!! rlang::sym(variable_name), linetype = dataset))
   } else if (line_vis %in% c("colour", "color")) {
-    my_plot <- ggplot2::ggplot(my_x, ggplot2::aes(x=!! rlang::sym("a"),y=!! rlang::sym(variable_name), color="dataset"))
+    my_plot <- ggplot2::ggplot(my_x, ggplot2::aes(x=!! rlang::sym("a"),y=!! rlang::sym(variable_name), color = dataset))
   }
   my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age") + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
   # check if group attribute is present to pass it on for plot legend title
