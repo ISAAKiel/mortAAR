@@ -37,12 +37,12 @@
         {
           "type": "double",
           "attributes": {},
-          "value": [20.24, 4.91, 22, 34]
+          "value": [20.24, 6.86, 22, 34]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [6.86, 4.91, 12, 155]
+          "value": [4.91, 4.91, 12, 155]
         },
         {
           "type": "double",
