@@ -70,8 +70,8 @@ lt.representativity.mortaar_life_table <- function(life_table) {
       "5q0 > 5q15", "5q10 < 5q15", "(5D5 / 5D10) >= 2",
       "(10D5 / D20+) >= 0.1"
     ),
-    value1 = round(c(mortality$q0_5, mortality$q15_5, indx$d5_9, indx$d5_14), 2),
-    value2 = round(c(mortality$q10_5, mortality$q15_5, indx$d10_14, indx$d20plus), 2),
+    value1 = round(c(mortality$q0_5, mortality$q10_5, indx$d5_9, indx$d5_14), 2),
+    value2 = round(c(mortality$q15_5, mortality$q15_5, indx$d10_14, indx$d20plus), 2),
     result = round(
       c(
         mortality$q0_5 / mortality$q15_5, mortality$q10_5 / mortality$q15_5,

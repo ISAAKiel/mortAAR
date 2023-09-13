@@ -38,7 +38,7 @@ nitra_life <- life.table(nitra_prep,option_spline = 20)
 plot(nitra_life, display=c("dx","qx"))
 ```
 
-As expected, applying the option leads to much smoother curves. However, for the 10-option, the oldest age group shows a local maximum which is not reflected in the original data and therefore is an artefact of the smoothing algorithm working on the available data. In this case, the 20-year-option seems to offer a better compromise between a much more natural looking curve and still trueness to the original data.
+As expected, applying the option leads to much smoother curves. However, for the 10-year-option, the oldest age group shows a local maximum which is not reflected in the original data and therefore is an artefact of the smoothing algorithm working on the available data. In this case, the 20-year-option seems to offer a better compromise between a much more natural looking curve and still trueness to the original data.
 
 ## Representativity of data
 
@@ -46,7 +46,7 @@ Anthropological data from archaeological contexts is necessarily fragmentary. Th
 
 Weiss chose the mortality (q<sub>x</sub>) as deciding factor and claimed that (1) the probability of death of the age group 10-15 (<sub>5</sub>q<sub>10</sub>) should be lower than that of the group 15-20 (<sub>5</sub>q<sub>15</sub>) and that (2) the latter in turn should be lower than that of age group 0-5 (<sub>5</sub>q<sub>0</sub>).
 
-In contrast, Bocquet-Appel and Masset took the raw number of dead (D<sub>x</sub>) and asserted that (1) the ratio of those having died between 5 and 10 (D<sub>5-10</sub>) and those died between 10 and 15 years (D<sub>5-10</sub>) should be equal or larger than 2 and that (2) the ratio of those having died between 5 and 15 (D<sub>5-15</sub>) and all adults (>= 20; D<sub>20+</sub>) should be 0.1 or larger.
+In contrast, Bocquet-Appel and Masset took the raw number of dead (D<sub>x</sub>) and asserted that (1) the ratio of those having died between 5 and 10 (D<sub>5-10</sub>) and those died between 10 and 15 years (D<sub>10-15</sub>) should be equal or larger than 2 and that (2) the ratio of those having died between 5 and 15 (D<sub>5-15</sub>) and all adults (>= 20; D<sub>20+</sub>) should be 0.1 or larger.
 
 If either of these prerequisites is not met, the results from such data should be treated with extreme caution as the mortality structure is different from that of known populations. Due to the specific nature of the indices, they only give meaningful results if 5-year-age categories have been chosen for the non-adults.
 
