@@ -43,3 +43,5 @@ Depends:
 RdMacros: Rdpack
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+URL: https://github.com/ISAAKiel/mortAAR
+BugReports: https://github.com/ISAAKiel/mortAAR/issues
