@@ -133,6 +133,7 @@ prep.life.table=function(x, dec = NA, agebeg, ageend = NA, group = NA, method = 
   if(!is.na(group)){
     # Change the names of group for further processes to "Group".
     names(asd)[which(names(asd)==group)]="Group"
+    if (any(is.na(asd$Group))){stop("NA in grouping variable not allowed.")}
 
     # Create a dataframe (restab) filled with zeros,
     # with the column count of the grouping columns (+2)
