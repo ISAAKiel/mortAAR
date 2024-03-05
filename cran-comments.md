@@ -1,6 +1,6 @@
 ## Resubmission
 This is a resubmission. In this version I have:
-* Made sure that the NOTE "Lost braces; missing escapes or markup?" vanishes.
+* Made sure that the NOTE "Lost braces; missing escapes or markup?" disappears.
 
 ## Increment patch
 This is a minor increment. In this version we have:
@@ -17,8 +17,7 @@ This is a minor increment. In this version we have:
 * win-builder (devel and release)
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
-Only the win-builder-devel issued a NOTE on "Lost braces; missing escapes or markup?".
+There were no ERRORs, WARNINGs or NOTEs.
 
 ## Reverse dependencies
 There are no reverse dependencies.
