@@ -1,3 +1,7 @@
+## Resubmission
+This is a resubmission. In this version I have:
+* Made sure that the NOTE "Lost braces; missing escapes or markup?" vanishes.
+
 ## Increment patch
 This is a minor increment. In this version we have:
 - fixed the error in plotting that occurred after the fix of "aes_string" of ggplot2

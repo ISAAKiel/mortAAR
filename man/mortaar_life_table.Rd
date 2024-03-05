@@ -4,7 +4,7 @@
 \alias{mortaar_life_table}
 \alias{as.mortaar_life_table_list}
 \alias{as.mortaar_life_table}
-\title{{mortaar_life_table} and {mortaar_life_table_list}}
+\title{mortaar_life_table and mortaar_life_table_list}
 \usage{
 as.mortaar_life_table_list(x, ...)
 

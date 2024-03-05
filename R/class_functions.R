@@ -1,4 +1,4 @@
-#' {mortaar_life_table} and {mortaar_life_table_list}
+#' mortaar_life_table and mortaar_life_table_list
 #'
 #' @description The \strong{mortaar_life_table} is the central data structure of the
 #' \code{mortAAR} package. It's a data.frame with set of custom methods and
