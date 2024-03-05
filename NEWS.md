@@ -2,7 +2,7 @@
 - fixed the error in plotting that occurred after the fix of "aes_string" of ggplot2
   and that still persisted
 - fixed some typos
-- added links to Description
+- added links to DESCRIPTION
 - added more helpful error message if grouping variable contains NAs
 
 # mortAAR 1.1.5
