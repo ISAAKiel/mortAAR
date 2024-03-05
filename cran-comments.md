@@ -1,7 +1,10 @@
 ## Increment patch
 This is a minor increment. In this version we have:
-- fixed an error in plotting that occurred after the fix of "aes_string" of ggplot2
-- enabled easier input of known-age data-sets
+- fixed the error in plotting that occurred after the fix of "aes_string" of ggplot2
+  and that still persisted
+- fixed some typos
+- added links to Description
+- added more helpful error message if grouping variable contains NAs
 
 ## Test environments
 * local OS X install, R 4.3.1
