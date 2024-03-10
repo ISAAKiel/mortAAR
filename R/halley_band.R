@@ -66,11 +66,7 @@ halley.band <- function(x, n = 1000, uncert = 0.95, agebeg, ageend, agerange = "
 
   # Change the names of agebeg and ageend for further processes to "beg" and "ende".
   names(asd)[which(names(asd)==agebeg)] <- "beg"
-  if (!is.na(ageend)) {
-    names(asd)[which(names(asd)==ageend)] <- "ende"
-  } else {
-    asd$ende <- asd$beg
-  }
+  names(asd)[which(names(asd)==ageend)] <- "ende"
 
   # Defines if the max of the age ranges is inclusive or exclusive.
   if(agerange == "excluded"){
