@@ -1,10 +1,10 @@
-#' Simulates an adult population with Gompertz distribution
+#' Simulation of a population of adults with Gompertz distribution
 #'
 #' In many instances, it is useful to calculate with a population with
 #' known parameters. To generate a population with realistic
 #' characteristics is less obvious than it seems. We operate here
 #' with the Gompertz distribution which provides a reasonable
-#' approximation of human mortality for adult mortality, that is
+#' approximation of human mortality for \bold{adult} mortality, that is
 #' for the ages >= 15 years. The user has to specify
 #' either the parameter b or the modal age M. The modal age M is
 #' particular useful as it provides an intuitive understanding of
@@ -13,52 +13,46 @@
 #' \emph{Sasaki and Kondo 2016}. If neither is given, a population
 #' with random parameters realistic for pre-modern times is generated.
 #'
-#' @param x number of individuals to be simulated.
+#' @param n number of individuals to be simulated.
 #'
 #' @param b numeric, optional. Gompertz parameter controlling the
 #' level of mortality.
 #'
 #' @param M numeric, optional. Modal age M.
 #'
-#' @param start_age numeric, optional. Start age, default: 15 years.
+#' @param start_age numeric. Start age, default: 15 years.
 #'
 #' @return
 #' A list of two data.frames with the following items:
 #'
+#' First data.frame
 #' \itemize{
-#'  \item \bold{First data.frame}
 #'   \item \bold{N}:  Number of individuals.
-#'   \item \bold{b}: Gompertz parameter controlling mortality.
+#'   \item \bold{b}:  Gompertz parameter controlling mortality.
 #'   \item \bold{M}:  Modal age.
-#'   \item \bold{a}: Gompertz parameter controlling hazard of the
+#'   \item \bold{a}:  Gompertz parameter controlling hazard of the
 #'   youngest age group.
+#'  }
+#'
+#'Second data.frame
+#' \itemize{
+#'   \item \bold{ind}:  ID of individuals.
+#'   \item \bold{age}:  Simulated absolute age.
 #'  }
 #'
 #' @references
 #'
-#' \insertRef{sasaki and kondo 2016}{mortAAR}
+#' \insertRef{sasaki_kondo_2016}{mortAAR}
 #'
 #' @examples
 #'
-#' pop_lt <- pop.sim.gomp(10000, M = 35)
+#' pop_sim <- pop.sim.gomp(n = 10000, M = 35)
+#' pop_sim <- pop.sim.gomp(n = 10000, b = 0.03)
+#' pop_sim <- pop.sim.gomp(n = 10000)
 
 #' @rdname pop.sim.gomp
 #' @export
-pop.sim.gomp <- function(x, b, M, start_age) {
-  UseMethod("pop.sim.gomp")
-}
-
-#' @rdname pop.sim.gomp
-#' @export
-#' @noRd
-pop.sim.gomp.default <- function(x, b, M, start_age) {
-  stop("x must be a numeric value.")
-}
-
-#' @rdname pop.sim.gomp
-#' @export
-#' @noRd
-pop.sim.gomp.df <- function(x, b = NULL, M = NULL, start_age = 15) {
+pop.sim.gomp <- function(n, b = NULL, M = NULL, start_age = 15) {
   if ( length(M) > 0) {
     M_1 <- 0
     M_2 <- 0
@@ -71,12 +65,16 @@ pop.sim.gomp.df <- function(x, b = NULL, M = NULL, start_age = 15) {
     }
   } else if (length(b) > 0) {
     a <- exp(rnorm(1, (-66.77 * (b - 0.0718) - 7.119), sqrt(0.0823) ) )
+    M <- 1 / b * log (b/a) + start_age
   } else {
     b <- runif(n = 1, min = 0.02, max = 0.05)
     a <- exp(rnorm(1, (-66.77 * (b - 0.0718) - 7.119), sqrt(0.0823) ) )
+    M <- 1 / b * log (b/a) + start_age
   }
 
-  lt_result <- data.frame(ind = 1:x) %>%
-    mutate(age = round(flexsurv::rgompertz(n(), b, a) ) + start_age)
-  return(lt_result)
+  lt_result <- data.frame(ind = 1:n) %>%
+    dplyr::mutate(age = round(flexsurv::rgompertz(dplyr::n(), b, a) ) + start_age)
+  lt_values <- data.frame(n = n, b = b, a = a, M = M, start_age = start_age)
+  lt_list <- list(values = lt_values, result = lt_result)
+  return(lt_list)
 }
