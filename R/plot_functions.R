@@ -122,7 +122,8 @@ make_ggplot <- function(data, variable_name, variable_labels, line_vis) {
   } else if (line_vis %in% c("colour", "color")) {
     my_plot <- ggplot2::ggplot(my_x, ggplot2::aes(x=!! rlang::sym("a"),y=!! rlang::sym(variable_name), color = dataset))
   }
-  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age") + ggplot2::ylab(variable_name) + ggplot2::ggtitle(variable_labels[variable_name])
+  my_plot <- my_plot + ggplot2::geom_line() + ggplot2::xlab("age") + ggplot2::ylab(variable_name) +
+    ggplot2::ggtitle(variable_labels[variable_name]) + ggplot2::expand_limits(y = 0)
   # check if group attribute is present to pass it on for plot legend title
   group <- attributes(data)$group
   if(is.null(group) %>% `!` && group %>% is.na %>% `!`) {my_plot <- my_plot +  ggplot2::guides(linetype=ggplot2::guide_legend(title=group))}
