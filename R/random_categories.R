@@ -2,13 +2,14 @@
 #'
 #' Helper function that generates random age categories of absolute ages.
 #' It is mainly used together with the functions \code{pop.sim.gomp}
-#' and \code{random.cat.apply}.
+#' and \code{random.cat.apply}. It will run until the number of categories
+#' are reached \emp{and} there are no gaps in the sequence left.
 #'
 #' @param n_cat numeric. Number of categories, default: 20.
 #'
 #' @param min_age numeric. Minimum age, default: 15.
 #'
-#' @param max_age numeric. Maximum age, default: 75.
+#' @param max_age numeric. Maximum age, default: 74.
 #'
 #' @param max_cat_low numeric. Lower boundary of highest age categoriy, default: 60.
 #'
@@ -24,10 +25,12 @@
 #' sim_ranges <- random.cat()
 
 # generate random age ranges with 5 year ranges
-random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 75) {
+random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 74) {
   n_sim_ranges <- 0
+  seq_range_all <- NULL
+  seq_test_result <- 1
   sim_ranges <- data.frame()
-  while (n_sim_ranges < n_cat){
+  while (n_sim_ranges < n_cat | length(seq_test_result) > 0){
     range_from <- round(runif(1, min = min_age, max = max_age)/5) * 5
     if(range_from > max_cat_low) {range_from <- max_cat_low}
 
@@ -41,6 +44,15 @@ random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 75)
     if(range_to > max_cat_low) {range_to <- max_age}
     sim_ranges <- rbind(sim_ranges, data.frame(from = range_from, to = range_to))
     sim_ranges <- sim_ranges %>% dplyr::distinct()
+
+    # test for missing years
+    for(j in 1:nrow(sim_ranges)){
+      seq_range <- sim_ranges$from[j]:sim_ranges$to[j]
+      seq_range_all <- c(seq_range_all, seq_range)
+    }
+    seq_test <- min(min_age):max(max_age)
+    seq_test_result <- seq_test[!seq_test %in% seq_range_all]
+
     n_sim_ranges <- nrow(sim_ranges)
   }
   return(sim_ranges)
