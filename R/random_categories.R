@@ -24,7 +24,9 @@
 #' @examples
 #' sim_ranges <- random.cat()
 
-# generate random age ranges with 5 year ranges
+
+#' @rdname random.cat.apply
+#' @export
 random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 74) {
   n_sim_ranges <- 0
   seq_range_all <- NULL
@@ -59,7 +61,6 @@ random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 74)
 }
 
 
-
 #' Applying random age ranges to individuals with absolute ages
 #'
 #' Helper function that applies random age categories to "known" absolute ages.
@@ -91,6 +92,8 @@ random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 74)
 #' # apply random age categories to simulated ages
 #' sim_appl <- random.cat.apply(pop_sim$result, age = "age", age_ranges = sim_ranges, from = "from", to = "to")
 
+#' @rdname random.cat.apply
+#' @export
 random.cat.apply <- function(x, age, age_ranges, from, to) {
   asd <- data.frame(x)
   max_age <- max(age_ranges['to'])
