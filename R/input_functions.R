@@ -122,7 +122,7 @@ prep.life.table=function(x, dec = NA, agebeg, ageend = NA, group = NA, method = 
   } else {
     # If the "method" is not a character and of length 1 use the value as age class size and repeat.
     if(length(method)==1){
-      meth=rep(method,ceiling(max(asd$ende,na.rm=T)/method))
+      meth=rep(method,ceiling(max(asd$ende + 1,na.rm=T)/method))
       # If the "method" value is not of length 1 take the entry of "method" as method.
     }else{
       meth=method
