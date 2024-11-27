@@ -22,6 +22,9 @@
 #'
 #' @param start_age numeric. Start age, default: 15 years.
 #'
+#' @param max_age numeric. Maximal age, to avoid unlikely centenaries,
+#' default: 100 years.
+#'
 #' @return
 #' A list of two data.frames with the following items:
 #'
@@ -52,7 +55,7 @@
 
 #' @rdname pop.sim.gomp
 #' @export
-pop.sim.gomp <- function(n, b = NULL, M = NULL, start_age = 15) {
+pop.sim.gomp <- function(n, b = NULL, M = NULL, start_age = 15, max_age = 100) {
   if ( length(M) > 0) {
     M_1 <- 0
     M_2 <- 0
@@ -71,10 +74,19 @@ pop.sim.gomp <- function(n, b = NULL, M = NULL, start_age = 15) {
     a <- exp(rnorm(1, (-66.77 * (b - 0.0718) - 7.119), sqrt(0.0823) ) )
     M <- 1 / b * log (b/a) + start_age
   }
-
-  lt_result <- data.frame(ind = 1:n) %>%
-    dplyr::mutate(age = round(flexsurv::rgompertz(dplyr::n(), b, a) ) + start_age)
-  lt_values <- data.frame(n = n, b = b, a = a, M = M, start_age = start_age)
+  count = 1
+  lt_result <- matrix(NA, n, 2)
+  while (count < (n + 1)) {
+    age <- round(flexsurv::rgompertz(1, b, a) ) + start_age
+    if (age < max_age) {
+    lt_result[count,] <- c(ind = count, age = age)
+    count <- count + 1
+    }
+  }
+  lt_result <- data.frame(lt_result)
+  colnames(lt_result) <- c("ind", "age")
+  lt_values <- data.frame(n = n, b = b, a = a, M = M, start_age = start_age,
+                          max_age = max_age)
   lt_list <- list(values = lt_values, result = lt_result)
   return(lt_list)
 }
