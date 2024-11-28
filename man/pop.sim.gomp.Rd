@@ -4,7 +4,7 @@
 \alias{pop.sim.gomp}
 \title{Simulation of a population of adults with Gompertz distribution}
 \usage{
-pop.sim.gomp(n, b = NULL, M = NULL, start_age = 15)
+pop.sim.gomp(n, b = NULL, M = NULL, start_age = 15, max_age = 100)
 }
 \arguments{
 \item{n}{number of individuals to be simulated.}
@@ -15,6 +15,9 @@ level of mortality.}
 \item{M}{numeric, optional. Modal age M.}
 
 \item{start_age}{numeric. Start age, default: 15 years.}
+
+\item{max_age}{numeric. Maximal age, to avoid unlikely centenaries,
+default: 100 years.}
 }
 \value{
 A list of two data.frames with the following items:

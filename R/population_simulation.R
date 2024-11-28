@@ -60,18 +60,18 @@ pop.sim.gomp <- function(n, b = NULL, M = NULL, start_age = 15, max_age = 100) {
     M_1 <- 0
     M_2 <- 0
     while ( M < M_1 | M > M_2 ) {
-      b <- runif(n = 1, min = 0.02, max = 0.1)
-      a <- exp(rnorm(1, (-66.77 * (b - 0.0718) - 7.119), 0.0823))
+      b <- stats::runif(n = 1, min = 0.02, max = 0.1)
+      a <- exp(stats::rnorm(1, (-66.77 * (b - 0.0718) - 7.119), 0.0823))
       M_ <- 1 / b * log (b/a) + start_age
       M_1 <- M_ - 0.001
       M_2 <- M_ + 0.001
     }
   } else if (length(b) > 0) {
-    a <- exp(rnorm(1, (-66.77 * (b - 0.0718) - 7.119), sqrt(0.0823) ) )
+    a <- exp(stats::rnorm(1, (-66.77 * (b - 0.0718) - 7.119), sqrt(0.0823) ) )
     M <- 1 / b * log (b/a) + start_age
   } else {
-    b <- runif(n = 1, min = 0.02, max = 0.05)
-    a <- exp(rnorm(1, (-66.77 * (b - 0.0718) - 7.119), sqrt(0.0823) ) )
+    b <- stats::runif(n = 1, min = 0.02, max = 0.05)
+    a <- exp(stats::rnorm(1, (-66.77 * (b - 0.0718) - 7.119), sqrt(0.0823) ) )
     M <- 1 / b * log (b/a) + start_age
   }
   count = 1

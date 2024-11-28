@@ -40,7 +40,7 @@ proposed a method they called 'Halley band' as alternative for other
 methods of sampling from an skeletal population. It basically involves
 sampling n times from the age-estimation of each individual and then
 only taking the 2.5th and 97.5th percentile into account. The space
-between they dubbed 'Halley band' but pointed out that it
+between, they dubbed 'Halley band' but pointed out that it
 is not to be confused with confidence intervals.
 }
 \examples{
@@ -50,16 +50,21 @@ pop_sim <- pop.sim.gomp(n = 1000)
 sim_ranges <- random.cat()
 
 # apply random age categories to simulated ages
-sim_appl <- random.cat.apply(pop_sim$result, age = "age", age_ranges = sim_ranges, from = "from", to = "to")
+sim_appl <- random.cat.apply(pop_sim$result, age = "age",
+age_ranges = sim_ranges, from = "from", to = "to")
 
 # create halley bands
-demo <- halley.band(sim_appl, n = 1000, uncert = 0.95, agebeg = "from", ageend = "to", agerange = "excluded")
+demo <- halley.band(sim_appl, n = 1000, uncert = 0.95, agebeg = "from",
+ageend = "to", agerange = "excluded")
 
 # plot band with ggplot
 library(ggplot2)
-ggplot(demo) + geom_ribbon(aes(x = age, ymin = lower_dx, ymax = upper_dx), linetype = 0, fill = "grey")
-ggplot(demo) + geom_ribbon(aes(x = age, ymin = lower_lx, ymax = upper_lx), linetype = 0, fill = "grey")
-ggplot(demo) + geom_ribbon(aes(x = age, ymin = lower_qx, ymax = upper_qx), linetype = 0, fill = "grey")
+ggplot(demo) + geom_ribbon(aes(x = age, ymin = lower_dx, ymax = upper_dx),
+linetype = 0, fill = "grey")
+ggplot(demo) + geom_ribbon(aes(x = age, ymin = lower_lx, ymax = upper_lx),
+linetype = 0, fill = "grey")
+ggplot(demo) + geom_ribbon(aes(x = age, ymin = lower_qx, ymax = upper_qx),
+linetype = 0, fill = "grey")
 }
 \references{
 \insertRef{Luy_Wittwer-Backofen_2005}{mortAAR}

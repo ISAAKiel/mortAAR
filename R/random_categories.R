@@ -3,7 +3,7 @@
 #' Helper function that generates random age categories of absolute ages.
 #' It is mainly used together with the functions \code{pop.sim.gomp}
 #' and \code{random.cat.apply}. It will run until the number of categories
-#' are reached \emp{and} there are no gaps in the sequence left.
+#' are reached \emph{and} there are no gaps in the sequence left.
 #'
 #' @param n_cat numeric. Number of categories, default: 20.
 #'
@@ -33,14 +33,14 @@ random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 74)
   seq_test_result <- 1
   sim_ranges <- data.frame()
   while (n_sim_ranges < n_cat | length(seq_test_result) > 0){
-    range_from <- round(runif(1, min = min_age, max = max_age)/5) * 5
+    range_from <- round(stats::runif(1, min = min_age, max = max_age)/5) * 5
     if(range_from > max_cat_low) {range_from <- max_cat_low}
 
     #define probabilities
     beta_1 <- range_from/40
     if(beta_1 == 0){beta_1 <- 0.01}
     beta_2 <- 3 - beta_1
-    range_probs <- dbeta(seq(1, 8, 1)/8.1, beta_1, beta_2)
+    range_probs <- stats::dbeta(seq(1, 8, 1)/8.1, beta_1, beta_2)
 
     range_to <- range_from + sample(seq(1, 8, 1), 1 , prob = range_probs) *5 -1
     if(range_to > max_cat_low) {range_to <- max_age}
@@ -69,6 +69,8 @@ random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 74)
 #'
 #' @param x a data.frame with individual absolute ages.
 #'
+#' @param age the column containing the individual absolute ages.
+#'
 #' @param age_ranges a data.frame with age ranges.
 #'
 #' @param from numeric. Column name for the begin of an age range.
@@ -90,7 +92,8 @@ random.cat <- function(n_cat = 20, min_age = 15, max_cat_low = 60, max_age = 74)
 #' sim_ranges <- random.cat()
 #'
 #' # apply random age categories to simulated ages
-#' sim_appl <- random.cat.apply(pop_sim$result, age = "age", age_ranges = sim_ranges, from = "from", to = "to")
+#' sim_appl <- random.cat.apply(pop_sim$result, age = "age",
+#' age_ranges = sim_ranges, from = "from", to = "to")
 
 #' @rdname random.cat.apply
 #' @export
