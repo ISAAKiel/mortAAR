@@ -10,7 +10,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "e0"]
+          "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "D15_49_D15plus", "e0"]
         }
       },
       "value": [
@@ -82,6 +82,11 @@
         {
           "type": "double",
           "attributes": {},
+          "value": [0.51534]
+        },
+        {
+          "type": "double",
+          "attributes": {},
           "value": [30.67139]
         }
       ]
@@ -105,7 +110,7 @@
             "names": {
               "type": "character",
               "attributes": {},
-              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "e0"]
+              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "D15_49_D15plus", "e0"]
             }
           },
           "value": [
@@ -177,6 +182,11 @@
             {
               "type": "double",
               "attributes": {},
+              "value": [0.6257]
+            },
+            {
+              "type": "double",
+              "attributes": {},
               "value": [37.88839]
             }
           ]
@@ -187,7 +197,7 @@
             "names": {
               "type": "character",
               "attributes": {},
-              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "e0"]
+              "value": ["child_i", "d5_9", "d10_14", "juvenile_i", "d5_14", "d20plus", "senility_i", "d0plus", "d60plus", "p5_19", "D30_D5", "D0_14_D", "d0_14", "D15_49_D15plus", "e0"]
             }
           },
           "value": [
@@ -259,6 +269,11 @@
             {
               "type": "double",
               "attributes": {},
+              "value": [0.7512]
+            },
+            {
+              "type": "double",
+              "attributes": {},
               "value": [34.7393]
             }
           ]
@@ -274,7 +289,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["q0_5", "q10_5", "q15_5", "q15_45"]
+          "value": ["q0_5", "q10_5", "q15_5", "q15_45", "TFR_subadult", "TFR_adult"]
         }
       },
       "value": [
@@ -297,6 +312,16 @@
           "type": "double",
           "attributes": {},
           "value": [68.57143]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [4.83298]
+        },
+        {
+          "type": "double",
+          "attributes": {},
+          "value": [6.99393]
         }
       ]
     }

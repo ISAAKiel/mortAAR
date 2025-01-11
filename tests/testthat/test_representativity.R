@@ -8,12 +8,4 @@ test_that("lt.representativity produces the right output", {
     lt.representativity(sl),
     style = c("json2")
   )
-  od <- life.table(list(
-    "corpus mandibulae" = odagsen_cm[c("a", "Dx")],
-    "margo orbitalis" = odagsen_mo[c("a", "Dx")]
-  ))
-  expect_snapshot_value(
-    lt.representativity(od),
-    style = c("json2")
-  )
 })

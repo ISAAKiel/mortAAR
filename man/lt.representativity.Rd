@@ -18,9 +18,10 @@ data.frame showing the indices and explaining their interpretation.
 \emph{Herrmann et al. 1990}, 306f.) have devised indices which check
 if the non-adult age groups are represented in proportions as can be
 expected from modern comparable data. Whether this is really applicable
-to archaeological data-sets is a matter of debate.
-}
-\details{
+to archaeological data-sets is a matter of debate.\cr
+Quite recently, \emph{Taylor and Oxenham 2024} added a comparison of Total
+fertility rates (TRF) according to different formulas which depend either
+on subadults or adults.\cr
 Weiss chose the mortality (qx) as deciding factor and claimed that
 (1) the probability of death of the age group 10--15 (5q10)
 should be lower than that of the group 15--20 (5q15) and that (2)
@@ -31,6 +32,13 @@ and asserted that (1) the ratio of those having died between 5 and 10
 (5D5) to those having died between 10 and 15 (5D15) should be equal or
 larger than 2 and that (2) the ratio of those having died between 5 and 15
 (10D5) and all adults (>= 20) should be 0.1 or larger.\cr
+The formualas Taylor and Oxenham used either weigh all individuals aged 0--14
+against all individuals or all individuals aged 15--49 against all individuals
+aged 15+. The formulas differ from the original ones published by
+\emph{McFadden and Oxenham 2018} and \emph{Taylor et al. 2023} because the
+data basis is slighty different. If the results of the formulas deviate
+by more than 0.692 (the standard error of estimate, SEE), there is a problem
+with the age structure.\cr
 Due to the specific nature of the indices, they only give meaningful
 results if 5-year-age categories have been chosen for the non-adults.
 }
@@ -44,5 +52,10 @@ lt.representativity(schleswig)
 
 \insertRef{masset_bocquet_1977}{mortAAR}
 
+mcfadden_oxenham_2018a
+
 \insertRef{weiss_demography_1973}{mortAAR}
+
+\insertRef{taylor_oxenham_2024}{mortAAR}
+taylor_et_al_2023
 }
