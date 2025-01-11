@@ -1,8 +1,8 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Coverage Status](https://img.shields.io/codecov/c/github/ISAAKiel/mortAAR/master.svg)](https://app.codecov.io/github/ISAAKiel/mortAAR?branch=master)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mortAAR)](https://CRAN.R-project.org/package=mortAAR)
-[![](http://cranlogs.r-pkg.org/badges/mortAAR)](https://CRAN.R-project.org/package=mortAAR)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/mortAAR)](https://CRAN.R-project.org/package=mortAAR)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/mortAAR)](https://CRAN.R-project.org/package=mortAAR)
+[![](https://cranlogs.r-pkg.org/badges/mortAAR)](https://CRAN.R-project.org/package=mortAAR)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/mortAAR)](https://CRAN.R-project.org/package=mortAAR)
 [![license](https://img.shields.io/badge/license-GPL%203-B50B82.svg)](https://www.r-project.org/Licenses/GPL-3)
 
 mortAAR
