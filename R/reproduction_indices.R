@@ -183,7 +183,7 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
       BA_log = { fertil_rate <- log(indx$p5_19[[1]]) * 1.58341 + 9.45601 },
       { stop(paste(
           "Please choose a valid fertility rate",
-          "(either 'McO', 'BA_linear', 'BA_log' or 'BA_power' or a number)."
+          "(either 'McO', 'TOMc', 'BA_linear', 'BA_log' or 'BA_power' or a number)."
         )) }
     )
   } else if (is.numeric(fertility_rate)) {

@@ -67,6 +67,8 @@ There are different approaches to calculate reproduction rates [e. g. @henneberg
 
 Recently, C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018a] have published a formula to estimate the Total fertility rate from archaeological data, provided that infants are represented fully in the archaeological record. Unfortunately, this will not be the case for most archaeological datasets. Therefore, we used the data published by McFadden and Oxenham to apply it to the $P_{5-19}$-index after J.-P. Bocquet-Appel [-@bocquet_appel_2002]. We approximated the ratio by three different methods of fitting (linear, logistic, power) and recommend logistic fitting, but the others are available as well.
 
+Even more recently, B. Taylor, M. Oxenham and C. McFadden [-@taylor_et_al_2023] have presented a formula for the Total fertility rate for cases where pre-adult individuals are known to be underrepresented.
+
 The Gross reproduction rate (GRR) is calculated by multiplying the TFR with the ratio of female newborns, assumed to be a constant of 48.8% of all children [@hassan_1981, 136]. The Net reproduction rate is arrived at by summing the product of the GRR, the age specific fertility rate calculated from the data given by Hassan [-@hassan_1981, 137 tab. 8.7] and the age specific survival taken from the life table and dividing the result by 10000.
 
 The Rate of natural increase or Intrinsic growth rate `r` (growth in per cent per year) can be computed from the fertility calculations following Hassan [-@hassan_1981, 140]. An alternative way to calculate the intrinsic growth rate has recently described by C. McFadden and M. F. Oxenham [-@mcfadden_oxenham_2018b]. They present a regression calculation based on the index $D_{0-15}/D$ also used for fertility calculations (see above) in connections with modern data. It must not astonish that even with the McFadden/Oxenham-index used for the fertility rate, the actual numbers for the computed Intrinsic rate of growth and the Rate of Natural Increase can highly diverge, as with the former formula, further life table data is taken into account.
@@ -84,10 +86,16 @@ lt.reproduction(schleswig, fertility_rate = "McFO", growth_rate = "fertility")[c
 The McFadden/Oxenham-index gives a Total fertility rate of 4.85 which equals a total of around 5 children per woman. Of these children 48% will be female which leads to a Gross reproduction rate of 2.37. Taking into account the lived years of the Schleswig woman during their reproductive years, the Net reproduction rate would be 1.17, meaning that on average every woman -- regardless of their time of death -- would have had 1.17 daughters who in turn would have had children. This translates to a Rate of natural increase of 0.79%: Every year the Schleswig population would have increased by roughly 0.8% and with stable growth would have doubled every 88 years.
 
 ```{r}
+lt.reproduction(schleswig, fertility_rate = "TOMc", growth_rate = "fertility")[c(-1,-2),]
+```
+
+The index of Taylor et al., which concentrates on the adult population only (age 15 and above), arrives at a much higher estimate for the Total fertility rate. This is computed with 6.92, and therefore also the Gross reproduction rate, the Net reproduction rate and the Rate of natural increase are higher than with the McFadden/Oxenham-index. Conversely, the doubling time of the population is with 27.04 years much lower.
+
+```{r}
 lt.reproduction(lt.correction(schleswig)$life_table_corr, fertility_rate = "McFO", growth_rate = "fertility")[c(-1,-2),]
 ```
 
-As stated above, the index assumes, somehow unrealistically, that the youngest age-groups are fully represented in the skeletal population. If we apply the life table corrections as advised by C. Masset and J.-P. Bocquet-Appel via the function `lt.correction` (see vignette "Life table corrections"), the values change dramatically. The Total fertility and Gross reproduction rates increase, but because of the much higher mortality among the youngest, the Net reproduction rate and thus the Rate of natural increase shrink. The doubling time is extended to nearly 250 years.
+As stated above, the McFadden/Oxenham-index assumes, somehow unrealistically, that the youngest age-groups are fully represented in the skeletal population. If we apply the life table corrections as advised by C. Masset and J.-P. Bocquet-Appel via the function `lt.correction` (see vignette "Life table corrections"), the values change dramatically. The Total fertility and Gross reproduction rates increase, but because of the much higher mortality among the youngest, the Net reproduction rate and thus the Rate of natural increase shrink. The doubling time is extended to nearly 250 years.
 
 ```{r}
 lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
@@ -113,7 +121,7 @@ lt.reproduction(schleswig, growth_rate = "McFO")[c(6,7),]
 
 The McFadden/Oxenham-index for the Rate of natural increase lies somewhere in-between. It gives a value of 1.81 and thus a doubling time of 38 years.
 
-In sum, the differing outcomes underline the importance of the fertility and the mortality among the youngest for the growth direction of a given population. Following Hassan [-@hassan_1981, 140], one would credit the corrected McFO-fertility rate to produce the most probable result as Hassan deems a growth rate of 0.5% per year as the maximum for prehistoric populations. On the other hand, also growth rates of 2.7% per year are known from ethnographic cases [@hassan_1981, 142].
+In sum, the differing outcomes underline the importance of the fertility and the mortality among the youngest for the growth direction of a given population. Following Hassan [-@hassan_1981, 140], one would credit the McFO-fertility index with lifetable correction after Masset and Bocquet-Appel to produce the most probable result as Hassan deems a growth rate of 0.5% per year as the maximum for prehistoric populations. On the other hand, also growth rates of 2.7% per year are known from ethnographic cases [@hassan_1981, 142].
 
 
 ### Rate of dependent individuals

@@ -50,6 +50,8 @@ In contrast, Bocquet-Appel and Masset took the raw number of dead (D<sub>x</sub>
 
 If either of these prerequisites is not met, the results from such data should be treated with extreme caution as the mortality structure is different from that of known populations. Due to the specific nature of the indices, they only give meaningful results if 5-year-age categories have been chosen for the non-adults.
 
+Quite recently, B. Taylor and M. Oxenham [-@taylor_oxenham_2024] added a comparison of Total fertility rates (TRF) according to different formulas which depend either on subadults or adults. The formualas Taylor and Oxenham used either weigh all individuals aged 0--14 against all individuals or all individuals aged 15--49 against all individuals aged 15+. The formulas differ from the original ones published by C. McFadden and M. Oxenham [-@mcfadden_oxenham_2018a] and B. Taylor et al. [-@taylor_et_al_2023] because the data basis is slighty different. If the results of the formulas deviate by more than 0.692 (the standard error of estimate, SEE), they conclude that there is a problem with the age structure. In contrast to the tests by Weiss and Masset and Bocquet-Appel, there is no need to divide the sample into 5-year-steps, as long as the limits at 15 and 50 years are respected.
+
 As example, we use the data-set of the medieval cemetery of Schleswig.
 
 ```{r}
@@ -57,7 +59,7 @@ schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 lt.representativity(schleswig)
 ```
 
-The result is a dataframe where the individual conditions with the actual results are listed. The last column provides the verdict if the respective condition is met or not. In the case of the Schleswig cemetery, only the Weiss criterium (1) and the Bocquet-Appel/Masset criterium (2) is `TRUE`, the other two are `FALSE`. Therefore, it can be argued that the Schleswig data is not representative of a complete once-living population. However, it might be that the Bocquet-Appel/Masset criterium (2) is too conservative as only two individuals would have to have died at this age to bring the ratio above 2 [@herrmann_prahistorische_1990, 307]. P. Sellier [-@sellier_1989, 23] has even argued that the ratio should be 1.5 instead of 2. In this case, both criteria of Bocquet-Appel and Masset would be met for the Schleswig cemetery.
+The result is a dataframe where the individual conditions with the actual results are listed. The last column provides the verdict if the respective condition is met or not. In the case of the Schleswig cemetery, only the Weiss criterium (1) and the Bocquet-Appel/Masset criterium (2) is `TRUE`, the other three are `FALSE`. Therefore, it can be argued that the Schleswig data is not representative of a complete once-living population. However, it might be that the Bocquet-Appel/Masset criterium (1) is too conservative as only two individuals would have to have died at this age to bring the ratio above 2 [@herrmann_prahistorische_1990, 307]. P. Sellier [-@sellier_1989, 23] has even argued that the ratio should be 1.5 instead of 2. In this case, both criteria of Bocquet-Appel and Masset would be met for the Schleswig cemetery.
 
 ## Correction of life table data after Bocquet-Appel and Masset
 
@@ -90,5 +92,11 @@ life.table(schleswig_ma[c("a", "Dx")])
 ```
 
 With the uncorrected data, the youngest age group (years 0--4) 'only' comprises around 20% of the population. However, according to the formulas by Masset and Bocquet-Appel, this number should be more than doubled (46%). This would mean that in reality nearly 50% of the individuals died before they reached their 5^th^ birthday. Applying this value to the life table, the number of individuals increases from 247 to 368 and at the same time the life expectancy at birth decreases from 30.7 to 21.1 years. Please note that this value differs somehow from that which is computed by the formula by Masset and Bocquet-Appel (22.5 years). This is easily explainable as the life expectancy of the life table includes _all_ individuals. However, the value of 21.1 years is still in the range of 21.0 to 24.1 years (see indices) given by Masset and Bocquet-Appel.
+
+```{r}
+lt.representativity(lt.correction(schleswig)$life_table_corr)
+```
+
+Because the correction only applies to the youngest age group, it has no effects on the tests for representativity by Weiss and Masset and Bocquet-Appel. The correction, however, affects the test by Taylor et al. Now, the Total fertility rate based on the subadult index is much closer to the value computed from the individuals aged 15 and above. As the difference is below 0.692, the test now would not suspect a biased population. This might be taken as hint that the 'true' TFR-value is closer to 7 than to 4 and that the correction by Masset and Bocquet-Appel was both necessary and arrived at good estimates.
 
 ## References
