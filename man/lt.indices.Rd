@@ -23,6 +23,8 @@ A list with the following indices and vectors:
   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
   according to \emph{McFadden & Oxenham 2018a} if infants are represented
   well.
+  \item \bold{D15_49_D15plus}:   proportion of individuals aged 15--49
+  according to \emph{Taylor & Oxenham 2024}.
   \item \bold{e0}:   life expectancy at age 0.
 }
 }
@@ -45,4 +47,6 @@ lt.indices(schleswig)
 \insertRef{buikstra_et_al_1986}{mortAAR}
 
 \insertRef{mcfadden_oxenham_2018a}{mortAAR}
+
+\insertRef{taylor_oxenham_2024}{mortAAR}
 }

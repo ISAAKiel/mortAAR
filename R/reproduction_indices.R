@@ -21,6 +21,9 @@
 #' 2002}. We approximated the ratio by three different methods of
 #' fitting (linear, logistic, power) and recommend logistic fitting,
 #' but the others are available as well.\cr
+#' We have also added the option to use the formula by \emph{Taylor et al.
+#' 2023} that uses the ratio of adults aged 15--49 in relation to those aged
+#' 15 or older.\cr
 #' The Gross reproduction rate (GRR) is calculated by multiplying the TFR
 #' with the ratio of female newborns, assumed to be a constant of 48.8%
 #' of all children (\emph{Hassan} 1981, 136). The Net reproduction rate is
@@ -42,7 +45,7 @@
 #' is reported that is usually (but probably erroneously for archaic societies
 #' (\emph{Grupe et al. 2015}, 423) assumed to apply to those aged below 15 or
 #' 60 and above.\cr
-#' Finally, \emph{Buikstra et al. 1986}. have made the interesting observation that
+#' Finally, \emph{Buikstra et al. 1986} have made the interesting observation that
 #' the relation of those individuals aged 30 years and above to those aged
 #' 5 years and above is very closely related to the birth rate and also closely
 #' (but less significantly) related to the death rate. Therefore, these indices
@@ -50,11 +53,13 @@
 #'
 #' @param life_table an object of class mortaar_life_table.
 #' @param fertility_rate string or numeric. Either fertility rate according to
-#' \emph{McFadden & Oxenham 2018a} if infants are represented well or fertility
-#' rate according to data by \emph{McFadden & Oxenham 2018a} for P(5-19) index
-#' after \emph{Bocquet-Appel 2002}. Options: 'McFO' (McFadden/Oxenham), 'BA_linear'
-#' (linear fit), 'BA_power' (power fit) or 'BA_log' (logistic fit). Default: BA_log'.
-#' Additionally, the user can specify an arbitrary number in lieu of the fertility rate.
+#' \emph{McFadden & Oxenham 2018a} if infants are represented well or
+#' \emph{Taylor et al.} or fertility rate according to data by \emph{McFadden &
+#' Oxenham 2018a} for P(5-19) index after \emph{Bocquet-Appel 2002}. Options:
+#' 'McFO' (McFadden/Oxenham), 'TOMc' (Taylor et al.), 'BA_linear' (linear fit),
+#' 'BA_power' (power fit) or 'BA_log' (logistic fit). Default: BA_log'.
+#' Additionally, the user can specify an arbitrary number in lieu of the
+#' fertility rate.
 #' @param growth_rate string or numeric. Either derived directly from the fertility
 #' calculations or from regression analysis by either \emph{McFadden & Oxenham 2018b}
 #' (\eqn{10.06 * D0--14/D) -- 1.61}) or \emph{Bocquet-Appel and Masset}
@@ -123,6 +128,8 @@
 #'
 #' \insertRef{mcfadden_oxenham_2018b}{mortAAR}
 #'
+#' \insertRef{taylor_et_al_2023}{mortAAR}
+#'
 #' @examples
 #' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
 #' lt.reproduction(schleswig)
@@ -164,7 +171,10 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   # switch to set fertil_rate
   if (is.character(fertility_rate)) {
     switch(fertility_rate,
+      # according to McFadden % Oxenham 2018
       McFO = { fertil_rate <- indx$D0_14_D[[1]] * 7.734 + 2.224 },
+      # according to Taylor et al. 2023
+      TOMc = { fertil_rate <- indx$D15_49_D15plus[[1]] * 8.564 + 2.508 },
       # Linear regression
       BA_linear = { fertil_rate <- indx$p5_19[[1]] * 25.7557 + 2.85273 },
       # power fit
@@ -206,7 +216,7 @@ lt.reproduction.mortaar_life_table <- function(life_table, fertility_rate = "BA_
   # mortality rate according to Bocquet/Masset 1977
   mortality_rate <- 0.127 * indx$juvenile_i + 0.016
 
-  # switch to set growthl_rate
+  # switch to set growth_rate
   if (is.character(growth_rate)) {
     switch(growth_rate,
            # Intrinsic growth rate in percent per year after Hassan

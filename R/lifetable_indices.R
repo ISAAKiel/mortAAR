@@ -21,6 +21,8 @@
 #'   \item \bold{D0_14_D}:   proportion of individuals aged 0--14
 #'   according to \emph{McFadden & Oxenham 2018a} if infants are represented
 #'   well.
+#'   \item \bold{D15_49_D15plus}:   proportion of individuals aged 15--49
+#'   according to \emph{Taylor & Oxenham 2024}.
 #'   \item \bold{e0}:   life expectancy at age 0.
 #'}
 #'
@@ -33,6 +35,8 @@
 #' \insertRef{buikstra_et_al_1986}{mortAAR}
 #'
 #' \insertRef{mcfadden_oxenham_2018a}{mortAAR}
+#'
+#' \insertRef{taylor_oxenham_2024}{mortAAR}
 #'
 #' @examples
 #' schleswig <- life.table(schleswig_ma[c("a", "Dx")])
@@ -63,6 +67,8 @@ lt.indices.mortaar_life_table_list <- function(life_table) {
 #' @noRd
 lt.indices.mortaar_life_table <- function(life_table) {
 
+  # please note that "all_age" denotes the upper limit of the age categories,
+  # so the queries for the indices are counterintuitive.
   all_age <- life_table$a %>% cumsum
 
   # Children index according to Masset and Bocquet 1977
@@ -75,7 +81,7 @@ lt.indices.mortaar_life_table <- function(life_table) {
   d20plus <- life_table$Dx[all_age > 20] %>% sum
   d5_14_d20plus <- d5_14 / d20plus
 
-    # Senility index according to Masset and Bocquet 1977
+  # Senility index according to Masset and Bocquet 1977
   d60plus <- life_table$Dx[all_age > 60] %>% sum
   d60_d20plus <- d60plus / d20plus
 
@@ -94,6 +100,11 @@ lt.indices.mortaar_life_table <- function(life_table) {
   d0plus <- life_table$Dx %>% sum
   D0_14_D <- d0_14 / d0plus
 
+  # D15_49_D15plus index according to Taylor and Oxenham 2024
+  d15_49 <- life_table$Dx[all_age >= 20 & all_age <= 50] %>% sum
+  d15plus <- life_table$Dx[all_age >= 20] %>% sum
+  D15_49_D15plus <- d15_49 / d15plus
+
   # Life expectancy at age 0
   e0 <- life_table$ex[[1]]
 
@@ -103,7 +114,8 @@ lt.indices.mortaar_life_table <- function(life_table) {
     juvenile_i = d5_14_d20plus, d5_14 = d5_14, d20plus = d20plus,
     senility_i = d60_d20plus, d0plus= d0plus, d60plus = d60plus,
     p5_19 = p5_19,D30_D5 = D30_D5,
-     D0_14_D = D0_14_D, d0_14 = d0_14,
+    D0_14_D = D0_14_D, d0_14 = d0_14,
+    D15_49_D15plus = D15_49_D15plus,
     e0 = e0
   )
 
@@ -131,6 +143,8 @@ lt.indices.mortaar_life_table <- function(life_table) {
 #' @keywords internal
 lt.mortality <- function(life_table) {
 
+  indx <- lt.indices(life_table)
+
   all_age <- life_table$a %>% cumsum
 
   # Indices for representativity after Weiss 1973 and Model life tables
@@ -149,6 +163,15 @@ lt.mortality <- function(life_table) {
   lx10 <- life_table$lx[all_age == 15]
   q15_45 <- d15_45 / lx10 * 100
 
-  result_list <- list(q0_5 = q0_5, q10_5 = q10_5, q15_5 = q15_5, q15_45 = q15_45)
+  # Total fertility rate from subadults and adults
+  TFR_subadult <-  indx$D0_14_D * 7.210 + 2.381
+  TFR_adult <- indx$D15_49_D15plus * 8.569 + 2.578
+
+  result_list <- list(q0_5 = q0_5,
+                      q10_5 = q10_5,
+                      q15_5 = q15_5,
+                      q15_45 = q15_45,
+                      TFR_subadult = TFR_subadult,
+                      TFR_adult = TFR_adult)
   result_list
 }

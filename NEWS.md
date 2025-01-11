@@ -1,3 +1,9 @@
+# mortAAR 1.1.7
+- added function for Halley bands
+- added function for population simulation
+- added helper functions for the random generating and applying of age categories
+- added reprasentativity check via Total fertility rate
+
 # mortAAR 1.1.6
 - fixed the error in plotting that occurred after the fix of "aes_string" of ggplot2
   and that still persisted
