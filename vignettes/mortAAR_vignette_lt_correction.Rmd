@@ -40,7 +40,7 @@ plot(nitra_life, display=c("dx","qx"))
 
 As expected, applying the option leads to much smoother curves. However, for the 10-year-option, the oldest age group shows a local maximum which is not reflected in the original data and therefore is an artefact of the smoothing algorithm working on the available data. In this case, the 20-year-option seems to offer a better compromise between a much more natural looking curve and still trueness to the original data.
 
-## Representativity of data
+## Representativeness of data
 
 Anthropological data from archaeological contexts is necessarily fragmentary. The question remains if this fragmentation leads to completely unreliable inferences when statistical methods are applied to it. K. M. Weiss [-@weiss_demography_1973, 46f.] and C. Masset and J.-P. Bocquet-Appel [-@masset_bocquet_1977; see also @herrmann_prahistorische_1990, 306f.] have therefore devised indices which check if the non-adult age groups are represented in proportions as can be expected from modern comparable data. Whether this is really applicable to archaeological data-sets is a matter of debate.
 
@@ -63,7 +63,7 @@ The result is a dataframe where the individual conditions with the actual result
 
 ## Correction of life table data after Bocquet-Appel and Masset
 
-It is generally assumed that most skeletal populations lack the youngest age group. Life tables resulting from such populations will necessarily be misleading as they lead to believe that the mortality of younger children was lower than it actually was and that life expectancy was higher. For correcting these missing individuals, Masset and Bocquet-Appel [-@masset_bocquet_1977; see also @herrmann_prahistorische_1990, 307] conceived of several calculations based on regression analyses of modern comparable mortality data. Despite the fact that these recommendations are more than 40 years old, they still surface in text books [e. g. @grupe_et_al_2015, 418--419]. However, the applicability of these indices to archaeological data is debatable and does not necessarily lead to reliable results. Therefore, the correction needs to be weighted carefully and ideally only after the representativity of the base data has been checked with function `lt.representativity`.
+It is generally assumed that most skeletal populations lack the youngest age group. Life tables resulting from such populations will necessarily be misleading as they lead to believe that the mortality of younger children was lower than it actually was and that life expectancy was higher. For correcting these missing individuals, Masset and Bocquet-Appel [-@masset_bocquet_1977; see also @herrmann_prahistorische_1990, 307] conceived of several calculations based on regression analyses of modern comparable mortality data. Despite the fact that these recommendations are more than 40 years old, they still surface in text books [e. g. @grupe_et_al_2015, 418--419]. However, the applicability of these indices to archaeological data is debatable and does not necessarily lead to reliable results. Therefore, the correction needs to be weighted carefully and ideally only after the representativeness of the base data has been checked with function `lt.representativity`.
 
 The equations conceived by Masset and Bocquet-Appel are relatively complex. Life expectancy at the time of birth is computed as follows: 
 
@@ -97,6 +97,6 @@ With the uncorrected data, the youngest age group (years 0--4) 'only' comprises 
 lt.representativity(lt.correction(schleswig)$life_table_corr)
 ```
 
-Because the correction only applies to the youngest age group, it has no effects on the tests for representativity by Weiss and Masset and Bocquet-Appel. The correction, however, affects the test by Taylor et al. Now, the Total fertility rate based on the subadult index is much closer to the value computed from the individuals aged 15 and above. As the difference is below 0.692, the test now would not suspect a biased population. This might be taken as hint that the 'true' TFR-value is closer to 7 than to 4 and that the correction by Masset and Bocquet-Appel was both necessary and arrived at good estimates.
+Because the correction only applies to the youngest age group, it has no effects on the tests for representativeness by Weiss and Masset and Bocquet-Appel. The correction, however, affects the test by Taylor et al. Now, the Total fertility rate based on the subadult index is much closer to the value computed from the individuals aged 15 and above. As the difference is below 0.692, the test now would not suspect a biased population. This might be taken as hint that the 'true' TFR-value is closer to 7 than to 4 and that the correction by Masset and Bocquet-Appel was both necessary and arrived at good estimates.
 
 ## References

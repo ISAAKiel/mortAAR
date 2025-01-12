@@ -7,7 +7,7 @@ This is a minor increment. In this version we have:
 
 ## Test environments
 * local OS X install, R 4.3.1
-* macOS builder, R 4.3.0
+* macOS builder, R 4.4.2
 * ubuntu 20.04 (on github-action), R 4.4.2
 * win-builder (devel and release)
 
