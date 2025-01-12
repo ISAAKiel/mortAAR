@@ -1,7 +1,6 @@
 ---
 title: "Introduction to mortAAR"
 output: rmarkdown::html_vignette
-bibliography: ../inst/REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{Introduction to mortAAR}
   %\VignetteEngine{knitr::rmarkdown}
@@ -10,8 +9,80 @@ vignette: >
 
 ## Introduction
 
-##Work to do##
+mortAAR is supposed to ease the import and display of archaeological life table data as well as to offer more advanced functions. The general idea behind life tables and the implementation in mortAAR is explained in the vignette("background"). This introduction gets you started with the import of different data sets, the computation of life tables and finally the plotting of life tables.
 
----
+## Import of data
 
-## References
+The import of data is controlled by the function prep.life.tabe(). In most cases, the data set will contain one row per individual with the respective age ranges, similar to the example of the cemetery of Nitra.
+
+```{r, message=FALSE}
+library(mortAAR)
+library(magrittr)
+
+head(mortAAR::nitra)
+nitra_prep <- prep.life.table(nitra, group = "sex", agebeg = "age_start", ageend = "age_end", agerange = "included")
+```
+
+Please note that the data set has an ID column, a grouping column with the sex of the individuals as well as two columns containing the start and end of the age ranges. The end age is "inclusive" which means that there are no overlaps between the age categories.
+
+In other cases, the data might already have been aggregated, e. g. in a published life table as in the example Aiterhofen-Ödmühlen.
+
+```{r, message=FALSE}
+head(mortAAR::aiterhofen_oedmuehlen)
+aiterhofen_prep <- prep.life.table(aiterhofen_oedmuehlen, dec = "Dx", agebeg = "Alter", method = "Equal5")
+```
+
+In this case, the column with the number of deceased (˚dec˚) has to be named and the method of aggregation has to be changed to ˚Equal5˚ as no differentiation is made in the youngest age category.
+
+## Displaying the life table
+
+If the data has been prepared as above, it is easy to generate a life table with the command life.table().
+
+```{r, message=FALSE}
+mortAAR::life.table(aiterhofen_prep)
+```
+
+For plotting the resulting life table indices, it is advisable to store the results. If a grouping variable had been specified, a separate life table is generated for each group.
+
+```{r, message=FALSE}
+nitra_lt <- mortAAR::life.table(nitra_prep)
+nitra_lt
+```
+
+## Plotting the results
+
+A complete set of all indices of the life table is generated with the command plot(). The lines of the groups (if specified) are displayed as line types (default) or with different colours.
+
+```{r, message=FALSE}
+plot(nitra_lt, line_vis = "colour")
+```
+
+It is, of course, also possible to address the life tables individually to only display or plot a subset. It is also possible to limit the plots to certain types.
+
+```{r, message=FALSE}
+plot(nitra_lt$All, display = "dx")
+```
+
+If more control is desired, for example to create customized plots in ggplot(), this is also possible. The following takes the life tables from the Nitra example and creates a ggplot diagram with combinations of line types and colours.
+
+```{r, message=FALSE}
+library(ggplot2)
+ggplot(nitra_lt$All, aes(x=c(0,cumsum(a)[-nrow(nitra_lt$All)]), y=dx)) +
+ geom_point() +
+ geom_line(aes(col = "All")) +
+ scale_x_continuous(breaks=seq(0, 80, 10)) +
+ labs(title="Nitra",
+     # subtitle="black: total, blue: males, red: females)",
+      x = "age",
+      y = "dx") +
+ geom_line(data=nitra_lt$m, aes(col= "male"), linewidth=1.2, linetype="dashed") +
+ geom_line(data=nitra_lt$f, aes(col= "female"), linewidth=1.2, linetype="dotted") +
+ scale_colour_manual(values = c("black", "blue","red")) + theme_light() +
+ theme( legend.title = element_blank())
+```
+
+## Going further
+
+Hopefully, the above has succeeded in giving an overview how to use the basic functions of mortAAR. Two further worked examples can be found in the vignette("example_1") and vignette("example_: European Iron Age_2"). The former deals especially with data preparation while the latter also covers the use case to combine two life tables in a joined analysis.
+
+More advanced functions of mortAAR deal with testing the representativeness and the subsequent correction of life tables (explained in the vignette("lt_correction") as well as the computation of reproduction indices (vignette("reproduction")).
