@@ -34,11 +34,11 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/mortAAR_vignette_background.html">Background</a></li>
-    <li><a class="dropdown-item" href="../articles/mortAAR_vignette_example_1.html">Example: Neolithic Gallery graves</a></li>
-    <li><a class="dropdown-item" href="../articles/mortAAR_vignette_example_2.html">Example: European Iron Age</a></li>
-    <li><a class="dropdown-item" href="../articles/mortAAR_vignette_lt_correction.html">Life table correction</a></li>
-    <li><a class="dropdown-item" href="../articles/mortAAR_vignette_reproduction.html">Reproduction</a></li>
+<li><a class="dropdown-item" href="../articles/background.html">Background</a></li>
+    <li><a class="dropdown-item" href="../articles/example_1.html">Example: Neolithic Gallery graves</a></li>
+    <li><a class="dropdown-item" href="../articles/example_2.html">Example: European Iron Age</a></li>
+    <li><a class="dropdown-item" href="../articles/lt_correction.html">Life table correction</a></li>
+    <li><a class="dropdown-item" href="../articles/reproduction.html">Reproduction</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -81,12 +81,227 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>##Work to do##</p>
-<hr>
+<p>mortAAR is supposed to ease the import and display of archaeological
+life table data as well as to offer more advanced functions. The general
+idea behind life tables and the implementation in mortAAR is explained
+in the vignette(“background”). This introduction gets you started with
+the import of different data sets, the computation of life tables and
+finally the plotting of life tables.</p>
 </div>
 <div class="section level2">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 id="import-of-data">Import of data<a class="anchor" aria-label="anchor" href="#import-of-data"></a>
 </h2>
+<p>The import of data is controlled by the function prep.life.tabe(). In
+most cases, the data set will contain one row per individual with the
+respective age ranges, similar to the example of the cemetery of
+Nitra.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ISAAKiel/mortAAR" class="external-link">mortAAR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">mortAAR</span><span class="fu">::</span><span class="va"><a href="../reference/nitra.html">nitra</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   X  no sex age_start age_end</span></span>
+<span><span class="co">## 1 1   1   f        20      25</span></span>
+<span><span class="co">## 2 2   2   m        36      45</span></span>
+<span><span class="co">## 3 3   3   u        13      17</span></span>
+<span><span class="co">## 4 4 4_1   u        13      17</span></span>
+<span><span class="co">## 5 5 4_2   f        26      35</span></span>
+<span><span class="co">## 6 6 4_3   m        36      45</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nitra_prep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.life.table.html">prep.life.table</a></span><span class="op">(</span><span class="va">nitra</span>, group <span class="op">=</span> <span class="st">"sex"</span>, agebeg <span class="op">=</span> <span class="st">"age_start"</span>, ageend <span class="op">=</span> <span class="st">"age_end"</span>, agerange <span class="op">=</span> <span class="st">"included"</span><span class="op">)</span></span></code></pre></div>
+<p>Please note that the data set has an ID column, a grouping column
+with the sex of the individuals as well as two columns containing the
+start and end of the age ranges. The end age is “inclusive” which means
+that there are no overlaps between the age categories.</p>
+<p>In other cases, the data might already have been aggregated, e. g. in
+a published life table as in the example Aiterhofen-Ödmühlen.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">mortAAR</span><span class="fu">::</span><span class="va"><a href="../reference/aiterhofen_oedmuehlen.html">aiterhofen_oedmuehlen</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   Alter a    Dx        Sx       qx        lx        dx       Lx        Tx</span></span>
+<span><span class="co">## 1     0 5  4.20 107.00000 0.039252 1000.0000  39.25233 4901.869 26773.570</span></span>
+<span><span class="co">## 2     5 5  4.26 102.80000 0.041504  960.7476  39.87538 4704.049 21871.700</span></span>
+<span><span class="co">## 3    10 5  8.67  98.53333 0.088018  920.8722  81.05352 4401.727 17167.650</span></span>
+<span><span class="co">## 4    15 5 14.20  89.86060 0.158022  839.8187 132.71020 3867.318 12765.930</span></span>
+<span><span class="co">## 5    20 5 14.73  75.66060 0.194809  707.1084 137.75130 3191.163  8898.612</span></span>
+<span><span class="co">## 6    25 5 17.37  60.92121 0.285216  569.3571 162.39020 2440.809  5707.448</span></span>
+<span><span class="co">##         ex  rel.Bevx</span></span>
+<span><span class="co">## 1 26.77357 18.308600</span></span>
+<span><span class="co">## 2 22.76529 17.569740</span></span>
+<span><span class="co">## 3 18.64282 16.440560</span></span>
+<span><span class="co">## 4 15.20081 14.444530</span></span>
+<span><span class="co">## 5 12.58450 11.919070</span></span>
+<span><span class="co">## 6 10.02437  9.116488</span></span></code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">aiterhofen_prep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.life.table.html">prep.life.table</a></span><span class="op">(</span><span class="va">aiterhofen_oedmuehlen</span>, dec <span class="op">=</span> <span class="st">"Dx"</span>, agebeg <span class="op">=</span> <span class="st">"Alter"</span>, method <span class="op">=</span> <span class="st">"Equal5"</span><span class="op">)</span></span></code></pre></div>
+<p>In this case, the column with the number of deceased (˚dec˚) has to
+be named and the method of aggregation has to be changed to ˚Equal5˚ as
+no differentiation is made in the youngest age category.</p>
+</div>
+<div class="section level2">
+<h2 id="displaying-the-life-table">Displaying the life table<a class="anchor" aria-label="anchor" href="#displaying-the-life-table"></a>
+</h2>
+<p>If the data has been prepared as above, it is easy to generate a life
+table with the command life.table().</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mortAAR</span><span class="fu">::</span><span class="fu"><a href="../reference/life.table.html">life.table</a></span><span class="op">(</span><span class="va">aiterhofen_prep</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">##   mortAAR life table (n = 106.49 individuals)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Life expectancy at birth (e0): 26.584</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##         x a    Ax    Dx     dx      lx      qx      Lx       Tx     ex rel_popx</span></span>
+<span><span class="co">## 1    0--4 5 1.667  4.20  3.944 100.000   3.944 486.853 2658.442 26.584   18.313</span></span>
+<span><span class="co">## 2    5--9 5 2.500  4.26  4.000  96.056   4.165 470.279 2171.589 22.608   17.690</span></span>
+<span><span class="co">## 3  10--14 5 2.500  8.67  8.142  92.056   8.844 439.924 1701.310 18.481   16.548</span></span>
+<span><span class="co">## 4  15--19 5 2.500 14.20 13.335  83.914  15.891 386.233 1261.386 15.032   14.529</span></span>
+<span><span class="co">## 5  20--24 5 2.500 14.73 13.832  70.579  19.598 318.316  875.153 12.400   11.974</span></span>
+<span><span class="co">## 6  25--29 5 2.500 17.37 16.311  56.747  28.744 242.957  556.836  9.813    9.139</span></span>
+<span><span class="co">## 7  30--34 5 2.500 18.12 17.016  40.436  42.081 159.639  313.879  7.762    6.005</span></span>
+<span><span class="co">## 8  35--39 5 2.500 12.46 11.701  23.420  49.960  87.849  154.240  6.586    3.305</span></span>
+<span><span class="co">## 9  40--44 5 2.500  6.78  6.367  11.719  54.327  42.680   66.391  5.665    1.605</span></span>
+<span><span class="co">## 10 45--49 5 2.500  3.95  3.709   5.353  69.298  17.490   23.711  4.430    0.658</span></span>
+<span><span class="co">## 11 50--54 5 2.500  1.30  1.221   1.643  74.286   5.165    6.221  3.786    0.194</span></span>
+<span><span class="co">## 12 55--59 5 2.500  0.45  0.423   0.423 100.000   1.056    1.056  2.500    0.040</span></span></code></pre>
+<p>For plotting the resulting life table indices, it is advisable to
+store the results. If a grouping variable had been specified, a separate
+life table is generated for each group.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nitra_lt</span> <span class="op">&lt;-</span> <span class="fu">mortAAR</span><span class="fu">::</span><span class="fu"><a href="../reference/life.table.html">life.table</a></span><span class="op">(</span><span class="va">nitra_prep</span><span class="op">)</span></span>
+<span><span class="va">nitra_lt</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   mortAAR life table for sex: f (n = 27 individuals)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Life expectancy at birth (e0): 38.882</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##         x a    Ax    Dx     dx      lx      qx      Lx       Tx     ex rel_popx</span></span>
+<span><span class="co">## 1    0--0 1 0.333 0.000  0.000 100.000   0.000 100.000 3888.230 38.882    2.572</span></span>
+<span><span class="co">## 2    1--4 4 1.333 0.000  0.000 100.000   0.000 400.000 3788.230 37.882   10.287</span></span>
+<span><span class="co">## 3    5--9 5 2.500 0.000  0.000 100.000   0.000 500.000 3388.230 33.882   12.859</span></span>
+<span><span class="co">## 4  10--14 5 2.500 0.000  0.000 100.000   0.000 500.000 2888.230 28.882   12.859</span></span>
+<span><span class="co">## 5  15--19 5 2.500 1.071  3.968 100.000   3.968 490.079 2388.230 23.882   12.604</span></span>
+<span><span class="co">## 6  20--24 5 2.500 3.612 13.377  96.032  13.930 446.715 1898.151 19.766   11.489</span></span>
+<span><span class="co">## 7  25--29 5 2.500 4.545 16.834  82.654  20.367 371.186 1451.436 17.560    9.546</span></span>
+<span><span class="co">## 8  30--34 5 2.500 3.979 14.735  65.820  22.387 292.262 1080.250 16.412    7.517</span></span>
+<span><span class="co">## 9  35--39 5 2.500 2.696  9.986  51.085  19.548 230.458  787.988 15.425    5.927</span></span>
+<span><span class="co">## 10 40--44 5 2.500 2.759 10.218  41.099  24.863 179.947  557.529 13.566    4.628</span></span>
+<span><span class="co">## 11 45--49 5 2.500 1.849  6.850  30.880  22.182 137.277  377.582 12.227    3.531</span></span>
+<span><span class="co">## 12 50--54 5 2.500 1.622  6.008  24.031  25.000 105.133  240.305 10.000    2.704</span></span>
+<span><span class="co">## 13 55--59 5 2.500 1.622  6.008  18.023  33.333  75.095  135.172  7.500    1.931</span></span>
+<span><span class="co">## 14 60--64 5 2.500 1.622  6.008  12.015  50.000  45.057   60.076  5.000    1.159</span></span>
+<span><span class="co">## 15 65--69 5 2.500 1.622  6.008   6.008 100.000  15.019   15.019  2.500    0.386</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   mortAAR life table for sex: m (n = 18 individuals)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Life expectancy at birth (e0): 41.192</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##         x a    Ax    Dx     dx      lx      qx      Lx       Tx     ex rel_popx</span></span>
+<span><span class="co">## 1    0--0 1 0.333 0.000  0.000 100.000   0.000 100.000 4119.151 41.192    2.428</span></span>
+<span><span class="co">## 2    1--4 4 1.333 0.000  0.000 100.000   0.000 400.000 4019.151 40.192    9.711</span></span>
+<span><span class="co">## 3    5--9 5 2.500 0.000  0.000 100.000   0.000 500.000 3619.151 36.192   12.138</span></span>
+<span><span class="co">## 4  10--14 5 2.500 0.000  0.000 100.000   0.000 500.000 3119.151 31.192   12.138</span></span>
+<span><span class="co">## 5  15--19 5 2.500 0.571  3.175 100.000   3.175 492.063 2619.151 26.192   11.946</span></span>
+<span><span class="co">## 6  20--24 5 2.500 1.529  8.492  96.825   8.770 462.897 2127.087 21.968   11.238</span></span>
+<span><span class="co">## 7  25--29 5 2.500 1.729  9.603  88.333  10.872 417.659 1664.190 18.840   10.139</span></span>
+<span><span class="co">## 8  30--34 5 2.500 2.091 11.617  78.730  14.756 364.608 1246.532 15.833    8.852</span></span>
+<span><span class="co">## 9  35--39 5 2.500 3.009 16.715  67.113  24.906 293.778  881.924 13.141    7.132</span></span>
+<span><span class="co">## 10 40--44 5 2.500 3.238 17.990  50.398  35.695 207.016  588.146 11.670    5.026</span></span>
+<span><span class="co">## 11 45--49 5 2.500 1.512  8.400  32.408  25.918 141.043  381.130 11.760    3.424</span></span>
+<span><span class="co">## 12 50--54 5 2.500 1.080  6.002  24.009  25.000 105.038  240.087 10.000    2.550</span></span>
+<span><span class="co">## 13 55--59 5 2.500 1.080  6.002  18.007  33.333  75.027  135.049  7.500    1.821</span></span>
+<span><span class="co">## 14 60--64 5 2.500 1.080  6.002  12.004  50.000  45.016   60.022  5.000    1.093</span></span>
+<span><span class="co">## 15 65--69 5 2.500 1.080  6.002   6.002 100.000  15.005   15.005  2.500    0.364</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   mortAAR life table for sex: u (n = 30 individuals)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Life expectancy at birth (e0): 11.448</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##         x a    Ax    Dx     dx      lx      qx      Lx       Tx     ex rel_popx</span></span>
+<span><span class="co">## 1    0--0 1 0.333 3.000 10.000 100.000  10.000  93.333 1144.791 11.448    8.153</span></span>
+<span><span class="co">## 2    1--4 4 1.333 7.500 25.000  90.000  27.778 293.333 1051.458 11.683   25.623</span></span>
+<span><span class="co">## 3    5--9 5 2.500 7.500 25.000  65.000  38.462 262.500  758.124 11.663   22.930</span></span>
+<span><span class="co">## 4  10--14 5 2.500 4.968 16.561  40.000  41.404 158.596  495.624 12.391   13.854</span></span>
+<span><span class="co">## 5  15--19 5 2.500 3.264 10.881  23.439  46.423  89.991  337.028 14.379    7.861</span></span>
+<span><span class="co">## 6  20--24 5 2.500 0.362  1.208  12.558   9.621  59.768  247.037 19.672    5.221</span></span>
+<span><span class="co">## 7  25--29 5 2.500 0.562  1.875  11.350  16.519  52.061  187.269 16.500    4.548</span></span>
+<span><span class="co">## 8  30--34 5 2.500 0.612  2.041   9.475  21.547  42.270  135.209 14.270    3.692</span></span>
+<span><span class="co">## 9  35--39 5 2.500 0.612  2.041   7.433  27.464  32.062   92.939 12.503    2.801</span></span>
+<span><span class="co">## 10 40--44 5 2.500 0.612  2.041   5.392  37.863  21.855   60.876 11.291    1.909</span></span>
+<span><span class="co">## 11 45--49 5 2.500 0.270  0.899   3.350  26.822  14.505   39.021 11.647    1.267</span></span>
+<span><span class="co">## 12 50--54 5 2.500 0.184  0.613   2.452  25.000  10.726   24.516 10.000    0.937</span></span>
+<span><span class="co">## 13 55--59 5 2.500 0.184  0.613   1.839  33.333   7.661   13.790  7.500    0.669</span></span>
+<span><span class="co">## 14 60--64 5 2.500 0.184  0.613   1.226  50.000   4.597    6.129  5.000    0.402</span></span>
+<span><span class="co">## 15 65--69 5 2.500 0.184  0.613   0.613 100.000   1.532    1.532  2.500    0.134</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   mortAAR life table for sex: All (n = 75 individuals)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Life expectancy at birth (e0): 28.463</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##         x a    Ax    Dx     dx      lx      qx      Lx       Tx     ex rel_popx</span></span>
+<span><span class="co">## 1    0--0 1 0.333 3.000  4.000 100.000   4.000  97.333 2846.275 28.463    3.420</span></span>
+<span><span class="co">## 2    1--4 4 1.333 7.500 10.000  96.000  10.417 357.333 2748.942 28.635   12.554</span></span>
+<span><span class="co">## 3    5--9 5 2.500 7.500 10.000  86.000  11.628 405.000 2391.609 27.809   14.229</span></span>
+<span><span class="co">## 4  10--14 5 2.500 4.968  6.625  76.000   8.717 363.439 1986.609 26.140   12.769</span></span>
+<span><span class="co">## 5  15--19 5 2.500 4.907  6.543  69.375   9.431 330.520 1623.170 23.397   11.612</span></span>
+<span><span class="co">## 6  20--24 5 2.500 5.503  7.337  62.833  11.677 295.820 1292.650 20.573   10.393</span></span>
+<span><span class="co">## 7  25--29 5 2.500 6.836  9.115  55.495  16.425 254.689  996.830 17.962    8.948</span></span>
+<span><span class="co">## 8  30--34 5 2.500 6.682  8.909  46.380  19.210 209.628  742.141 16.001    7.365</span></span>
+<span><span class="co">## 9  35--39 5 2.500 6.317  8.423  37.471  22.479 166.297  532.513 14.211    5.843</span></span>
+<span><span class="co">## 10 40--44 5 2.500 6.610  8.813  29.048  30.339 123.207  366.216 12.607    4.329</span></span>
+<span><span class="co">## 11 45--49 5 2.500 3.631  4.841  20.235  23.925  89.072  243.009 12.009    3.129</span></span>
+<span><span class="co">## 12 50--54 5 2.500 2.886  3.848  15.394  25.000  67.348  153.937 10.000    2.366</span></span>
+<span><span class="co">## 13 55--59 5 2.500 2.886  3.848  11.545  33.333  48.105   86.590  7.500    1.690</span></span>
+<span><span class="co">## 14 60--64 5 2.500 2.886  3.848   7.697  50.000  28.863   38.484  5.000    1.014</span></span>
+<span><span class="co">## 15 65--69 5 2.500 2.886  3.848   3.848 100.000   9.621    9.621  2.500    0.338</span></span></code></pre>
+</div>
+<div class="section level2">
+<h2 id="plotting-the-results">Plotting the results<a class="anchor" aria-label="anchor" href="#plotting-the-results"></a>
+</h2>
+<p>A complete set of all indices of the life table is generated with the
+command plot(). The lines of the groups (if specified) are displayed as
+line types (default) or with different colours.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">nitra_lt</span>, line_vis <span class="op">=</span> <span class="st">"colour"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mortAAR_files/figure-html/unnamed-chunk-5-1.png" width="700"><img src="mortAAR_files/figure-html/unnamed-chunk-5-2.png" width="700"><img src="mortAAR_files/figure-html/unnamed-chunk-5-3.png" width="700"><img src="mortAAR_files/figure-html/unnamed-chunk-5-4.png" width="700"><img src="mortAAR_files/figure-html/unnamed-chunk-5-5.png" width="700"></p>
+<p>It is, of course, also possible to address the life tables
+individually to only display or plot a subset. It is also possible to
+limit the plots to certain types.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">All</span>, display <span class="op">=</span> <span class="st">"dx"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mortAAR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>If more control is desired, for example to create customized plots in
+ggplot(), this is also possible. The following takes the life tables
+from the Nitra example and creates a ggplot diagram with combinations of
+line types and colours.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">All</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">All</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, y<span class="op">=</span><span class="va">dx</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"All"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">80</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title<span class="op">=</span><span class="st">"Nitra"</span>,</span>
+<span>     <span class="co"># subtitle="black: total, blue: males, red: females)",</span></span>
+<span>      x <span class="op">=</span> <span class="st">"age"</span>,</span>
+<span>      y <span class="op">=</span> <span class="st">"dx"</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">m</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span> <span class="st">"male"</span><span class="op">)</span>, linewidth<span class="op">=</span><span class="fl">1.2</span>, linetype<span class="op">=</span><span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">f</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col<span class="op">=</span> <span class="st">"female"</span><span class="op">)</span>, linewidth<span class="op">=</span><span class="fl">1.2</span>, linetype<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"blue"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span> legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mortAAR_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="going-further">Going further<a class="anchor" aria-label="anchor" href="#going-further"></a>
+</h2>
+<p>Hopefully, the above has succeeded in giving an overview how to use
+the basic functions of mortAAR. Two further worked examples can be found
+in the vignette(“example_1”) and vignette(“example_: European Iron
+Age_2”). The former deals especially with data preparation while the
+latter also covers the use case to combine two life tables in a joined
+analysis.</p>
+<p>More advanced functions of mortAAR deal with testing the
+representativeness and the subsequent correction of life tables
+(explained in the vignette(“lt_correction”) as well as the computation
+of reproduction indices (vignette(“reproduction”)).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

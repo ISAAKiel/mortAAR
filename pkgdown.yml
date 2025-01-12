@@ -2,13 +2,13 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  mortAAR_vignette_background: mortAAR_vignette_background.html
-  mortAAR_vignette_example_1: mortAAR_vignette_example_1.html
-  mortAAR_vignette_example_2: mortAAR_vignette_example_2.html
-  mortAAR_vignette_lt_correction: mortAAR_vignette_lt_correction.html
-  mortAAR_vignette_reproduction: mortAAR_vignette_reproduction.html
+  background: background.html
+  example_1: example_1.html
+  example_2: example_2.html
+  lt_correction: lt_correction.html
   mortAAR: mortAAR.html
-last_built: 2025-01-12T19:32Z
+  reproduction: reproduction.html
+last_built: 2025-01-12T21:20Z
 urls:
   reference: https://isaakiel.github.io/mortAAR/reference
   article: https://isaakiel.github.io/mortAAR/articles
