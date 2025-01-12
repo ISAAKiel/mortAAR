@@ -78,18 +78,19 @@
 
     
     
-<p>mortAAR is supposed to ease the import and display of archaeological
-life table data as well as to offer more advanced functions. The general
-idea behind life tables and the implementation in mortAAR is explained
-in the vignette(“background”). This introduction gets you started with
-the import of different data sets, the computation of life tables and
-finally the plotting of life tables.</p>
+<p><strong>mortAAR</strong> is supposed to ease the import and display
+of archaeological life table data as well as to offer more advanced
+functions. The general idea behind life tables and the implementation in
+mortAAR is explained in the <code><a href="../articles/background.html">vignette("background")</a></code>. This
+introduction gets you started with the import of different data sets,
+the computation of life tables and finally the plotting of life
+tables.</p>
 <div class="section level2">
 <h2 id="import-of-data">Import of data<a class="anchor" aria-label="anchor" href="#import-of-data"></a>
 </h2>
 <p>The import of data is controlled by the function
-mortAAR::prep.life.tabe(). In most cases, the data set will contain one
-row per individual with the respective age ranges, similar to the
+<code>prep.life.tabe()</code>. In most cases, the data set will contain
+one row per individual with the respective age ranges, similar to the
 example of the cemetery of Nitra.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ISAAKiel/mortAAR" class="external-link">mortAAR</a></span><span class="op">)</span></span>
@@ -139,7 +140,7 @@ youngest age category.</p>
 <h2 id="displaying-the-life-table">Displaying the life table<a class="anchor" aria-label="anchor" href="#displaying-the-life-table"></a>
 </h2>
 <p>If the data has been prepared as above, it is easy to generate a life
-table with the command mortAAR::life.table().</p>
+table with the command <code><a href="../reference/life.table.html">life.table()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">mortAAR</span><span class="fu">::</span><span class="fu"><a href="../reference/life.table.html">life.table</a></span><span class="op">(</span><span class="va">aiterhofen_prep</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
@@ -256,7 +257,7 @@ life table is generated for each group.</p>
 <h2 id="plotting-the-results">Plotting the results<a class="anchor" aria-label="anchor" href="#plotting-the-results"></a>
 </h2>
 <p>A complete set of all indices of the life table is generated with the
-command mortAAR::plot(). The lines of the groups (if specified) are
+command <code><a href="../reference/plot.html">plot()</a></code>. The lines of the groups (if specified) are
 displayed as line types (default) or with different colours.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">nitra_lt</span>, line_vis <span class="op">=</span> <span class="st">"colour"</span><span class="op">)</span></span></code></pre></div>
@@ -268,11 +269,11 @@ limit the plots to certain types.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">All</span>, display <span class="op">=</span> <span class="st">"dx"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mortAAR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>If more control is desired, for example to create customized plots in
-ggplot2::ggplot(), this is also possible. The following takes the life
-tables from the Nitra example and creates a ggplot diagram with
-combinations of line types and colours. Please note how the x-axis is
-created with the column “a” from the life table which contains the
-length of each age class.</p>
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code>, this is also possible. The following
+takes the life tables from the Nitra example and creates a ggplot
+diagram with combinations of line types and colours. Please note how the
+x-axis is created with the column <code>a</code> from the life table
+which contains the length of each age class.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">All</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">nitra_lt</span><span class="op">$</span><span class="va">All</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, y<span class="op">=</span><span class="va">dx</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -291,13 +292,15 @@ length of each age class.</p>
 </h2>
 <p>Hopefully, the above has succeeded in giving an overview how to use
 the basic functions of mortAAR. Two further worked examples can be found
-in the vignette(“example_1”) and vignette(“example_2”). The former deals
-especially with data preparation while the latter also covers the use
-case to combine two life tables in a joined analysis.</p>
+in the <code><a href="../articles/example_1.html">vignette("example_1")</a></code> and
+<code><a href="../articles/example_2.html">vignette("example_2")</a></code>. The former deals especially with
+data preparation while the latter also covers the use case to combine
+two life tables in a joined analysis.</p>
 <p>More advanced functions of mortAAR deal with testing the
 representativeness and the subsequent correction of life tables
-(explained in the vignette(“lt_correction”) as well as the computation
-of reproduction indices (vignette(“reproduction”)).</p>
+(explained in the <code><a href="../articles/lt_correction.html">vignette("lt_correction")</a></code>) as well as the
+computation of reproduction indices
+(<code><a href="../articles/reproduction.html">vignette("reproduction")</a></code>).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
