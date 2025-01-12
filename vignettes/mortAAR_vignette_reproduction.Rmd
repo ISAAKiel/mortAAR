@@ -1,11 +1,9 @@
 ---
-title: "Vignette >Reproduction<"
-author: "Nils Müller-Scheeßel"
-date: "December 2020"
+title: "Reproduction"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 vignette: >
-  %\VignetteIndexEntry{Vignette >Reproduction<}
+  %\VignetteIndexEntry{Reproduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

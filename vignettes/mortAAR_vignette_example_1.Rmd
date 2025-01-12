@@ -1,11 +1,11 @@
 ---
-title: "Vignette >Basic usage<"
+title: "Example: Neolithic Gallery graves"
 author: "Clemens Schmid"
 date: "March 2017"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 vignette: >
-  %\VignetteIndexEntry{Vignette >Basic usage<}
+  %\VignetteIndexEntry{Example: Neolithic Gallery graves}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

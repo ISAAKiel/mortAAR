@@ -1,6 +1,7 @@
 url: https://isaakiel.github.io/mortAAR/
 template:
   bootstrap: 5
+  light-switch: true
 
 reference:
 - title: "Basic functions"

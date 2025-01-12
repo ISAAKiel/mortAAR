@@ -1,0 +1,17 @@
+---
+title: "Introduction to mortAAR"
+output: rmarkdown::html_vignette
+bibliography: ../inst/REFERENCES.bib
+vignette: >
+  %\VignetteIndexEntry{Introduction to mortAAR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+##Work to do##
+
+---
+
+## References

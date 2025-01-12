@@ -1,11 +1,9 @@
 ---
-title: "Vignette >Life table correction<"
-author: "Nils Müller-Scheeßel"
-date: "December 2020"
+title: "Life table correction"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 vignette: >
-  %\VignetteIndexEntry{Vignette >Life table correction<}
+  %\VignetteIndexEntry{Life table correction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
