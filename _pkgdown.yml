@@ -1,0 +1,38 @@
+url: https://isaakiel.github.io/mortAAR/
+template:
+  bootstrap: 5
+
+reference:
+- title: "Basic functions"
+  contents:
+  - prep.life.table
+  - life.table
+  - plot
+  - print
+- title: "Advanced functions"
+  contents:
+  - lt.representativity
+  - lt.correction
+  - lt.reproduction
+  - lt.sexrelation
+  - lt.population_size
+  - halley.band
+- title: "Helper functions"
+  contents:
+  - lt.indices
+  - pop.sim.gomp
+  - random.cat
+  - random.cat.apply
+  - mortaar_life_table
+  - as.mortaar_life_table
+  - as.mortaar_life_table_list
+- title: "Life table examples"
+  contents:
+  - aiterhofen_oedmuehlen
+  - gallery_graves
+  - magdalenenberg
+  - muensingen
+  - nitra
+  - odagsen_cm
+  - odagsen_mo
+  - schleswig_ma
