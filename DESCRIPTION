@@ -23,7 +23,7 @@ Description: A collection of functions for the analysis of archaeological mortal
     as well as plots the relevant indices (percentage of deaths, survivorship, probability of death, 
     life expectancy, percentage of population). It also checks for possible biases in the age 
     structure and applies corrections to life tables.
-Date: 2025-04-09
+Date: 2025-04-10
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true

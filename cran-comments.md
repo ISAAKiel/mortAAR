@@ -1,6 +1,6 @@
-## Increment patch
-This is a minor increment. In this version we have:
-- created a nice-looking web-reference via pkgdown
+## resubmission
+This is a resubmission. In this version we have:
+- reduced the number of simulated runs in the example of the function halley band
 
 ## Test environments
 * local OS X install, R 4.3.1

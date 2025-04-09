@@ -44,7 +44,7 @@
 #' @examples
 #'
 #'# create simulated population with artifical coarsening first
-#' pop_sim <- pop.sim.gomp(n = 1000)
+#' pop_sim <- pop.sim.gomp(n = 100)
 #' sim_ranges <- random.cat()
 #'
 #' # apply random age categories to simulated ages
@@ -52,7 +52,7 @@
 #' age_ranges = sim_ranges, from = "from", to = "to")
 #'
 #' # create halley bands
-#' demo <- halley.band(sim_appl, n = 1000, uncert = 0.95, agebeg = "from",
+#' demo <- halley.band(sim_appl, n = 100, uncert = 0.95, agebeg = "from",
 #' ageend = "to", agerange = "excluded")
 #'
 #' # plot band with ggplot
