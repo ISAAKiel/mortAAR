@@ -11,7 +11,7 @@ vignette: >
 
 ## Import of data
 
-The import of data is controlled by the function `prep.life.tabe()`. In most cases, the data set will contain one row per individual with the respective age ranges, similar to the example of the cemetery of Nitra.
+The import of data is controlled by the function `mortAAR::prep.life.tabe()`. In most cases, the data set will contain one row per individual with the respective age ranges, similar to the example of the cemetery of Nitra.
 
 ```{r, message=FALSE}
 library(mortAAR)
