@@ -1,3 +1,6 @@
+# mortAAR 1.1.8
+- created a nice-looking web-reference via pkgdown
+
 # mortAAR 1.1.7
 - added function for Halley bands
 - added function for population simulation

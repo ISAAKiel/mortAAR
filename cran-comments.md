@@ -1,9 +1,6 @@
 ## Increment patch
 This is a minor increment. In this version we have:
-- added function for Halley bands
-- added function for population simulation
-- added helper functions for the random generating and applying of age categories
-- added reprasentativity check via Total fertility rate
+- created a nice-looking web-reference via pkgdown
 
 ## Test environments
 * local OS X install, R 4.3.1

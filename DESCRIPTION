@@ -1,7 +1,7 @@
 Package: mortAAR
 Type: Package
 Title: Analysis of Archaeological Mortality Data
-Version: 1.1.7
+Version: 1.1.8
 Authors@R: c(
     person("Nils", "Mueller-Scheessel", , "nils.mueller-scheessel@ufg.uni-kiel.de", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-7992-8722")),
@@ -23,7 +23,7 @@ Description: A collection of functions for the analysis of archaeological mortal
     as well as plots the relevant indices (percentage of deaths, survivorship, probability of death, 
     life expectancy, percentage of population). It also checks for possible biases in the age 
     structure and applies corrections to life tables.
-Date: 2025-01-12
+Date: 2025-04-09
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
