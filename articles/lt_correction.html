@@ -72,7 +72,7 @@
       <h1>Life table correction</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ISAAKiel/mortAAR/blob/v1.1.8/vignettes/lt_correction.Rmd" class="external-link"><code>vignettes/lt_correction.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ISAAKiel/mortAAR/blob/master/vignettes/lt_correction.Rmd" class="external-link"><code>vignettes/lt_correction.Rmd</code></a></small>
       <div class="d-none name"><code>lt_correction.Rmd</code></div>
     </div>
 
@@ -107,18 +107,18 @@ sharply drops after 40 which also looks very unnatural.</p>
 <code class="sourceCode R"><span><span class="va">nitra_prep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.life.table.html">prep.life.table</a></span><span class="op">(</span><span class="va">nitra</span>, method<span class="op">=</span><span class="st">"Equal5"</span>, agebeg <span class="op">=</span> <span class="st">"age_start"</span>, ageend <span class="op">=</span> <span class="st">"age_end"</span><span class="op">)</span></span>
 <span><span class="va">nitra_life</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/life.table.html">life.table</a></span><span class="op">(</span><span class="va">nitra_prep</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">nitra_life</span>, display<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dx"</span>,<span class="st">"qx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lt_correction_files/figure-html/unnamed-chunk-2-1.png" width="700"><img src="lt_correction_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<p><img src="lt_correction_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="700"><img src="lt_correction_files/figure-html/unnamed-chunk-2-2.png" class="r-plt" width="700"></p>
 <p>Next we test how the plot changes if the spline-option with 10 and 20
 years is chosen. In both cases, the smoothing is only applied to the age
 groups 20 and above.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nitra_life</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/life.table.html">life.table</a></span><span class="op">(</span><span class="va">nitra_prep</span>,option_spline <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">nitra_life</span>, display<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dx"</span>,<span class="st">"qx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lt_correction_files/figure-html/unnamed-chunk-3-1.png" width="700"><img src="lt_correction_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<p><img src="lt_correction_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="700"><img src="lt_correction_files/figure-html/unnamed-chunk-3-2.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nitra_life</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/life.table.html">life.table</a></span><span class="op">(</span><span class="va">nitra_prep</span>,option_spline <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">nitra_life</span>, display<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dx"</span>,<span class="st">"qx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lt_correction_files/figure-html/unnamed-chunk-3-3.png" width="700"><img src="lt_correction_files/figure-html/unnamed-chunk-3-4.png" width="700"></p>
+<p><img src="lt_correction_files/figure-html/unnamed-chunk-3-3.png" class="r-plt" width="700"><img src="lt_correction_files/figure-html/unnamed-chunk-3-4.png" class="r-plt" width="700"></p>
 <p>As expected, applying the option leads to much smoother curves.
 However, for the 10-year-option, the oldest age group shows a local
 maximum which is not reflected in the original data and therefore is an
@@ -383,7 +383,7 @@ Weiss, Kenneth M., and H. Martin Wobst. 1973. <span>“<span class="nocase">Demo
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

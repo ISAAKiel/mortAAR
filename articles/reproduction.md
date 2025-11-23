@@ -1,0 +1,539 @@
+# Reproduction
+
+## Load libraries
+
+``` r
+library(mortAAR)
+library(magrittr)
+```
+
+## Introduction
+
+For population studies it is of vital importance to estimate growth or
+decline of a population. For anthropological datasets this is rarely
+attempted, probably because the data quality seems to scanty.
+Nevertheless, the calculation of such measures seems worth the try, at
+least it should give an impression if the resulting values are
+unrealistic high or low.
+
+## Indices of reproduction
+
+### Mortality rate
+
+The mortality rate `m` is calculated after C. Masset and J.-P.
+Bocquet-Appel (1977) in per cent of a given population, on the basis of
+the indices $D_{5 - 14}$ and $D_{20 +}$.
+
+$m = 12.7*\frac{D_{5 - 14}}{D_{20 +}}$
+
+A value of 1.0, for example, means that 1 among 100 individuals died per
+year. In archaeological cases `m` is usually the same as the natality
+rate `n` because it has to be assumed that the population is stationary.
+
+``` r
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig)[1,]
+```
+
+    ##   method value description
+    ## 1      m  4.39   Mortality
+
+### Birth and death rates according to Buikstra et al. 1986
+
+Buikstra et al. (1986) have offered a different formula. They made the
+interesting observation that the relation of those individuals aged 30
+years and above to those aged 5 years and above is very closely related
+to the birth rate and also closely (but less significantly) related to
+the death rate. Despite the high correlations, Buikstra et al. decided
+against calculating direct birth and death rates but rather used the
+D30+/D5+-index to compare different archaeological populations.
+
+Here, apart from the $\frac{D_{30 +}}{D_{5 +}}$-ratio, the birth and
+death rates are calculated as well from the regression formulas supplied
+by Buikstra et al., knowing that their merit is questionable. The values
+are supposed to specify the number of births and deaths, respectively,
+per year and per 100 individuals.
+$BR = - 11.493*\frac{D_{30 +}}{D_{5 +}} + 12.712$$DR = - 5.287*\frac{D_{30 +}}{D_{5 +}} + 6.179$
+
+``` r
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig)[c(1,8:10),]
+```
+
+    ##    method value    description
+    ## 1       m  4.39      Mortality
+    ## 8  D30_D5  0.57 ratio D30+/D5+
+    ## 9      BR  6.20     Birth rate
+    ## 10     DR  3.18     Death rate
+
+For the Schleswig data, the ratio of $D_{5 +}$ and $D_{30 +}$ is 0.57,
+which means that the number of individuals aged 5 and above nearly
+doubles that of those aged 30 and above. This speaks for a moderate to
+high birth rate. Applying the formulas by Buikstra et al., the birth
+rate would be 6.2, nearly doubling the death rate of 3.2. The latter
+value is lower than the value of 4.4 computed by the formula of Masset
+and Bocquet-Appel.
+
+``` r
+odagsen <- life.table(list("corpus mandibulae" = odagsen_cm[c("a", "Dx")],"margo orbitalis" = odagsen_mo[c("a", "Dx")]))
+lt.reproduction(odagsen)
+```
+
+    ## $`corpus mandibulae`
+    ##    method value              description
+    ## 1       m  3.37                Mortality
+    ## 2     dep 62.32         Dependency ratio
+    ## 3     TFR  6.46     Total fertility rate
+    ## 4     GRR  3.15  Gross reproduction rate
+    ## 5     NRR  1.82    Net reproduction rate
+    ## 6       r  2.98 Rate of natural increase
+    ## 7      Dt 23.24   Doubling time in years
+    ## 8  D30_D5  0.69           ratio D30+/D5+
+    ## 9      BR  4.74               Birth rate
+    ## 10     DR  2.51               Death rate
+    ## 
+    ## $`margo orbitalis`
+    ##    method value              description
+    ## 1       m  2.42                Mortality
+    ## 2     dep 34.05         Dependency ratio
+    ## 3     TFR  5.83     Total fertility rate
+    ## 4     GRR  2.84  Gross reproduction rate
+    ## 5     NRR  1.45    Net reproduction rate
+    ## 6       r  1.87 Rate of natural increase
+    ## 7      Dt 37.09   Doubling time in years
+    ## 8  D30_D5  0.69           ratio D30+/D5+
+    ## 9      BR  4.77               Birth rate
+    ## 10     DR  2.52               Death rate
+
+Interesting is the case of Odagsen, where age and sex were determined on
+two different parts of the skeleton (margo orbitalis and corpus
+mandibulae). The other reproduction indices differ between the two
+data-sets, but the $\frac{D_{30 +}}{D_{5 +}}$-ratios are nearly
+identical at 0.69. This might be seen as speaking for the robustness of
+this index. The value itself indicates a higher percentage of older
+individuals and thus a lower birth rate than we have seen for Schleswig.
+The birth rate is computed to have been 4.7%. and the death rate 2.5%.
+
+### Reproduction rates
+
+There are different approaches to calculate reproduction rates (e. g.
+Henneberg 1976). We largely follow the methodology by F. A. Hassan
+(1981). Typically, a Total fertility rate (TFR) of 6–8 is assumed for
+prehistoric populations (Acsadi and Nemeskeri 1970, 177; Henneberg 1976;
+Hassan 1981, 130). That means that a woman living at least to her
+climacteric period is expected to have given birth to on average 6 to 8
+children.
+
+Recently, C. McFadden and M. F. Oxenham (2018b) have published a formula
+to estimate the Total fertility rate from archaeological data, provided
+that infants are represented fully in the archaeological record.
+Unfortunately, this will not be the case for most archaeological
+datasets. Therefore, we used the data published by McFadden and Oxenham
+to apply it to the $P_{5 - 19}$-index after J.-P. Bocquet-Appel (2002).
+We approximated the ratio by three different methods of fitting (linear,
+logistic, power) and recommend logistic fitting, but the others are
+available as well.
+
+Even more recently, B. Taylor, M. Oxenham and C. McFadden (2023) have
+presented a formula for the Total fertility rate for cases where
+pre-adult individuals are known to be underrepresented.
+
+The Gross reproduction rate (GRR) is calculated by multiplying the TFR
+with the ratio of female newborns, assumed to be a constant of 48.8% of
+all children (Hassan 1981, 136). The Net reproduction rate is arrived at
+by summing the product of the GRR, the age specific fertility rate
+calculated from the data given by Hassan (1981, 137 tab. 8.7) and the
+age specific survival taken from the life table and dividing the result
+by 10000.
+
+The Rate of natural increase or Intrinsic growth rate `r` (growth in per
+cent per year) can be computed from the fertility calculations following
+Hassan (1981, 140). An alternative way to calculate the intrinsic growth
+rate has recently described by C. McFadden and M. F. Oxenham (2018a).
+They present a regression calculation based on the index $D_{0 - 15}/D$
+also used for fertility calculations (see above) in connections with
+modern data. It must not astonish that even with the
+McFadden/Oxenham-index used for the fertility rate, the actual numbers
+for the computed Intrinsic rate of growth and the Rate of Natural
+Increase can highly diverge, as with the former formula, further life
+table data is taken into account.
+
+Depending on the values chosen for the Total fertility rate and the
+Intrinsic growth rate, the Doubling time `Dt` will also vary. This can
+be found in any textbook as follows:
+
+$Dt = \frac{100\;*\; ln(2)}{r}$
+
+In the following, the dataset of the medieval cemetery of Schleswig is
+used again to demonstrate the different outcome of the varying options.
+
+``` r
+lt.reproduction(schleswig, fertility_rate = "McFO", growth_rate = "fertility")[c(-1,-2),]
+```
+
+    ##    method value              description
+    ## 3     TFR  4.85     Total fertility rate
+    ## 4     GRR  2.37  Gross reproduction rate
+    ## 5     NRR  1.17    Net reproduction rate
+    ## 6       r  0.79 Rate of natural increase
+    ## 7      Dt 87.77   Doubling time in years
+    ## 8  D30_D5  0.57           ratio D30+/D5+
+    ## 9      BR  6.20               Birth rate
+    ## 10     DR  3.18               Death rate
+
+The McFadden/Oxenham-index gives a Total fertility rate of 4.85 which
+equals a total of around 5 children per woman. Of these children 48%
+will be female which leads to a Gross reproduction rate of 2.37. Taking
+into account the lived years of the Schleswig woman during their
+reproductive years, the Net reproduction rate would be 1.17, meaning
+that on average every woman – regardless of their time of death – would
+have had 1.17 daughters who in turn would have had children. This
+translates to a Rate of natural increase of 0.79%: Every year the
+Schleswig population would have increased by roughly 0.8% and with
+stable growth would have doubled every 88 years.
+
+``` r
+lt.reproduction(schleswig, fertility_rate = "TOMc", growth_rate = "fertility")[c(-1,-2),]
+```
+
+    ##    method value              description
+    ## 3     TFR  6.92     Total fertility rate
+    ## 4     GRR  3.38  Gross reproduction rate
+    ## 5     NRR  1.67    Net reproduction rate
+    ## 6       r  2.56 Rate of natural increase
+    ## 7      Dt 27.04   Doubling time in years
+    ## 8  D30_D5  0.57           ratio D30+/D5+
+    ## 9      BR  6.20               Birth rate
+    ## 10     DR  3.18               Death rate
+
+The index of Taylor et al., which concentrates on the adult population
+only (age 15 and above), arrives at a much higher estimate for the Total
+fertility rate. This is computed with 6.92, and therefore also the Gross
+reproduction rate, the Net reproduction rate and the Rate of natural
+increase are higher than with the McFadden/Oxenham-index. Conversely,
+the doubling time of the population is with 27.04 years much lower.
+
+``` r
+lt.reproduction(lt.correction(schleswig)$life_table_corr, fertility_rate = "McFO", growth_rate = "fertility")[c(-1,-2),]
+```
+
+    ##    method  value              description
+    ## 3     TFR   6.53     Total fertility rate
+    ## 4     GRR   3.19  Gross reproduction rate
+    ## 5     NRR   1.06    Net reproduction rate
+    ## 6       r   0.28 Rate of natural increase
+    ## 7      Dt 247.36   Doubling time in years
+    ## 8  D30_D5   0.38           ratio D30+/D5+
+    ## 9      BR   8.34               Birth rate
+    ## 10     DR   4.17               Death rate
+
+As stated above, the McFadden/Oxenham-index assumes, somehow
+unrealistically, that the youngest age-groups are fully represented in
+the skeletal population. If we apply the life table corrections as
+advised by C. Masset and J.-P. Bocquet-Appel via the function
+`lt.correction` (see vignette “Life table corrections”), the values
+change dramatically. The Total fertility and Gross reproduction rates
+increase, but because of the much higher mortality among the youngest,
+the Net reproduction rate and thus the Rate of natural increase shrink.
+The doubling time is extended to nearly 250 years.
+
+``` r
+lt.reproduction(schleswig, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
+```
+
+    ##    method value              description
+    ## 3     TFR  7.01     Total fertility rate
+    ## 4     GRR  3.42  Gross reproduction rate
+    ## 5     NRR  1.69    Net reproduction rate
+    ## 6       r  2.63 Rate of natural increase
+    ## 7      Dt 26.39   Doubling time in years
+    ## 8  D30_D5  0.57           ratio D30+/D5+
+    ## 9      BR  6.20               Birth rate
+    ## 10     DR  3.18               Death rate
+
+On contrast, the log-regression derived from the $P_{5 - 19}$-index by
+Bocquet-Appel arrives at a Total fertility rate of around 7, also in
+line with the expectation (see above). This higher value, not
+surprisingly, leads to much higher numbers in all the other indices,
+including a much higher Rate of natural increase and a much shorter
+doubling time of only 26 years.
+
+``` r
+lt.reproduction(lt.correction(schleswig)$life_table_corr, fertility_rate = "BA_log", growth_rate = "fertility")[c(-1,-2),]
+```
+
+    ##    method  value              description
+    ## 3     TFR   7.01     Total fertility rate
+    ## 4     GRR   3.42  Gross reproduction rate
+    ## 5     NRR   1.13    Net reproduction rate
+    ## 6       r   0.63 Rate of natural increase
+    ## 7      Dt 109.76   Doubling time in years
+    ## 8  D30_D5   0.38           ratio D30+/D5+
+    ## 9      BR   8.34               Birth rate
+    ## 10     DR   4.17               Death rate
+
+Because the $P_{5 - 19}$-index is not depended on the age-group 0–4
+years, the Total fertility and Gross reproduction rates do not change if
+the life table correction is applied. Still, the other values are
+affected, and the Net reproduction rate decreases to 1.13. The Rate of
+natural increase is then 0.63 and the doubling time 110 years.
+
+``` r
+lt.reproduction(schleswig, growth_rate = "MBA")[c(6,7),]
+```
+
+    ##   method    value              description
+    ## 6      r     0.00 Rate of natural increase
+    ## 7     Dt 26163.39   Doubling time in years
+
+If we skip the fertility computation and consider the growth rate
+devised by Masset and Bocquet-Appel, the picture changes again: Now the
+Rate of natural increase is virtually zero, the population stationary
+and the doubling time more than 25000 years.
+
+``` r
+lt.reproduction(schleswig, growth_rate = "McFO")[c(6,7),]
+```
+
+    ##   method value              description
+    ## 6      r  1.81 Rate of natural increase
+    ## 7     Dt 38.27   Doubling time in years
+
+The McFadden/Oxenham-index for the Rate of natural increase lies
+somewhere in-between. It gives a value of 1.81 and thus a doubling time
+of 38 years.
+
+In sum, the differing outcomes underline the importance of the fertility
+and the mortality among the youngest for the growth direction of a given
+population. Following Hassan (1981, 140), one would credit the
+McFO-fertility index with lifetable correction after Masset and
+Bocquet-Appel to produce the most probable result as Hassan deems a
+growth rate of 0.5% per year as the maximum for prehistoric populations.
+On the other hand, also growth rates of 2.7% per year are known from
+ethnographic cases (Hassan 1981, 142).
+
+### Rate of dependent individuals
+
+The ratio of dependent individuals (Hassan 1981, 147) is usually (but
+probably erroneously for archaic societies Grupe, Harbeck, and McGlynn
+2015, 423) assumed to apply to those aged below 15 or 60 and above, and
+this is put into relation of the individuals aged in-between:
+
+$DR = \frac{\sum D_{0 - 14} + \sum D_{60 +}}{\sum D_{15 - - 59}}$
+
+``` r
+schleswig <- life.table(schleswig_ma[c("a", "Dx")])
+lt.reproduction(schleswig)[2,]
+```
+
+    ##   method  value      description
+    ## 2    dep 105.83 Dependency ratio
+
+The example dataset of the Schleswig produces a Dependency ratio of
+around 106. That would mean that in Schleswig there would have been
+roughly as much dependent individuals as those available to support
+them. This number even doubles if we apply the life table corrections
+devised by C. Masset and J.-P. Bocquet-Appel via the function
+`lt.correction` (see vignette “Life table corrections”).
+
+``` r
+lt.reproduction(lt.correction(schleswig)$life_table_corr)[2,]
+```
+
+    ##   method  value      description
+    ## 2    dep 206.75 Dependency ratio
+
+### Relation between female and male individuals
+
+The proportional relation between adult males and females (= Masculinity
+index) is defined for juvenile and older individuals:
+
+$MI = \frac{D_{\geq 15_{male}}}{D_{\geq 15_{female}}}$
+
+It is interesting for a number of reasons (Herrmann et al. 1990, 310):
+
+1.  It can point to basic problems in the datasets in that, say, one sex
+    is grossly over- or underrepresented.
+
+2.  It may hint towards cultural reasons like sex-specific mobility.
+
+Note that with a higher mortality rate of adult females, an MI \< 1 does
+not necessarily speak for an unbalanced MI in life.
+
+As example, we choose the Early Neolithic cemetery of Nitra in Slovakia.
+
+``` r
+nitra_prep <- prep.life.table(nitra, group="sex", agebeg = "age_start", ageend = "age_end")
+nitra_life <- life.table(nitra_prep)
+lt.sexrelation(nitra_life$f, nitra_life$m)[1,]
+```
+
+    ##   method value       description
+    ## 1     MI  0.67 Masculinity index
+
+The first row of the function `lt.sexrelation` reports the Masculinity
+index. With 0.67 it is quite low and points to a surplus of female
+individuals. However, as pointed out above, this has to be weighted
+carefully as it could also be due to a higher mortality of female
+adults.
+
+## Maternal mortality
+
+Maternal mortality rate (MMR) is a basic indicator for the health system
+of a given population. Maternal mortality is defined as dying during
+pregnancy or within the first 42 days after birth due to complications.
+Recently, C. McFadden and M. F. Oxenham (2019) have provided a formula
+to calculate it from archaeological data. They show that with modern
+data a very high correlation is achieved by only comparing the absolute
+numbers of the age group 20 to 24. This has the additional advantage
+that for this age group anthropological aging methods are reasonable
+exact. Recently, McFadden et al. (2020) have presented a stabilized
+version of this formula to cater for highly biased ratios in terms of
+the relation between male and female individuals.
+
+$Stabilized\; MMR = 333.33*\frac{D_{20 - 24_{female}}}{D_{20 - 24_{male}}}*\frac{D_{15 +_{male}}}{D_{15 +_{female}}} - 76.07$
+
+``` r
+lt.sexrelation(nitra_life$f, nitra_life$m)[c(-1),]
+```
+
+    ##      method  value                           description
+    ## 2 Ratio_F_M   2.36 Ratio of females to males aged 20--24
+    ## 3      MMR1 449.00 Maternal mortality per 100,000 births
+    ## 4      MMR2   4.49   Maternal mortality per 1,000 births
+
+In Nitra, more than twice the number of females of the age 20-24 have
+been found than males of the same age. This gives a unstabilized
+Maternal mortality rate of 712 (not shown). However, because the ratio
+of female and male individuals is so unbalanced (Masculinity index =
+0.67, see above), the stabilized version used here calculates an actual
+rate of 449 per 100,000 births or 4.49 per 1,000 births. In percentage,
+this number translates to 0.45% maternal deaths per birth.
+
+McFadden and Oxenham based their formula on modern data which, of
+course, allow the most precise calculations. However, for early modern
+census data, much higher Maternal mortality rates are estimated
+(Schofield 1986), easily topping 1,000 and more. For these numbers, the
+formula by McFadden and Oxenham does not work, as their sample data-sets
+do not exceed 700. This is a problem which still needs more in-depth
+research.
+
+Therefore, Maternal mortality rates computed for prehistoric populations
+should only very carefully compared to modern data. Regardless if the
+actual regression calculation is in need of adjustment or not, the
+McFadden/Oxenham-formula still seems capable to allow comparisons
+*between* prehistoric populations.
+
+## Population size
+
+The estimation of the population size for a given cemetery is only
+possible if a stationary population is assumed. In this case, the number
+of deaths is simply multiplied with the life expectancy at birth and
+divided be the time span in years the cemetery was in use. Additionally,
+it is assumed that an unknown number of individuals is not represented
+in the cemetery and, therefore, the resulting number is multiplied by an
+arbitrary value k (Herrmann et al. 1990). By default, this is assumed to
+be 1.1. Still, in many cases, the actual numbers calculated seem too
+small to yield viable population sizes.
+
+The simple formula is as follows:
+
+$P = \frac{D\;*\; e0\;*\; k}{t}$
+
+This time, we use all individuals from Nitra to calculate the size of
+the population burying their dead here.
+
+The median of the span of a phase-model (OxCal 4.4.) of the available
+¹⁴C-dates (Griffiths 2013) indicates that the cemetery was used for 147
+years. However, the actual 95.4%-span is 0–260 years, and a strong
+wiggle in-between probably distorts the picture. Therefore, 80 years
+could be a more realistic value.
+
+``` r
+lt.population_size(nitra_life$All,t = 147)
+```
+
+    ##   method value       description
+    ## 1      D  75.0  Number of deaths
+    ## 2     e0  28.5   Life expectancy
+    ## 3      k   1.1 Correction factor
+    ## 4      t 147.0         Time span
+    ## 5      P  16.0   Population size
+
+``` r
+lt.population_size(nitra_life$All,t = 80)
+```
+
+    ##   method value       description
+    ## 1      D  75.0  Number of deaths
+    ## 2     e0  28.5   Life expectancy
+    ## 3      k   1.1 Correction factor
+    ## 4      t  80.0         Time span
+    ## 5      P  29.4   Population size
+
+In the first case, the Nitra population would have had a size of only 16
+individuals. In the second, the population burying in this cemetery
+would have comprised about 29 individuals at any given time during its
+existence.
+
+## References
+
+Acsadi, G., and J. Nemeskeri. 1970. *History of Human Life Span and
+Mortality*. Budapest: Akademiai Kiado.
+
+Bocquet-Appel, Jean-Pierre. 2002. “Paleoanthropological Traces of a
+Neolithic Demographic Transition.” *Current Anthropology* 43 (4):
+637–50.
+
+Buikstra, Jane E., Lyle W. Konigsberg, and Jill Bullington. 1986.
+“Fertility and the Development of Agriculture in the Prehistoric
+Midwest.” *American Antiquity* 51 (3): 528–46.
+
+Griffiths, Seren. 2013. “Appendix B1: Radiocarbon dates from Nitra,
+Schwetzingen and Vedrovice.” In *The first farmers of central Europe:
+diversity in LBK lifeways*, edited by Penny Bickle and A. W. R. Whittle,
+443–58. Oxford: Oxbow Books.
+
+Grupe, Gisela, Michaela Harbeck, and George C. McGlynn. 2015.
+*Prähistorische Anthropologie*. Berlin, Heidelberg: Springer.
+
+Hassan, Fekri A. 1981. *Demographic Archaeology*. New York: Academic
+Press.
+
+Henneberg, Maciej. 1976. “Reproductive Possibilities and Estimations of
+the Biological Dynamics of Earlier Human Populations.” *Journal of Human
+Evolution* 5 (1): 41–48.
+
+Herrmann, B., G. Grupe, S. Hummel, H. Piepenbrink, and H. Schutkowski.
+1990. *Praehistorische Anthropologie: Leitfaden Der Feld- Und
+Labormethoden*. Berlin: Springer.
+
+Masset, Claude, and Jean-Pierre Bocquet. 1977. “Estimateurs En
+Paléodémographie.” *L’Homme* 17 (4): 65–90.
+
+McFadden, Clare, and Marc F. Oxenham. 2018a. “Rate of Natural Population
+Increase as a Paleodemographic Measure of Growth.” *Journal of
+Archaeological Science: Reports* 19: 352–56.
+
+———. 2018b. “The D0-14/D ratio: A new paleodemographic index and
+equation for estimating total fertility rates.” *American Journal of
+Physical Anthropology* 165 (3): 471–79.
+
+———. 2019. “The Paleodemographic Measure of Maternal Mortality and a
+Multifaceted Approach to Maternal Health.” *Current Anthropology* 60
+(1): 141–46. <http://dx.doi.org/10.1086/701476>.
+
+McFadden, Clare, Britta Van Tiel, and Marc F. Oxenham. 2020. “A
+Stabilized Maternal Mortality Rate Estimator for Biased Skeletal
+Samples.” *Anthropological Science* 128 (3): 113–17.
+
+Schofield, Roger. 1986. “Did the Mothers Really Die? Three Centuries of
+Maternal Mortality in ‚The World We Have Lost’.” In *The World We Have
+Gained: Histories of Population and Social Structure. Essays Presented
+to Peter Laslett on His Seventh Birthday*, edited by Lloyd Bonfield,
+Richard M. Smith, and Keith Wrightson, 231–60. Oxford: Basil Blackwell.
+
+Taylor, B. R., M. Oxenham, and C. McFadden. 2023. “Estimating fertility
+using adults: A method for under-enumerated pre-adult skeletal samples.”
+*American Journal of Biological Anthropology* 181 (2): 262–70.
+<https://doi.org/10.1002/ajpa.24739>.
