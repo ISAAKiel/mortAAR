@@ -92,7 +92,7 @@ lt.indices.mortaar_life_table <- function(life_table) {
 
   # D30+/D5+ index according to Buikstra et al. 1986
   d5plus <- life_table$Dx[all_age >=5] %>% sum
-  d30plus <- life_table$Dx[all_age > 30] %>% sum
+  d30plus <- life_table$Dx[all_age >= 30] %>% sum
   D30_D5 <- d30plus / d5plus
 
   # D0_14_D index according to McFadden and Oxenham 2018 if infants are represented well
